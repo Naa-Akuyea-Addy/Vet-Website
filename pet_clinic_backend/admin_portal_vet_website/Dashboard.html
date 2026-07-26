@@ -1,0 +1,1470 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Admin Dashboard | addyPets Veterinary Clinic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Open+Sans:wght@400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!--<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>-->
+    <script src="../node_modules/chart.js/dist/chart.umd.min.js"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-fixed": "#9ef0f4",
+              "inverse-primary": "#88d3d8",
+              "on-primary-fixed-variant": "#004f53",
+              "tertiary-container": "#617677",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-highest": "#e4e2e1",
+              "deep-navy": "#1A3638",
+              "surface-container-low": "#f5f3f3",
+              error: "#ba1a1a",
+              tertiary: "#485d5f",
+              "on-tertiary-container": "#e6fdfe",
+              "on-secondary-container": "#006e72",
+              "on-surface-variant": "#3f4949",
+              "tertiary-fixed-dim": "#b4cbcc",
+              "surface-container": "#f0eded",
+              "on-tertiary-fixed": "#091f20",
+              "on-secondary": "#ffffff",
+              "primary-fixed": "#a4eff4",
+              "inverse-on-surface": "#f2f0f0",
+              "inverse-surface": "#303030",
+              "surface-dim": "#dcd9d9",
+              "primary-container": "#2e7d82",
+              "secondary-fixed-dim": "#82d4d8",
+              "on-secondary-fixed": "#002021",
+              "primary-fixed-dim": "#88d3d8",
+              "surface-bright": "#fbf9f8",
+              primary: "#036469",
+              outline: "#6f797a",
+              "on-secondary-fixed-variant": "#004f52",
+              "error-container": "#ffdad6",
+              "on-tertiary-fixed-variant": "#364a4c",
+              secondary: "#00696d",
+              "on-primary-container": "#e5fdff",
+              "on-primary": "#ffffff",
+              "on-error-container": "#93000a",
+              "tertiary-fixed": "#d0e7e8",
+              "surface-container-high": "#eae8e7",
+              "outline-variant": "#bec8c9",
+              "on-tertiary": "#ffffff",
+              "surface-tint": "#0f696e",
+              background: "#fbf9f8",
+              "surface-muted": "#F4F7F7",
+              "on-surface": "#1b1c1c",
+              "on-primary-fixed": "#002022",
+              "surface-variant": "#e4e2e1",
+              "on-background": "#1b1c1c",
+              "emergency-red": "#943031",
+              surface: "#fbf9f8",
+              "secondary-container": "#9bedf1",
+              "on-error": "#ffffff",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              "stack-lg": "48px",
+              "stack-md": "24px",
+              base: "8px",
+              "stack-sm": "12px",
+              "margin-mobile": "16px",
+              "margin-desktop": "40px",
+              gutter: "24px",
+              "container-max": "1200px",
+            },
+            fontFamily: {
+              "headline-lg-mobile": ["Plus Jakarta Sans"],
+              "headline-md": ["Plus Jakarta Sans"],
+              "body-md": ["Open Sans"],
+              "body-lg": ["Open Sans"],
+              "label-md": ["Open Sans"],
+              "headline-lg": ["Plus Jakarta Sans"],
+              "display-lg": ["Plus Jakarta Sans"],
+              caption: ["Open Sans"],
+            },
+            fontSize: {
+              "headline-lg-mobile": [
+                "28px",
+                { lineHeight: "36px", fontWeight: "600" },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "headline-lg": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "600" },
+              ],
+              "display-lg": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              caption: ["12px", { lineHeight: "16px", fontWeight: "400" }],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+
+      .sidebar-item-active {
+        background-color: #2e7d82;
+        color: #ffffff;
+      }
+
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* Sidebar transition for desktop collapse */
+      .sidebar-transition {
+        transition:
+          width 0.3s ease-in-out,
+          transform 0.3s ease-in-out;
+      }
+
+      /* Mobile sidebar animation */
+      .mobile-sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 280px;
+        height: 100vh;
+        transition: left 0.3s ease-in-out;
+        z-index: 1000;
+      }
+
+      .mobile-sidebar.open {
+        left: 0;
+      }
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        display: none;
+      }
+
+      .overlay.active {
+        display: block;
+      }
+
+      /* Hide sidebar content when collapsed */
+      .sidebar-collapsed .sidebar-text {
+        display: none;
+      }
+
+      .sidebar-collapsed .sidebar-icon-only {
+        margin: 0 auto;
+      }
+
+      .sidebar-collapsed {
+        width: 80px !important;
+      }
+
+      .sidebar-collapsed .sidebar-logo-text {
+        display: none;
+      }
+
+      .sidebar-collapsed .sidebar-logo {
+        margin: 0 auto;
+      }
+
+      .sidebar-collapsed .sidebar-button {
+        justify-content: center;
+      }
+
+      /* Hide emergency section when sidebar is collapsed */
+      .sidebar-collapsed .emergency-section {
+        display: none;
+      }
+
+      /* Keep the logout icon centered */
+      .sidebar-collapsed #logoutBtnDesktop {
+        justify-content: center;
+        padding: 12px !important;
+      }
+
+      /* Adjust the bottom container padding when collapsed */
+      .sidebar-collapsed .bottom-container {
+        padding: 16px 8px !important;
+      }
+
+      /* Make main content take full width when sidebar is collapsed */
+      .main-content-full {
+        width: 100% !important;
+        margin-left: 0 !important;
+      }
+
+      /* Ensure smooth transition */
+      #mainContentWrapper {
+        transition: all 0.3s ease-in-out;
+      }
+
+      /* Ensure canvas containers are responsive */
+      .canvas-container {
+        position: relative;
+        width: 100%;
+        height: auto;
+        min-height: 250px;
+      }
+
+      .canvas-container canvas {
+        width: 100% !important;
+        height: auto !important;
+        max-height: 300px;
+      }
+
+      /* Mobile adjustments */
+      @media (max-width: 768px) {
+        .canvas-container {
+          min-height: 200px;
+        }
+
+        .canvas-container canvas {
+          max-height: 220px;
+        }
+
+        /* Table scroll container styling */
+        .schedule-scroll-container {
+          max-height: 400px;
+          overflow-y: auto;
+          overflow-x: auto;
+        }
+
+        .schedule-scroll-container::-webkit-scrollbar {
+          width: 6px;
+          height: 6px;
+        }
+
+        .schedule-scroll-container::-webkit-scrollbar-track {
+          background: #f1f1f1;
+          border-radius: 10px;
+        }
+
+        .schedule-scroll-container::-webkit-scrollbar-thumb {
+          background: #c1c1c1;
+          border-radius: 10px;
+        }
+
+        .schedule-scroll-container::-webkit-scrollbar-thumb:hover {
+          background: #a8a8a8;
+        }
+
+        /* Sticky header for scrollable table */
+        .schedule-scroll-container thead th {
+          position: sticky;
+          top: 0;
+          background-color: #f5f3f3;
+          z-index: 10;
+        }
+
+        /* Hidden utility class */
+        .hidden {
+          display: none;
+        }
+      }
+      a[data-nav-desktop="emergency"],
+a[data-nav-mobile="emergency"] {
+  background-color: #943031 !important;
+  color: #ffffff !important;
+}
+
+a[data-nav-desktop="emergency"]:hover,
+a[data-nav-mobile="emergency"]:hover {
+  background-color: #7a2526 !important; /* Slightly darker red on hover */
+  color: #ffffff !important;
+}
+    </style>
+  </head>
+
+  <body
+    class="bg-background text-on-background font-body-md min-h-screen flex flex-col md:flex-row"
+  >
+    <!-- Mobile Top Bar (visible only on mobile) -->
+    <div
+      class="md:hidden fixed top-0 left-0 right-0 bg-deep-navy z-50 px-4 py-4 flex items-center justify-between shadow-lg"
+    >
+      <div class="flex items-center gap-3">
+        <button
+          id="mobileBurgerBtn"
+          class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"
+        >
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+        <img
+          alt="Logo"
+          class="w-8 h-8 rounded-full object-cover"
+          src="../../public/logo.png"
+        />
+        <h1 class="font-bold text-primary-fixed text-sm">addyPets</h1>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-white">notifications</span>
+        <span class="material-symbols-outlined text-white">account_circle</span>
+      </div>
+    </div>
+
+    <!-- Overlay for mobile -->
+    <div id="mobileOverlay" class="overlay"></div>
+
+    <!-- Mobile Sidebar (for mobile devices) -->
+    <div
+      id="mobileSidebar"
+      class="mobile-sidebar bg-deep-navy flex flex-col shadow-2xl"
+    >
+      <div
+        class="flex items-center justify-between p-6 border-b border-white/10"
+      >
+        <div class="flex items-center gap-3">
+          <img
+            alt="Logo"
+            class="w-10 h-10 rounded-full object-cover"
+            src="../../public/logo.png"
+          />
+          <div>
+            <h1 class="font-bold text-primary-fixed">addyPets</h1>
+            <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
+          </div>
+        </div>
+        <button
+          id="closeMobileSidebar"
+          class="text-white p-2 hover:bg-white/10 rounded-lg"
+        >
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto hide-scrollbar">
+        <a
+          href="./Dashboard.html"
+          data-nav-mobile="analytics"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">analytics</span>
+          <span>Analytics</span>
+        </a>
+        <a
+          href="./clinic_calendar.html"
+          data-nav-mobile="calendar"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">calendar_today</span>
+          <span>Calendar</span>
+        </a>
+        <a
+          href="./staff_service_settings.html"
+          data-nav-mobile="staff"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">groups</span>
+          <span>Staff</span>
+        </a>
+        <a
+          href="./billing.html"
+          data-nav-mobile="billing"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">payments</span>
+          <span>Billing</span>
+        </a>
+       <a
+            href="./records.html"
+            data-nav-desktop="records"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >description</span
+            ><span class="sidebar-text">Patient & Owner Records</span></a
+          >
+        <a
+          href="./message.html"
+          data-nav-desktop="message"
+          data-nav-mobile="message"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined">message</span
+          ><span class="sidebar-text">Messages</span></a
+        >
+         <a href="./emergency_management.html" data-nav-mobile="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10">
+            <span class="material-symbols-outlined sidebar-icon-only">emergency</span><span class="sidebar-text">Emergency Cases</span>
+          </a>
+        <a
+          href="#"
+          data-nav-mobile="appointments"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">event_note</span>
+          <span>Appointments</span>
+        </a>
+        <div class="h-px bg-white/10 my-4"></div>
+        <a
+          href="#"
+          data-nav-mobile="settings"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">settings</span>
+          <span>Settings</span>
+        </a>
+        <button
+          id="logoutBtnMobile"
+          class="w-full flex items-center gap-4 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all"
+        >
+          <span class="material-symbols-outlined">logout</span>
+          <span>Logout</span>
+        </button>
+      </nav>
+
+      <div class="p-4 border-t border-white/10">
+        <div
+          class="bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10"
+        >
+          <p class="font-caption text-caption text-tertiary-fixed-dim mb-2">
+            Emergency Hotline
+          </p>
+          <p class="font-label-md text-label-md text-primary-fixed">
+            +233 500 000 000
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop Layout with Collapsible Sidebar -->
+    <div class="flex min-h-screen w-full">
+      <!-- Desktop Sidebar (collapsible) -->
+      <aside
+        id="desktopSidebar"
+        class="hidden md:flex flex-col w-72 bg-deep-navy h-screen sticky top-0 border-r border-outline-variant/10 text-white sidebar-transition"
+      >
+        <div
+          class="px-6 py-6 flex items-center justify-between border-b border-white/10"
+        >
+          <div class="flex items-center gap-3 sidebar-logo">
+            <img
+              alt="Logo"
+              class="w-10 h-10 rounded-full object-cover"
+              src="../../public/logo.png"
+            />
+            <div class="sidebar-logo-text">
+              <h1
+                class="font-headline-md text-headline-md font-bold text-primary-fixed text-sm"
+              >
+                addyPets
+              </h1>
+              <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
+            </div>
+          </div>
+          <button
+            id="collapseSidebarBtn"
+            class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"
+          >
+            <span class="material-symbols-outlined">chevron_left</span>
+          </button>
+        </div>
+
+        <nav class="flex-1 px-3 py-6 space-y-1 overflow-y-auto hide-scrollbar">
+          <a
+            href="./Dashboard.html"
+            data-nav-desktop="analytics"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all sidebar-button"
+          >
+            <span
+              class="material-symbols-outlined sidebar-icon-only"
+              style="font-variation-settings: &quot;FILL&quot; 1"
+              >analytics</span
+            >
+            <span class="sidebar-text">Analytics</span>
+          </a>
+          <a
+            href="./clinic_calendar.html"
+            data-nav-desktop="calendar"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >calendar_today</span
+            >
+            <span class="sidebar-text">Calendar</span>
+          </a>
+          <a
+            href="./staff_service_settings.html"
+            data-nav-desktop="staff"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >groups</span
+            >
+            <span class="sidebar-text">Staff</span>
+          </a>
+          <a
+            href="./billing.html"
+            data-nav-desktop="billing"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >payments</span
+            >
+            <span class="sidebar-text">Billing</span>
+          </a>
+         <a
+            href="./records.html"
+            data-nav-desktop="records"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >description</span
+            ><span class="sidebar-text">Patient & Owner Records</span></a
+          >
+          <a
+          href="./message.html"
+          data-nav-desktop="message"
+          data-nav-mobile="message"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined">message</span
+          ><span class="sidebar-text">Messages</span></a
+        >
+         <a href="./emergency_management.html" data-nav-desktop="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10">
+            <span class="material-symbols-outlined sidebar-icon-only">emergency</span><span class="sidebar-text">Emergency Cases</span>
+          </a>
+          <a
+            href="#"
+            data-nav-desktop="appointments"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >event_note</span
+            >
+            <span class="sidebar-text">Appointments</span>
+          </a>
+        </nav>
+
+        <div class="p-4 mt-auto bottom-container">
+          <button
+            id="logoutBtnDesktop"
+            class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >logout</span
+            >
+            <span class="sidebar-text">Logout</span>
+          </button>
+          <div
+            class="emergency-section bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10 mt-4"
+          >
+            <p class="font-caption text-caption text-tertiary-fixed-dim mb-2">
+              Emergency Hotline
+            </p>
+            <p class="font-label-md text-label-md text-primary-fixed">
+              +233 500 000 000
+            </p>
+          </div>
+        </div>
+      </aside>
+      <!-- Main Content Area -->
+      <div
+        id="mainContentWrapper"
+        class="flex-1 flex flex-col min-w-0 bg-surface pt-16 md:pt-0 transition-all duration-300"
+      >
+        <!-- Top Bar (Desktop) -->
+        <header
+          class="h-20 bg-surface hidden md:flex items-center justify-between px-margin-desktop sticky top-0 z-40 border-b border-surface-container-highest"
+        >
+          <div class="flex items-center gap-4 w-1/3">
+            <div class="relative w-full max-w-md">
+              <span
+                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline"
+                >search</span
+              >
+              <input
+                class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                placeholder="Search patients, vets, or files..."
+                type="text"
+              />
+            </div>
+          </div>
+          <div class="flex items-center gap-6">
+            <button
+              class="relative p-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-full"
+            >
+              <span class="material-symbols-outlined">notifications</span>
+              <span
+                class="absolute top-2 right-2 w-2 h-2 bg-emergency-red rounded-full"
+              ></span>
+            </button>
+            <div class="flex items-center gap-3 cursor-pointer group">
+              <div class="text-right">
+                <p class="font-label-md text-label-md text-on-surface">
+                  Dr. Abena Mensah
+                </p>
+                <p class="font-caption text-caption text-on-surface-variant">
+                  Chief Veterinary Officer
+                </p>
+              </div>
+              <img
+                alt="Profile"
+                class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-container"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt_l2NtwBrHDxQNGs9rPyaBDSi0T_lttSSni_UFdT12mHBHPojsxTE2haa69Vl-xUxsOfIG9hBjBfFUbTbuzqUZTrwCxsYx-WVkbqBP95JzSas9Gk-vlSi5L3t6i5wijVQgjwTRZWzXWDoOxvbiuiwTwUvQerM7vTOeUAbTgk0LzdJ6ZlyU0xeXqf__Iapv8Wpu9q6UmECwczFqWAIEuCSYFKPwinFOH3N6vq0YJKWoiJViDN71AZUcTRiwGyz_FO9sM63nmOE114"
+              />
+            </div>
+          </div>
+        </header>
+
+        <!-- Dashboard Canvas -->
+        <div
+          class="p-margin-mobile md:p-margin-desktop space-y-stack-lg mx-auto w-full"
+          id="mainContent"
+        >
+          <!-- Dynamic content loads here -->
+        </div>
+
+        <!-- Footer -->
+      </div>
+    </div>
+
+    <script>
+      // Mobile Sidebar Elements
+      const mobileBurgerBtn = document.getElementById("mobileBurgerBtn");
+      const mobileSidebar = document.getElementById("mobileSidebar");
+      const closeMobileSidebar = document.getElementById("closeMobileSidebar");
+      const mobileOverlay = document.getElementById("mobileOverlay");
+
+      // Desktop Sidebar Elements
+      const desktopSidebar = document.getElementById("desktopSidebar");
+      const desktopBurgerBtn = document.getElementById("desktopBurgerBtn");
+      const collapseSidebarBtn = document.getElementById("collapseSidebarBtn");
+
+      let isSidebarCollapsed =
+        localStorage.getItem("sidebarCollapsed") === "true";
+
+      // Mobile Sidebar Functions
+      function openMobileSidebar() {
+        mobileSidebar.classList.add("open");
+        mobileOverlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeMobileSidebarFunc() {
+        mobileSidebar.classList.remove("open");
+        mobileOverlay.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      // Desktop Sidebar Collapse Function
+      function toggleDesktopSidebar() {
+        isSidebarCollapsed = !isSidebarCollapsed;
+        localStorage.setItem("sidebarCollapsed", isSidebarCollapsed);
+
+        const mainContentWrapper =
+          document.getElementById("mainContentWrapper");
+
+        if (isSidebarCollapsed) {
+          desktopSidebar.classList.add("sidebar-collapsed");
+          if (collapseSidebarBtn) {
+            collapseSidebarBtn.querySelector(
+              ".material-symbols-outlined",
+            ).textContent = "chevron_right";
+          }
+          // Make main content take full width
+          if (mainContentWrapper) {
+            mainContentWrapper.classList.add("main-content-full");
+          }
+        } else {
+          desktopSidebar.classList.remove("sidebar-collapsed");
+          if (collapseSidebarBtn) {
+            collapseSidebarBtn.querySelector(
+              ".material-symbols-outlined",
+            ).textContent = "chevron_left";
+          }
+          // Reset main content width
+          if (mainContentWrapper) {
+            mainContentWrapper.classList.remove("main-content-full");
+          }
+        }
+      }
+
+      // Initialize desktop sidebar state
+      if (isSidebarCollapsed) {
+        desktopSidebar.classList.add("sidebar-collapsed");
+        if (collapseSidebarBtn) {
+          collapseSidebarBtn.querySelector(
+            ".material-symbols-outlined",
+          ).textContent = "chevron_right";
+        }
+      }
+
+      // Event Listeners for Mobile
+      if (mobileBurgerBtn)
+        mobileBurgerBtn.addEventListener("click", openMobileSidebar);
+      if (closeMobileSidebar)
+        closeMobileSidebar.addEventListener("click", closeMobileSidebarFunc);
+      if (mobileOverlay)
+        mobileOverlay.addEventListener("click", closeMobileSidebarFunc);
+
+      // Event Listeners for Desktop
+      if (desktopBurgerBtn)
+        desktopBurgerBtn.addEventListener("click", toggleDesktopSidebar);
+      if (collapseSidebarBtn)
+        collapseSidebarBtn.addEventListener("click", toggleDesktopSidebar);
+
+      // Close mobile sidebar on escape key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && mobileSidebar.classList.contains("open")) {
+          closeMobileSidebarFunc();
+        }
+      });
+
+      // Handle window resize - close mobile sidebar if resizing to desktop
+      window.addEventListener("resize", () => {
+        if (
+          window.innerWidth >= 768 &&
+          mobileSidebar.classList.contains("open")
+        ) {
+          closeMobileSidebarFunc();
+        }
+      });
+      // Content mapping for each page
+      const pages = {
+        analytics: `
+              <!-- Summary Bento Grid -->
+              <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+                  <div class="bg-white p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+                      <div class="flex items-center justify-between mb-4">
+                          <div class="p-2 bg-primary-container/10 rounded-lg text-primary">
+                              <span class="material-symbols-outlined">today</span>
+                          </div>
+                          <span class="text-secondary font-label-md text-label-md">+12% vs last week</span>
+                      </div>
+                      <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Today's Appts</h3>
+                      <p class="font-display-lg text-display-lg text-on-surface mt-1">24</p>
+                  </div>
+                  <div class="bg-white p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+                      <div class="flex items-center justify-between mb-4">
+                          <div class="p-2 bg-secondary-container/20 rounded-lg text-secondary">
+                              <span class="material-symbols-outlined">upcoming</span>
+                          </div>
+                          <span class="text-primary font-label-md text-label-md">Next 7 days</span>
+                      </div>
+                      <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Upcoming</h3>
+                      <p class="font-display-lg text-display-lg text-on-surface mt-1">158</p>
+                  </div>
+                  <div class="bg-white p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+                      <div class="flex items-center justify-between mb-4">
+                          <div class="p-2 bg-tertiary-fixed/30 rounded-lg text-tertiary">
+                              <span class="material-symbols-outlined">pets</span>
+                          </div>
+                          <span class="text-on-surface-variant font-label-md text-label-md">Total active</span>
+                      </div>
+                      <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Total Patients</h3>
+                      <p class="font-display-lg text-display-lg text-on-surface mt-1">1,240</p>
+                  </div>
+                  <div class="bg-white p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+                      <div class="flex items-center justify-between mb-4">
+                          <div class="p-2 bg-primary-container text-white rounded-lg">
+                              <span class="material-symbols-outlined">payments</span>
+                          </div>
+                          <span class="text-primary font-label-md text-label-md">This Month</span>
+                      </div>
+                      <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Revenue</h3>
+                      <p class="font-display-lg text-display-lg text-on-surface mt-1">₵42.5k</p>
+                  </div>
+              </section>
+
+              <!-- Responsive Charts Grid -->
+              <section class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+                  <!-- Chart 1 - Appointment Volume -->
+                  <div class="bg-white p-4 md:p-6 rounded-xl border border-outline-variant">
+                      <h2 class="font-headline-md text-headline-md text-on-surface text-lg md:text-xl mb-2">Appointment Volume</h2>
+                      <p class="font-body-md text-on-surface-variant text-sm md:text-base mb-4">Weekly performance</p>
+                      <div class="w-full h-[250px] md:h-[300px]">
+                          <canvas id="appointmentsChart" class="w-full h-full"></canvas>
+                      </div>
+                  </div>
+
+                  <!-- Chart 2 - Revenue -->
+                  <div class="bg-white p-4 md:p-6 rounded-xl border border-outline-variant">
+                      <h2 class="font-headline-md text-headline-md text-on-surface text-lg md:text-xl mb-2">Revenue</h2>
+                      <p class="font-body-md text-on-surface-variant text-sm md:text-base mb-4">Monthly income (GH₵)</p>
+                      <div class="w-full h-[250px] md:h-[300px]">
+                          <canvas id="revenueChart" class="w-full h-full"></canvas>
+                      </div>
+                  </div>
+
+                  <!-- Chart 3 - Popular Services -->
+                  <div class="bg-white p-4 md:p-6 rounded-xl border border-outline-variant">
+                      <h2 class="font-headline-md text-headline-md text-on-surface text-lg md:text-xl mb-4">Popular Services</h2>
+                      <div class="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+                          <div class="w-[200px] h-[200px] md:w-[250px] md:h-[250px]">
+                              <canvas id="servicesChart" class="w-full h-full"></canvas>
+                          </div>
+                          <div class="flex-1 space-y-2">
+                              <div class="flex items-center gap-2 text-sm md:text-base">
+                                  <span class="inline-block w-3 h-3 rounded-full bg-[#036469]"></span>
+                                  Vaccinations 45%
+                              </div>
+                              <div class="flex items-center gap-2 text-sm md:text-base">
+                                  <span class="inline-block w-3 h-3 rounded-full bg-[#00696d]"></span>
+                                  Dental Care 28%
+                              </div>
+                              <div class="flex items-center gap-2 text-sm md:text-base">
+                                  <span class="inline-block w-3 h-3 rounded-full bg-[#2e7d82]"></span>
+                                  Surgery 15%
+                              </div>
+                              <div class="flex items-center gap-2 text-sm md:text-base">
+                                  <span class="inline-block w-3 h-3 rounded-full bg-[#943031]"></span>
+                                  Emergency 12%
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- Chart 4 - Patient Growth -->
+                  <div class="bg-white p-4 md:p-6 rounded-xl border border-outline-variant">
+                      <h2 class="font-headline-md text-headline-md text-on-surface text-lg md:text-xl mb-2">Patient Growth</h2>
+                      <p class="font-body-md text-on-surface-variant text-sm md:text-base mb-4">New vs Returning</p>
+                      <div class="w-full h-[250px] md:h-[300px]">
+                          <canvas id="patientsChart" class="w-full h-full"></canvas>
+                      </div>
+                  </div>
+              </section>
+              <!-- Recent Activity Table -->
+      <section class="bg-white rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+          <div class="px-8 py-6 border-b border-outline-variant flex justify-between items-center">
+              <h2 class="font-headline-md text-headline-md text-on-surface">Today's Schedule</h2>
+              <button id="newAppointmentBtn" class="bg-primary text-white px-6 py-2 rounded-lg font-label-md text-label-md flex items-center gap-2 hover:bg-primary/90 transition-all">
+                  <span class="material-symbols-outlined text-[20px]">add</span>
+                  New Appointment
+              </button>
+          </div>
+
+          <!-- Scrollable table container - hidden until button click -->
+          <div id="scheduleScrollContainer" class="schedule-scroll-container hidden overflow-x-auto overflow-y-auto max-h-96">
+              <table class="w-full text-left">
+                  <thead class="sticky top-0 z-10">
+                      <tr class="bg-surface-muted text-on-surface-variant font-label-md text-label-md border-b border-outline-variant">
+                          <th class="px-8 py-4">Patient &amp; Owner</th>
+                          <th class="px-4 py-4">Service</th>
+                          <th class="px-4 py-4">Vet</th>
+                          <th class="px-4 py-4">Time</th>
+                          <th class="px-4 py-4">Status</th>
+                          <th class="px-8 py-4 text-right">Action</th>
+                      </tr>
+                  </thead>
+                  <tbody class="divide-y divide-outline-variant/30">
+                      <!-- Row 1 -->
+                      <tr class="hover:bg-surface-container-low transition-colors">
+                          <td class="px-8 py-5">
+                              <div class="flex items-center gap-4">
+                                  <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+                                      <span class="material-symbols-outlined">pets</span>
+                                  </div>
+                                  <div>
+                                      <p class="font-label-md text-label-md text-on-surface">Buddy (Golden Retriever)</p>
+                                      <p class="font-caption text-caption text-on-surface-variant">Owner: Ama Serwaa</p>
+                                  </div>
+                              </div>
+                          </td>
+                          <td class="px-4 py-5 text-on-surface font-body-md">Annual Vaccination</td>
+                          <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Mensah</td>
+                          <td class="px-4 py-5 text-on-surface font-body-md">09:30 AM</td>
+                          <td class="px-4 py-5">
+                              <span class="px-3 py-1 bg-primary-container/20 text-primary rounded-full font-label-md text-caption">Confirmed</span>
+                          </td>
+                          <td class="px-8 py-5 text-right">
+                              <button class="p-2 text-outline hover:text-primary transition-colors">
+                                  <span class="material-symbols-outlined">more_vert</span>
+                              </button>
+                          </td>
+                      </tr>
+                      <!-- Row 2 -->
+                      <tr class="hover:bg-surface-container-low transition-colors">
+                          <td class="px-8 py-5">
+                              <div class="flex items-center gap-4">
+                                  <div class="w-10 h-10 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary">
+                                      <span class="material-symbols-outlined">pets</span>
+                                  </div>
+                                  <div>
+                                      <p class="font-label-md text-label-md text-on-surface">Luna (Siamese Cat)</p>
+                                      <p class="font-caption text-caption text-on-surface-variant">Owner: Kofi Appiah</p>
+                                  </div>
+                              </div>
+                          </td>
+                          <td class="px-4 py-5 text-on-surface font-body-md">Dental Cleaning</td>
+                          <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Boateng</td>
+                          <td class="px-4 py-5 text-on-surface font-body-md">11:00 AM</td>
+                          <td class="px-4 py-5">
+                              <span class="px-3 py-1 bg-secondary-container/20 text-secondary rounded-full font-label-md text-caption">In Progress</span>
+                          </td>
+                          <td class="px-8 py-5 text-right">
+                              <button class="p-2 text-outline hover:text-primary transition-colors">
+                                  <span class="material-symbols-outlined">more_vert</span>
+                              </button>
+                          </td>
+                      </tr>
+                      <!-- Row 3 -->
+                      <tr class="hover:bg-surface-container-low transition-colors">
+                          <td class="px-8 py-5">
+                              <div class="flex items-center gap-4">
+                                  <div class="w-10 h-10 rounded-full bg-error-container/20 flex items-center justify-center text-emergency-red">
+                                      <span class="material-symbols-outlined">emergency_home</span>
+                                  </div>
+                                  <div>
+                                      <p class="font-label-md text-label-md text-on-surface">Max (German Shepherd)</p>
+                                      <p class="font-caption text-caption text-on-surface-variant">Owner: Emelia Tetteh</p>
+                                  </div>
+                              </div>
+                          </td>
+                          <td class="px-4 py-5 text-on-surface font-body-md">Urgent X-Ray</td>
+                          <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Mensah</td>
+                          <td class="px-4 py-5 text-on-surface font-body-md">01:45 PM</td>
+                          <td class="px-4 py-5">
+                              <span class="px-3 py-1 bg-error-container text-emergency-red rounded-full font-label-md text-caption">Urgent</span>
+                          </td>
+                          <td class="px-8 py-5 text-right">
+                              <button class="p-2 text-outline hover:text-primary transition-colors">
+                                  <span class="material-symbols-outlined">more_vert</span>
+                              </button>
+                          </td>
+                      </tr>
+                      <!-- Additional rows to demonstrate scrolling -->
+                      <tr class="hover:bg-surface-container-low transition-colors">
+                          <td class="px-8 py-5">
+                              <div class="flex items-center gap-4">
+                                  <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+                                      <span class="material-symbols-outlined">pets</span>
+                                  </div>
+                                  <div>
+                                      <p class="font-label-md text-label-md text-on-surface">Rocky (Beagle)</p>
+                                      <p class="font-caption text-caption text-on-surface-variant">Owner: John Doe</p>
+                                  </div>
+                              </div>
+                          </td>
+                          <td class="px-4 py-5 text-on-surface font-body-md">General Checkup</td>
+                          <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Smith</td>
+                          <td class="px-4 py-5 text-on-surface font-body-md">02:00 PM</td>
+                          <td class="px-4 py-5">
+                              <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full font-label-md text-caption">Waiting</span>
+                          </td>
+                          <td class="px-8 py-5 text-right">
+                              <button class="p-2 text-outline hover:text-primary transition-colors">
+                                  <span class="material-symbols-outlined">more_vert</span>
+                              </button>
+                          </td>
+                      </tr>
+                      <tr class="hover:bg-surface-container-low transition-colors">
+                          <td class="px-8 py-5">
+                              <div class="flex items-center gap-4">
+                                  <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+                                      <span class="material-symbols-outlined">pets</span>
+                                  </div>
+                                  <div>
+                                      <p class="font-label-md text-label-md text-on-surface">Bella (Poodle)</p>
+                                      <p class="font-caption text-caption text-on-surface-variant">Owner: Mary Johnson</p>
+                                  </div>
+                              </div>
+                          </td>
+                          <td class="px-4 py-5 text-on-surface font-body-md">Grooming</td>
+                          <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Brown</td>
+                          <td class="px-4 py-5 text-on-surface font-body-md">03:30 PM</td>
+                          <td class="px-4 py-5">
+                              <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full font-label-md text-caption">Scheduled</span>
+                          </td>
+                          <td class="px-8 py-5 text-right">
+                              <button class="p-2 text-outline hover:text-primary transition-colors">
+                                  <span class="material-symbols-outlined">more_vert</span>
+                              </button>
+                          </td>
+                      </tr>
+                      <tr class="hover:bg-surface-container-low transition-colors">
+                          <td class="px-8 py-5">
+                              <div class="flex items-center gap-4">
+                                  <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+                                      <span class="material-symbols-outlined">pets</span>
+                                  </div>
+                                  <div>
+                                      <p class="font-label-md text-label-md text-on-surface">Charlie (Labrador)</p>
+                                      <p class="font-caption text-caption text-on-surface-variant">Owner: Sarah Williams</p>
+                                  </div>
+                              </div>
+                          </td>
+                          <td class="px-4 py-5 text-on-surface font-body-md">Vaccination</td>
+                          <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Mensah</td>
+                          <td class="px-4 py-5 text-on-surface font-body-md">04:00 PM</td>
+                          <td class="px-4 py-5">
+                              <span class="px-3 py-1 bg-primary-container/20 text-primary rounded-full font-label-md text-caption">Confirmed</span>
+                          </td>
+                          <td class="px-8 py-5 text-right">
+                              <button class="p-2 text-outline hover:text-primary transition-colors">
+                                  <span class="material-symbols-outlined">more_vert</span>
+                              </button>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+
+          <!-- Limited view table (initially visible) -->
+          <div id="limitedScheduleView" class="overflow-x-auto">
+              <table class="w-full text-left">
+                  <thead>
+                      <tr class="bg-surface-muted text-on-surface-variant font-label-md text-label-md border-b border-outline-variant">
+                          <th class="px-8 py-4">Patient &amp; Owner</th>
+                          <th class="px-4 py-4">Service</th>
+                          <th class="px-4 py-4">Vet</th>
+                          <th class="px-4 py-4">Time</th>
+                          <th class="px-4 py-4">Status</th>
+                          <th class="px-8 py-4 text-right">Action</th>
+                      </tr>
+                  </thead>
+                  <tbody class="divide-y divide-outline-variant/30">
+                      <!-- Only first 3 rows visible initially -->
+                      <tr class="hover:bg-surface-container-low transition-colors">
+                          <td class="px-8 py-5">
+                              <div class="flex items-center gap-4">
+                                  <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+                                      <span class="material-symbols-outlined">pets</span>
+                                  </div>
+                                  <div>
+                                      <p class="font-label-md text-label-md text-on-surface">Buddy (Golden Retriever)</p>
+                                      <p class="font-caption text-caption text-on-surface-variant">Owner: Ama Serwaa</p>
+                                  </div>
+                              </div>
+                          </td>
+                          <td class="px-4 py-5 text-on-surface font-body-md">Annual Vaccination</td>
+                          <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Mensah</td>
+                          <td class="px-4 py-5 text-on-surface font-body-md">09:30 AM</td>
+                          <td class="px-4 py-5">
+                              <span class="px-3 py-1 bg-primary-container/20 text-primary rounded-full font-label-md text-caption">Confirmed</span>
+                          </td>
+                          <td class="px-8 py-5 text-right">
+                              <button class="p-2 text-outline hover:text-primary transition-colors">
+                                  <span class="material-symbols-outlined">more_vert</span>
+                              </button>
+                          </td>
+                      </tr>
+                      <tr class="hover:bg-surface-container-low transition-colors">
+                          <td class="px-8 py-5">
+                              <div class="flex items-center gap-4">
+                                  <div class="w-10 h-10 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary">
+                                      <span class="material-symbols-outlined">pets</span>
+                                  </div>
+                                  <div>
+                                      <p class="font-label-md text-label-md text-on-surface">Luna (Siamese Cat)</p>
+                                      <p class="font-caption text-caption text-on-surface-variant">Owner: Kofi Appiah</p>
+                                  </div>
+                              </div>
+                          </td>
+                          <td class="px-4 py-5 text-on-surface font-body-md">Dental Cleaning</td>
+                          <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Boateng</td>
+                          <td class="px-4 py-5 text-on-surface font-body-md">11:00 AM</td>
+                          <td class="px-4 py-5">
+                              <span class="px-3 py-1 bg-secondary-container/20 text-secondary rounded-full font-label-md text-caption">In Progress</span>
+                          </td>
+                          <td class="px-8 py-5 text-right">
+                              <button class="p-2 text-outline hover:text-primary transition-colors">
+                                  <span class="material-symbols-outlined">more_vert</span>
+                              </button>
+                          </td>
+                      </tr>
+                      <tr class="hover:bg-surface-container-low transition-colors">
+                          <td class="px-8 py-5">
+                              <div class="flex items-center gap-4">
+                                  <div class="w-10 h-10 rounded-full bg-error-container/20 flex items-center justify-center text-emergency-red">
+                                      <span class="material-symbols-outlined">emergency_home</span>
+                                  </div>
+                                  <div>
+                                      <p class="font-label-md text-label-md text-on-surface">Max (German Shepherd)</p>
+                                      <p class="font-caption text-caption text-on-surface-variant">Owner: Emelia Tetteh</p>
+                                  </div>
+                              </div>
+                          </td>
+                          <td class="px-4 py-5 text-on-surface font-body-md">Urgent X-Ray</td>
+                          <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Mensah</td>
+                          <td class="px-4 py-5 text-on-surface font-body-md">01:45 PM</td>
+                          <td class="px-4 py-5">
+                              <span class="px-3 py-1 bg-error-container text-emergency-red rounded-full font-label-md text-caption">Urgent</span>
+                          </td>
+                          <td class="px-8 py-5 text-right">
+                              <button class="p-2 text-outline hover:text-primary transition-colors">
+                                  <span class="material-symbols-outlined">more_vert</span>
+                              </button>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+
+          <!-- View All Button -->
+          <div id="viewAllButton" class="px-8 py-4 bg-surface-muted border-t border-outline-variant text-center">
+              <button id="viewAllScheduleBtn" class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors">
+                  View All Schedule (18 more)
+              </button>
+          </div>
+      </section>
+              `,
+      };
+
+
+
+      // Navigation function
+      function navigateTo(section) {
+        const mainContent = document.getElementById("mainContent");
+        if (mainContent && pages[section]) {
+          mainContent.innerHTML = pages[section];
+        }
+
+        // Update active states for desktop
+        document.querySelectorAll("[data-nav-desktop]").forEach((link) => {
+          if (link.getAttribute("data-nav-desktop") === section) {
+            link.classList.add(
+              "bg-primary-container",
+              "text-on-primary-container",
+            );
+            link.classList.remove(
+              "text-tertiary-fixed-dim",
+              "hover:bg-white/5",
+            );
+          } else {
+            link.classList.remove(
+              "bg-primary-container",
+              "text-on-primary-container",
+            );
+            link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
+          }
+        });
+
+        // Update active states for mobile
+        document.querySelectorAll("[data-nav-mobile]").forEach((link) => {
+          if (link.getAttribute("data-nav-mobile") === section) {
+            link.classList.add(
+              "bg-primary-container",
+              "text-on-primary-container",
+            );
+            link.classList.remove(
+              "text-tertiary-fixed-dim",
+              "hover:bg-white/5",
+            );
+          } else {
+            link.classList.remove(
+              "bg-primary-container",
+              "text-on-primary-container",
+            );
+            link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
+          }
+        });
+      }
+
+      // Desktop navigation click handlers
+      document.querySelectorAll("[data-nav-desktop]").forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const section = link.getAttribute("data-nav-desktop");
+          navigateTo(section);
+        });
+      });
+
+      // Mobile navigation click handlers
+      document.querySelectorAll("[data-nav-mobile]").forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const section = link.getAttribute("data-nav-mobile");
+          navigateTo(section);
+          closeMobileSidebarFunc();
+        });
+      });
+
+      // Logout function
+      function logout() {
+        if (confirm("Are you sure you want to logout?")) {
+          localStorage.removeItem("user");
+          localStorage.removeItem("token");
+          window.location.href = "vet_portal_login.html";
+        }
+      }
+
+      document
+        .getElementById("logoutBtnMobile")
+        ?.addEventListener("click", logout);
+      document
+        .getElementById("logoutBtnDesktop")
+        ?.addEventListener("click", logout);
+
+      // Initialize with analytics page
+      navigateTo("analytics");
+
+      // Initialize Charts
+      let appointmentsChart, revenueChart, servicesChart, patientsChart;
+
+      function initCharts() {
+        // Safety check - wait for canvas elements to exist
+        if (!document.getElementById("appointmentsChart")) {
+          console.log("Charts not ready yet, retrying...");
+          setTimeout(initCharts, 100);
+          return;
+        }
+
+        // Destroy existing charts if they exist
+        if (appointmentsChart) appointmentsChart.destroy();
+        if (revenueChart) revenueChart.destroy();
+        if (servicesChart) servicesChart.destroy();
+        if (patientsChart) patientsChart.destroy();
+
+        console.log("Initializing charts...");
+
+        // 1. Appointment Volume Chart
+        const appointmentsCtx = document
+          .getElementById("appointmentsChart")
+          ?.getContext("2d");
+        if (appointmentsCtx) {
+          appointmentsChart = new Chart(appointmentsCtx, {
+            type: "line",
+            data: {
+              labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+              datasets: [
+                {
+                  label: "Appointments",
+                  data: [12, 18, 16, 24, 21, 28, 23],
+                  borderColor: "#036469",
+                  backgroundColor: "rgba(3, 100, 105, 0.1)",
+                  tension: 0.4,
+                  fill: true,
+                  pointRadius: window.innerWidth < 768 ? 3 : 4,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: true,
+              plugins: { legend: { position: "bottom" } },
+            },
+          });
+        }
+
+        // 2. Revenue Chart
+        const revenueCtx = document
+          .getElementById("revenueChart")
+          ?.getContext("2d");
+        if (revenueCtx) {
+          revenueChart = new Chart(revenueCtx, {
+            type: "bar",
+            data: {
+              labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+              datasets: [
+                {
+                  label: "Revenue (GH₵)",
+                  data: [12500, 14800, 16200, 18900, 21400, 25800],
+                  backgroundColor: "#00696d",
+                  borderRadius: window.innerWidth < 768 ? 4 : 8,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: true,
+              plugins: { legend: { position: "bottom" } },
+            },
+          });
+        }
+
+        // 3. Services Distribution Chart
+        const servicesCtx = document
+          .getElementById("servicesChart")
+          ?.getContext("2d");
+        if (servicesCtx) {
+          servicesChart = new Chart(servicesCtx, {
+            type: "doughnut",
+            data: {
+              labels: ["Vaccinations", "Dental Care", "Surgery", "Emergency"],
+              datasets: [
+                {
+                  data: [45, 28, 15, 12],
+                  backgroundColor: ["#036469", "#00696d", "#2e7d82", "#943031"],
+                  borderWidth: 0,
+                  cutout: window.innerWidth < 768 ? "50%" : "60%",
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: true,
+              plugins: {
+                legend: {
+                  position: window.innerWidth < 768 ? "bottom" : "right",
+                },
+              },
+            },
+          });
+        }
+
+        // 4. Patient Growth Chart
+        const patientsCtx = document
+          .getElementById("patientsChart")
+          ?.getContext("2d");
+        if (patientsCtx) {
+          patientsChart = new Chart(patientsCtx, {
+            type: "line",
+            data: {
+              labels: [
+                "Week 1",
+                "Week 2",
+                "Week 3",
+                "Week 4",
+                "Week 5",
+                "Week 6",
+                "Week 7",
+                "Week 8",
+              ],
+              datasets: [
+                {
+                  label: "New Patients",
+                  data: [12, 19, 15, 24, 28, 32, 38, 42],
+                  borderColor: "#036469",
+                  tension: 0.4,
+                  pointRadius: window.innerWidth < 768 ? 3 : 4,
+                },
+                {
+                  label: "Returning Patients",
+                  data: [45, 52, 48, 61, 58, 72, 68, 85],
+                  borderColor: "#00696d",
+                  tension: 0.4,
+                  pointRadius: window.innerWidth < 768 ? 3 : 4,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: true,
+              plugins: { legend: { position: "bottom" } },
+            },
+          });
+        }
+
+        console.log("Charts initialized successfully");
+      }
+
+      // Call this after navigation to ensure charts are initialized
+      const originalNavigateTo = navigateTo;
+      window.navigateTo = function (section) {
+        if (section === "calendar") {
+          window.location.href = "clinic_calendar.html";
+          return;
+        }
+        if(section === "emergency") {
+          window.location.href = "emergency_management.html";
+          return;
+        }
+        if (section === "message") {
+          window.location.href = "message.html";
+          return;
+        }
+        if (section === "billing") {
+          window.location.href = "billing.html";
+          return;
+        }
+        if (section === "staff") {
+          window.location.href = "staff_service_settings.html";
+          return;
+        }
+        if(section === "records"){
+          window.location.href = "records.html";
+          return;
+        }
+        originalNavigateTo(section);
+        if (section === "analytics") {
+          setTimeout(initCharts, 200);
+        }
+      };
+
+      // Handle window resize
+      let resizeTimeout;
+      window.addEventListener("resize", function () {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function () {
+          if (document.getElementById("appointmentsChart")) {
+            initCharts();
+          }
+        }, 250);
+      });
+
+      // Initial chart load
+      setTimeout(initCharts, 500);
+
+      // View All Schedule Button Functionality
+      const viewAllBtn = document.getElementById("viewAllScheduleBtn");
+      const limitedView = document.getElementById("limitedScheduleView");
+      const scrollContainer = document.getElementById(
+        "scheduleScrollContainer",
+      );
+      const viewAllButtonDiv = document.getElementById("viewAllButton");
+
+      if (viewAllBtn) {
+        viewAllBtn.addEventListener("click", function () {
+          // Hide the limited view
+          limitedView.classList.add("hidden");
+
+          // Show the scrollable container
+          scrollContainer.classList.remove("hidden");
+
+          // Hide the "View All" button div
+          viewAllButtonDiv.classList.add("hidden");
+
+          // Optional: Scroll to the table after expanding
+          setTimeout(() => {
+            scrollContainer.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }, 100);
+        });
+      }
+
+      const newAppointmentBtn = document.getElementById("newAppointmentBtn");
+      if (newAppointmentBtn) {
+        newAppointmentBtn.addEventListener("click", function () {
+          window.location.href = "appointments.html";
+        });
+      }
+    </script>
+  </body>
+</html>

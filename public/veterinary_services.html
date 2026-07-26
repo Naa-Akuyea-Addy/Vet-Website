@@ -1,0 +1,700 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Our Services | addyPets Veterinary Clinic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Open+Sans:wght@400;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary-fixed-variant": "#364a4c",
+              "on-primary-fixed": "#002022",
+              "surface-variant": "#e4e2e1",
+              "error-container": "#ffdad6",
+              "tertiary-fixed": "#d0e7e8",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed-variant": "#004f53",
+              outline: "#6f797a",
+              tertiary: "#485d5f",
+              "inverse-primary": "#88d3d8",
+              "secondary-fixed-dim": "#82d4d8",
+              "on-error-container": "#93000a",
+              "surface-container-low": "#f5f3f3",
+              "on-background": "#1b1c1c",
+              "on-primary-container": "#e5fdff",
+              "secondary-fixed": "#9ef0f4",
+              "on-tertiary-fixed": "#091f20",
+              "inverse-on-surface": "#f2f0f0",
+              "on-secondary-fixed": "#002021",
+              surface: "#fbf9f8",
+              "inverse-surface": "#303030",
+              "primary-fixed-dim": "#88d3d8",
+              "emergency-red": "#943031",
+              "on-secondary-container": "#006e72",
+              "surface-container": "#f0eded",
+              "on-primary": "#ffffff",
+              "surface-container-high": "#eae8e7",
+              "on-tertiary": "#ffffff",
+              "surface-muted": "#F4F7F7",
+              primary: "#036469",
+              "surface-container-lowest": "#ffffff",
+              error: "#ba1a1a",
+              "surface-dim": "#dcd9d9",
+              "secondary-container": "#9bedf1",
+              secondary: "#00696d",
+              "on-surface": "#1b1c1c",
+              background: "#fbf9f8",
+              "surface-container-highest": "#e4e2e1",
+              "primary-container": "#2e7d82",
+              "on-error": "#ffffff",
+              "outline-variant": "#bec8c9",
+              "deep-navy": "#1A3638",
+              "surface-bright": "#fbf9f8",
+              "on-tertiary-container": "#e6fdfe",
+              "on-secondary-fixed-variant": "#004f52",
+              "tertiary-fixed-dim": "#b4cbcc",
+              "tertiary-container": "#617677",
+              "primary-fixed": "#a4eff4",
+              "surface-tint": "#0f696e",
+              "on-surface-variant": "#3f4949",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              "container-max": "1200px",
+              "stack-lg": "48px",
+              "stack-md": "24px",
+              "margin-desktop": "40px",
+              "margin-mobile": "16px",
+              "stack-sm": "12px",
+              gutter: "24px",
+              base: "8px",
+            },
+            fontFamily: {
+              "display-lg": ["Plus Jakarta Sans"],
+              "headline-lg": ["Plus Jakarta Sans"],
+              caption: ["Open Sans"],
+              "label-md": ["Open Sans"],
+              "headline-md": ["Plus Jakarta Sans"],
+              "body-lg": ["Open Sans"],
+              "body-md": ["Open Sans"],
+              "headline-lg-mobile": ["Plus Jakarta Sans"],
+            },
+            fontSize: {
+              "display-lg": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "headline-lg": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "600" },
+              ],
+              caption: ["12px", { lineHeight: "16px", fontWeight: "400" }],
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "headline-lg-mobile": [
+                "28px",
+                { lineHeight: "36px", fontWeight: "600" },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+      .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 24px;
+      }
+      .bento-item {
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+      .bento-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px -8px rgba(26, 54, 56, 0.08);
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-surface font-body-md">
+    <!-- TopNavBar -->
+    <header
+      class="w-full top-0 sticky bg-surface dark:bg-on-surface shadow-sm z-50"
+    >
+      <nav
+        class="flex justify-between items-center px-margin-desktop h-20 max-w-container-max mx-auto"
+      >
+        <div class="flex items-center gap-2 md:gap-4">
+          <button
+            id="mobile-menu-btn"
+            class="md:hidden p-2 text-on-surface hover:bg-surface-muted rounded-lg transition-colors"
+          >
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <img
+            alt="addyPets Logo"
+            class="h-10 md:h-12 w-auto object-contain"
+            src="logo.png"
+          />
+          <span
+            class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed text-sm md:text-base"
+            >addyPets Veterinary Clinic</span
+          >
+        </div>
+        <div class="hidden md:flex items-center space-x-8">
+          <a
+            class="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80"
+            href="home.html"
+            >Home</a
+          >
+          <a
+            class="font-body-md text-body-md text-primary dark:text-primary-fixed border-b-2 border-primary dark:border-primary-fixed pb-1 hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80"
+            href="veterinary_services.html"
+            >Services</a
+          >
+          <a
+            class="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80"
+            href="about_us.html"
+            >About Us</a
+          >
+          <a
+            class="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80"
+            href="vet_portal_login.html"
+            >Vets Portal</a
+          >
+        </div>
+        <div class="flex items-center gap-4">
+          <button
+            id="emergency-btn"
+            class="hidden md:inline-block bg-emergency-red text-white font-label-md px-6 py-2.5 rounded-lg hover:opacity-90 shadow-sm transition-all"
+          >
+            Emergency
+          </button>
+        </div>
+      </nav>
+      <!-- Mobile Menu -->
+      <div
+        id="mobile-menu"
+        class="hidden md:hidden bg-surface dark:bg-on-surface border-t border-outline-variant"
+      >
+        <div
+          class="px-margin-mobile py-4 space-y-2 max-w-container-max mx-auto"
+        >
+          <a
+            class="block font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80 text-sm"
+            href="home.html"
+            >Home</a
+          >
+          <a
+            class="block font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80 text-sm"
+            href="veterinary_services.html"
+            >Services</a
+          >
+          <a
+            class="block font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80 text-sm"
+            href="about_us.html"
+            >About Us</a
+          >
+          <a
+            class="block font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80 text-sm"
+            href="vet_portal_login.html"
+            >Vets Portal</a
+          >
+          <a
+            href="emergency.html"
+            class="block font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer text-sm"
+            >Emergency</a
+          >
+          <a
+            id="mobile-login-btn"
+            href="vet_portal_login.html"
+            class="block font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer text-sm"
+            >Login</a
+          >
+        </div>
+      </div>
+    </header>
+    <!-- Hero Section -->
+    <section
+      class="relative w-full overflow-hidden bg-deep-navy py-24 md:py-32"
+    >
+      <div class="absolute inset-0 z-0">
+        <img
+          alt="Modern Veterinary Clinic Interior"
+          class="w-full h-full object-cover opacity-30"
+          data-alt="A cinematic, wide-angle photograph of a state-of-the-art veterinary clinic interior in Ghana. The space features clean architectural lines, warm wood accents, and modern clinical equipment under soft, diffused natural lighting. The color palette is a professional mix of deep teals and soft greys, creating a calm and trustworthy environment for pet owners. The atmosphere is quiet, clinical, yet deeply compassionate and welcoming."
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJGVAp9crn081AXX5ylXQyaXXSZKijpoWmR-uPypgTYJT6LF66LmU40sY4S0__bmae4_yVVPH836ROXKsTAUMn-cxxFk7--RssdJimwPx1j6wkOq3Sd4ocpzW9q3drH974vwOltTOoVlq9LNVyAQffcuqs5kY_lBh-hU1BF6sGU_IBHPYmw_xGF5wbAJHza_Pd7gTYlC1BLPnlNW0MClLxSVsVasO8xn3c3Y08SBgdS_I4r9rTOhU46FYczkco2L3bvBjB1wf_M8c"
+        />
+      </div>
+      <div
+        class="relative z-10 max-w-container-max mx-auto px-margin-desktop text-center md:text-left"
+      >
+        <div class="max-w-2xl">
+          <h1
+            class="font-display-lg text-display-lg text-on-primary-container mb-6"
+          >
+            Comprehensive Care for Your Trusted Companions
+          </h1>
+          <p
+            class="font-body-lg text-body-lg text-primary-fixed mb-10 opacity-90"
+          >
+            Combining advanced medical technology with the warmth of Ghanaian
+            hospitality. Our expert team is dedicated to providing world-class
+            veterinary services tailored to your pet's unique needs.
+          </p>
+          <div
+            class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+          >
+            <button
+              id="services-scroll-btn"
+              class="bg-primary text-white font-label-md px-8 py-4 rounded-lg hover:bg-primary-container transition-all flex items-center justify-center gap-2"
+            >
+              Our Services
+              <span class="material-symbols-outlined">arrow_downward</span>
+            </button>
+            <a
+              href="about_us.html#meet-our-vets"
+              class="bg-transparent border border-primary-fixed text-primary-fixed font-label-md px-8 py-4 rounded-lg hover:bg-white/10 transition-all inline-flex items-center justify-center"
+            >
+              Meet Our Vets
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Services Section -->
+    <section
+      id="services"
+      class="py-stack-lg max-w-container-max mx-auto px-margin-desktop"
+    >
+      <div class="flex flex-col items-center mb-16 text-center">
+        <span class="text-primary font-label-md tracking-widest uppercase mb-2"
+          >Our Expertise</span
+        >
+        <h2 class="font-headline-lg text-headline-lg text-deep-navy mb-4">
+          World-Class Veterinary Solutions
+        </h2>
+        <div class="h-1.5 w-24 bg-secondary rounded-full"></div>
+      </div>
+      <div class="bento-grid">
+        <!-- 24/7 Emergency (Priority Card) -->
+        <div
+          class="bento-item col-span-12 lg:col-span-8 bg-emergency-red rounded-xl p-8 text-white flex flex-col md:flex-row items-center gap-8 border border-emergency-red/20"
+        >
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-4">
+              <span
+                class="material-symbols-outlined text-4xl"
+                style="font-variation-settings: &quot;FILL&quot; 1"
+                >emergency</span
+              >
+              <h3 class="font-headline-md text-headline-md">
+                24/7 Emergency Care
+              </h3>
+            </div>
+            <p class="font-body-md text-white/90 mb-6">
+              Critical care doesn't wait for business hours. Our trauma team is
+              on standby 365 days a year to handle life-threatening situations
+              with speed and precision.
+            </p>
+            <button
+              id="emergency-scroll-btn"
+              class="bg-white text-emergency-red font-label-md px-6 py-3 rounded-lg hover:bg-on-error-container hover:text-white transition-all w-full md:w-auto"
+            >
+              Call Emergency Now
+            </button>
+          </div>
+          <div class="hidden md:block w-1/3">
+            <div
+              class="bg-white/10 p-6 rounded-xl border border-white/20 text-center"
+            >
+              <div class="text-3xl font-bold mb-1">0.0s</div>
+              <div class="text-sm font-label-md opacity-80 uppercase">
+                Response Time
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Advanced Surgery -->
+        <div
+          class="bento-item col-span-12 md:col-span-6 lg:col-span-4 bg-white rounded-xl p-6 border border-outline-variant shadow-sm flex flex-col"
+        >
+          <div
+            class="w-12 h-12 rounded-lg bg-primary-fixed flex items-center justify-center text-primary mb-6"
+          >
+            <span class="material-symbols-outlined">medical_services</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md text-deep-navy mb-3">
+            Advanced Surgery
+          </h3>
+          <p class="font-body-md text-on-surface-variant mb-6 flex-grow">
+            Soft tissue, orthopedic, and emergency procedures conducted in our
+            sterile, high-tech surgical suites.
+          </p>
+          <ul class="space-y-2 mb-6">
+            <li class="flex items-center gap-2 text-sm text-on-surface-variant">
+              <span class="material-symbols-outlined text-primary text-lg"
+                >check_circle</span
+              >
+              Orthopedic Specialists
+            </li>
+            <li class="flex items-center gap-2 text-sm text-on-surface-variant">
+              <span class="material-symbols-outlined text-primary text-lg"
+                >check_circle</span
+              >
+              Minimally Invasive
+            </li>
+          </ul>
+        </div>
+        <!-- Wellness Exams -->
+        <div
+          class="bento-item col-span-12 md:col-span-6 lg:col-span-4 bg-surface-muted rounded-xl p-6 border border-outline-variant shadow-sm"
+        >
+          <div
+            class="w-12 h-12 rounded-lg bg-secondary-fixed flex items-center justify-center text-secondary mb-6"
+          >
+            <span class="material-symbols-outlined">health_and_safety</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md text-deep-navy mb-3">
+            Wellness Exams
+          </h3>
+          <p class="font-body-md text-on-surface-variant mb-4">
+            Preventative care and vaccinations to ensure your pet lives a long,
+            vibrant life in the tropical climate.
+          </p>
+        </div>
+        <!-- On-site Laboratory -->
+        <div
+          class="bento-item col-span-12 md:col-span-6 lg:col-span-4 bg-white rounded-xl p-6 border border-outline-variant shadow-sm"
+        >
+          <div
+            class="w-12 h-12 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary mb-6"
+          >
+            <span class="material-symbols-outlined">biotech</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md text-deep-navy mb-3">
+            On-site Laboratory
+          </h3>
+          <p class="font-body-md text-on-surface-variant mb-4">
+            Rapid blood work and urinalysis results, enabling immediate
+            diagnosis and treatment planning.
+          </p>
+        </div>
+        <!-- Dental Care -->
+        <div
+          class="bento-item col-span-12 md:col-span-6 lg:col-span-4 bg-surface-muted rounded-xl p-6 border border-outline-variant shadow-sm"
+        >
+          <div
+            class="w-12 h-12 rounded-lg bg-secondary-fixed flex items-center justify-center text-secondary mb-6"
+          >
+            <span class="material-symbols-outlined">dentistry</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md text-deep-navy mb-3">
+            Dental Care
+          </h3>
+          <p class="font-body-md text-on-surface-variant mb-4">
+            Comprehensive cleaning and extractions to prevent systemic diseases
+            and maintain oral health.
+          </p>
+        </div>
+        <!-- Full Pharmacy -->
+        <div
+          class="bento-item col-span-12 md:col-span-6 lg:col-span-6 bg-white rounded-xl p-8 border border-outline-variant shadow-sm flex flex-col md:flex-row gap-6 items-start"
+        >
+          <div
+            class="w-16 h-16 shrink-0 rounded-full bg-primary-fixed flex items-center justify-center text-primary"
+          >
+            <span class="material-symbols-outlined text-3xl">vaccines</span>
+          </div>
+          <div>
+            <h3 class="font-headline-md text-headline-md text-deep-navy mb-3">
+              Full Pharmacy
+            </h3>
+            <p class="font-body-md text-on-surface-variant mb-4">
+              Our in-house pharmacy stocks essential medications, including
+              effective flea and tick control specifically vetted for local
+              environmental factors.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span
+                class="px-3 py-1 bg-surface-container rounded-full text-xs font-label-md text-on-surface-variant"
+                >Prescriptions</span
+              >
+              <span
+                class="px-3 py-1 bg-surface-container rounded-full text-xs font-label-md text-on-surface-variant"
+                >Tick Control</span
+              >
+              <span
+                class="px-3 py-1 bg-surface-container rounded-full text-xs font-label-md text-on-surface-variant"
+                >Supplements</span
+              >
+            </div>
+          </div>
+        </div>
+        <!-- Grooming -->
+        <div
+          class="bento-item col-span-12 md:col-span-6 lg:col-span-6 bg-secondary-container/30 rounded-xl p-8 border border-secondary/10 shadow-sm flex flex-col md:flex-row gap-6 items-start"
+        >
+          <div
+            class="w-16 h-16 shrink-0 rounded-full bg-secondary-fixed flex items-center justify-center text-secondary"
+          >
+            <span class="material-symbols-outlined text-3xl">content_cut</span>
+          </div>
+          <div>
+            <h3 class="font-headline-md text-headline-md text-deep-navy mb-3">
+              Grooming &amp; Hygiene
+            </h3>
+            <p class="font-body-md text-on-surface-variant mb-4">
+              From therapeutic bathing to nail trimming, we ensure your pets
+              look and feel their best. Professional care that prioritizes your
+              pet's comfort.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span
+                class="px-3 py-1 bg-white/60 rounded-full text-xs font-label-md text-secondary"
+                >Medicated Baths</span
+              >
+              <span
+                class="px-3 py-1 bg-white/60 rounded-full text-xs font-label-md text-secondary"
+                >Pedicures</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- CTA Section -->
+    <section class="max-w-container-max mx-auto px-margin-desktop py-stack-lg">
+      <div
+        class="bg-primary rounded-2xl p-10 md:p-16 text-center text-white relative overflow-hidden"
+      >
+        <div class="absolute top-0 right-0 p-8 opacity-10">
+          <span class="material-symbols-outlined text-9xl">pets</span>
+        </div>
+        <h2 class="font-headline-lg text-headline-lg mb-4 relative z-10">
+          Ready to schedule a visit?
+        </h2>
+        <p
+          class="font-body-lg text-body-lg mb-10 max-w-xl mx-auto opacity-90 relative z-10"
+        >
+          Join the VetCare family today and experience the gold standard in
+          Ghanaian pet healthcare.
+        </p>
+        <div
+          class="flex flex-col sm:flex-row gap-4 justify-center relative z-10"
+        >
+          <button
+            id="book-appointment-btn"
+            class="bg-white text-primary font-label-md px-10 py-4 rounded-full hover:bg-primary-fixed transition-all shadow-lg"
+          >
+            Book Appointment
+          </button>
+        </div>
+      </div>
+    </section>
+    <!-- Footer -->
+    <footer
+      class="w-full bg-deep-navy dark:bg-surface-container-lowest text-primary-fixed dark:text-primary"
+    >
+      <div
+        class="flex flex-col md:flex-row justify-between items-center px-margin-desktop py-stack-lg w-full max-w-container-max mx-auto"
+      >
+        <div class="mb-8 md:mb-0">
+          <div
+            class="font-headline-md text-headline-md text-primary-fixed dark:text-primary mb-2"
+          >
+            VetCare Ghana
+          </div>
+          <p class="font-caption text-caption text-tertiary-fixed-dim max-w-xs">
+            © 2024 VetCare Ghana. Providing compassionate care for every pet.
+          </p>
+        </div>
+        <div class="flex flex-wrap justify-center gap-x-8 gap-y-4">
+          <a
+            class="font-caption text-caption text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors cursor-pointer"
+            href="https://www.facebook.com"
+            >Privacy Policy</a
+          >
+          <a
+            class="font-caption text-caption text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors cursor-pointer"
+            href="https://www.pintrest.com"
+            >Terms of Service</a
+          >
+          <a
+            class="font-caption text-caption text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors cursor-pointer"
+            href="https://www.instagram.com"
+            >Contact Us</a
+          >
+          <a
+            class="font-caption text-caption text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors cursor-pointer"
+            href="https://www.whatsapp.com"
+            >Ghana Vet Council</a
+          >
+        </div>
+      </div>
+    </footer>
+    <script>
+      // Intersection Observer for fade-in animations
+      const observerOptions = {
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("opacity-100");
+            entry.target.classList.remove("opacity-0", "translate-y-8");
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".bento-item").forEach((el) => {
+        el.classList.add(
+          "opacity-0",
+          "translate-y-8",
+          "transition-all",
+          "duration-700",
+        );
+        observer.observe(el);
+      });
+      // ===============================
+      // Mobile Menu Toggle
+      // ===============================
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+        });
+      }
+
+      // ===============================
+      // Navigation Buttons
+      // ===============================
+      const emergencyBtn = document.getElementById("emergency-btn");
+      const servicesScrollBtn = document.getElementById("services-scroll-btn");
+      const servicesSection = document.getElementById("services");
+      const emergencyScrollBtn = document.getElementById(
+        "emergency-scroll-btn",
+      );
+      const bookAppointmentBtn = document.getElementById(
+        "book-appointment-btn",
+      );
+
+      if (emergencyBtn) {
+        emergencyBtn.addEventListener("click", () => {
+          window.location.href = "emergency.html";
+        });
+      }
+
+      if (servicesScrollBtn && servicesSection) {
+        servicesScrollBtn.addEventListener("click", () => {
+          servicesSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        });
+      }
+
+      if (emergencyScrollBtn) {
+        emergencyScrollBtn.addEventListener("click", () => {
+          window.location.href = "emergency.html";
+        });
+      }
+
+      if (bookAppointmentBtn) {
+        bookAppointmentBtn.addEventListener("click", () => {
+          window.location.href = "book_an_appointment.html";
+        });
+      }
+
+      // ===============================
+      // Mobile Menu Active Link
+      // ===============================
+      const mobileMenuLinks = mobileMenu
+        ? mobileMenu.querySelectorAll("a")
+        : [];
+
+      mobileMenuLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          // close menu after click
+          mobileMenu.classList.add("hidden");
+
+          // remove active styles from all mobile menu links
+          mobileMenuLinks.forEach((el) => {
+            el.classList.remove("text-primary", "font-semibold");
+          });
+
+          // add active styles to the clicked item
+          link.classList.add("text-primary", "font-semibold");
+        });
+      });
+
+      // ===============================
+      // Highlight Current Page
+      // ===============================
+      const currentPage = window.location.pathname.split("/").pop();
+
+      mobileMenuLinks.forEach((link) => {
+        const href = link.getAttribute("href");
+        if (href === currentPage) {
+          link.classList.add("text-primary", "font-semibold");
+        } else {
+          link.classList.remove("text-primary", "font-semibold");
+        }
+      });
+    </script>
+  </body>
+</html>

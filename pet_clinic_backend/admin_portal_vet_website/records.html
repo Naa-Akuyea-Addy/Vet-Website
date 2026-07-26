@@ -1,0 +1,3036 @@
+<!doctype html>
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>addyPets | Patient & Owner Management</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+        vertical-align: middle;
+      }
+      .custom-scrollbar::-webkit-scrollbar,
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track,
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb,
+      ::-webkit-scrollbar-thumb {
+        background: #bec8c9;
+        border-radius: 10px;
+      }
+      .tab-active {
+        position: relative;
+      }
+      .tab-active::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: #036469;
+      }
+      .chart-bar {
+        transition: height 1s ease-out;
+      }
+      .timeline-line {
+        background: repeating-linear-gradient(
+          to bottom,
+          #bec8c9 0,
+          #bec8c9 4px,
+          transparent 4px,
+          transparent 8px
+        );
+      }
+
+      /* === FORM VALIDATION COLORS === */
+
+      /* Red border & ring when invalid AND user has typed something */
+      input:invalid:not(:placeholder-shown),
+      select:invalid:not([value=""]) {
+        border-color: #ef4444 !important; /* Tailwind red-500 */
+        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2) !important; /* Red focus ring */
+      }
+
+      /* Primary Blue border & ring when valid AND user has typed something */
+      input:valid:not(:placeholder-shown),
+      select:valid:not([value=""]) {
+        border-color: #036469 !important; /* Your primary color */
+        box-shadow: 0 0 0 2px rgba(3, 100, 105, 0.2) !important; /* Primary focus ring */
+      }
+
+      /* ===== TOAST STYLES ===== */
+      .toast-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        pointer-events: none;
+      }
+      .toast {
+        min-width: 220px;
+        max-width: 320px;
+        padding: 1rem 1.2rem;
+        border-radius: 0.9rem;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
+        color: #ffffff;
+        font-weight: 600;
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.28s ease,
+          transform 0.28s ease;
+        pointer-events: auto;
+        white-space: pre-line;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .toast-success {
+        background: linear-gradient(135deg, #047857, #059669);
+      }
+      .toast-info {
+        background: linear-gradient(135deg, #0d6efd, #2563eb);
+      }
+      .toast-error {
+        background: linear-gradient(135deg, #b91c1c, #ef4444);
+      }
+
+      /* ===== SIDEBAR STYLES ===== */
+      .sidebar-item-active {
+        background-color: #2e7d82;
+        color: #ffffff;
+      }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .sidebar-transition {
+        transition:
+          width 0.3s ease-in-out,
+          transform 0.3s ease-in-out;
+      }
+      .mobile-sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 280px;
+        height: 100vh;
+        transition: left 0.3s ease-in-out;
+        z-index: 1000;
+      }
+      .mobile-sidebar.open {
+        left: 0;
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        display: none;
+      }
+      .overlay.active {
+        display: block;
+      }
+      .sidebar-collapsed .sidebar-text {
+        display: none;
+      }
+      .sidebar-collapsed .sidebar-icon-only {
+        margin: 0 auto;
+      }
+      .sidebar-collapsed {
+        width: 80px !important;
+      }
+      .sidebar-collapsed .sidebar-logo-text {
+        display: none;
+      }
+      .sidebar-collapsed .sidebar-logo {
+        margin: 0 auto;
+      }
+      .sidebar-collapsed .sidebar-button {
+        justify-content: center;
+      }
+      .sidebar-collapsed .emergency-section {
+        display: none;
+      }
+      .sidebar-collapsed #logoutBtnDesktop {
+        justify-content: center;
+        padding: 12px !important;
+      }
+      .sidebar-collapsed .bottom-container {
+        padding: 16px 8px !important;
+      }
+      .main-content-full {
+        width: 100% !important;
+        margin-left: 0 !important;
+      }
+      #mainContentWrapper {
+        transition: all 0.3s ease-in-out;
+      }
+      .active-nav-item {
+        font-variation-settings: "FILL" 1;
+      }
+      body {
+        background-color: #fbf9f8;
+        color: #1b1c1c;
+      }
+
+      /* Status badge select styling (Arrow Removed) */
+      .status-select {
+        appearance: none !important;
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        background-image: none !important; /* Force-removes Tailwind Forms plugin arrow */
+        background-color: transparent !important;
+        padding-right: 0.5rem !important;
+        padding-left: 0.5rem !important;
+        cursor: pointer;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        border: none;
+        outline: none;
+      }
+      .status-vaccinated {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+      .status-due-soon {
+        background-color: #fef9c3;
+        color: #854d0e;
+      }
+      .status-overdue {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+
+      /* Modal animation */
+      .modal-overlay {
+        transition: opacity 0.25s ease;
+      }
+      .modal-card {
+        transition:
+          transform 0.25s ease,
+          opacity 0.25s ease;
+      }
+      a[data-nav-desktop="emergency"],
+a[data-nav-mobile="emergency"] {
+  background-color: #943031 !important;
+  color: #ffffff !important;
+}
+
+a[data-nav-desktop="emergency"]:hover,
+a[data-nav-mobile="emergency"]:hover {
+  background-color: #7a2526 !important; /* Slightly darker red on hover */
+  color: #ffffff !important;
+}
+    </style>
+
+    <!-- Tailwind Configuration -->
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-fixed": "#9ef0f4",
+              "inverse-primary": "#88d3d8",
+              "on-primary-fixed-variant": "#004f53",
+              "tertiary-container": "#617677",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-highest": "#e4e2e1",
+              "deep-navy": "#1A3638",
+              "surface-container-low": "#f5f3f3",
+              error: "#ba1a1a",
+              tertiary: "#485d5f",
+              "on-tertiary-container": "#e6fdfe",
+              "on-secondary-container": "#006e72",
+              "on-surface-variant": "#3f4949",
+              "tertiary-fixed-dim": "#b4cbcc",
+              "surface-container": "#f0eded",
+              "on-tertiary-fixed": "#091f20",
+              "on-secondary": "#ffffff",
+              "primary-fixed": "#a4eff4",
+              "inverse-on-surface": "#f2f0f0",
+              "inverse-surface": "#303030",
+              "surface-dim": "#dcd9d9",
+              "primary-container": "#2e7d82",
+              "secondary-fixed-dim": "#82d4d8",
+              "on-secondary-fixed": "#002021",
+              "primary-fixed-dim": "#88d3d8",
+              "surface-bright": "#fbf9f8",
+              primary: "#036469",
+              outline: "#6f797a",
+              "on-secondary-fixed-variant": "#004f52",
+              "error-container": "#ffdad6",
+              "on-tertiary-fixed-variant": "#364a4c",
+              secondary: "#00696d",
+              "on-primary-container": "#e5fdff",
+              "on-primary": "#ffffff",
+              "on-error-container": "#93000a",
+              "tertiary-fixed": "#d0e7e8",
+              "surface-container-high": "#eae8e7",
+              "outline-variant": "#bec8c9",
+              "on-tertiary": "#ffffff",
+              "surface-tint": "#0f696e",
+              background: "#fbf9f8",
+              "surface-muted": "#F4F7F7",
+              "on-surface": "#1b1c1c",
+              "on-primary-fixed": "#002022",
+              "surface-variant": "#e4e2e1",
+              "on-background": "#1b1c1c",
+              "emergency-red": "#943031",
+              surface: "#fbf9f8",
+              "secondary-container": "#9bedf1",
+              "on-error": "#ffffff",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              "stack-lg": "48px",
+              "stack-md": "24px",
+              base: "8px",
+              "stack-sm": "12px",
+              "margin-mobile": "16px",
+              "margin-desktop": "40px",
+              gutter: "24px",
+              "container-max": "1200px",
+            },
+            fontFamily: {
+              "headline-lg-mobile": ["Plus Jakarta Sans"],
+              "headline-md": ["Plus Jakarta Sans"],
+              "body-md": ["Open Sans"],
+              "body-lg": ["Open Sans"],
+              "label-md": ["Open Sans"],
+              "headline-lg": ["Plus Jakarta Sans"],
+              "display-lg": ["Plus Jakarta Sans"],
+              caption: ["Open Sans"],
+            },
+            fontSize: {
+              "headline-lg-mobile": [
+                "28px",
+                { lineHeight: "36px", fontWeight: "600" },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "headline-lg": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "600" },
+              ],
+              "display-lg": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              caption: ["12px", { lineHeight: "16px", fontWeight: "400" }],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col overflow-x-hidden"
+    datapage="records"
+  >
+    <!-- Shared TopNavBar -->
+    <!-- Mobile Top Bar -->
+    <div
+      class="md:hidden fixed top-0 left-0 right-0 bg-deep-navy z-50 px-4 py-4 flex items-center justify-between shadow-lg"
+    >
+      <div class="flex items-center gap-3">
+        <button
+          id="mobileBurgerBtn"
+          class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"
+        >
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+        <img
+          alt="Logo"
+          class="w-8 h-8 rounded-full object-cover"
+          src="../../public/logo.png"
+        />
+        <h1 class="font-bold text-primary-fixed text-sm">addyPets</h1>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-white">notifications</span>
+        <span class="material-symbols-outlined text-white">account_circle</span>
+      </div>
+    </div>
+
+    <div id="mobileOverlay" class="overlay"></div>
+
+    <!-- Mobile Sidebar -->
+    <div
+      id="mobileSidebar"
+      class="mobile-sidebar bg-deep-navy flex flex-col shadow-2xl"
+    >
+      <div
+        class="flex items-center justify-between p-6 border-b border-white/10"
+      >
+        <div class="flex items-center gap-3">
+          <img
+            alt="Logo"
+            class="w-10 h-10 rounded-full object-cover"
+            src="../../public/logo.png"
+          />
+          <div>
+            <h1 class="font-bold text-primary-fixed">addyPets</h1>
+            <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
+          </div>
+        </div>
+        <button
+          id="closeMobileSidebar"
+          class="text-white p-2 hover:bg-white/10 rounded-lg"
+        >
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto hide-scrollbar">
+        <a
+          href="./Dashboard.html"
+          data-nav-mobile="analytics"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined">analytics</span
+          ><span>Analytics</span></a
+        >
+        <a
+          href="./clinic_calendar.html"
+          data-nav-mobile="calendar"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined">calendar_today</span
+          ><span>Calendar</span></a
+        >
+        <a
+          href="./staff_service_settings.html"
+          data-nav-mobile="staff"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined">groups</span
+          ><span>Staff</span></a
+        >
+        <a
+          href="./billing.html"
+          data-nav-desktop="billing"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          ><span class="material-symbols-outlined sidebar-icon-only"
+            >payments</span
+          ><span class="sidebar-text">Billing</span></a
+        >
+        <a
+          href="./records.html"
+          data-nav-desktop="records"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          ><span class="material-symbols-outlined sidebar-icon-only"
+            >description</span
+          ><span class="sidebar-text">Patient & Owner Records</span></a
+        >
+        <a
+          href="./message.html"
+          data-nav-desktop="message"
+          data-nav-mobile="message"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined">message</span
+          ><span>Messages</span></a
+        >
+         <a href="./emergency_management.html" data-nav-desktop="emergency" data-nav-mobile="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10">
+            <span class="material-symbols-outlined sidebar-icon-only">emergency</span><span class="sidebar-text">Emergency Cases</span>
+          </a>
+        <div class="h-px bg-white/10 my-4"></div>
+        <a
+          href="#"
+          data-nav-mobile="settings"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined">settings</span
+          ><span>Settings</span></a
+        >
+        <button
+          id="logoutBtnMobile"
+          class="w-full flex items-center gap-4 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all"
+        >
+          <span class="material-symbols-outlined">logout</span
+          ><span>Logout</span>
+        </button>
+      </nav>
+      <div class="p-4 border-t border-white/10">
+        <div
+          class="bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10"
+        >
+          <p class="text-xs text-tertiary-fixed-dim mb-2">Emergency Hotline</p>
+          <p class="text-sm text-primary-fixed font-bold">+233 500 000 000</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop Layout -->
+    <div class="flex min-h-screen w-full">
+      <!-- Desktop Sidebar -->
+      <aside
+        id="desktopSidebar"
+        class="hidden md:flex flex-col bg-deep-navy h-screen sticky top-0 border-r border-outline-variant/10 text-white sidebar-transition w-64"
+      >
+        <div
+          class="px-6 py-6 flex items-center justify-between border-b border-white/10"
+        >
+          <div class="flex items-center gap-3 sidebar-logo">
+            <img
+              alt="Logo"
+              class="w-10 h-10 rounded-full object-cover"
+              src="../../public/logo.png"
+            />
+            <div class="sidebar-logo-text">
+              <h1 class="font-bold text-primary-fixed text-sm">addyPets</h1>
+              <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
+            </div>
+          </div>
+          <button
+            id="collapseSidebarBtn"
+            class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"
+          >
+            <span class="material-symbols-outlined">chevron_left</span>
+          </button>
+        </div>
+        <nav class="flex-1 px-3 py-6 space-y-1 overflow-y-auto hide-scrollbar">
+          <a
+            href="./Dashboard.html"
+            data-nav-desktop="analytics"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >analytics</span
+            ><span class="sidebar-text">Analytics</span></a
+          >
+          <a
+            href="./clinic_calendar.html"
+            data-nav-desktop="calendar"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >calendar_today</span
+            ><span class="sidebar-text">Calendar</span></a
+          >
+          <a
+            href="./staff_service_settings.html"
+            data-nav-desktop="staff"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >groups</span
+            ><span class="sidebar-text">Staff</span></a
+          >
+          <a
+            href="./billing.html"
+            data-nav-desktop="billing"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >payments</span
+            ><span class="sidebar-text">Billing</span></a
+          >
+          <a
+            href="./records.html"
+            data-nav-desktop="records"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >description</span
+            ><span class="sidebar-text">Patient & Owner Records</span></a
+          >
+          <a
+            href="./message.html"
+            data-nav-desktop="message"
+            data-nav-mobile="message"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+            ><span class="material-symbols-outlined">message</span
+            ><span class="sidebar-text">Messages</span></a
+          >
+          <a
+            href="./emergency_management.html"
+            data-nav-desktop="emergency"
+            data-nav-mobile="emergency"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >emergency</span
+            ><span class="sidebar-text">Emergency Cases</span>
+          </a>
+        </nav>
+        <div class="p-4 mt-auto bottom-container">
+          <button
+            id="logoutBtnDesktop"
+            class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >logout</span
+            ><span class="sidebar-text">Logout</span>
+          </button>
+          <div
+            class="emergency-section bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10 mt-4"
+          >
+            <p class="text-xs text-tertiary-fixed-dim mb-2">
+              Emergency Hotline
+            </p>
+            <p class="text-sm text-primary-fixed font-bold">+233 500 000 000</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <div
+        id="mainContentWrapper"
+        class="flex-1 flex flex-col bg-surface pt-16 md:pt-0 transition-all duration-300"
+      >
+        <!-- Top Bar (Desktop) -->
+        <header
+          class="h-20 bg-surface hidden md:flex items-center justify-between px-margin-desktop sticky top-0 z-40 border-b border-surface-container-highest"
+        >
+          <div class="flex items-center gap-4 w-1/3">
+            <div class="relative w-full max-w-md">
+              <span
+                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline"
+                >search</span
+              >
+              <input
+                class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                placeholder="Search patients, vets, or files..."
+                type="text"
+              />
+            </div>
+          </div>
+          <div class="flex items-center gap-6">
+            <button
+              class="relative p-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-full"
+            >
+              <span class="material-symbols-outlined">notifications</span>
+              <span
+                class="absolute top-2 right-2 w-2 h-2 bg-emergency-red rounded-full"
+              ></span>
+            </button>
+            <div class="flex items-center gap-3 cursor-pointer group">
+              <div class="text-right">
+                <p class="text-sm font-bold text-on-surface">
+                  Dr. Abena Mensah
+                </p>
+                <p class="text-xs text-on-surface-variant">
+                  Chief Veterinary Officer
+                </p>
+              </div>
+              <img
+                alt="Profile"
+                class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-container"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt_l2NtwBrHDxQNGs9rPyaBDSi0T_lttSSni_UFdT12mHBHPojsxTE2haa69Vl-xUxsOfIG9hBjBfFUbTbuzqUZTrwCxsYx-WVkbqBP95JzSas9Gk-vlSi5L3t6i5wijVQgjwTRZWzXWDoOxvbiuiwTwUvQerM7vTOeUAbTgk0LzdJ6ZlyU0xeXqf__Iapv8Wpu9q6UmECwczFqWAIEuCSYFKPwinFOH3N6vq0YJKWoiJViDN71AZUcTRiwGyz_FO9sM63nmOE114"
+              />
+            </div>
+          </div>
+        </header>
+
+        <!-- DASHBOARD VIEW -->
+        <main
+          id="dashboard-view"
+          class="flex-grow max-w-container-max mx-auto w-full px-margin-desktop py-stack-lg"
+        >
+          <!-- Header & Action Section -->
+          <div
+            class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-stack-md"
+          >
+            <div></div>
+            <button
+              id="add-record-btn"
+              class="flex items-center gap-2 px-8 py-4 bg-primary text-on-primary rounded-xl font-label-md shadow-sm hover:opacity-90 transition-all active:scale-95"
+            >
+              <span class="material-symbols-outlined" data-icon="add">add</span>
+              Add New Record
+            </button>
+          </div>
+
+          <!-- Dashboard Layout: Bento-inspired Grid -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+            <!-- Filter & Navigation Sidebar (Col 4) -->
+            <aside class="lg:col-span-3 flex flex-col gap-gutter">
+              <!-- Tab Navigation Card -->
+
+              <div class="flex flex-col gap-2"></div>
+
+              <!-- Advanced Filters Card (NOW CONNECTED) -->
+              <div
+                class="bg-white p-6 rounded-xl border border-outline-variant/30 shadow-sm"
+              >
+                <h3
+                  class="font-label-md text-on-surface mb-6 flex items-center justify-between"
+                >
+                  Filters
+                  <span
+                    class="material-symbols-outlined text-outline"
+                    data-icon="filter_list"
+                    >filter_list</span
+                  >
+                </h3>
+                <div class="space-y-6">
+                  <div>
+                    <label
+                      class="block font-label-md text-on-surface-variant mb-2"
+                      >Species</label
+                    >
+                    <!-- ADDED id="filter-species" -->
+                    <select
+                      id="filter-species"
+                      class="w-full bg-surface-muted border border-outline-variant rounded-lg p-3 text-body-md focus:ring-primary focus:border-primary"
+                    >
+                      <option value="All">All Species</option>
+                      <option value="Dog">Canine (Dog)</option>
+                      <option value="Cat">Feline (Cat)</option>
+                      <option value="Bird">Avian (Bird)</option>
+                      <option value="Exotic">Exotic</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label
+                      class="block font-label-md text-on-surface-variant mb-2"
+                      >Vaccination Status</label
+                    >
+                    <div class="space-y-3">
+                      <label
+                        class="flex items-center gap-3 cursor-pointer group"
+                      >
+                        <!-- ADDED id and w-4 h-4 for better mobile touch -->
+                        <input
+                          id="filter-vaccinated"
+                          checked
+                          class="w-4 h-4 rounded text-primary focus:ring-primary border-outline-variant"
+                          type="checkbox"
+                        />
+                        <span
+                          class="text-body-md text-on-surface group-hover:text-primary transition-colors"
+                          >Up to date</span
+                        >
+                      </label>
+                      <label
+                        class="flex items-center gap-3 cursor-pointer group"
+                      >
+                        <input
+                          id="filter-due-soon"
+                          checked
+                          class="w-4 h-4 rounded text-primary focus:ring-primary border-outline-variant"
+                          type="checkbox"
+                        />
+                        <span
+                          class="text-body-md text-on-surface group-hover:text-primary transition-colors"
+                          >Expiring Soon</span
+                        >
+                      </label>
+                      <label
+                        class="flex items-center gap-3 cursor-pointer group"
+                      >
+                        <input
+                          id="filter-overdue"
+                          checked
+                          class="w-4 h-4 rounded text-primary focus:ring-primary border-outline-variant"
+                          type="checkbox"
+                        />
+                        <span
+                          class="text-body-md text-on-surface group-hover:text-primary transition-colors"
+                          >Overdue</span
+                        >
+                      </label>
+                    </div>
+                  </div>
+                  <!-- ADDED id="clear-filters-btn" -->
+                  <button
+                    id="clear-filters-btn"
+                    class="w-full py-3 text-primary border border-primary/20 rounded-lg font-label-md hover:bg-primary/5 transition-all"
+                  >
+                    Clear All Filters
+                  </button>
+                </div>
+              </div>
+            </aside>
+
+            <!-- Main Listing Area (Col 9) -->
+            <div class="lg:col-span-9 flex flex-col gap-gutter">
+              <!-- Search Bar Container -->
+              <div class="relative w-full max-w-md group">
+                <span
+                  class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline group-focus-within:text-primary transition-colors"
+                  data-icon="search"
+                  >search</span
+                >
+                <input
+                  id="patient-search"
+                  class="w-full pl-12 pr-4 py-4 bg-white border border-outline-variant/50 rounded-xl shadow-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-body-md"
+                  placeholder="Search by Pet Name, Owner, or Breed..."
+                  type="text"
+                />
+              </div>
+
+              <!-- Data Table Card -->
+              <div
+                class="bg-white rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden"
+              >
+                <div class="overflow-x-auto custom-scrollbar">
+                  <table class="w-full border-collapse text-left">
+                    <thead
+                      class="bg-surface-muted border-b border-outline-variant/30"
+                    >
+                      <tr>
+                        <th
+                          class="px-6 py-4 font-label-md text-on-surface-variant"
+                        >
+                          Patient Name
+                        </th>
+                        <th
+                          class="px-6 py-4 font-label-md text-on-surface-variant"
+                        >
+                          Species / Breed
+                        </th>
+                        <th
+                          class="px-6 py-4 font-label-md text-on-surface-variant"
+                        >
+                          Owner
+                        </th>
+                        <th
+                          class="px-6 py-4 font-label-md text-on-surface-variant"
+                        >
+                          Last Visit
+                        </th>
+                        <th
+                          class="px-6 py-4 font-label-md text-on-surface-variant"
+                        >
+                          Status
+                        </th>
+                        <th
+                          class="px-6 py-4 font-label-md text-on-surface-variant text-right"
+                        >
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody
+                      id="patient-tbody"
+                      class="divide-y divide-outline-variant/20"
+                    >
+                      <!-- Row 1 -->
+                      <tr class="hover:bg-surface-muted/50 transition-colors">
+                        <td class="px-6 py-4">
+                          <div class="flex items-center gap-3">
+                            <div
+                              class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden"
+                            >
+                              <img
+                                class="w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaPdmzJWLko5Bjs7O9BAdaR-JOU0QVqS8OwF73T2lIf8DAcGb_8D5dyCBf507JjLBybEm771j7S6buktFanpFd9kEU9B1XAkdi1zY5fqXA8xEpw_IrfBFeUzdYUPVukoidQSxKZQOvfKWUocUQB07N7VBA126t7eXKLcvHceYnMcBJN0GnzG0eNrxwWTn1H3vmAUD1Fk4ENllaqaql5O9o2HS-rLO2VVoseqzWgcrfLBoCsiFtgXuGgkTdqIx4Tn4JKUkpBKE0qH4"
+                              />
+                            </div>
+                            <div>
+                              <div class="font-label-md text-on-surface">
+                                Kofi
+                              </div>
+                              <div class="text-caption text-outline">
+                                ID: #VC-2041
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <div class="text-body-md">Dog</div>
+                          <div class="text-caption text-outline">
+                            Golden Retriever
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-body-md">Kwame Mensah</td>
+                        <td class="px-6 py-4 text-body-md">Oct 24, 2024</td>
+                        <td class="px-6 py-4">
+                          <span
+                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-800"
+                            >VACCINATED</span
+                          >
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                          <button
+                            class="text-primary font-label-md hover:underline active:opacity-70 view-record-btn"
+                          >
+                            View Records
+                          </button>
+                        </td>
+                      </tr>
+                      <!-- Row 2 -->
+                      <tr class="hover:bg-surface-muted/50 transition-colors">
+                        <td class="px-6 py-4">
+                          <div class="flex items-center gap-3">
+                            <div
+                              class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden"
+                            >
+                              <img
+                                class="w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDS-whnYoEbDMj3cDJe4et7-X-24HE0E08j8n4iFO_pVb03SUSlqeZuHcaQlZiEBXK414NIxnZJhu_utny8sFOTTDJ4_dwCHUY_lHfwfs02BFtQZpsybbqU9naC3K2wnDdwBEFqCU9Zaq2hGYSqY4DbXPjKHdO16U2t19IZHoVYsr8LaFosxUW37M80eOIJdPI4Bn-Bf93Yf3od2mpyHWZjL7aTW8RyKIW-gvcU76KUTzCrWDcgDcyVojMY5T8R2HGgKENj3yIoC8s"
+                              />
+                            </div>
+                            <div>
+                              <div class="font-label-md text-on-surface">
+                                Nala
+                              </div>
+                              <div class="text-caption text-outline">
+                                ID: #VC-2088
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <div class="text-body-md">Cat</div>
+                          <div class="text-caption text-outline">Siamese</div>
+                        </td>
+                        <td class="px-6 py-4 text-body-md">Ama Boateng</td>
+                        <td class="px-6 py-4 text-body-md">Nov 02, 2024</td>
+                        <td class="px-6 py-4">
+                          <span
+                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-yellow-100 text-yellow-800"
+                            >DUE SOON</span
+                          >
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                          <button
+                            class="text-primary font-label-md hover:underline active:opacity-70 view-record-btn"
+                          >
+                            View Records
+                          </button>
+                        </td>
+                      </tr>
+                      <!-- Row 3 -->
+                      <tr class="hover:bg-surface-muted/50 transition-colors">
+                        <td class="px-6 py-4">
+                          <div class="flex items-center gap-3">
+                            <div
+                              class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden"
+                            >
+                              <img
+                                class="w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFinE03crclFIvILzq8l9TZOBo7kLqJrHWdYxPK3rYB47FWGk615n0nHaHtZzMxZQwGpq6HEThCTUwofx2NHD1uWhGTSeo6NiTqPguMnb7bvYUHAzIP7tRtAE4rzfKCtTaH9LLMvNq846GqisyI79fT-sn_ETofQu8rO9AoZJuwxlo2_L5BH97bvIMnJiaQgBDvw_k4Gibj1-aN7ReNzLncjPf6NhTIfY6VneVz187Z-wDXGQ7SNiwxoOhkLxSXjW4VBOJgrcslI4"
+                              />
+                            </div>
+                            <div>
+                              <div class="font-label-md text-on-surface">
+                                Snowy
+                              </div>
+                              <div class="text-caption text-outline">
+                                ID: #VC-3112
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <div class="text-body-md">Dog</div>
+                          <div class="text-caption text-outline">
+                            Toy Poodle
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-body-md">Daniel Appiah</td>
+                        <td class="px-6 py-4 text-body-md">Aug 15, 2024</td>
+                        <td class="px-6 py-4">
+                          <span
+                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-800"
+                            >OVERDUE</span
+                          >
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                          <button
+                            class="text-primary font-label-md hover:underline active:opacity-70 view-record-btn"
+                          >
+                            View Records
+                          </button>
+                        </td>
+                      </tr>
+                      <!-- Row 4 -->
+                      <tr class="hover:bg-surface-muted/50 transition-colors">
+                        <td class="px-6 py-4">
+                          <div class="flex items-center gap-3">
+                            <div
+                              class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden"
+                            >
+                              <span
+                                class="material-symbols-outlined text-primary text-2xl"
+                                data-icon="pet_supplies"
+                                >pet_supplies</span
+                              >
+                            </div>
+                            <div>
+                              <div class="font-label-md text-on-surface">
+                                Zazu
+                              </div>
+                              <div class="text-caption text-outline">
+                                ID: #VC-4002
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <div class="text-body-md">Bird</div>
+                          <div class="text-caption text-outline">
+                            African Gray Parrot
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-body-md">Ekow Quansah</td>
+                        <td class="px-6 py-4 text-body-md">Nov 10, 2024</td>
+                        <td class="px-6 py-4">
+                          <span
+                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-800"
+                            >VACCINATED</span
+                          >
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                          <button
+                            class="text-primary font-label-md hover:underline active:opacity-70 view-record-btn"
+                          >
+                            View Records
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- Pagination -->
+                <div
+                  class="bg-surface-muted px-6 py-4 flex items-center justify-between border-t border-outline-variant/30"
+                >
+                  <span
+                    id="pagination-count"
+                    class="text-caption text-on-surface-variant"
+                    >Showing 1-4 of 1,284 patients</span
+                  >
+                  <div class="flex gap-2">
+                    <button
+                      class="p-2 rounded-lg border border-outline-variant hover:bg-white transition-all disabled:opacity-50"
+                      disabled=""
+                    >
+                      <span
+                        class="material-symbols-outlined"
+                        data-icon="chevron_left"
+                        >chevron_left</span
+                      >
+                    </button>
+                    <button
+                      class="p-2 rounded-lg border border-outline-variant bg-white text-primary font-bold"
+                    >
+                      1
+                    </button>
+                    <button
+                      class="p-2 rounded-lg border border-outline-variant hover:bg-white transition-all"
+                    >
+                      2
+                    </button>
+                    <button
+                      class="p-2 rounded-lg border border-outline-variant hover:bg-white transition-all"
+                    >
+                      3
+                    </button>
+                    <button
+                      class="p-2 rounded-lg border border-outline-variant hover:bg-white transition-all"
+                    >
+                      <span
+                        class="material-symbols-outlined"
+                        data-icon="chevron_right"
+                        >chevron_right</span
+                      >
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- PATIENT RECORD VIEW -->
+        <!-- PATIENT RECORD VIEW -->
+        <main
+          id="record-view"
+          class="flex-grow max-w-container-max mx-auto w-full px-4 md:px-margin-desktop py-stack-md"
+          style="display: none"
+        >
+          <!-- Back Button -->
+          <button
+            onclick="showDashboardView()"
+            class="flex items-center gap-2 mb-6 text-primary font-label-md hover:opacity-80 transition-all active:scale-95"
+          >
+            <span class="material-symbols-outlined">arrow_back</span>
+            Back to Owner Records
+          </button>
+
+          <!-- Patient Header Section -->
+          <section
+            class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant mb-stack-md flex flex-col md:flex-row gap-6 items-center md:items-start"
+          >
+            <div class="relative group shrink-0">
+              <!-- Added id and onclick for image change -->
+              <img
+                id="record-img"
+                alt="Patient"
+                class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-secondary-container shadow-md cursor-pointer hover:opacity-90 transition-opacity"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrlc2YHZaSkMYwZ7BcnZL0-YJ4vEvCmtoR8c62qrf1zsoxYSJIdubHkvReVOrZtVBKGAjEiObSUwQNhEPgpWzeKY8R_PiFT4H-tbyT1YwhcupmNcpnqpVMw7ClEgxbO2hXwG7Oczav3N2OK05r8xkSDd39ZaR9BzcNzq8aXvlmyBqsc0hi_s2unhgWOdkD5vjHI_WKasuL7qQ9oW2BcVjJfaPRCWztYRvnzrZaxEwN3nyR3pJAJ15UpAD3DxLvcovxaVF12S_ioTU"
+                onclick="document.getElementById('profile-pic-input').click()"
+              />
+
+              <!-- Hidden file input for profile picture -->
+              <input
+                type="file"
+                id="profile-pic-input"
+                accept="image/*"
+                class="hidden"
+                onchange="updateProfilePicture(event)"
+              />
+
+              <div
+                class="absolute bottom-2 right-2 bg-primary text-on-primary rounded-full p-1.5 border-2 border-white shadow-sm cursor-pointer hover:bg-primary/90 transition-colors"
+                onclick="document.getElementById('profile-pic-input').click()"
+                title="Change Profile Picture"
+              >
+                <span class="material-symbols-outlined text-[16px]">edit</span>
+              </div>
+            </div>
+
+            <div class="flex-grow text-center md:text-left w-full">
+              <div
+                class="flex flex-col md:flex-row md:items-end gap-3 mb-4 justify-center md:justify-start"
+              >
+                <h1
+                  id="record-name"
+                  class="font-headline-lg text-headline-lg text-primary"
+                >
+                  Loading...
+                </h1>
+                <span
+                  id="record-id"
+                  class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-label-md text-caption uppercase tracking-wider"
+                  >ID: Loading...</span
+                >
+              </div>
+
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                <div class="flex flex-col">
+                  <span
+                    class="text-on-surface-variant font-label-md text-caption"
+                    >Species</span
+                  >
+                  <span
+                    id="record-species"
+                    class="font-body-lg text-body-lg font-semibold"
+                    >-</span
+                  >
+                </div>
+                <div class="flex flex-col">
+                  <span
+                    class="text-on-surface-variant font-label-md text-caption"
+                    >Breed</span
+                  >
+                  <span
+                    id="record-breed"
+                    class="font-body-lg text-body-lg font-semibold"
+                    >-</span
+                  >
+                </div>
+                <div class="flex flex-col">
+                  <span
+                    class="text-on-surface-variant font-label-md text-caption"
+                    >Age</span
+                  >
+                  <span
+                    id="record-age"
+                    class="font-body-lg text-body-lg font-semibold"
+                    >-</span
+                  >
+                </div>
+                <div class="flex flex-col">
+                  <span
+                    class="text-on-surface-variant font-label-md text-caption"
+                    >Gender</span
+                  >
+                  <span
+                    id="record-gender"
+                    class="font-body-lg text-body-lg font-semibold"
+                    >-</span
+                  >
+                </div>
+              </div>
+
+              <div
+                class="flex flex-col sm:flex-row gap-3 w-full md:w-auto mt-6 justify-center md:justify-start"
+              >
+                <button
+                  onclick="scheduleAppointment()"
+                  class="bg-primary-container text-on-primary-container px-6 py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-primary hover:text-on-primary transition-all shadow-sm"
+                >
+                  <span class="material-symbols-outlined">calendar_today</span>
+                  <span class="font-label-md">Schedule Appointment</span>
+                </button>
+                <button
+                  onclick="exportRecord()"
+                  class="border border-outline text-primary px-6 py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-secondary-fixed transition-all shadow-sm"
+                >
+                  <span class="material-symbols-outlined">print</span>
+                  <span class="font-label-md">Export Record</span>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Bento Grid Content -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+            <!-- Left Column: History & Med Notes (8 cols) -->
+            <div class="lg:col-span-8 space-y-gutter">
+              <!-- Appointment History Timeline -->
+              <div
+                class="bg-white rounded-xl p-6 shadow-sm border border-outline-variant"
+              >
+                <div class="flex justify-between items-center mb-6">
+                  <h2
+                    class="font-headline-md text-headline-md flex items-center gap-2"
+                  >
+                    <span class="material-symbols-outlined text-primary"
+                      >history</span
+                    >
+                    Appointment History
+                  </h2>
+                  <span
+                    class="text-primary font-label-md cursor-pointer hover:underline"
+                    >View All</span
+                  >
+                </div>
+                <div class="relative pl-8">
+                  <div
+                    class="absolute left-[15px] top-2 bottom-2 w-0.5 timeline-line"
+                  ></div>
+                  <!-- Event 1 -->
+                  <div class="relative mb-8">
+                    <div
+                      class="absolute -left-[25px] top-1 w-4 h-4 rounded-full bg-primary ring-4 ring-primary-fixed"
+                    ></div>
+                    <div
+                      class="bg-surface-muted rounded-lg p-4 hover:shadow-md transition-shadow"
+                    >
+                      <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-semibold text-body-lg">
+                          Annual Wellness Exam
+                        </h3>
+                        <span
+                          class="text-caption font-label-md text-on-surface-variant"
+                          >Oct 12, 2023</span
+                        >
+                      </div>
+                      <p class="text-on-surface-variant text-body-md">
+                        Comprehensive physical check-up. Patient is in excellent
+                        health. Recommended heartworm preventative renewal.
+                      </p>
+                      <div class="mt-3 flex gap-2 flex-wrap">
+                        <span
+                          class="bg-surface-container-highest px-2 py-1 rounded text-caption"
+                          >Dr. Abena Mensah</span
+                        >
+                        <span
+                          class="bg-surface-container-highest px-2 py-1 rounded text-caption"
+                          >Clinic Room 4</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Medical Notes (With Inbuilt Editor & Dropdown) -->
+              <div
+                class="bg-white rounded-xl p-6 shadow-sm border border-outline-variant"
+              >
+                <div class="flex justify-between items-center mb-6">
+                  <h2
+                    class="font-headline-md text-headline-md flex items-center gap-2"
+                  >
+                    <span class="material-symbols-outlined text-primary"
+                      >description</span
+                    >
+                    Medical Notes
+                  </h2>
+                  <button
+                    onclick="toggleNoteEditor()"
+                    class="bg-secondary text-on-secondary px-4 py-2 rounded-lg font-label-md flex items-center gap-2 hover:opacity-90 transition-all"
+                  >
+                    <span class="material-symbols-outlined">add</span>
+                    Add Note
+                  </button>
+                </div>
+
+                <!-- Inbuilt Note Editor (Hidden by default) -->
+                <div
+                  id="note-editor"
+                  class="hidden mb-6 p-4 bg-surface-muted rounded-lg border border-outline-variant"
+                >
+                  <textarea
+                    id="new-note-text"
+                    class="w-full bg-white border border-outline-variant rounded-lg p-3 text-body-md focus:ring-primary focus:border-primary outline-none resize-y min-h-[100px]"
+                    placeholder="Enter medical observation, diagnosis, or instructions..."
+                  ></textarea>
+                  <!-- NEW: Emergency Note Checkbox -->
+                  <label
+                    class="flex items-center gap-2 mt-3 cursor-pointer group w-fit"
+                  >
+                    <input
+                      type="checkbox"
+                      id="note-is-emergency"
+                      class="w-4 h-4 rounded border-outline-variant text-emergency-red focus:ring-emergency-red transition-all"
+                    />
+                    <span
+                      class="text-sm font-semibold text-emergency-red group-hover:text-red-700 transition-colors flex items-center gap-1"
+                    >
+                      <span class="material-symbols-outlined text-[16px]"
+                        >warning</span
+                      >
+                      Mark as Emergency / Critical Alert
+                    </span>
+                  </label>
+                  <div class="flex justify-end gap-3 mt-3">
+                    <button
+                      onclick="toggleNoteEditor()"
+                      class="px-4 py-2 text-on-surface-variant font-label-md hover:bg-surface-container-highest rounded-lg transition-all"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onclick="saveMedicalNote()"
+                      class="px-4 py-2 bg-primary text-on-primary font-label-md rounded-lg hover:opacity-90 transition-all"
+                    >
+                      Save Note
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Notes List -->
+                <div id="medical-notes-list" class="space-y-4">
+                  <!-- Notes will be injected here by JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Stats & Docs (4 cols) -->
+            <div class="lg:col-span-4 space-y-gutter">
+              <!-- Weight Tracking Chart (Chart.js) -->
+              <div
+                class="bg-white rounded-xl p-6 shadow-sm border border-outline-variant"
+              >
+                <h2
+                  class="font-headline-md text-headline-md mb-6 flex items-center gap-2"
+                >
+                  <span class="material-symbols-outlined text-primary"
+                    >monitoring</span
+                  >
+                  Weight Track
+                </h2>
+                <div class="h-48 w-full">
+                  <canvas id="weightChart"></canvas>
+                </div>
+                <div
+                  class="mt-4 pt-4 border-t border-outline-variant flex justify-between items-center"
+                >
+                  <div>
+                    <span class="text-caption text-on-surface-variant block"
+                      >Current Weight</span
+                    >
+                    <span class="text-headline-md font-bold text-primary"
+                      >31.2 kg</span
+                    >
+                  </div>
+                  <div class="text-right">
+                    <span class="text-caption text-on-surface-variant block"
+                      >Target</span
+                    >
+                    <span
+                      class="text-headline-md font-bold text-on-surface-variant"
+                      >30.0 kg</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Vaccination Records -->
+              <div
+                class="bg-white rounded-xl p-6 shadow-sm border border-outline-variant"
+              >
+                <h2
+                  class="font-headline-md text-headline-md mb-6 flex items-center gap-2"
+                >
+                  <span class="material-symbols-outlined text-primary"
+                    >vaccines</span
+                  >
+                  Vaccinations
+                </h2>
+                <p class="text-caption text-on-surface-variant mb-4 -mt-4">
+                  * Tracks core vaccines to ensure boosters are never missed and
+                  the patient remains compliant with clinic/legal standards.
+                </p>
+                <ul class="space-y-4">
+                  <li class="flex items-center gap-4">
+                    <span
+                      class="material-symbols-outlined text-primary"
+                      style="font-variation-settings: &quot;FILL&quot; 1"
+                      >check_circle</span
+                    >
+                    <div class="flex-grow">
+                      <p class="font-semibold text-body-md">Rabies (3-Year)</p>
+                      <p class="text-caption text-on-surface-variant">
+                        Expires: Oct 2026
+                      </p>
+                    </div>
+                  </li>
+                  <li class="flex items-center gap-4">
+                    <span
+                      class="material-symbols-outlined text-primary"
+                      style="font-variation-settings: &quot;FILL&quot; 1"
+                      >check_circle</span
+                    >
+                    <div class="flex-grow">
+                      <p class="font-semibold text-body-md">DHPP</p>
+                      <p class="text-caption text-on-surface-variant">
+                        Expires: Oct 2024
+                      </p>
+                    </div>
+                  </li>
+                  <li class="flex items-center gap-4">
+                    <span class="material-symbols-outlined text-outline-variant"
+                      >radio_button_unchecked</span
+                    >
+                    <div class="flex-grow">
+                      <p class="font-semibold text-body-md text-outline">
+                        Bordetella
+                      </p>
+                      <p class="text-caption text-emergency-red font-bold">
+                        Overdue since Jan 2024
+                      </p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Lab Results & Documents (File Upload) -->
+              <div
+                class="bg-white rounded-xl p-6 shadow-sm border border-outline-variant"
+              >
+                <h2
+                  class="font-headline-md text-headline-md mb-6 flex items-center gap-2"
+                >
+                  <span class="material-symbols-outlined text-primary"
+                    >folder_open</span
+                  >
+                  Lab &amp; X-Rays
+                </h2>
+
+                <!-- Upload Dropzone -->
+                <div
+                  class="border-2 border-dashed border-outline-variant rounded-xl p-6 flex flex-col items-center justify-center gap-2 group cursor-pointer hover:bg-primary-container/5 hover:border-primary transition-all mb-4"
+                  onclick="document.getElementById('lab-file-input').click()"
+                >
+                  <span
+                    class="material-symbols-outlined text-primary text-3xl group-hover:scale-110 transition-transform"
+                    >cloud_upload</span
+                  >
+                  <span
+                    class="font-label-md text-on-surface-variant text-center"
+                    >Click to upload files</span
+                  >
+                  <span class="text-caption text-outline"
+                    >PDF, JPG, PNG (Max 10MB)</span
+                  >
+                  <input
+                    type="file"
+                    id="lab-file-input"
+                    class="hidden"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    multiple
+                    onchange="handleLabUpload(event)"
+                  />
+                </div>
+
+                <!-- Uploaded Files List -->
+                <div id="lab-files-list" class="space-y-3">
+                  <!-- Files will be injected here by JS -->
+                  <p
+                    id="no-files-msg"
+                    class="text-caption text-on-surface-variant text-center py-2"
+                  >
+                    No files uploaded yet.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- ADD NEW RECORD MODAL -->
+        <div
+          id="add-modal"
+          class="modal-overlay fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4"
+        >
+          <div
+            class="modal-card bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
+          >
+            <div
+              class="flex justify-between items-center p-6 border-b border-outline-variant/30"
+            >
+              <h2 class="font-headline-md text-headline-md text-on-surface">
+                Add New Patient Record
+              </h2>
+              <button
+                id="close-modal"
+                class="text-on-surface-variant hover:text-primary transition-colors"
+              >
+                <span class="material-symbols-outlined">close</span>
+              </button>
+            </div>
+            <form id="add-form" class="p-6 space-y-5">
+              <div>
+                <label class="block font-label-md text-on-surface-variant mb-2"
+                  >Patient Name *</label
+                >
+                <input
+                  id="f-name"
+                  type="text"
+                  required
+                  pattern="^[A-Za-z0-9\s\-]{2,}$"
+                  title="Pet name should only contain letters, numbers, spaces, or hyphens (e.g. Bella, Lucky 7, C-3PO)"
+                  class="w-full bg-surface-muted border border-outline-variant rounded-lg p-3 text-body-md focus:ring-primary focus:border-primary"
+                  placeholder="e.g. Bella"
+                />
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label
+                    class="block font-label-md text-on-surface-variant mb-2"
+                    >Species *</label
+                  >
+                  <select
+                    id="f-species"
+                    required
+                    title="Please select species"
+                    class="w-full bg-surface-muted border border-outline-variant rounded-lg p-3 text-body-md focus:ring-primary focus:border-primary"
+                  >
+                    <option value="">Select Species</option>
+                    <option value="Dog">Canine (Dog)</option>
+                    <option value="Cat">Feline (Cat)</option>
+                    <option value="Bird">Avian (Bird)</option>
+                    <option value="Exotic">Exotic</option>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    class="block font-label-md text-on-surface-variant mb-2"
+                    >Breed *</label
+                  >
+                  <input
+                    id="f-breed"
+                    type="text"
+                    required
+                    pattern="^[A-Za-z\s\-]{2,}$"
+                    title="Breed name should only contain letters, spaces, or hyphens (e.g. Golden Retriever, German-Shepherd)"
+                    class="w-full bg-surface-muted border border-outline-variant rounded-lg p-3 text-body-md focus:ring-primary focus:border-primary"
+                    placeholder="e.g. Golden Retriever"
+                  />
+                </div>
+              </div>
+              <div>
+                <label class="block font-label-md text-on-surface-variant mb-2"
+                  >Owner Name *</label
+                >
+                <input
+                  id="f-owner"
+                  type="text"
+                  required
+                  pattern="^[A-Za-z\s\-'.]{2,}$"
+                  title="Owner name should only contain letters, spaces, hyphens, or apostrophes (e.g. Kwame Mensah, O'Brien)"
+                  class="w-full bg-surface-muted border border-outline-variant rounded-lg p-3 text-body-md focus:ring-primary focus:border-primary"
+                  placeholder="e.g. Kwame Mensah"
+                />
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label
+                    class="block font-label-md text-on-surface-variant mb-2"
+                    >Age *</label
+                  >
+                  <input
+                    id="f-age"
+                    type="text"
+                    required
+                    pattern="^\d+\s*([Yy]ears?|[Mm]onths?|[Ww]eeks?|[Dd]ays?)(?:\s*,\s*\d+\s*([Yy]ears?|[Mm]onths?|[Ww]eeks?|[Dd]ays?))?$"
+                    title="Please enter age in format like: '3 Years', '2 Years, 2 Months', or '6 Months'"
+                    class="w-full bg-surface-muted border border-outline-variant rounded-lg p-3 text-body-md focus:ring-primary focus:border-primary"
+                    placeholder="e.g. 2 Years"
+                  />
+                </div>
+                <div>
+                  <label
+                    class="block font-label-md text-on-surface-variant mb-2"
+                    >Gender *</label
+                  >
+                  <select
+                    id="f-gender"
+                    required
+                    title="Please select gender"
+                    class="w-full bg-surface-muted border border-outline-variant rounded-lg p-3 text-body-md focus:ring-primary focus:border-primary"
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Male (Neutered)">Male (Neutered)</option>
+                    <option value="Female (Neutered)">Female (Neutered)</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label class="block font-label-md text-on-surface-variant mb-2"
+                  >Initial Status *</label
+                >
+                <select
+                  id="f-status"
+                  required
+                  title="Please select vaccination status"
+                  class="w-full bg-surface-muted border border-outline-variant rounded-lg p-3 text-body-md focus:ring-primary focus:border-primary"
+                >
+                  <option value="">Select a vaccination Status</option>
+                  <option value="DUE SOON">Due Soon</option>
+                  <option value="VACCINATED">Vaccinated</option>
+                  <option value="OVERDUE">Overdue</option>
+                </select>
+              </div>
+              <div
+                class="flex justify-end gap-3 pt-4 border-t border-outline-variant/30"
+              >
+                <button
+                  type="button"
+                  id="cancel-modal"
+                  class="px-6 py-3 rounded-lg bg-red-600 text-white font-label-md hover:bg-red-800 active:scale-95 transition-all shadow-sm"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  class="px-6 py-3 rounded-lg bg-primary text-on-primary font-label-md hover:opacity-90 transition-all"
+                >
+                  Save Record
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- SCHEDULE APPOINTMENT MODAL -->
+        <div
+          id="appointment-modal"
+          class="modal-overlay fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4"
+        >
+          <div
+            class="modal-card bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
+          >
+            <div
+              class="flex justify-between items-center p-6 border-b border-outline-variant/30"
+            >
+              <h2 class="font-headline-md text-headline-md text-on-surface">
+                Schedule Appointment
+              </h2>
+              <button
+                id="close-appointment-modal"
+                class="text-on-surface-variant hover:text-primary transition-colors"
+              >
+                <span class="material-symbols-outlined">close</span>
+              </button>
+            </div>
+
+            <form id="appointment-form" class="p-6 space-y-5">
+              <!-- Pre-filled Patient Info -->
+              <div
+                class="bg-surface-muted p-4 rounded-lg border border-outline-variant/30"
+              >
+                <p class="text-caption text-on-surface-variant mb-1">Patient</p>
+                <p
+                  id="appt-patient-name"
+                  class="font-label-md text-on-surface font-semibold"
+                >
+                  Loading...
+                </p>
+                <p id="appt-patient-id" class="text-caption text-outline">
+                  ID: ...
+                </p>
+              </div>
+
+              <!-- Appointment Type -->
+              <div>
+                <label class="block font-label-md text-on-surface-variant mb-2"
+                  >Appointment Type *</label
+                >
+                <select
+                  id="appt-type"
+                  required
+                  title="Select appointment"
+                  class="w-full bg-surface-muted border border-outline-variant rounded-lg p-3 text-body-md focus:ring-primary focus:border-primary"
+                >
+                  <option value="">Select type...</option>
+                  <option value="General Checkup">General Checkup</option>
+                  <option value="Vaccination">Vaccination</option>
+                  <option value="Follow-up">Follow-up</option>
+                  <option value="Surgery">Surgery</option>
+                  <option value="Emergency">Emergency</option>
+                </select>
+              </div>
+
+              <!-- Date & Time -->
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label
+                    class="block font-label-md text-on-surface-variant mb-2"
+                    >Preferred Date *</label
+                  >
+                  <input
+                    id="appt-date"
+                    type="date"
+                    required
+                    title="Select a date"
+                    class="w-full bg-surface-muted border border-outline-variant rounded-lg p-3 text-body-md focus:ring-primary focus:border-primary"
+                  />
+                </div>
+                <div>
+                  <label
+                    class="block font-label-md text-on-surface-variant mb-2"
+                    >Preferred Time *</label
+                  >
+                  <input
+                    id="appt-time"
+                    type="time"
+                    title="Choose the time"
+                    required
+                    class="w-full bg-surface-muted border border-outline-variant rounded-lg p-3 text-body-md focus:ring-primary focus:border-primary"
+                  />
+                </div>
+              </div>
+
+              <!-- Veterinarian -->
+              <div>
+                <label class="block font-label-md text-on-surface-variant mb-2"
+                  >Preferred Veterinarian</label
+                >
+                <select
+                  id="appt-vet"
+                  class="w-full bg-surface-muted border border-outline-variant rounded-lg p-3 text-body-md focus:ring-primary focus:border-primary"
+                >
+                  <option value="Any Available">Any Available</option>
+                  <option value="Dr. Abena Mensah">Dr. Abena Mensah</option>
+                  <option value="Dr. Kwame Osei">Dr. Kwame Osei</option>
+                  <option value="Dr. Sarah Johnson">Dr. Sarah Johnson</option>
+                </select>
+              </div>
+
+              <!-- Notes -->
+              <div>
+                <label class="block font-label-md text-on-surface-variant mb-2"
+                  >Reason for Visit / Notes</label
+                >
+                <textarea
+                  id="appt-notes"
+                  rows="3"
+                  class="w-full bg-surface-muted border border-outline-variant rounded-lg p-3 text-body-md focus:ring-primary focus:border-primary resize-y"
+                  placeholder="Briefly describe the reason for the visit..."
+                ></textarea>
+              </div>
+
+              <!-- Actions -->
+              <div
+                class="flex justify-end gap-3 pt-4 border-t border-outline-variant/30"
+              >
+                <button
+                  type="button"
+                  id="cancel-appointment-modal"
+                  class="px-6 py-3 rounded-lg border border-outline-variant text-on-surface-variant font-label-md hover:bg-surface-muted transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  class="px-6 py-3 rounded-lg bg-primary text-on-primary font-label-md hover:opacity-90 transition-all flex items-center gap-2"
+                >
+                  <span class="material-symbols-outlined text-[20px]"
+                    >event_available</span
+                  >
+                  Confirm Booking
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Shared Footer -->
+        <footer
+          class="w-full bg-deep-navy dark:bg-surface-container-lowest mt-auto"
+        >
+          <div
+            class="flex flex-col md:flex-row justify-between items-center px-margin-desktop py-stack-lg w-full max-w-container-max mx-auto"
+          >
+            <div
+              class="text-primary-fixed font-headline-md text-headline-md mb-6 md:mb-0"
+            >
+              VetCare Ghana
+            </div>
+            <div class="flex flex-col md:flex-row gap-6 md:gap-12 items-center">
+              <div class="flex gap-8">
+                <a
+                  class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer"
+                  >Privacy Policy</a
+                >
+                <a
+                  class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer"
+                  >Terms of Service</a
+                >
+                <a
+                  class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer"
+                  >Contact Us</a
+                >
+                <a
+                  class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer"
+                  >Ghana Vet Council</a
+                >
+              </div>
+              <p
+                class="text-tertiary-fixed-dim font-caption text-caption text-center md:text-right"
+              >
+                © 2024 VetCare Ghana. Providing compassionate care for every
+                pet.
+              </p>
+            </div>
+          </div>
+        </footer>
+
+        <script>
+          // Sidebar logic
+          const mobileBurgerBtn = document.getElementById("mobileBurgerBtn");
+          const mobileSidebar = document.getElementById("mobileSidebar");
+          const closeMobileSidebar =
+            document.getElementById("closeMobileSidebar");
+          const mobileOverlay = document.getElementById("mobileOverlay");
+          const desktopSidebar = document.getElementById("desktopSidebar");
+          const collapseSidebarBtn =
+            document.getElementById("collapseSidebarBtn");
+          let isSidebarCollapsed =
+            localStorage.getItem("sidebarCollapsed") === "true";
+
+          function openMobileSidebar() {
+            mobileSidebar.classList.add("open");
+            mobileOverlay.classList.add("active");
+            document.body.style.overflow = "hidden";
+          }
+          function closeMobileSidebarFunc() {
+            mobileSidebar.classList.remove("open");
+            mobileOverlay.classList.remove("active");
+            document.body.style.overflow = "";
+          }
+          function toggleDesktopSidebar() {
+            isSidebarCollapsed = !isSidebarCollapsed;
+            localStorage.setItem("sidebarCollapsed", isSidebarCollapsed);
+            const mainContentWrapper =
+              document.getElementById("mainContentWrapper");
+            if (isSidebarCollapsed) {
+              desktopSidebar.classList.add("sidebar-collapsed");
+              collapseSidebarBtn.querySelector(
+                ".material-symbols-outlined",
+              ).textContent = "chevron_right";
+              mainContentWrapper &&
+                mainContentWrapper.classList.add("main-content-full");
+            } else {
+              desktopSidebar.classList.remove("sidebar-collapsed");
+              collapseSidebarBtn.querySelector(
+                ".material-symbols-outlined",
+              ).textContent = "chevron_left";
+              mainContentWrapper &&
+                mainContentWrapper.classList.remove("main-content-full");
+            }
+          }
+
+          if (isSidebarCollapsed) {
+            desktopSidebar.classList.add("sidebar-collapsed");
+            if (collapseSidebarBtn)
+              collapseSidebarBtn.querySelector(
+                ".material-symbols-outlined",
+              ).textContent = "chevron_right";
+          }
+          if (mobileBurgerBtn)
+            mobileBurgerBtn.addEventListener("click", openMobileSidebar);
+          if (closeMobileSidebar)
+            closeMobileSidebar.addEventListener(
+              "click",
+              closeMobileSidebarFunc,
+            );
+          if (mobileOverlay)
+            mobileOverlay.addEventListener("click", closeMobileSidebarFunc);
+          if (collapseSidebarBtn)
+            collapseSidebarBtn.addEventListener("click", toggleDesktopSidebar);
+          document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && mobileSidebar.classList.contains("open"))
+              closeMobileSidebarFunc();
+          });
+          window.addEventListener("resize", () => {
+            if (
+              window.innerWidth >= 768 &&
+              mobileSidebar.classList.contains("open")
+            )
+              closeMobileSidebarFunc();
+          });
+          // Highlight the correct sidebar nav item based on current page
+          function highlightActiveNav() {
+            try {
+              const current = (location.pathname || "")
+                .split("/")
+                .pop()
+                .toLowerCase();
+              const currCore = (current || "")
+                .replace(/\?.*$/, "")
+                .replace(/\.html$/, "");
+              const anchors = document.querySelectorAll(
+                "#desktopSidebar nav a, #mobileSidebar nav a",
+              );
+              anchors.forEach((a) => {
+                const href = a.getAttribute("href") || "";
+                const hrefBase = href.split("/").pop().toLowerCase();
+                const hrefCore = hrefBase.replace(/\.html$/, "");
+                a.classList.remove("sidebar-item-active");
+                // If this page matches the link (or shares a core name), mark active
+                if (
+                  hrefCore &&
+                  currCore &&
+                  (hrefCore === currCore ||
+                    currCore.includes(hrefCore) ||
+                    hrefCore.includes(currCore))
+                ) {
+                  a.classList.add("sidebar-item-active");
+                }
+              });
+            } catch (e) {
+              console.warn("highlightActiveNav failed", e);
+            }
+          }
+          highlightActiveNav();
+
+          // Navigation helpers (added)
+          function navigateTo(section) {
+            const pageMap = {
+              analytics: "Dashboard.html",
+              calendar: "clinic_calendar.html",
+              staff: "staff_service_settings.html",
+              billing: "billing.html",
+              records: "records.html",
+              message: "message.html",
+              emergency:"emergency_management.html",
+              settings: "settings.html",
+            };
+
+            if (pageMap[section]) {
+              window.location.href = pageMap[section];
+            }
+             
+             // Helper function to prevent overriding the emergency button
+  const updateLinkStyle = (link, isActive) => {
+    const isEmergency = link.getAttribute("data-nav-desktop") === "emergency" || link.getAttribute("data-nav-mobile") === "emergency";
+    if (isEmergency) return; // 🛡️ SKIP: Keep emergency button red
+
+    if (isActive) {
+      link.classList.add("bg-primary-container", "text-on-primary-container");
+      link.classList.remove("text-tertiary-fixed-dim", "hover:bg-white/5");
+    } else {
+      link.classList.remove("bg-primary-container", "text-on-primary-container");
+      link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
+    }
+  };
+            // Update active states for desktop
+            document.querySelectorAll("[data-nav-desktop]").forEach((link) => {
+              if (link.getAttribute("data-nav-desktop") === section) {
+                link.classList.add(
+                  "bg-primary-container",
+                  "text-on-primary-container",
+                );
+                link.classList.remove(
+                  "text-tertiary-fixed-dim",
+                  "hover:bg-white/5",
+                );
+              } else {
+                link.classList.remove(
+                  "bg-primary-container",
+                  "text-on-primary-container",
+                );
+                link.classList.add(
+                  "text-tertiary-fixed-dim",
+                  "hover:bg-white/5",
+                );
+              }
+            });
+
+            // Update active states for mobile
+            document.querySelectorAll("[data-nav-mobile]").forEach((link) => {
+              if (link.getAttribute("data-nav-mobile") === section) {
+                link.classList.add(
+                  "bg-primary-container",
+                  "text-on-primary-container",
+                );
+                link.classList.remove(
+                  "text-tertiary-fixed-dim",
+                  "hover:bg-white/5",
+                );
+              } else {
+                link.classList.remove(
+                  "bg-primary-container",
+                  "text-on-primary-container",
+                );
+                link.classList.add(
+                  "text-tertiary-fixed-dim",
+                  "hover:bg-white/5",
+                );
+              }
+            });
+          }
+
+          // Desktop navigation click handlers
+          document.querySelectorAll("[data-nav-desktop]").forEach((link) => {
+            link.addEventListener("click", (e) => {
+              e.preventDefault();
+              const section = link.getAttribute("data-nav-desktop");
+              navigateTo(section);
+            });
+          });
+
+          // Mobile navigation click handlers
+          document.querySelectorAll("[data-nav-mobile]").forEach((link) => {
+            link.addEventListener("click", (e) => {
+              e.preventDefault();
+              const section = link.getAttribute("data-nav-mobile");
+              navigateTo(section);
+              try {
+                closeMobileSidebarFunc();
+              } catch (err) {
+                /* noop */
+              }
+            });
+          });
+
+          // ===== AUTO-HIGHLIGHT ACTIVE PAGE =====
+          function highlightCurrentPage() {
+            const currentPage =
+              document.body.getAttribute("data-page") || "records";
+
+            // Desktop
+            document.querySelectorAll("[data-nav-desktop]").forEach((link) => {
+              if (link.getAttribute("data-nav-desktop") === currentPage) {
+                link.classList.add(
+                  "bg-primary-container",
+                  "text-on-primary-container",
+                );
+                link.classList.remove(
+                  "text-tertiary-fixed-dim",
+                  "hover:bg-white/5",
+                );
+              } else {
+                link.classList.remove(
+                  "bg-primary-container",
+                  "text-on-primary-container",
+                );
+                link.classList.add(
+                  "text-tertiary-fixed-dim",
+                  "hover:bg-white/5",
+                );
+              }
+            });
+
+            // Mobile
+            document.querySelectorAll("[data-nav-mobile]").forEach((link) => {
+              if (link.getAttribute("data-nav-mobile") === currentPage) {
+                link.classList.add(
+                  "bg-primary-container",
+                  "text-on-primary-container",
+                );
+                link.classList.remove(
+                  "text-tertiary-fixed-dim",
+                  "hover:bg-white/5",
+                );
+              } else {
+                link.classList.remove(
+                  "bg-primary-container",
+                  "text-on-primary-container",
+                );
+                link.classList.add(
+                  "text-tertiary-fixed-dim",
+                  "hover:bg-white/5",
+                );
+              }
+            });
+          }
+
+          // Call it on load
+          document.addEventListener("DOMContentLoaded", function () {
+            highlightCurrentPage();
+          });
+
+          function logout() {
+            if (confirm("Are you sure you want to logout?")) {
+              localStorage.removeItem("user");
+              localStorage.removeItem("token");
+              window.location.href = "vet_portal_login.html";
+            }
+          }
+          document
+            .getElementById("logoutBtnMobile")
+            ?.addEventListener("click", logout);
+          document
+            .getElementById("logoutBtnDesktop")
+            ?.addEventListener("click", logout);
+
+          // Toast
+          function showToast(message, type = "success") {
+            const container = document.getElementById("toast-container");
+            if (!container) return;
+            const toast = document.createElement("div");
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => toast.classList.add("show"));
+            });
+            setTimeout(() => {
+              toast.classList.remove("show");
+              setTimeout(() => {
+                if (toast.parentNode) toast.remove();
+              }, 300);
+            }, 4500);
+          }
+
+          // Attach "View Records" buttons to show the record view
+          document.querySelectorAll(".view-record-btn").forEach((btn) => {
+            btn.addEventListener("click", showRecordView);
+          });
+
+          // --- Micro-interactions ---
+          document.querySelectorAll("button, a").forEach((el) => {
+            el.addEventListener("mousedown", () => (el.style.opacity = "0.7"));
+            el.addEventListener("mouseup", () => (el.style.opacity = "1"));
+            el.addEventListener("mouseleave", () => (el.style.opacity = "1"));
+          });
+
+          // Tab Switching Logic (Simulated)
+          const tabs = document.querySelectorAll("[data-tab]");
+          tabs.forEach((tab) => {
+            tab.addEventListener("click", () => {
+              console.log("Switching to directory: " + tab.innerText);
+            });
+          });
+
+          // Add visual interest to weight bars on scroll/load
+          window.addEventListener("load", () => {
+            const bars = document.querySelectorAll(".chart-bar");
+            bars.forEach((bar) => {
+              const finalHeight = bar.style.height;
+              if (finalHeight) {
+                bar.style.height = "0";
+                setTimeout(() => {
+                  bar.style.height = finalHeight;
+                }, 100);
+              }
+            });
+          });
+
+          // --- DATA STORE ---
+          const petImages = {
+            Dog: "https://lh3.googleusercontent.com/aida-public/AB6AXuDaPdmzJWLko5Bjs7O9BAdaR-JOU0QVqS8OwF73T2lIf8DAcGb_8D5dyCBf507JjLBybEm771j7S6buktFanpFd9kEU9B1XAkdi1zY5fqXA8xEpw_IrfBFeUzdYUPVukoidQSxKZQOvfKWUocUQB07N7VBA126t7eXKLcvHceYnMcBJN0GnzG0eNrxwWTn1H3vmAUD1Fk4ENllaqaql5O9o2HS-rLO2VVoseqzWgcrfLBoCsiFtgXuGgkTdqIx4Tn4JKUkpBKE0qH4",
+            Cat: "https://lh3.googleusercontent.com/aida-public/AB6AXuDS-whnYoEbDMj3cDJe4et7-X-24HE0E08j8n4iFO_pVb03SUSlqeZuHcaQlZiEBXK414NIxnZJhu_utny8sFOTTDJ4_dwCHUY_lHfwfs02BFtQZpsybbqU9naC3K2wnDdwBEFqCU9Zaq2hGYSqY4DbXPjKHdO16U2t19IZHoVYsr8LaFosxUW37M80eOIJdPI4Bn-Bf93Yf3od2mpyHWZjL7aTW8RyKIW-gvcU76KUTzCrWDcgDcyVojMY5T8R2HGgKENj3yIoC8s",
+            Bird: "https://lh3.googleusercontent.com/aida-public/AB6AXuBFinE03crclFIvILzq8l9TZOBo7kLqJrHWdYxPK3rYB47FWGk615n0nHaHtZzMxZQwGpq6HEThCTUwofx2NHD1uWhGTSeo6NiTqPguMnb7bvYUHAzIP7tRtAE4rzfKCtTaH9LLMvNq846GqisyI79fT-sn_ETofQu8rO9AoZJuwxlo2_L5BH97bvIMnJiaQgBDvw_k4Gibj1-aN7ReNzLncjPf6NhTIfY6VneVz187Z-wDXGQ7SNiwxoOhkLxSXjW4VBOJgrcslI4",
+            Exotic: null,
+          };
+
+          let patients = [
+            {
+              id: "VC-2041",
+              name: "Kofi",
+              species: "Dog",
+              breed: "Golden Retriever",
+              owner: "Kwame Mensah",
+              lastVisit: "Oct 24, 2024",
+              status: "VACCINATED",
+              age: "3 Years",
+              gender: "Male (Neutered)",
+              img: petImages.Dog,
+            },
+            {
+              id: "VC-2088",
+              name: "Nala",
+              species: "Cat",
+              breed: "Siamese",
+              owner: "Ama Boateng",
+              lastVisit: "Nov 02, 2024",
+              status: "DUE SOON",
+              age: "2 Years",
+              gender: "Female",
+              img: petImages.Cat,
+            },
+            {
+              id: "VC-3112",
+              name: "Snowy",
+              species: "Dog",
+              breed: "Toy Poodle",
+              owner: "Daniel Appiah",
+              lastVisit: "Aug 15, 2024",
+              status: "OVERDUE",
+              age: "4 Years",
+              gender: "Female (Neutered)",
+              img: petImages.Dog,
+            },
+            {
+              id: "VC-4002",
+              name: "Zazu",
+              species: "Bird",
+              breed: "African Gray Parrot",
+              owner: "Ekow Quansah",
+              lastVisit: "Nov 10, 2024",
+              status: "VACCINATED",
+              age: "1 Year",
+              gender: "Male",
+              img: petImages.Bird,
+            },
+          ];
+
+          let idCounter = 5000; // Starting point for new IDs
+
+          // --- RENDER TABLE (NOW CONNECTED TO FILTERS) ---
+          function renderTable() {
+            const tbody = document.getElementById("patient-tbody");
+            tbody.innerHTML = "";
+
+            // Get current filter values
+            const searchInput = document
+              .getElementById("patient-search")
+              .value.toLowerCase();
+            const speciesFilter =
+              document.getElementById("filter-species").value;
+            const showVaccinated =
+              document.getElementById("filter-vaccinated").checked;
+            const showDueSoon =
+              document.getElementById("filter-due-soon").checked;
+            const showOverdue =
+              document.getElementById("filter-overdue").checked;
+
+            const filtered = patients.filter((p) => {
+              // 1. Search filter
+              const matchesSearch =
+                !searchInput ||
+                p.name.toLowerCase().includes(searchInput) ||
+                p.owner.toLowerCase().includes(searchInput) ||
+                p.breed.toLowerCase().includes(searchInput) ||
+                p.species.toLowerCase().includes(searchInput);
+
+              // 2. Species filter
+              const matchesSpecies =
+                speciesFilter === "All" || p.species === speciesFilter;
+
+              // 3. Status filter
+              let matchesStatus = false;
+              if (p.status === "VACCINATED" && showVaccinated)
+                matchesStatus = true;
+              if (p.status === "DUE SOON" && showDueSoon) matchesStatus = true;
+              if (p.status === "OVERDUE" && showOverdue) matchesStatus = true;
+
+              // Return true ONLY if it passes all active filters
+              return matchesSearch && matchesSpecies && matchesStatus;
+            });
+
+            if (filtered.length === 0) {
+              tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant font-body-md">No patients found matching your filters.</td></tr>`;
+            } else {
+              filtered.forEach((p) => {
+                const statusClass =
+                  p.status === "VACCINATED"
+                    ? "status-vaccinated"
+                    : p.status === "DUE SOON"
+                      ? "status-due-soon"
+                      : "status-overdue";
+                const avatarHTML = p.img
+                  ? `<img class="w-full h-full object-cover" src="${p.img}" />`
+                  : `<span class="material-symbols-outlined text-primary text-2xl">pet_supplies</span>`;
+
+                const row = document.createElement("tr");
+                row.className = "hover:bg-surface-muted/50 transition-colors";
+                row.innerHTML = `
+                                      <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                          <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden">
+                                            ${avatarHTML}
+                                          </div>
+                                          <div>
+                                            <div class="font-label-md text-on-surface">${p.name}</div>
+                                            <div class="text-caption text-outline">ID: #${p.id}</div>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td class="px-6 py-4">
+                                        <div class="text-body-md">${p.species}</div>
+                                        <div class="text-caption text-outline">${p.breed}</div>
+                                      </td>
+                                      <td class="px-6 py-4 text-body-md">${p.owner}</td>
+                                      <td class="px-6 py-4 text-body-md">${p.lastVisit}</td>
+                                      <td class="px-6 py-4">
+                                        <select data-id="${p.id}" class="status-select rounded-full px-3 py-1 ${statusClass}">
+                                          <option value="VACCINATED" ${p.status === "VACCINATED" ? "selected" : ""}>Vaccinated</option>
+                                          <option value="DUE SOON" ${p.status === "DUE SOON" ? "selected" : ""}>Due Soon</option>
+                                          <option value="OVERDUE" ${p.status === "OVERDUE" ? "selected" : ""}>Overdue</option>
+                                        </select>
+                                      </td>
+                                      <td class="px-6 py-4 text-right">
+                                        <button data-id="${p.id}" class="view-record-btn text-primary font-label-md hover:underline active:opacity-70">View Records</button>
+                                      </td>
+                                    `;
+                tbody.appendChild(row);
+              });
+            }
+
+            // Re-attach event listeners for buttons inside the newly created rows
+            document.querySelectorAll(".view-record-btn").forEach((btn) => {
+              btn.addEventListener("click", (e) => {
+                const id = e.target.getAttribute("data-id");
+                const patient = patients.find((p) => p.id === id);
+                if (patient) openRecordView(patient);
+              });
+            });
+
+            document.querySelectorAll(".status-select").forEach((sel) => {
+              sel.addEventListener("change", (e) => {
+                const id = e.target.getAttribute("data-id");
+                const newStatus = e.target.value;
+                const patient = patients.find((p) => p.id === id);
+                if (patient) {
+                  patient.status = newStatus;
+                  e.target.classList.remove(
+                    "status-vaccinated",
+                    "status-due-soon",
+                    "status-overdue",
+                  );
+                  e.target.classList.add(
+                    newStatus === "VACCINATED"
+                      ? "status-vaccinated"
+                      : newStatus === "DUE SOON"
+                        ? "status-due-soon"
+                        : "status-overdue",
+                  );
+                }
+              });
+            });
+
+            document.getElementById("pagination-count").textContent =
+              `Showing ${filtered.length} of ${patients.length} patients`;
+          }
+
+          // --- FILTER & SEARCH LISTENERS ---
+          document
+            .getElementById("patient-search")
+            .addEventListener("input", renderTable);
+          document
+            .getElementById("filter-species")
+            .addEventListener("change", renderTable);
+          document
+            .getElementById("filter-vaccinated")
+            .addEventListener("change", renderTable);
+          document
+            .getElementById("filter-due-soon")
+            .addEventListener("change", renderTable);
+          document
+            .getElementById("filter-overdue")
+            .addEventListener("change", renderTable);
+
+          document
+            .getElementById("clear-filters-btn")
+            .addEventListener("click", () => {
+              document.getElementById("filter-species").value = "All";
+              document.getElementById("filter-vaccinated").checked = true;
+              document.getElementById("filter-due-soon").checked = true;
+              document.getElementById("filter-overdue").checked = true;
+              document.getElementById("patient-search").value = "";
+              renderTable();
+            });
+
+          function goToPatientRecord(id, name, species, breed, age, gender) {
+            // Build the URL with all patient details
+            const url = `./records.html?name=${name}&id=${id}&species=${species}&breed=${breed}&age=${age}&gender=${gender}`;
+            window.location.href = url;
+          }
+
+          // ==========================================
+          // 2. CHART.JS WEIGHT TRACKER
+          // ==========================================
+          function initWeightChart() {
+            const canvas = document.getElementById("weightChart");
+            if (!canvas) return; // Safety check
+
+            const ctx = canvas.getContext("2d");
+
+            // Destroy existing chart to prevent "canvas already in use" errors
+            if (
+              typeof weightChartInstance !== "undefined" &&
+              weightChartInstance
+            ) {
+              weightChartInstance.destroy();
+            }
+
+            weightChartInstance = new Chart(ctx, {
+              type: "line",
+              data: {
+                labels: ["Jan", "Mar", "Jun", "Oct"],
+                datasets: [
+                  {
+                    label: "Weight (kg)",
+                    data: [28.5, 29.1, 29.8, 31.2],
+                    borderColor: "#036469",
+                    backgroundColor: "rgba(3, 100, 105, 0.1)",
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: "#ffffff",
+                    pointBorderColor: "#036469",
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                  },
+                ],
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: { display: false },
+                },
+                scales: {
+                  y: {
+                    beginAtZero: false,
+                    grid: { color: "#e4e2e1" },
+                    ticks: { font: { size: 11 } },
+                  },
+                  x: {
+                    grid: { display: false },
+                    ticks: { font: { size: 11 } },
+                  },
+                },
+              },
+            });
+          }
+          // ==========================================
+          // 3. PROFILE PICTURE CHANGE
+          // ==========================================
+          function updateProfilePicture(event) {
+            const file = event.target.files[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onload = function (e) {
+                document.getElementById("record-img").src = e.target.result;
+              };
+              reader.readAsDataURL(file);
+            }
+          }
+
+          // ==========================================
+          // 4. EXPORT RECORD FUNCTIONALITY
+          // ==========================================
+          function exportRecord() {
+            // Triggers the browser's native print-to-PDF dialog
+            window.print();
+            // Alternatively, you could generate a real PDF here using a library like jsPDF
+          }
+
+          // ==========================================
+          // 5. MEDICAL NOTES EDITOR & DROPDOWN
+          // ==========================================
+          let medicalNotes = [
+            {
+              id: 1,
+              date: "Dec 01, 2023, 10:30 AM",
+              text: "Owner reports slight stiffness in hind legs during morning walks. Monitored for early signs of dysplasia. No clinical intervention needed yet.",
+            },
+            {
+              id: 2,
+              date: "Oct 12, 2023, 02:15 PM",
+              text: "Allergy Warning: Sensitive to Penicillin-based medications.",
+              isWarning: true,
+            },
+          ];
+
+          function renderMedicalNotes() {
+            const list = document.getElementById("medical-notes-list");
+            list.innerHTML = "";
+
+            medicalNotes.forEach((note) => {
+              const warningClass = note.isWarning
+                ? "border-l-4 border-emergency-red bg-error-container/20"
+                : "border border-outline-variant";
+              const warningIcon = note.isWarning
+                ? `<div class="flex items-center gap-2 mb-1"><span class="material-symbols-outlined text-emergency-red text-sm">warning</span><span class="font-label-md text-emergency-red uppercase">Allergy Warning</span></div>`
+                : "";
+              const textClass = note.isWarning
+                ? "font-semibold"
+                : "text-body-md";
+
+              const noteHTML = `
+                <div class="${warningClass} p-4 rounded-r-lg relative group">
+                  ${warningIcon}
+                  <div class="flex justify-between items-start mb-2">
+                    <span class="font-label-md text-on-surface-variant">${note.date}</span>
+                    <!-- Three Dots Dropdown -->
+                    <div class="relative">
+                      <button onclick="toggleNoteDropdown(${note.id})" class="text-on-surface-variant hover:text-primary p-1 rounded-full hover:bg-surface-container transition-all">
+                        <span class="material-symbols-outlined text-[20px]">more_vert</span>
+                      </button>
+                      <!-- Dropdown Menu -->
+                      <div id="dropdown-${note.id}" class="hidden absolute right-0 mt-1 w-32 bg-white rounded-lg shadow-lg border border-outline-variant z-10 overflow-hidden">
+                        <button onclick="editNote(${note.id})" class="w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-muted transition-colors flex items-center gap-2">
+                          <span class="material-symbols-outlined text-[16px]">edit</span> Edit
+                        </button>
+                        <button onclick="deleteNote(${note.id})" class="w-full text-left px-4 py-2 text-sm text-emergency-red hover:bg-error-container/20 transition-colors flex items-center gap-2">
+                          <span class="material-symbols-outlined text-[16px]">delete</span> Delete
+                        </td>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="${textClass}">${note.text}</p>
+                </div>
+              `;
+              list.innerHTML += noteHTML;
+            });
+          }
+
+          function toggleNoteEditor() {
+            const editor = document.getElementById("note-editor");
+            editor.classList.toggle("hidden");
+            if (!editor.classList.contains("hidden")) {
+              document.getElementById("new-note-text").focus();
+            }
+          }
+
+          function saveMedicalNote() {
+            const text = document.getElementById("new-note-text").value.trim();
+            // 1. Check if the emergency box is ticked
+            const isEmergency =
+              document.getElementById("note-is-emergency").checked;
+
+            // Silently return if empty
+            if (!text) return;
+
+            const now = new Date();
+            const dateString =
+              now.toLocaleDateString("en-US", {
+                month: "short",
+                day: "2-digit",
+                year: "numeric",
+              }) +
+              ", " +
+              now.toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+              });
+
+            // 2. Add the new note, using the checkbox state for isWarning
+            medicalNotes.unshift({
+              id: Date.now(),
+              date: dateString,
+              text: text,
+              isWarning: isEmergency,
+            });
+
+            // 3. Clear the textarea AND uncheck the emergency box
+            document.getElementById("new-note-text").value = "";
+            document.getElementById("note-is-emergency").checked = false;
+
+            toggleNoteEditor();
+            renderMedicalNotes();
+          }
+
+          function toggleNoteDropdown(noteId) {
+            // Close all other dropdowns first
+            document.querySelectorAll('[id^="dropdown-"]').forEach((el) => {
+              if (el.id !== `dropdown-${noteId}`) el.classList.add("hidden");
+            });
+            const dropdown = document.getElementById(`dropdown-${noteId}`);
+            dropdown.classList.toggle("hidden");
+          }
+
+          function deleteNote(noteId) {
+            if (confirm("Are you sure you want to delete this note?")) {
+              medicalNotes = medicalNotes.filter((n) => n.id !== noteId);
+              renderMedicalNotes();
+            }
+          }
+
+          function editNote(noteId) {
+            const note = medicalNotes.find((n) => n.id === noteId);
+            if (note) {
+              document.getElementById("new-note-text").value = note.text;
+              toggleNoteEditor();
+              // Remove the old one so saving creates an "updated" version at the top
+              medicalNotes = medicalNotes.filter((n) => n.id !== noteId);
+            }
+          }
+
+          // Close dropdowns when clicking outside
+          document.addEventListener("click", (e) => {
+            if (!e.target.closest(".relative.group")) {
+              // Adjusted selector for the note container
+              document
+                .querySelectorAll('[id^="dropdown-"]')
+                .forEach((el) => el.classList.add("hidden"));
+            }
+          });
+
+          // ==========================================
+          // 6. LABS & X-RAYS FILE UPLOAD
+          // ==========================================
+          let uploadedFiles = [];
+
+          function handleLabUpload(event) {
+            const files = Array.from(event.target.files);
+            files.forEach((file) => {
+              if (file.size > 10 * 1024 * 1024) {
+                showToast(
+                  `File ${file.name} is too large. Max size is 10MB.`,
+                  "error",
+                );
+                return;
+              }
+
+              // Read the file and store it as a data URL
+              const reader = new FileReader();
+              reader.onload = function (e) {
+                uploadedFiles.push({
+                  id: Date.now() + Math.random(),
+                  name: file.name,
+                  type: file.type,
+                  size: (file.size / 1024 / 1024).toFixed(2) + " MB",
+                  dataUrl: e.target.result, // Store the actual file data
+                });
+                renderLabFiles();
+              };
+              reader.readAsDataURL(file);
+            });
+            event.target.value = ""; // Reset input
+          }
+          function renderLabFiles() {
+            const list = document.getElementById("lab-files-list");
+            const noFilesMsg = document.getElementById("no-files-msg");
+
+            // Clear existing rendered files (keep the no-files message)
+            Array.from(list.children).forEach((child) => {
+              if (child.id !== "no-files-msg") list.removeChild(child);
+            });
+
+            if (uploadedFiles.length === 0) {
+              noFilesMsg.style.display = "block";
+              return;
+            }
+            noFilesMsg.style.display = "none";
+
+            uploadedFiles.forEach((file) => {
+              const icon = file.type.includes("pdf")
+                ? "picture_as_pdf"
+                : "image";
+              const canView =
+                file.type.includes("pdf") || file.type.includes("image");
+
+              const fileHTML = `
+      <div class="flex items-center justify-between p-3 bg-surface-muted rounded-lg border border-transparent hover:border-primary-container transition-all group">
+        <div class="flex items-center gap-3 overflow-hidden flex-1">
+          <span class="material-symbols-outlined text-tertiary shrink-0">${icon}</span>
+          <div class="truncate">
+            <p class="text-body-md font-medium truncate">${file.name}</p>
+            <p class="text-caption text-on-surface-variant">${file.size}</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          ${
+            canView
+              ? `
+          <button onclick="viewLabFile('${file.id}')" class="text-primary hover:text-primary-dark p-2 rounded-full hover:bg-primary-container/20 transition-all" title="View">
+            <span class="material-symbols-outlined text-[20px]">visibility</span>
+          </button>
+          `
+              : ""
+          }
+          <button onclick="downloadLabFile('${file.id}')" class="text-on-surface-variant hover:text-primary p-2 rounded-full hover:bg-primary-container/20 transition-all" title="Download">
+            <span class="material-symbols-outlined text-[20px]">download</span>
+          </button>
+          <button onclick="removeLabFile('${file.id}')" class="text-on-surface-variant hover:text-emergency-red p-2 rounded-full hover:bg-error-container/20 transition-all" title="Remove">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+      </div>
+    `;
+              list.insertAdjacentHTML("beforeend", fileHTML);
+            });
+          }
+          function viewLabFile(fileId) {
+            const file = uploadedFiles.find((f) => f.id == fileId);
+            if (!file) return;
+
+            const newWindow = window.open();
+            if (!newWindow) {
+              showToast("Please allow pop-ups to view files.", "error");
+              return;
+            }
+
+            if (file.type.includes("pdf")) {
+              // For PDFs, embed in an iframe
+              newWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head><title>${file.name}</title></head>
+        <body style="margin:0; background:#f5f5f5;">
+          <iframe src="${file.dataUrl}" style="width:100%;height:100vh;border:none;"></iframe>
+        </body>
+      </html>
+    `);
+            } else {
+              // For images, just show the image centered
+              newWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head><title>${file.name}</title></head>
+        <body style="margin:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#f5f5f5;">
+          <img src="${file.dataUrl}" style="max-width:100%;max-height:100vh; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" />
+        </body>
+      </html>
+    `);
+            }
+            newWindow.document.close();
+          }
+
+          function downloadLabFile(fileId) {
+            const file = uploadedFiles.find((f) => f.id == fileId);
+            if (!file) return;
+
+            // Create a temporary download link
+            const link = document.createElement("a");
+            link.href = file.dataUrl;
+            link.download = file.name;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            showToast(`Downloading ${file.name}...`, "info");
+          }
+          function removeLabFile(fileId) {
+            uploadedFiles = uploadedFiles.filter((f) => f.id != fileId);
+            renderLabFiles();
+            showToast("File removed successfully.", "success");
+          }
+
+          // ==========================================
+          // 7. UPDATE showRecordView TO INITIALIZE EVERYTHING
+          // ==========================================
+          const originalShowRecordView = showRecordView;
+          showRecordView = function () {
+            document.getElementById("dashboard-view").style.display = "none";
+            document.getElementById("record-view").style.display = "block";
+            window.scrollTo(0, 0);
+
+            // Initialize dynamic features when view is shown
+            renderMedicalNotes();
+            renderLabFiles();
+
+            // Delay chart init slightly to ensure canvas is visible and has dimensions
+            setTimeout(initWeightChart, 150);
+          };
+
+          // --- MODAL LOGIC ---
+          const modal = document.getElementById("add-modal");
+          const form = document.getElementById("add-form");
+
+          document
+            .getElementById("add-record-btn")
+            .addEventListener("click", () => {
+              modal.classList.remove("hidden");
+              modal.classList.add("flex");
+            });
+
+          function closeModal() {
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+            form.reset();
+          }
+
+          document
+            .getElementById("close-modal")
+            .addEventListener("click", closeModal);
+          document
+            .getElementById("cancel-modal")
+            .addEventListener("click", closeModal);
+          modal.addEventListener("click", (e) => {
+            if (e.target === modal) closeModal();
+          });
+
+          // UPDATED SUBMIT LISTENER WITH FORCED VALIDATION
+          form.addEventListener("submit", (e) => {
+            // e.preventDefault();
+            // 1. Check if the form is valid
+            if (!form.checkValidity()) {
+              form.reportValidity(); // FORCES the browser to show your custom 'title' message
+              return; // Stop execution
+            }
+
+            // 2. If valid, prevent default page reload and process the data
+            e.preventDefault();
+
+            const name = document.getElementById("f-name").value.trim();
+            const species = document.getElementById("f-species").value;
+            const breed = document.getElementById("f-breed").value.trim();
+            const owner = document.getElementById("f-owner").value.trim();
+            const age = document.getElementById("f-age").value.trim() || "N/A";
+            const gender = document.getElementById("f-gender").value;
+            const status = document.getElementById("f-status").value;
+
+            const newId = `VC-${idCounter++}`;
+            const today = new Date();
+            const lastVisit = today.toLocaleDateString("en-US", {
+              month: "short",
+              day: "2-digit",
+              year: "numeric",
+            });
+
+            const newPatient = {
+              id: newId,
+              name,
+              species,
+              breed,
+              owner,
+              lastVisit,
+              status,
+              age,
+              gender,
+              img: petImages[species] || null,
+            };
+
+            patients.unshift(newPatient);
+            renderTable(); // Re-render table with new filters applied
+            closeModal();
+
+            // Optional: Show a success toast
+            showToast(`Patient ${name} added successfully!`, "success");
+          });
+          // --- SEARCH ---
+          document
+            .getElementById("patient-search")
+            .addEventListener("input", (e) => {
+              renderTable(e.target.value);
+            });
+
+          // ==========================================
+          // NAVIGATION & RECORD VIEW LOGIC
+          // ==========================================
+          function openRecordView(patient) {
+            // 1. Populate the HTML elements with the patient's data from the array
+            document.getElementById("record-name").textContent = patient.name;
+            document.getElementById("record-id").textContent =
+              `Patient ID: #${patient.id}`;
+            document.getElementById("record-species").textContent =
+              patient.species;
+            document.getElementById("record-breed").textContent = patient.breed;
+            document.getElementById("record-age").textContent = patient.age;
+            document.getElementById("record-gender").textContent =
+              patient.gender;
+            if (patient.img)
+              document.getElementById("record-img").src = patient.img;
+
+            // 2. Switch the view
+            showRecordView();
+          }
+
+          function showRecordView() {
+            document.getElementById("dashboard-view").style.display = "none";
+            document.getElementById("record-view").style.display = "block";
+            window.scrollTo(0, 0);
+
+            // Initialize features that need the view to be visible (like Chart.js)
+            renderMedicalNotes();
+            renderLabFiles();
+            setTimeout(initWeightChart, 100);
+          }
+
+          function showDashboardView() {
+            document.getElementById("record-view").style.display = "none";
+            document.getElementById("dashboard-view").style.display = "block";
+            window.scrollTo(0, 0);
+          }
+
+          // ==========================================
+          // SIMPLE SAME-PAGE RECORD VIEW LOGIC
+          // ==========================================
+
+          // 1. This runs when you click "View Records" in the table
+          function openRecordView(patient) {
+            // Fill the Patient Record View with the clicked patient's data
+            document.getElementById("record-name").textContent = patient.name;
+            document.getElementById("record-id").textContent =
+              `Patient ID: #${patient.id}`;
+            document.getElementById("record-species").textContent =
+              patient.species;
+            document.getElementById("record-breed").textContent = patient.breed;
+            document.getElementById("record-age").textContent = patient.age;
+            document.getElementById("record-gender").textContent =
+              patient.gender;
+
+            if (patient.img) {
+              document.getElementById("record-img").src = patient.img;
+            }
+
+            // Switch the screen to show the record view
+            showRecordView();
+          }
+
+          // 2. This hides the table and shows the patient details
+          function showRecordView() {
+            document.getElementById("dashboard-view").style.display = "none";
+            document.getElementById("record-view").style.display = "block";
+            window.scrollTo(0, 0);
+
+            // Load the notes, files, and chart for the record view
+            renderMedicalNotes();
+            renderLabFiles();
+            setTimeout(initWeightChart, 100);
+          }
+
+          // 3. This hides the patient details and goes back to the table
+          function showDashboardView() {
+            document.getElementById("record-view").style.display = "none";
+            document.getElementById("dashboard-view").style.display = "block";
+            window.scrollTo(0, 0);
+          }
+
+          // ==========================================
+          // INITIAL PAGE LOAD
+          // ==========================================
+          window.addEventListener("load", () => {
+            // 1. Render the dashboard table
+            renderTable();
+
+            // 2. Animate chart bars if they exist on the dashboard
+            const bars = document.querySelectorAll(".chart-bar");
+            bars.forEach((bar) => {
+              const finalHeight = bar.style.height;
+              if (finalHeight) {
+                bar.style.height = "0";
+                setTimeout(() => {
+                  bar.style.height = finalHeight;
+                }, 100);
+              }
+            });
+          });
+
+          // ==========================================
+          // APPOINTMENT MODAL LOGIC
+          // ==========================================
+          const appointmentModal = document.getElementById("appointment-modal");
+          const appointmentForm = document.getElementById("appointment-form");
+
+          // Opens the modal and pre-fills patient data
+          function scheduleAppointment() {
+            const name = document.getElementById("record-name").textContent;
+            const id = document.getElementById("record-id").textContent;
+
+            document.getElementById("appt-patient-name").textContent = name;
+            document.getElementById("appt-patient-id").textContent = id;
+
+            // Set default date to today
+            const today = new Date().toISOString().split("T")[0];
+            document.getElementById("appt-date").value = today;
+
+            appointmentModal.classList.remove("hidden");
+            appointmentModal.classList.add("flex");
+          }
+
+          // Closes the modal and resets the form
+          function closeAppointmentModal() {
+            appointmentModal.classList.add("hidden");
+            appointmentModal.classList.remove("flex");
+            appointmentForm.reset();
+          }
+
+          // Event listeners for closing
+          document
+            .getElementById("close-appointment-modal")
+            .addEventListener("click", closeAppointmentModal);
+          document
+            .getElementById("cancel-appointment-modal")
+            .addEventListener("click", closeAppointmentModal);
+          appointmentModal.addEventListener("click", (e) => {
+            if (e.target === appointmentModal) closeAppointmentModal();
+          });
+
+          // Handle form submission
+          appointmentForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            // 1. Check if the form is valid FIRST
+            if (!appointmentForm.checkValidity()) {
+              appointmentForm.reportValidity(); // FORCES the browser to show your custom 'title' message
+              return; // Stop execution and let the browser highlight the invalid fields
+            }
+
+            const type = document.getElementById("appt-type").value;
+            const date = document.getElementById("appt-date").value;
+            const time = document.getElementById("appt-time").value;
+            const vet = document.getElementById("appt-vet").value;
+
+            // In a real app, you would send this data to your backend here
+            console.log("Booking Submitted:", { type, date, time, vet });
+
+            // Show success message and close
+            showToast(
+              `Appointment scheduled successfully for ${date} at ${time}!`,
+              "success",
+            );
+            closeAppointmentModal();
+          });
+        </script>
+      </div>
+      <!-- Closes mainContentWrapper -->
+    </div>
+    <!-- Closes flex min-h-screen w-full -->
+    <!-- Toast Notification Container (Required for showToast to work) -->
+    <div
+      id="toast-container"
+      class="toast-container fixed top-20 right-4 z-[100]"
+    ></div>
+  </body>
+</html>

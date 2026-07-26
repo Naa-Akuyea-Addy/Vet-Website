@@ -1,0 +1,1000 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>addyPets Veterinary Clinic | Veterinarian Portal</title>
+    <!-- Google Fonts & Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#93000a",
+              "primary-fixed": "#a4eff4",
+              "surface-bright": "#fbf9f8",
+              "secondary-container": "#9bedf1",
+              "on-primary-fixed": "#002022",
+              "on-surface": "#1b1c1c",
+              background: "#fbf9f8",
+              "outline-variant": "#bec8c9",
+              "tertiary-container": "#617677",
+              secondary: "#00696d",
+              "error-container": "#ffdad6",
+              "on-secondary-fixed": "#002021",
+              "surface-container-highest": "#e4e2e1",
+              "surface-variant": "#e4e2e1",
+              "inverse-primary": "#88d3d8",
+              primary: "#036469",
+              "deep-navy": "#1A3638",
+              "surface-container-low": "#f5f3f3",
+              "on-tertiary-fixed-variant": "#364a4c",
+              "secondary-fixed": "#9ef0f4",
+              "tertiary-fixed": "#d0e7e8",
+              "on-primary-container": "#e5fdff",
+              "on-tertiary": "#ffffff",
+              "on-secondary": "#ffffff",
+              "on-tertiary-container": "#e6fdfe",
+              "on-surface-variant": "#3f4949",
+              "surface-container-lowest": "#ffffff",
+              "tertiary-fixed-dim": "#b4cbcc",
+              "on-background": "#1b1c1c",
+              "on-secondary-container": "#006e72",
+              surface: "#fbf9f8",
+              "inverse-surface": "#303030",
+              "secondary-fixed-dim": "#82d4d8",
+              "on-tertiary-fixed": "#091f20",
+              "surface-muted": "#F4F7F7",
+              tertiary: "#485d5f",
+              "on-secondary-fixed-variant": "#004f52",
+              "primary-container": "#2e7d82",
+              "emergency-red": "#943031",
+              "surface-tint": "#0f696e",
+              "surface-dim": "#dcd9d9",
+              "surface-container-high": "#eae8e7",
+              "on-primary": "#ffffff",
+              outline: "#6f797a",
+              "inverse-on-surface": "#f2f0f0",
+              "on-error": "#ffffff",
+              "on-primary-fixed-variant": "#004f53",
+              error: "#ba1a1a",
+              "primary-fixed-dim": "#88d3d8",
+              "surface-container": "#f0eded",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              "margin-desktop": "40px",
+              "stack-sm": "12px",
+              "margin-mobile": "16px",
+              "stack-lg": "48px",
+              gutter: "24px",
+              "container-max": "1200px",
+              "stack-md": "24px",
+              base: "8px",
+            },
+            fontFamily: {
+              "label-md": ["Open Sans"],
+              caption: ["Open Sans"],
+              "display-lg": ["Plus Jakarta Sans"],
+              "headline-md": ["Plus Jakarta Sans"],
+              "headline-lg": ["Plus Jakarta Sans"],
+              "headline-lg-mobile": ["Plus Jakarta Sans"],
+              "body-lg": ["Open Sans"],
+              "body-md": ["Open Sans"],
+            },
+            fontSize: {
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              caption: ["12px", { lineHeight: "16px", fontWeight: "400" }],
+              "display-lg": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "headline-lg": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "600" },
+              ],
+              "headline-lg-mobile": [
+                "28px",
+                { lineHeight: "36px", fontWeight: "600" },
+              ],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .input-error {
+        border-color: #fd0808 !important;
+        box-shadow: none !important;
+        background-color: #ffffff !important;
+      }
+      .input-error:focus {
+        border-color: #fd0808 !important;
+        box-shadow: none !important;
+        background-color: #ffffff !important;
+        outline: none !important;
+      }
+      .form-transition {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+      .toast-container {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        z-index: 60;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        pointer-events: none;
+      }
+      .toast {
+        min-width: 220px;
+        max-width: 320px;
+        padding: 1rem 1.2rem;
+        border-radius: 0.9rem;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
+        color: #ffffff;
+        font-weight: 600;
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.28s ease,
+          transform 0.28s ease;
+        pointer-events: auto;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .toast-success {
+        background: linear-gradient(135deg, #047857, #059669);
+      }
+      .toast-info {
+        background: linear-gradient(135deg, #0d6efd, #2563eb);
+      }
+      .toast-error {
+        background: linear-gradient(135deg, #b91c1c, #ef4444);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col"
+  >
+    <main
+      class="flex-grow flex items-center justify-center relative overflow-hidden px-margin-mobile md:px-0 py-stack-lg"
+    >
+      <div
+        class="absolute top-[-10%] right-[-5%] w-96 h-96 bg-primary/5 rounded-full blur-3xl"
+      ></div>
+      <div
+        class="absolute bottom-[-10%] left-[-5%] w-96 h-96 bg-secondary/5 rounded-full blur-3xl"
+      ></div>
+      <div
+        class="w-full max-w-[1100px] flex flex-col md:flex-row bg-surface-container-lowest shadow-lg rounded-xl overflow-hidden min-h-[700px] z-10"
+      >
+        <!-- Left Side: Branding & Context -->
+        <div
+          class="w-full md:w-1/2 bg-deep-navy p-stack-lg flex flex-col justify-between relative overflow-hidden"
+        >
+          <div class="z-20">
+            <img
+              alt="adyPets Veterinary Clinic Logo"
+              class="h-16 w-auto mb-stack-md"
+              src="logo.png"
+            />
+            <h1
+              class="font-headline-lg text-headline-lg text-primary-fixed mb-stack-sm"
+            >
+              Professional Portal
+            </h1>
+            <p
+              class="font-body-lg text-body-lg text-tertiary-fixed-dim max-w-md"
+            >
+              Dedicated tools for Ghana's veterinary community. Manage clinical
+              data, track patient history, and stay connected with the Ghana Vet
+              Council.
+            </p>
+          </div>
+          <div class="absolute inset-0 opacity-10 pointer-events-none">
+            <div
+              class="w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary via-deep-navy to-deep-navy"
+            ></div>
+          </div>
+          <div class="z-20 pt-stack-lg">
+            <div class="flex items-center gap-stack-sm text-primary-fixed mb-4">
+              <span class="material-symbols-outlined text-[32px]"
+                >verified_user</span
+              >
+              <span class="font-label-md text-label-md"
+                >Secure Medical Environment</span
+              >
+            </div>
+            <p
+              class="font-caption text-caption text-outline-variant opacity-70"
+            >
+              Join 500+ clinics across Accra, Kumasi, and Tamale providing
+              world-class animal care.
+            </p>
+          </div>
+        </div>
+        <!-- Right Side: Auth Forms -->
+        <div
+          class="w-full md:w-1/2 p-stack-lg flex flex-col justify-center bg-surface-bright"
+        >
+          <!-- Tab Navigation -->
+          <div class="flex border-b border-outline-variant/30 mb-stack-lg">
+            <button
+              class="flex-1 py-4 font-headline-md text-headline-md border-b-2 border-primary text-primary transition-all"
+              id="tab-login"
+              onclick="toggleTab('login')"
+            >
+              Login
+            </button>
+            <button
+              class="flex-1 py-4 font-headline-md text-headline-md border-b-2 border-transparent text-on-surface-variant hover:text-primary transition-all"
+              id="tab-register"
+              onclick="toggleTab('register')"
+            >
+              Register
+            </button>
+          </div>
+          <!-- Login Form -->
+          <form id="login-form" class="form-transition space-y-stack-md">
+            <div class="space-y-2">
+              <label
+                class="font-label-md text-label-md text-on-surface-variant ml-1"
+                >Email Address</label
+              >
+              <div class="relative">
+                <span
+                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline"
+                  >mail</span
+                >
+                <input
+                  id="loginEmail"
+                  name="log_email"
+                  class="w-full pl-12 pr-4 py-4 rounded-lg bg-surface-container-low border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  placeholder="vet@clinic.com.gh"
+                  type="email"
+                  autocomplete="email"
+                />
+              </div>
+              <p class="font-caption text-caption text-on-surface-variant mt-2">
+                Use only letters, numbers, dots, underscores, or hyphens in the
+                email. Avoid other special characters.
+              </p>
+            </div>
+            <div class="space-y-2">
+              <label
+                class="font-label-md text-label-md text-on-surface-variant ml-1"
+                >Password</label
+              >
+              <div class="relative">
+                <span
+                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline"
+                  >lock</span
+                >
+                <input
+                  id="loginPassword"
+                  name="password"
+                  class="w-full pl-12 pr-4 py-4 rounded-lg bg-surface-container-low border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  placeholder="••••••••"
+                  type="password"
+                  minlength="8"
+                  autocomplete="current-password"
+                />
+                <button
+                  id="toggle-password-btn"
+                  class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-primary"
+                  type="button"
+                >
+                  <span
+                    id="toggle-password-icon"
+                    class="material-symbols-outlined"
+                    >visibility</span
+                  >
+                </button>
+              </div>
+            </div>
+            <div class="flex items-center justify-between py-2">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input
+                  id="rememberMe"
+                  class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary"
+                  type="checkbox"
+                />
+                <span class="font-caption text-caption text-on-surface-variant"
+                  >Remember device</span
+                >
+              </label>
+              <a
+                class="font-caption text-caption text-primary font-bold hover:underline"
+                href="forgot_password.html"
+                >Forgot password?</a
+              >
+            </div>
+            <button
+              type="submit"
+              class="w-full py-4 bg-primary text-on-primary rounded-lg font-headline-md text-headline-md hover:bg-primary-container transition-all shadow-md active:scale-[0.98]"
+            >
+              Sign In
+            </button>
+          </form>
+          <!-- Register Form (Hidden by default) -->
+          <form
+            id="register-form"
+            class="hidden form-transition space-y-stack-sm"
+          >
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="space-y-1">
+                <label
+                  class="font-label-md text-label-md text-on-surface-variant ml-1"
+                  >Full Name</label
+                >
+                <input
+                  id="registerName"
+                  name="name"
+                  class="w-full px-4 py-3 rounded-lg bg-surface-container-low border border-outline-variant focus:border-primary outline-none transition-all"
+                  placeholder="Kwame Mensah"
+                  type="text"
+                />
+              </div>
+              <div class="space-y-1">
+                <label
+                  class="font-label-md text-label-md text-on-surface-variant ml-1"
+                  >Medical License ID</label
+                >
+                <input
+                  id="registerLicense"
+                  name="license_number"
+                  class="w-full px-4 py-3 rounded-lg bg-surface-container-low border border-outline-variant focus:border-primary outline-none transition-all"
+                  placeholder="GVC-XXXXX"
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="space-y-1">
+              <label
+                class="font-label-md text-label-md text-on-surface-variant ml-1"
+                >Phone Number</label
+              >
+              <div class="flex">
+                <span
+                  class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-outline-variant rounded-l-md"
+                >
+                  +233
+                </span>
+                <input
+                  id="registerPhone"
+                  name="phone"
+                  class="flex-1 min-w-0 bg-surface border border-outline-variant rounded-r-lg p-3 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  placeholder="241234567"
+                  type="tel"
+                />
+              </div>
+            </div>
+            <div class="space-y-1">
+              <label
+                class="font-label-md text-label-md text-on-surface-variant ml-1"
+                >Personal Email</label
+              >
+              <input
+                id="registerEmail"
+                name="email"
+                class="w-full px-4 py-3 rounded-lg bg-surface-container-low border border-outline-variant focus:border-primary outline-none transition-all"
+                placeholder="name@google.com"
+                type="email"
+              />
+              <p class="font-caption text-caption text-on-surface-variant mt-2">
+                Use only letters, numbers, dots, underscores, or hyphens in the
+                email. Avoid other special characters.
+              </p>
+            </div>
+            <div class="space-y-1">
+              <label
+                class="font-label-md text-label-md text-on-surface-variant ml-1"
+                >Create Password</label
+              >
+              <div class="relative">
+                <input
+                  id="registerPassword"
+                  name="password"
+                  class="w-full px-4 py-3 rounded-lg bg-surface-container-low border border-outline-variant focus:border-primary outline-none transition-all"
+                  placeholder="Min. 8 characters"
+                  type="password"
+                  minlength="8"
+                />
+                <button
+                  id="toggle-register-password-btn"
+                  class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-primary"
+                  type="button"
+                >
+                  <span
+                    id="toggle-register-password-icon"
+                    class="material-symbols-outlined"
+                    >visibility</span
+                  >
+                </button>
+              </div>
+            </div>
+            <div class="py-2">
+              <p class="font-caption text-caption text-on-surface-variant">
+                By registering, you agree to our
+                <a
+                  class="text-primary underline"
+                  href="https://www.facebook.com"
+                  >Terms of Service</a
+                >
+                and confirm your registration with the
+                <span class="font-bold">Ghana Vet Council</span>.
+              </p>
+            </div>
+            <button
+              type="submit"
+              class="w-full py-4 bg-primary text-on-primary rounded-lg font-headline-md text-headline-md hover:bg-primary-container transition-all shadow-md active:scale-[0.98]"
+            >
+              Create Account
+            </button>
+          </form>
+          <!-- Secondary Actions -->
+          <div
+            class="mt-stack-lg pt-stack-md border-t border-outline-variant/20 flex flex-col items-center gap-4"
+          >
+            <p class="font-caption text-caption text-on-surface-variant">
+              Authentication provided by addyPets Global Secure Systems
+            </p>
+            <div class="flex gap-4">
+              <div
+                class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-outline cursor-pointer hover:bg-secondary-container hover:text-secondary transition-colors"
+              >
+                <span class="material-symbols-outlined">help_outline</span>
+              </div>
+              <div
+                class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-outline cursor-pointer hover:bg-secondary-container hover:text-secondary transition-colors"
+              >
+                <span class="material-symbols-outlined">language</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div id="toast-container" class="toast-container"></div>
+    <footer
+      class="bg-deep-navy dark:bg-surface-container-lowest w-full mt-auto"
+    >
+      <div
+        class="flex flex-col md:flex-row justify-between items-center px-margin-desktop py-stack-lg w-full max-w-container-max mx-auto"
+      >
+        <div class="mb-stack-md md:mb-0">
+          <p
+            class="font-headline-md text-headline-md text-primary-fixed dark:text-primary"
+          >
+            addyPets Ghana
+          </p>
+          <p class="font-caption text-caption text-tertiary-fixed-dim mt-1">
+            © 2024 addyPets Ghana. Providing compassionate care for every pet.
+          </p>
+        </div>
+        <div class="flex flex-wrap justify-center gap-gutter">
+          <a
+            class="font-caption text-caption text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors cursor-pointer"
+            href="https://www.facebook.com"
+            >Privacy Policy</a
+          >
+          <a
+            class="font-caption text-caption text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors cursor-pointer"
+            href="https://www.pinterest.com"
+            >Terms of Service</a
+          >
+          <a
+            class="font-caption text-caption text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors cursor-pointer"
+            href="https://www.facebook.com"
+            >Contact Us</a
+          >
+          <a
+            class="font-caption text-caption text-primary-fixed font-bold hover:text-on-primary-fixed transition-colors cursor-pointer"
+            href="https://www.facebook.com"
+            >Ghana Vet Council</a
+          >
+        </div>
+      </div>
+    </footer>
+    <script>
+      function toggleTab(type) {
+        const loginForm = document.getElementById("login-form");
+        const registerForm = document.getElementById("register-form");
+        const tabLogin = document.getElementById("tab-login");
+        const tabRegister = document.getElementById("tab-register");
+
+        if (type === "login") {
+          loginForm.classList.remove("hidden");
+          registerForm.classList.add("hidden");
+          tabLogin.classList.add("border-primary", "text-primary");
+          tabLogin.classList.remove(
+            "border-transparent",
+            "text-on-surface-variant",
+          );
+          tabRegister.classList.add(
+            "border-transparent",
+            "text-on-surface-variant",
+          );
+          tabRegister.classList.remove("border-primary", "text-primary");
+        } else {
+          loginForm.classList.add("hidden");
+          registerForm.classList.remove("hidden");
+          tabRegister.classList.add("border-primary", "text-primary");
+          tabRegister.classList.remove(
+            "border-transparent",
+            "text-on-surface-variant",
+          );
+          tabLogin.classList.add(
+            "border-transparent",
+            "text-on-surface-variant",
+          );
+          tabLogin.classList.remove("border-primary", "text-primary");
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const loginForm = document.getElementById("login-form");
+        const registerForm = document.getElementById("register-form");
+
+        const emailRegex =
+          /^[A-Za-z0-9]+(?:[._-][A-Za-z0-9]+)*@[A-Za-z0-9]+(?:\.[A-Za-z0-9]+)*\.(?:com|clinic|gh)(?:\.[A-Za-z]{2,})?$/;
+        const nameRegex = /^[A-Za-z]+(?:[A-Za-z\s.'-]*[A-Za-z])?$/;
+        const licenseRegex = /^GVC-[A-Za-z0-9]{3,15}$/i;
+        const phoneRegex = /^\d{7,11}$/;
+        const passwordRegex = /^[A-Za-z0-9]{8,}$/;
+
+        const validateEmail = (email) => emailRegex.test(email);
+        const validateName = (name) => nameRegex.test(name);
+        const validateLicense = (license) => licenseRegex.test(license);
+        const validatePhone = (phone) => phoneRegex.test(phone);
+        const validatePassword = (password) => passwordRegex.test(password);
+
+        const setFieldError = (input, message) => {
+          if (message) {
+            input.classList.add("input-error");
+            input.setCustomValidity(message);
+          } else {
+            input.classList.remove("input-error");
+            input.setCustomValidity("");
+          }
+        };
+
+        const clearFieldError = (input) => {
+          input.classList.remove("input-error");
+          input.setCustomValidity("");
+        };
+
+        const validateField = (
+          input,
+          validator,
+          emptyMessage,
+          invalidMessage,
+        ) => {
+          if (!input) return false;
+          const value = input.value.trim();
+          if (!value) {
+            setFieldError(input, emptyMessage);
+            return false;
+          }
+          if (!validator(value)) {
+            setFieldError(input, invalidMessage);
+            return false;
+          }
+          clearFieldError(input);
+          return true;
+        };
+
+        const attachInputValidation = (
+          input,
+          validator,
+          emptyMessage,
+          invalidMessage,
+        ) => {
+          if (!input) return;
+          input.addEventListener("focus", () => {
+            input.setCustomValidity("");
+          });
+          input.addEventListener("input", () => {
+            const value = input.value.trim();
+            if (!value) {
+              clearFieldError(input);
+            } else if (!validator(value)) {
+              setFieldError(input, invalidMessage);
+            } else {
+              clearFieldError(input);
+            }
+          });
+          input.addEventListener("blur", () => {
+            const value = input.value.trim();
+            if (!value) {
+              setFieldError(input, emptyMessage);
+            } else if (!validator(value)) {
+              setFieldError(input, invalidMessage);
+            } else {
+              clearFieldError(input);
+            }
+          });
+        };
+
+        // Initialize LOGIN form validations
+        attachInputValidation(
+          document.getElementById("loginEmail"),
+          validateEmail,
+          "Please enter your email address.",
+          "Email must be valid and may only contain letters, numbers, dots, underscores, or hyphens.",
+        );
+        attachInputValidation(
+          document.getElementById("loginPassword"),
+          validatePassword,
+          "Please enter your password.",
+          "Password must be exactly 8 alphanumeric characters.",
+        );
+
+        // Password visibility toggle for LOGIN
+        const passwordInput = document.getElementById("loginPassword");
+        const passwordToggleBtn = document.getElementById(
+          "toggle-password-btn",
+        );
+        const passwordToggleIcon = document.getElementById(
+          "toggle-password-icon",
+        );
+        if (passwordToggleBtn && passwordInput && passwordToggleIcon) {
+          passwordToggleBtn.addEventListener("click", () => {
+            const isPassword = passwordInput.type === "password";
+            passwordInput.type = isPassword ? "text" : "password";
+            passwordToggleIcon.textContent = isPassword
+              ? "visibility_off"
+              : "visibility";
+          });
+        }
+
+        const rememberMeCheckbox = document.getElementById("rememberMe");
+        const savedLoginEmail = rememberMeCheckbox
+          ? localStorage.getItem("savedLoginEmail")
+          : null;
+        if (savedLoginEmail) {
+          const loginEmailInput = document.getElementById("loginEmail");
+          if (loginEmailInput) loginEmailInput.value = savedLoginEmail;
+        }
+
+        // Password visibility toggle for REGISTER
+        const registerPasswordInput =
+          document.getElementById("registerPassword");
+        const registerPasswordToggleBtn = document.getElementById(
+          "toggle-register-password-btn",
+        );
+        const registerPasswordToggleIcon = document.getElementById(
+          "toggle-register-password-icon",
+        );
+        if (
+          registerPasswordToggleBtn &&
+          registerPasswordInput &&
+          registerPasswordToggleIcon
+        ) {
+          registerPasswordToggleBtn.addEventListener("click", () => {
+            const isPassword = registerPasswordInput.type === "password";
+            registerPasswordInput.type = isPassword ? "text" : "password";
+            registerPasswordToggleIcon.textContent = isPassword
+              ? "visibility_off"
+              : "visibility";
+          });
+        }
+
+        // Name input sanitization
+        const registerNameInput = document.getElementById("registerName");
+        if (registerNameInput) {
+          registerNameInput.addEventListener("input", (event) => {
+            const target = event.target;
+            const cleanedValue = target.value.replace(/[^A-Za-z\s.'-]/g, "");
+            if (target.value !== cleanedValue) target.value = cleanedValue;
+          });
+        }
+
+        // ✅ ADD THIS - Initialize REGISTER form validations (real-time)
+        attachInputValidation(
+          document.getElementById("registerName"),
+          validateName,
+          "Please enter your full name.",
+          "Please enter a valid name (letters, spaces, apostrophes, or hyphens; 3-60 characters).",
+        );
+        attachInputValidation(
+          document.getElementById("registerLicense"),
+          validateLicense,
+          "Please enter your medical license ID.",
+          "License ID must start with GVC- followed by 3-15 letters/numbers.",
+        );
+        attachInputValidation(
+          document.getElementById("registerPhone"),
+          validatePhone,
+          "Please enter your phone number.",
+          "Phone number must be 7-11 digits.",
+        );
+        attachInputValidation(
+          document.getElementById("registerEmail"),
+          validateEmail,
+          "Please enter your work email.",
+          "Email must be valid and may only contain letters, numbers, dots, underscores, or hyphens.",
+        );
+        attachInputValidation(
+          document.getElementById("registerPassword"),
+          validatePassword,
+          "Please create a password.",
+          "Password must be exactly 8 alphanumeric characters.",
+        );
+
+        // ✅ LOGIN FORM SUBMIT — now calls login()
+        if (loginForm) {
+          loginForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const emailInput = document.getElementById("loginEmail");
+            const passwordInput = document.getElementById("loginPassword");
+
+            // FIXED: Added missing validation variables
+            const isEmailValid = validateField(
+              emailInput,
+              validateEmail,
+              "Please enter your email address.",
+              "Please enter a valid clinic email address.",
+            );
+            const isPasswordValid = validateField(
+              passwordInput,
+              validatePassword,
+              "Please enter your password.",
+              "Password must be exactly 8 alphanumeric characters.",
+            );
+
+            if (!isEmailValid || !isPasswordValid) {
+              const firstError = document.querySelector(".input-error");
+              if (firstError)
+                firstError.scrollIntoView({
+                  behavior: "smooth",
+                  block: "center",
+                });
+              return;
+            }
+
+            if (rememberMeCheckbox && rememberMeCheckbox.checked) {
+              localStorage.setItem("savedLoginEmail", emailInput.value);
+            } else {
+              localStorage.removeItem("savedLoginEmail");
+            }
+
+            //  Actually call the login function
+            await login();
+          });
+        }
+
+        //  REGISTER FORM SUBMIT — now calls register()
+        if (registerForm) {
+          registerForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const nameInput = document.getElementById("registerName");
+            const licenseInput = document.getElementById("registerLicense");
+            const phoneInput = document.getElementById("registerPhone");
+            const emailInput = document.getElementById("registerEmail");
+            const passwordInput = document.getElementById("registerPassword");
+
+            const isNameValid = validateField(
+              nameInput,
+              validateName,
+              "Please enter your full name.",
+              "Please enter a valid name (3-60 characters).",
+            );
+            const isLicenseValid = validateField(
+              licenseInput,
+              validateLicense,
+              "Please enter your medical license ID.",
+              "License ID must start with GVC- followed by 3-15 letters/numbers.",
+            );
+            const isPhoneValid = validateField(
+              phoneInput,
+              validatePhone,
+              "Please enter your phone number.",
+              "Phone number must be 7-11 digits.",
+            );
+            const isEmailValid = validateField(
+              emailInput,
+              validateEmail,
+              "Please enter your work email.",
+              "Please enter a valid clinic email address.",
+            );
+            const isPasswordValid = validateField(
+              passwordInput,
+              validatePassword,
+              "Please create a password.",
+              "Password must be exactly 8 alphanumeric characters.",
+            );
+
+            if (
+              !isNameValid ||
+              !isLicenseValid ||
+              !isPhoneValid ||
+              !isEmailValid ||
+              !isPasswordValid
+            ) {
+              const firstError = document.querySelector(".input-error");
+              if (firstError)
+                firstError.scrollIntoView({
+                  behavior: "smooth",
+                  block: "center",
+                });
+              return;
+            }
+
+            //  Actually call the register function
+            await register();
+          });
+        }
+      });
+
+      function showToast(message, type = "success") {
+        const container = document.getElementById("toast-container");
+        if (!container) return;
+        const toast = document.createElement("div");
+        toast.className = `toast toast-${type}`;
+        toast.textContent = message;
+        container.appendChild(toast);
+        requestAnimationFrame(() => toast.classList.add("show"));
+        setTimeout(() => {
+          toast.classList.remove("show");
+          toast.addEventListener("transitionend", () => toast.remove(), {
+            once: true,
+          });
+        }, 2200);
+      }
+
+      //  LOGIN function — resets only on success
+      async function login() {
+        const email = document.getElementById("loginEmail").value.trim();
+        const password = document.getElementById("loginPassword").value.trim();
+
+        if (!email || !password) {
+          alert("Email and password are required");
+          return;
+        }
+
+        try {
+          const res = await fetch("http://localhost:3000/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+          });
+
+          const data = await res.json();
+
+          if (res.ok) {
+            console.log(data.user);
+            showToast(
+              "Login Successful. Redirecting you to Dashboard",
+              "success",
+            );
+            setTimeout(() => {
+              window.location.href = "admin_portal_vet_website/";
+            }, 1800);
+          } else {
+            showToast(
+              data.message || "Login failed. Please try again.",
+              "error",
+            );
+          }
+        } catch (err) {
+          console.error("Login error:", err);
+          showToast(
+            "Network error. Please check your connection and try again.",
+            "error",
+          );
+        }
+      }
+
+      //  REGISTER function — resets only on success
+      async function register() {
+        const email = document.getElementById("registerEmail").value.trim();
+        const password = document
+          .getElementById("registerPassword")
+          .value.trim();
+        const name = document.getElementById("registerName").value.trim();
+        const license_number = document
+          .getElementById("registerLicense")
+          .value.trim();
+        let phone = document.getElementById("registerPhone").value.trim();
+
+        if (!email || !password || !name || !license_number || !phone) {
+          alert("All fields are required");
+          return;
+        }
+
+        // ✅ Add the +233 prefix to the phone number
+        if (phone) {
+          phone = "+233" + phone;
+        }
+
+        try {
+          const res = await fetch("http://localhost:3000/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email,
+              password,
+              name,
+              license_number,
+              phone,
+            }),
+          });
+
+          const data = await res.json();
+
+          if (res.ok) {
+            showToast("Registration successful", "success");
+            document.getElementById("register-form").reset(); //  Reset only on success
+            toggleTab("login"); //  Switch to login tab after successful registration
+          } else {
+            alert(
+              data.message ||
+                data.error ||
+                "Registration failed. Please try again.",
+            );
+          }
+        } catch (err) {
+          console.error("Register error:", err);
+          alert("Network error. Please check your connection and try again.");
+        }
+      }
+    </script>
+  </body>
+</html>

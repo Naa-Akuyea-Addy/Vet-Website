@@ -1,0 +1,2778 @@
+<!doctype html>
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Billing Management | VetCare Ghana</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Open+Sans:wght@400;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .toast-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        pointer-events: none;
+        position: fixed;
+        top: 24px;
+        right: 24px;
+        z-index: 999999;
+      }
+      .toast {
+        min-width: 220px;
+        max-width: 320px;
+        padding: 1rem 1.2rem;
+        border-radius: 0.9rem;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
+        color: #ffffff;
+        font-weight: 600;
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.28s ease,
+          transform 0.28s ease;
+        pointer-events: auto;
+        white-space: pre-line;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .toast-success {
+        background: linear-gradient(135deg, #047857, #059669);
+      }
+      .toast-info {
+        background: linear-gradient(135deg, #0d6efd, #2563eb);
+      }
+      .toast-error {
+        background: linear-gradient(135deg, #b91c1c, #ef4444);
+      }
+      .toast-warning {
+        background: linear-gradient(135deg, #b45309, #d97706);
+      }
+      .sidebar-item-active {
+        background-color: #2e7d82;
+        color: #ffffff;
+      }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .sidebar-transition {
+        transition:
+          width 0.3s ease-in-out,
+          transform 0.3s ease-in-out;
+      }
+      .mobile-sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 280px;
+        height: 100vh;
+        transition: left 0.3s ease-in-out;
+        z-index: 1000;
+      }
+      .mobile-sidebar.open {
+        left: 0;
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        display: none;
+      }
+      .overlay.active {
+        display: block;
+      }
+      .sidebar-collapsed .sidebar-text {
+        display: none;
+      }
+      .sidebar-collapsed .sidebar-icon-only {
+        margin: 0 auto;
+      }
+      .sidebar-collapsed {
+        width: 80px !important;
+      }
+      .sidebar-collapsed .sidebar-logo-text {
+        display: none;
+      }
+      .sidebar-collapsed .sidebar-logo {
+        margin: 0 auto;
+      }
+      .sidebar-collapsed .sidebar-button {
+        justify-content: center;
+      }
+      .sidebar-collapsed .emergency-section {
+        display: none;
+      }
+      .sidebar-collapsed #logoutBtnDesktop {
+        justify-content: center;
+        padding: 12px !important;
+      }
+      .sidebar-collapsed .bottom-container {
+        padding: 16px 8px !important;
+      }
+      .main-content-full {
+        width: 100% !important;
+        margin-left: 0 !important;
+      }
+      #mainContentWrapper {
+        transition: all 0.3s ease-in-out;
+      }
+      .active-nav-item {
+        font-variation-settings: "FILL" 1;
+      }
+      body {
+        background-color: #fbf9f8;
+        color: #1b1c1c;
+      }
+      .sidebar-scroll {
+        overflow-y: auto;
+        flex: 1;
+      }
+      .sidebar-scroll::-webkit-scrollbar {
+        width: 4px;
+      }
+      .sidebar-scroll::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .sidebar-scroll::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 2px;
+      }
+      .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+      @media (max-width: 767px) {
+        .mobile-card-table thead {
+          display: none;
+        }
+        .mobile-card-table tbody tr {
+          display: block;
+          background-color: #ffffff;
+          border: 1px solid #bec8c9;
+          border-radius: 0.75rem;
+          padding: 1rem;
+          margin-bottom: 1rem;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+        .mobile-card-table tbody td {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0.5rem 0;
+          border-bottom: 1px solid #f4f7f7;
+          text-align: right;
+        }
+        .mobile-card-table tbody td:last-child {
+          border-bottom: none;
+        }
+        .mobile-card-table tbody td::before {
+          content: attr(data-label);
+          font-weight: 600;
+          font-size: 0.75rem;
+          color: #3f4949;
+          text-transform: uppercase;
+          text-align: left;
+          flex-shrink: 0;
+          margin-right: 1rem;
+        }
+        .mobile-card-table tbody td > div {
+          justify-content: flex-end;
+        }
+        .mobile-stack {
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+        .mobile-stack > * {
+          width: 100%;
+        }
+      }
+      .action-dropdown {
+        position: relative;
+        display: inline-block;
+      }
+      .action-dropdown-btn {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 4px;
+        transition: background 0.15s;
+        color: #6f797a;
+      }
+      .action-dropdown-btn:hover {
+        background: #f0eded;
+      }
+      .action-dropdown-menu {
+        position: absolute;
+        right: 0;
+        top: 100%;
+        background: #ffffff;
+        border: 1px solid #bec8c9;
+        border-radius: 0.5rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        min-width: 180px;
+        z-index: 50;
+        opacity: 0;
+        transform: translateY(-8px) scale(0.95);
+        pointer-events: none;
+        transition:
+          opacity 0.15s ease,
+          transform 0.15s ease;
+        overflow: hidden;
+      }
+      .action-dropdown-menu.open {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+      }
+      .action-dropdown-menu button {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        width: 100%;
+        padding: 0.65rem 1rem;
+        font-size: 0.875rem;
+        color: #1b1c1c;
+        text-align: left;
+        transition: background 0.15s;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+      }
+      .action-dropdown-menu button:hover {
+        background: #f4f7f7;
+      }
+      .action-dropdown-menu button.danger {
+        color: #943031;
+      }
+      .action-dropdown-menu button.danger:hover {
+        background: #ffdad6;
+      }
+      .action-dropdown-menu .menu-divider {
+        height: 1px;
+        background: #e4e2e1;
+        margin: 0.25rem 0;
+      }
+      .tab-btn {
+        padding: 0.5rem 1.25rem;
+        border-radius: 9999px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        transition: all 0.15s;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        color: #3f4949;
+      }
+      .tab-btn.active {
+        background: #036469;
+        color: white;
+        box-shadow: 0 2px 6px rgba(3, 100, 105, 0.25);
+      }
+      .tab-btn:hover:not(.active) {
+        background: #e4e2e1;
+      }
+      .wf-stat {
+        background: white;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        border: 1px solid #e4e2e1;
+      }
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 200;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+      .modal-overlay.active {
+        display: flex;
+      }
+      .modal-box {
+        background: white;
+        border-radius: 1rem;
+        max-width: 600px;
+        width: 100%;
+        padding: 2rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      .view-modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 300;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+      .view-modal-overlay.active {
+        display: flex;
+      }
+      .view-modal-box {
+        background: white;
+        border-radius: 1rem;
+        max-width: 600px;
+        width: 100%;
+        padding: 2rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      .view-modal-box .field {
+        display: flex;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #f0eded;
+      }
+      .view-modal-box .field-label {
+        font-weight: 600;
+        width: 40%;
+        color: #3f4949;
+      }
+      .view-modal-box .field-value {
+        width: 60%;
+        color: #1b1c1c;
+      }
+      .editing-row td {
+        background: #f0f7ff;
+      }
+      .editing-row input,
+      .editing-row select {
+        border: 1px solid #036469;
+        border-radius: 0.25rem;
+        padding: 0.2rem 0.4rem;
+        font-size: 0.875rem;
+        width: 100%;
+        background: white;
+      }
+      .editing-row .edit-actions {
+        display: flex;
+        gap: 0.25rem;
+      }
+      .editing-row .edit-actions button {
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+      }
+      .editing-row .edit-actions .save-btn {
+        background: #036469;
+        color: white;
+      }
+      .editing-row .edit-actions .save-btn:hover {
+        background: #025a5e;
+      }
+      .editing-row .edit-actions .cancel-btn {
+        background: #e4e2e1;
+        color: #1b1c1c;
+      }
+      .editing-row .edit-actions .cancel-btn:hover {
+        background: #d0cecd;
+      }
+      .confirm-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 500;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+      .confirm-overlay.active {
+        display: flex;
+      }
+      .confirm-box {
+        background: white;
+        border-radius: 1rem;
+        max-width: 420px;
+        width: 100%;
+        padding: 2rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        text-align: center;
+      }
+      .confirm-box .icon {
+        font-size: 3rem;
+        color: #943031;
+        margin-bottom: 0.5rem;
+      }
+      .confirm-box h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1b1c1c;
+        margin-bottom: 0.5rem;
+      }
+      .confirm-box p {
+        color: #3f4949;
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+      }
+      .confirm-box .confirm-actions {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .confirm-box .confirm-actions button {
+        padding: 0.6rem 2rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+      .confirm-box .confirm-actions .cancel-confirm {
+        background: #e4e2e1;
+        color: #1b1c1c;
+      }
+      .confirm-box .confirm-actions .cancel-confirm:hover {
+        background: #d0cecd;
+      }
+      .confirm-box .confirm-actions .delete-confirm {
+        background: #943031;
+        color: white;
+      }
+      .confirm-box .confirm-actions .delete-confirm:hover {
+        background: #7d2829;
+      }
+      @media (max-width: 640px) {
+        .tab-btn {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.75rem;
+        }
+        .wf-stat {
+          padding: 1rem;
+        }
+        .wf-stat h3 {
+          font-size: 1.25rem;
+        }
+        .confirm-box {
+          margin: 1rem;
+          padding: 1.5rem;
+        }
+        .modal-box {
+          margin: 1rem;
+          padding: 1.5rem;
+        }
+      }
+      @media print {
+        .no-print {
+          display: none !important;
+        }
+        .print-only {
+          display: block !important;
+        }
+        body * {
+          visibility: hidden;
+        }
+        .print-content,
+        .print-content * {
+          visibility: visible;
+        }
+        .print-content {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          padding: 2rem;
+          background: white;
+        }
+        .print-content .print-header {
+          border-bottom: 2px solid #036469;
+          padding-bottom: 1rem;
+          margin-bottom: 1rem;
+        }
+        .print-content .print-header h1 {
+          font-size: 1.8rem;
+          color: #036469;
+        }
+        .print-content table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 1rem 0;
+        }
+        .print-content table th {
+          background: #f0eded;
+          text-align: left;
+          padding: 0.5rem;
+          font-size: 0.75rem;
+          text-transform: uppercase;
+        }
+        .print-content table td {
+          padding: 0.5rem;
+          border-bottom: 1px solid #e4e2e1;
+        }
+        .print-content .print-footer {
+          margin-top: 2rem;
+          padding-top: 1rem;
+          border-top: 1px solid #e4e2e1;
+          text-align: center;
+          font-size: 0.8rem;
+          color: #6f797a;
+        }
+      }
+
+      a[data-nav-desktop="emergency"],
+      a[data-nav-mobile="emergency"] {
+        background-color: #943031 !important;
+        color: #ffffff !important;
+      }
+
+      a[data-nav-desktop="emergency"]:hover,
+      a[data-nav-mobile="emergency"]:hover {
+        background-color: #7a2526 !important;
+        color: #ffffff !important;
+      }
+
+      @media (max-width: 640px) {
+        .payroll-card {
+          padding: 0.75rem;
+        }
+        .payroll-card p.label {
+          font-size: 0.6rem;
+        }
+        .payroll-card p.value {
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              outline: "#6f797a",
+              "on-background": "#1b1c1c",
+              "inverse-surface": "#303030",
+              "outline-variant": "#bec8c9",
+              "secondary-fixed": "#9ef0f4",
+              "inverse-primary": "#88d3d8",
+              "tertiary-container": "#617677",
+              "on-tertiary-fixed": "#091f20",
+              "surface-container-highest": "#e4e2e1",
+              "surface-container": "#f0eded",
+              "on-surface-variant": "#3f4949",
+              "emergency-red": "#943031",
+              "surface-container-lowest": "#ffffff",
+              "surface-dim": "#dcd9d9",
+              primary: "#036469",
+              "on-surface": "#1b1c1c",
+              "inverse-on-surface": "#f2f0f0",
+              "on-secondary-fixed": "#002021",
+              "tertiary-fixed-dim": "#b4cbcc",
+              "on-tertiary-fixed-variant": "#364a4c",
+              "secondary-container": "#9bedf1",
+              "surface-tint": "#0f696e",
+              "surface-container-high": "#eae8e7",
+              tertiary: "#485d5f",
+              "on-error": "#ffffff",
+              background: "#fbf9f8",
+              "on-secondary-container": "#006e72",
+              error: "#ba1a1a",
+              "on-tertiary-container": "#e6fdfe",
+              "surface-container-low": "#f5f3f3",
+              "primary-fixed-dim": "#88d3d8",
+              "primary-container": "#2e7d82",
+              "tertiary-fixed": "#d0e7e8",
+              surface: "#fbf9f8",
+              "on-tertiary": "#ffffff",
+              "on-secondary-fixed-variant": "#004f52",
+              secondary: "#00696d",
+              "surface-bright": "#fbf9f8",
+              "on-error-container": "#93000a",
+              "surface-muted": "#F4F7F7",
+              "surface-variant": "#e4e2e1",
+              "primary-fixed": "#a4eff4",
+              "error-container": "#ffdad6",
+              "on-primary-container": "#e5fdff",
+              "secondary-fixed-dim": "#82d4d8",
+              "on-primary-fixed": "#002022",
+              "deep-navy": "#1A3638",
+              "on-primary-fixed-variant": "#004f53",
+              "on-secondary": "#ffffff",
+              "on-primary": "#ffffff",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              gutter: "24px",
+              "stack-md": "24px",
+              "margin-mobile": "16px",
+              base: "8px",
+              "stack-sm": "12px",
+              "stack-lg": "48px",
+              "margin-desktop": "40px",
+              "container-max": "1200px",
+            },
+            fontFamily: {
+              "headline-lg": ["Plus Jakarta Sans"],
+              "headline-md": ["Plus Jakarta Sans"],
+              "display-lg": ["Plus Jakarta Sans"],
+              "body-md": ["Open Sans"],
+              "label-md": ["Open Sans"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    data-page="billing"
+    class="bg-background text-on-background font-body-md min-h-screen flex flex-col md:flex-row"
+  >
+    <!-- Mobile Top Bar -->
+    <div
+      class="md:hidden fixed top-0 left-0 right-0 bg-deep-navy z-50 px-4 py-4 flex items-center justify-between shadow-lg"
+    >
+      <div class="flex items-center gap-3">
+        <button
+          id="mobileBurgerBtn"
+          class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"
+        >
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+        <img
+          alt="Logo"
+          class="w-8 h-8 rounded-full object-cover"
+          src="../../public/logo.png"
+        />
+        <h1 class="font-bold text-primary-fixed text-sm">addyPets</h1>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-white">notifications</span>
+        <span class="material-symbols-outlined text-white">account_circle</span>
+      </div>
+    </div>
+
+    <div id="mobileOverlay" class="overlay"></div>
+
+    <!-- Mobile Sidebar -->
+    <div
+      id="mobileSidebar"
+      class="mobile-sidebar bg-deep-navy flex flex-col shadow-2xl"
+    >
+      <div
+        class="flex items-center justify-between p-6 border-b border-white/10"
+      >
+        <div class="flex items-center gap-3">
+          <img
+            alt="Logo"
+            class="w-10 h-10 rounded-full object-cover"
+            src="../../public/logo.png"
+          />
+          <div>
+            <h1 class="font-bold text-primary-fixed text-base">addyPets</h1>
+            <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
+          </div>
+        </div>
+        <button
+          id="closeMobileSidebar"
+          class="text-white p-2 hover:bg-white/10 rounded-lg"
+        >
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto hide-scrollbar">
+        <a
+          href="./Dashboard.html"
+          data-nav-mobile="analytics"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined text-[24px]">analytics</span
+          ><span>Analytics</span></a
+        >
+        <a
+          href="./clinic_calendar.html"
+          data-nav-mobile="calendar"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined text-[24px]"
+            >calendar_today</span
+          ><span>Calendar</span></a
+        >
+        <a
+          href="./staff_service_settings.html"
+          data-nav-mobile="staff"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined text-[24px]">groups</span
+          ><span>Staff</span></a
+        >
+        <a
+          href="#"
+          data-nav-mobile="services"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined text-[24px]"
+            >medical_services</span
+          ><span>Services</span></a
+        >
+        <a
+          href="./records.html"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined text-[24px]">description</span
+          ><span>Patient & Owner Records</span></a
+        >
+        <a
+          href="./message.html"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined text-[24px]">message</span
+          ><span>Messages</span></a
+        >
+        <a
+          href="./emergency_management.html"
+          data-nav-mobile="emergency"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"
+        >
+          <span class="material-symbols-outlined sidebar-icon-only"
+            >emergency</span
+          ><span class="sidebar-text">Emergency Cases</span>
+        </a>
+        <a
+          href="#"
+          data-nav-mobile="appointments"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined text-[24px]">event_note</span
+          ><span>Appointments</span></a
+        >
+        <div class="h-px bg-white/10 my-4"></div>
+        <a
+          href="#"
+          data-nav-mobile="settings"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined text-[24px]">settings</span
+          ><span>Settings</span></a
+        >
+        <button
+          id="logoutBtnMobile"
+          class="w-full flex items-center gap-4 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all"
+        >
+          <span class="material-symbols-outlined text-[24px]">logout</span
+          ><span>Logout</span>
+        </button>
+      </nav>
+      <div class="p-4 border-t border-white/10">
+        <div
+          class="bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10"
+        >
+          <p class="text-xs text-tertiary-fixed-dim mb-2">Emergency Hotline</p>
+          <p class="text-sm text-primary-fixed font-bold">+233 500 000 000</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop Layout -->
+    <div class="flex min-h-screen w-full">
+      <!-- Desktop Sidebar -->
+      <aside
+        id="desktopSidebar"
+        class="hidden md:flex flex-col bg-deep-navy h-screen sticky top-0 border-r border-outline-variant/10 text-white sidebar-transition w-64"
+      >
+        <div
+          class="px-6 py-6 flex items-center justify-between border-b border-white/10 flex-shrink-0"
+        >
+          <div class="flex items-center gap-3 sidebar-logo">
+            <img
+              alt="Logo"
+              class="w-10 h-10 rounded-full object-cover"
+              src="../../public/logo.png"
+            />
+            <div class="sidebar-logo-text">
+              <h1 class="font-bold text-primary-fixed text-base">addyPets</h1>
+              <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
+            </div>
+          </div>
+          <button
+            id="collapseSidebarBtn"
+            class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"
+          >
+            <span class="material-symbols-outlined">chevron_left</span>
+          </button>
+        </div>
+        <nav class="flex-1 px-3 py-6 space-y-1 overflow-y-auto sidebar-scroll">
+          <a
+            href="./Dashboard.html"
+            data-nav-desktop="analytics"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5"
+          >
+            <span
+              class="material-symbols-outlined sidebar-icon-only text-[24px]"
+              >analytics</span
+            >
+            <span class="sidebar-text text-sm font-medium">Analytics</span>
+          </a>
+          <a
+            href="./clinic_calendar.html"
+            data-nav-desktop="calendar"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span
+              class="material-symbols-outlined sidebar-icon-only text-[24px]"
+              >calendar_today</span
+            >
+            <span class="sidebar-text text-sm font-medium">Calendar</span>
+          </a>
+          <a
+            href="./staff_service_settings.html"
+            data-nav-desktop="staff"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span
+              class="material-symbols-outlined sidebar-icon-only text-[24px]"
+              >groups</span
+            >
+            <span class="sidebar-text text-sm font-medium">Staff</span>
+          </a>
+          <a
+            href="./billing.html"
+            data-nav-desktop="billing"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-white hover:bg-primary-container/80 transition-all sidebar-button"
+          >
+            <span
+              class="material-symbols-outlined sidebar-icon-only text-[24px]"
+              >payments</span
+            >
+            <span class="sidebar-text text-sm font-medium">Billing</span>
+          </a>
+          <a
+            href="./records.html"
+            data-nav-desktop="records"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span
+              class="material-symbols-outlined sidebar-icon-only text-[24px]"
+              >description</span
+            >
+            <span class="sidebar-text text-sm font-medium"
+              >Patient & Owner Records</span
+            >
+          </a>
+          <a
+            href="./message.html"
+            data-nav-desktop="message"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span
+              class="material-symbols-outlined sidebar-icon-only text-[24px]"
+              >message</span
+            >
+            <span class="sidebar-text text-sm font-medium">Messages</span>
+          </a>
+          <a
+            href="./emergency_management.html"
+            data-nav-desktop="emergency"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >emergency</span
+            ><span class="sidebar-text">Emergency Cases</span>
+          </a>
+          <a
+            href="#"
+            data-nav-desktop="inventory"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span
+              class="material-symbols-outlined sidebar-icon-only text-[24px]"
+              >inventory_2</span
+            >
+            <span class="sidebar-text text-sm font-medium">Inventory</span>
+          </a>
+          <a
+            href="#"
+            data-nav-desktop="reports"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span
+              class="material-symbols-outlined sidebar-icon-only text-[24px]"
+              >assessment</span
+            >
+            <span class="sidebar-text text-sm font-medium">Reports</span>
+          </a>
+          <a
+            href="#"
+            data-nav-desktop="settings"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span
+              class="material-symbols-outlined sidebar-icon-only text-[24px]"
+              >settings</span
+            >
+            <span class="sidebar-text text-sm font-medium">Settings</span>
+          </a>
+        </nav>
+        <div class="p-4 mt-auto bottom-container flex-shrink-0">
+          <button
+            id="logoutBtnDesktop"
+            class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all sidebar-button"
+          >
+            <span
+              class="material-symbols-outlined sidebar-icon-only text-[24px]"
+              >logout</span
+            >
+            <span class="sidebar-text text-sm font-medium">Logout</span>
+          </button>
+          <div
+            class="emergency-section bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10 mt-4"
+          >
+            <p class="text-xs text-tertiary-fixed-dim mb-2">
+              Emergency Hotline
+            </p>
+            <p class="text-sm text-primary-fixed font-bold">+233 500 000 000</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <div
+        id="mainContentWrapper"
+        class="flex-1 flex flex-col bg-surface pt-16 md:pt-0 transition-all duration-300"
+      >
+        <!-- Top Bar (Desktop) -->
+        <header
+          class="h-20 bg-surface hidden md:flex items-center justify-between px-6 sticky top-0 z-40 border-b border-surface-container-highest"
+        >
+          <div class="flex items-center gap-4 w-1/3">
+            <div class="relative w-full max-w-md">
+              <span
+                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline"
+                >search</span
+              >
+              <input
+                class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                placeholder="Search patients, vets, or files..."
+                type="text"
+              />
+            </div>
+          </div>
+          <div class="flex items-center gap-6">
+            <button
+              class="relative p-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-full"
+            >
+              <span class="material-symbols-outlined">notifications</span>
+              <span
+                class="absolute top-2 right-2 w-2 h-2 bg-emergency-red rounded-full"
+              ></span>
+            </button>
+            <div class="flex items-center gap-3 cursor-pointer group">
+              <div class="text-right">
+                <p class="text-sm font-bold text-on-surface">
+                  Dr. Abena Mensah
+                </p>
+                <p class="text-xs text-on-surface-variant">
+                  Chief Veterinary Officer
+                </p>
+              </div>
+              <img
+                alt="Profile"
+                class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-container"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt_l2NtwBrHDxQNGs9rPyaBDSi0T_lttSSni_UFdT12mHBHPojsxTE2haa69Vl-xUxsOfIG9hBjBfFUbTbuzqUZTrwCxsYx-WVkbqBP95JzSas9Gk-vlSi5L3t6i5wijVQgjwTRZWzXWDoOxvbiuiwTwUvQerM7vTOeUAbTgk0LzdJ6ZlyU0xeXqf__Iapv8Wpu9q6UmECwczFqWAIEuCSYFKPwinFOH3N6vq0YJKWoiJViDN71AZUcTRiwGyz_FO9sM63nmOE114"
+              />
+            </div>
+          </div>
+        </header>
+
+        <main class="w-full p-4 md:p-6 max-w-7xl mx-auto flex-1 flex flex-col">
+          <!-- TAB NAVIGATION -->
+          <div
+            class="flex flex-wrap gap-1.5 md:gap-2 mb-4 md:mb-6 bg-surface-container-lowest p-1.5 md:p-2 rounded-xl border border-outline-variant/10 overflow-x-auto"
+          >
+            <button class="tab-btn active text-xs md:text-sm" data-tab="owner">
+              💊 Owner Medication
+            </button>
+            <button class="tab-btn text-xs md:text-sm" data-tab="inventory">
+              📦 Inventory Stock
+            </button>
+            <button class="tab-btn text-xs md:text-sm" data-tab="salary">
+              👨‍⚕️ Staff Salary
+            </button>
+          </div>
+
+          <!-- DYNAMIC CONTENT PANELS -->
+          <div id="tabContent" class="space-y-4 md:space-y-6">
+            <!-- OWNER MEDICATION -->
+            <div id="panel-owner" class="tab-panel">
+              <div
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 mb-4 md:mb-6"
+              >
+                <div class="wf-stat">
+                  <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary"
+                      >payments</span
+                    >
+                  </div>
+                  <p class="text-xs text-on-surface-variant mt-1">
+                    Total Owner Payments
+                  </p>
+                  <h3 class="text-lg md:text-2xl font-bold text-deep-navy">
+                    GHS 48,720.00
+                  </h3>
+                </div>
+                <div class="wf-stat">
+                  <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-amber-600"
+                      >pending_actions</span
+                    >
+                  </div>
+                  <p class="text-xs text-on-surface-variant mt-1">
+                    Outstanding Owner Bills
+                  </p>
+                  <h3 class="text-lg md:text-2xl font-bold text-emergency-red">
+                    GHS 12,340.00
+                  </h3>
+                </div>
+                <div class="wf-stat">
+                  <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-emerald-600"
+                      >receipt_long</span
+                    >
+                  </div>
+                  <p class="text-xs text-on-surface-variant mt-1">
+                    Recent Transactions
+                  </p>
+                  <h3 class="text-lg md:text-2xl font-bold text-deep-navy">
+                    32 Invoices
+                  </h3>
+                </div>
+              </div>
+              <div
+                class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/10 overflow-hidden"
+              >
+                <div
+                  class="p-3 md:p-5 border-b border-outline-variant/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-3 bg-surface-muted/30"
+                >
+                  <div>
+                    <h4 class="text-base md:text-xl font-bold text-deep-navy">
+                      Owner Medication Invoices
+                    </h4>
+                    <p class="text-xs text-on-surface-variant opacity-70">
+                      Payments for prescribed medications & treatments
+                    </p>
+                  </div>
+                  <div
+                    class="flex flex-col sm:flex-row gap-2 w-full md:w-auto mobile-stack"
+                  >
+                    <input
+                      id="ownerSearch"
+                      class="w-full sm:w-48 md:w-64 px-3 py-1.5 border border-outline-variant/30 rounded-lg text-sm text-on-surface focus:ring-2 focus:ring-primary outline-none"
+                      placeholder="Search owner..."
+                    />
+                    <select
+                      id="ownerStatusFilter"
+                      class="w-full sm:w-36 md:w-40 px-3 py-1.5 border border-outline-variant/30 rounded-lg text-sm text-on-surface bg-surface"
+                    >
+                      <option value="All">All Statuses</option>
+                      <option value="Paid">Paid</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Overdue">Overdue</option>
+                    </select>
+                    <button
+                      id="exportOwnerCsv"
+                      class="flex items-center justify-center gap-1.5 px-3 py-1.5 border border-outline-variant/30 rounded-lg text-sm text-on-surface-variant hover:bg-surface-container transition-colors"
+                    >
+                      <span class="material-symbols-outlined text-[18px]"
+                        >download</span
+                      >Export CSV
+                    </button>
+                  </div>
+                </div>
+                <div class="overflow-x-auto">
+                  <table
+                    class="mobile-card-table w-full text-left border-collapse"
+                  >
+                    <thead>
+                      <tr
+                        class="bg-surface-muted/50 border-b border-outline-variant/20"
+                      >
+                        <th
+                          class="px-3 py-2 md:px-5 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase tracking-wider"
+                        >
+                          Invoice ID
+                        </th>
+                        <th
+                          class="px-3 py-2 md:px-5 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase tracking-wider"
+                        >
+                          Owner
+                        </th>
+                        <th
+                          class="px-3 py-2 md:px-5 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase tracking-wider text-right"
+                        >
+                          Amount (GHS)
+                        </th>
+                        <th
+                          class="px-3 py-2 md:px-5 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase tracking-wider"
+                        >
+                          Status
+                        </th>
+                        <th
+                          class="px-3 py-2 md:px-5 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase tracking-wider"
+                        >
+                          Pay Date
+                        </th>
+                        <th
+                          class="px-3 py-2 md:px-5 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase tracking-wider"
+                        >
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody id="ownerTableBody"></tbody>
+                  </table>
+                </div>
+                <div
+                  class="p-3 md:p-5 bg-surface-muted/20 border-t border-outline-variant/10 flex flex-col sm:flex-row items-center justify-between gap-3"
+                >
+                  <span
+                    id="ownerPaginationInfo"
+                    class="text-xs text-on-surface-variant text-center sm:text-left"
+                    >Showing 0-0 of 0 results</span
+                  >
+                  <div id="ownerPaginationButtons" class="flex gap-1"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- INVENTORY -->
+            <div id="panel-inventory" class="tab-panel hidden">
+              <div
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 mb-4 md:mb-6"
+              >
+                <div class="wf-stat">
+                  <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary"
+                      >inventory_2</span
+                    >
+                  </div>
+                  <p class="text-xs text-on-surface-variant mt-1">
+                    Total Stock Purchases
+                  </p>
+                  <h3 class="text-lg md:text-2xl font-bold text-deep-navy">
+                    GHS 42,800.00
+                  </h3>
+                </div>
+                <div class="wf-stat">
+                  <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-amber-600"
+                      >pending</span
+                    >
+                  </div>
+                  <p class="text-xs text-on-surface-variant mt-1">
+                    Pending Supplier Invoices
+                  </p>
+                  <h3 class="text-lg md:text-2xl font-bold text-amber-700">
+                    GHS 8,450.00
+                  </h3>
+                </div>
+                <div class="wf-stat">
+                  <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-emerald-600"
+                      >check_circle</span
+                    >
+                  </div>
+                  <p class="text-xs text-on-surface-variant mt-1">
+                    Stock Items Restocked
+                  </p>
+                  <h3 class="text-lg md:text-2xl font-bold text-deep-navy">
+                    56 Items
+                  </h3>
+                </div>
+              </div>
+              <div
+                class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/10 overflow-hidden"
+              >
+                <div
+                  class="p-3 md:p-5 border-b border-outline-variant/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-3 bg-surface-muted/30"
+                >
+                  <div>
+                    <h4 class="text-base md:text-xl font-bold text-deep-navy">
+                      Inventory Supplier Payments
+                    </h4>
+                    <p class="text-xs text-on-surface-variant opacity-70">
+                      Track purchase orders and supplier payments
+                    </p>
+                  </div>
+                  <div
+                    class="flex flex-col sm:flex-row gap-2 w-full md:w-auto mobile-stack"
+                  >
+                    <input
+                      id="inventorySearch"
+                      class="w-full sm:w-48 md:w-64 px-3 py-1.5 border border-outline-variant/30 rounded-lg text-sm text-on-surface focus:ring-2 focus:ring-primary outline-none"
+                      placeholder="Search supplier..."
+                    />
+                    <select
+                      id="inventoryStatusFilter"
+                      class="w-full sm:w-36 md:w-40 px-3 py-1.5 border border-outline-variant/30 rounded-lg text-sm text-on-surface bg-surface"
+                    >
+                      <option value="All">All Statuses</option>
+                      <option value="Paid">Paid</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Overdue">Overdue</option>
+                    </select>
+                    <button
+                      id="exportInventoryCsv"
+                      class="flex items-center justify-center gap-1.5 px-3 py-1.5 border border-outline-variant/30 rounded-lg text-sm text-on-surface-variant hover:bg-surface-container transition-colors"
+                    >
+                      <span class="material-symbols-outlined text-[18px]"
+                        >download</span
+                      >Export CSV
+                    </button>
+                  </div>
+                </div>
+                <div class="overflow-x-auto">
+                  <table
+                    class="mobile-card-table w-full text-left border-collapse"
+                  >
+                    <thead class="bg-surface-muted/50">
+                      <tr>
+                        <th
+                          class="px-3 py-2 md:px-5 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase"
+                        >
+                          PO #
+                        </th>
+                        <th
+                          class="px-3 py-2 md:px-5 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase"
+                        >
+                          Supplier
+                        </th>
+                        <th
+                          class="px-3 py-2 md:px-5 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase text-right"
+                        >
+                          Total (GHS)
+                        </th>
+                        <th
+                          class="px-3 py-2 md:px-5 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase"
+                        >
+                          Status
+                        </th>
+                        <th
+                          class="px-3 py-2 md:px-5 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase"
+                        >
+                          Pay Date
+                        </th>
+                        <th
+                          class="px-3 py-2 md:px-5 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase"
+                        >
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody id="inventoryTableBody"></tbody>
+                  </table>
+                </div>
+                <div
+                  class="p-3 md:p-5 bg-surface-muted/20 border-t border-outline-variant/10 flex flex-col sm:flex-row items-center justify-between gap-3"
+                >
+                  <span
+                    id="inventoryPaginationInfo"
+                    class="text-xs text-on-surface-variant text-center sm:text-left"
+                    >Showing 0-0 of 0 results</span
+                  >
+                  <div id="inventoryPaginationButtons" class="flex gap-1"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- STAFF SALARY -->
+            <div id="panel-salary" class="tab-panel hidden">
+              <div
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 mb-4 md:mb-6"
+              >
+                <div class="wf-stat">
+                  <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-indigo-600"
+                      >payments</span
+                    >
+                  </div>
+                  <p class="text-xs text-on-surface-variant mt-1">
+                    Total Payroll This Month
+                  </p>
+                  <h3 class="text-lg md:text-2xl font-bold text-deep-navy">
+                    GHS 67,400.00
+                  </h3>
+                </div>
+                <div class="wf-stat">
+                  <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-rose-600"
+                      >hourglass_top</span
+                    >
+                  </div>
+                  <p class="text-xs text-on-surface-variant mt-1">
+                    Pending Salaries
+                  </p>
+                  <h3 class="text-lg md:text-2xl font-bold text-rose-600">
+                    GHS 18,900.00
+                  </h3>
+                </div>
+                <div class="wf-stat">
+                  <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-teal-600"
+                      >groups</span
+                    >
+                  </div>
+                  <p class="text-xs text-on-surface-variant mt-1">
+                    Staff on Payroll
+                  </p>
+                  <h3 class="text-lg md:text-2xl font-bold text-deep-navy">
+                    18
+                  </h3>
+                </div>
+              </div>
+
+              <!-- Payroll Summary Cards -->
+              <div
+                class="grid grid-cols-2 md:grid-cols-5 gap-3 p-4 border-b border-outline-variant/10 bg-surface-muted/20"
+              >
+                <div class="text-center p-3 bg-white rounded-lg shadow-sm payroll-card">
+                  <p class="text-xs text-on-surface-variant uppercase font-bold label">
+                    Total Payroll
+                  </p>
+                  <p
+                    class="text-lg font-bold text-deep-navy value"
+                    id="totalPayroll"
+                  >
+                    GHS 0
+                  </p>
+                </div>
+                <div class="text-center p-3 bg-white rounded-lg shadow-sm payroll-card">
+                  <p class="text-xs text-on-surface-variant uppercase font-bold label">
+                    Total Allowances
+                  </p>
+                  <p
+                    class="text-lg font-bold text-primary value"
+                    id="totalAllowances"
+                  >
+                    GHS 0
+                  </p>
+                </div>
+                <div class="text-center p-3 bg-white rounded-lg shadow-sm payroll-card">
+                  <p class="text-xs text-on-surface-variant uppercase font-bold label">
+                    Total Deductions
+                  </p>
+                  <p
+                    class="text-lg font-bold text-amber-600 value"
+                    id="totalDeductions"
+                  >
+                    GHS 0
+                  </p>
+                </div>
+                <div class="text-center p-3 bg-white rounded-lg shadow-sm payroll-card">
+                  <p class="text-xs text-on-surface-variant uppercase font-bold label">
+                    Net Pay Total
+                  </p>
+                  <p
+                    class="text-lg font-bold text-emerald-600 value"
+                    id="totalNetPay"
+                  >
+                    GHS 0
+                  </p>
+                </div>
+                <div class="text-center p-3 bg-white rounded-lg shadow-sm payroll-card">
+                  <p class="text-xs text-on-surface-variant uppercase font-bold label">
+                    Staff Count
+                  </p>
+                  <p class="text-lg font-bold text-deep-navy value" id="staffCount">
+                    0
+                  </p>
+                </div>
+              </div>
+
+              <div
+                class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/10 overflow-hidden"
+              >
+                <div
+                  class="p-3 md:p-5 border-b border-outline-variant/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-3 bg-surface-muted/30"
+                >
+                  <div>
+                    <h4 class="text-base md:text-xl font-bold text-deep-navy">
+                      Staff Salary Payments
+                    </h4>
+                    <p class="text-xs text-on-surface-variant opacity-70">
+                      Manage staff payroll and salary records
+                    </p>
+                  </div>
+                  <div
+                    class="flex flex-col sm:flex-row gap-2 w-full md:w-auto mobile-stack"
+                  >
+                    <input
+                      id="salarySearch"
+                      class="w-full sm:w-48 md:w-64 px-3 py-1.5 border border-outline-variant/30 rounded-lg text-sm text-on-surface focus:ring-2 focus:ring-primary outline-none"
+                      placeholder="Search staff..."
+                    />
+                    <select
+                      id="salaryStatusFilter"
+                      class="w-full sm:w-36 md:w-40 px-3 py-1.5 border border-outline-variant/30 rounded-lg text-sm text-on-surface bg-surface"
+                    >
+                      <option value="All">All Statuses</option>
+                      <option value="Paid">Paid</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Overdue">Overdue</option>
+                    </select>
+                    <button
+                      id="addStaffBtn"
+                      class="flex items-center justify-center gap-1.5 px-4 py-1.5 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary/90 transition-all shadow-sm"
+                    >
+                      <span class="material-symbols-outlined text-[18px]"
+                        >person_add</span
+                      >
+                      Add Staff
+                    </button>
+                    <button
+                      id="exportSalaryCsv"
+                      class="flex items-center justify-center gap-1.5 px-3 py-1.5 border border-outline-variant/30 rounded-lg text-sm text-on-surface-variant hover:bg-surface-container transition-colors"
+                    >
+                      <span class="material-symbols-outlined text-[18px]"
+                        >download</span
+                      >Export CSV
+                    </button>
+                  </div>
+                </div>
+                <div class="overflow-x-auto">
+                  <table class="w-full text-left border-collapse">
+                    <thead
+                      class="bg-surface-muted/50 border-b border-outline-variant/20"
+                    >
+                      <tr>
+                        <th
+                          class="px-3 py-3 md:px-4 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase tracking-wider whitespace-nowrap"
+                        >
+                          Staff ID
+                        </th>
+                        <th
+                          class="px-3 py-3 md:px-4 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase tracking-wider whitespace-nowrap"
+                        >
+                          First Name
+                        </th>
+                        <th
+                          class="px-3 py-3 md:px-4 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase tracking-wider whitespace-nowrap"
+                        >
+                          Last Name
+                        </th>
+                        <th
+                          class="px-3 py-3 md:px-4 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase tracking-wider whitespace-nowrap"
+                        >
+                          Middle Name
+                        </th>
+                        <th
+                          class="px-3 py-3 md:px-4 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase tracking-wider text-right whitespace-nowrap"
+                        >
+                          Basic Salary
+                        </th>
+                        <th
+                          class="px-3 py-3 md:px-4 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase tracking-wider text-right whitespace-nowrap"
+                        >
+                          Allowances
+                        </th>
+                        <th
+                          class="px-3 py-3 md:px-4 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase tracking-wider text-right whitespace-nowrap"
+                        >
+                          Bonuses
+                        </th>
+                        <th
+                          class="px-3 py-3 md:px-4 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase tracking-wider text-right whitespace-nowrap"
+                        >
+                          Deductions
+                        </th>
+                        <th
+                          class="px-3 py-3 md:px-4 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase tracking-wider text-right whitespace-nowrap font-bold text-primary"
+                        >
+                          Net Pay
+                        </th>
+                        <th
+                          class="px-3 py-3 md:px-4 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase tracking-wider whitespace-nowrap"
+                        >
+                          Status
+                        </th>
+                        <th
+                          class="px-3 py-3 md:px-4 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase tracking-wider whitespace-nowrap"
+                        >
+                          Pay Period
+                        </th>
+                        <th
+                          class="px-3 py-3 md:px-4 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase tracking-wider whitespace-nowrap"
+                        >
+                          Payment Method
+                        </th>
+                        <th
+                          class="px-3 py-3 md:px-4 md:py-3 text-[10px] md:text-xs text-on-surface-variant uppercase tracking-wider whitespace-nowrap"
+                        >
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody
+                      id="payrollTableBody"
+                      class="divide-y divide-outline-variant/10"
+                    ></tbody>
+                  </table>
+                </div>
+                <div
+                  class="p-3 md:p-5 bg-surface-muted/20 border-t border-outline-variant/10 flex flex-col sm:flex-row items-center justify-between gap-3"
+                >
+                  <span
+                    id="salaryPaginationInfo"
+                    class="text-xs text-on-surface-variant text-center sm:text-left"
+                    >Showing 0-0 of 0 results</span
+                  >
+                  <div id="salaryPaginationButtons" class="flex gap-1"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Toast container -->
+          <div id="toast-container" class="toast-container"></div>
+
+          <footer class="w-full mt-auto bg-deep-navy py-3 md:py-4">
+            <div
+              class="px-4 md:px-6 text-center text-tertiary-fixed-dim text-[10px] md:text-xs"
+            >
+              © 2024 addyPets veterinary clinic. All rights reserved.
+            </div>
+          </footer>
+        </main>
+      </div>
+    </div>
+
+    <!-- VIEW DETAILS MODAL -->
+    <div id="viewModal" class="view-modal-overlay">
+      <div class="view-modal-box">
+        <div class="flex justify-between items-center mb-4">
+          <h3
+            class="text-lg md:text-xl font-bold text-deep-navy"
+            id="viewModalTitle"
+          >
+            Record Details
+          </h3>
+          <button
+            onclick="closeViewModal()"
+            class="p-1 hover:bg-surface-container rounded-lg"
+          >
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <div id="viewModalContent"></div>
+        <div class="flex justify-end mt-4">
+          <button
+            onclick="closeViewModal()"
+            class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary/90 transition-colors"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONFIRMATION POPUP -->
+    <div id="confirmPopup" class="confirm-overlay">
+      <div class="confirm-box">
+        <div class="icon">⚠️</div>
+        <h3 id="confirmTitle">Confirm Delete</h3>
+        <p id="confirmMessage">
+          Are you sure you want to delete this record? This action cannot be
+          undone.
+        </p>
+        <div class="confirm-actions">
+          <button class="cancel-confirm" onclick="closeConfirm()">
+            Cancel
+          </button>
+          <button class="delete-confirm" id="confirmDeleteBtn">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADD STAFF MODAL (UPDATED) -->
+    <div id="addStaffModal" class="modal-overlay">
+      <div class="modal-box mx-4 md:mx-0">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg md:text-xl font-bold text-deep-navy" id="staffModalTitle">
+            Add New Staff
+          </h3>
+          <button id="closeStaffModalBtn" class="p-1 hover:bg-surface-container rounded-lg">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <form id="addStaffForm" class="space-y-3">
+          <!-- Basic Info -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-sm font-medium text-on-surface-variant mb-1">First Name *</label>
+              <input type="text" id="staffFirstName" required class="w-full px-3 py-2 border border-outline-variant/30 rounded-lg text-sm focus:ring-2 focus:ring-primary outline-none" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-on-surface-variant mb-1">Last Name *</label>
+              <input type="text" id="staffLastName" required class="w-full px-3 py-2 border border-outline-variant/30 rounded-lg text-sm focus:ring-2 focus:ring-primary outline-none" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-on-surface-variant mb-1">Middle Name</label>
+            <input type="text" id="staffMiddleName" class="w-full px-3 py-2 border border-outline-variant/30 rounded-lg text-sm focus:ring-2 focus:ring-primary outline-none" />
+          </div>
+
+          <!-- Payroll Fields -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-sm font-medium text-on-surface-variant mb-1">Basic Salary (GHS) *</label>
+              <input type="number" id="staffBasicSalary" required min="0" step="0.01" class="w-full px-3 py-2 border border-outline-variant/30 rounded-lg text-sm focus:ring-2 focus:ring-primary outline-none" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-on-surface-variant mb-1">Allowances (GHS)</label>
+              <input type="number" id="staffAllowances" value="0" min="0" step="0.01" class="w-full px-3 py-2 border border-outline-variant/30 rounded-lg text-sm focus:ring-2 focus:ring-primary outline-none" />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-sm font-medium text-on-surface-variant mb-1">Bonuses (GHS)</label>
+              <input type="number" id="staffBonuses" value="0" min="0" step="0.01" class="w-full px-3 py-2 border border-outline-variant/30 rounded-lg text-sm focus:ring-2 focus:ring-primary outline-none" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-on-surface-variant mb-1">Deductions (GHS)</label>
+              <input type="number" id="staffDeductions" value="0" min="0" step="0.01" class="w-full px-3 py-2 border border-outline-variant/30 rounded-lg text-sm focus:ring-2 focus:ring-primary outline-none" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-sm font-medium text-on-surface-variant mb-1">Pay Period</label>
+              <!-- ✅ ONLY MONTHLY REMAINS -->
+              <select id="staffPayPeriod" class="w-full px-3 py-2 border border-outline-variant/30 rounded-lg text-sm focus:ring-2 focus:ring-primary outline-none">
+                <option value="Monthly">Monthly</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-on-surface-variant mb-1">Payment Method</label>
+              <!-- ✅ ONLY BANK TRANSFER AND CHEQUE REMAIN -->
+              <select id="staffPaymentMethod" class="w-full px-3 py-2 border border-outline-variant/30 rounded-lg text-sm focus:ring-2 focus:ring-primary outline-none">
+                <option value="Bank Transfer">Bank Transfer</option>
+                <option value="Cheque">Cheque</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-on-surface-variant mb-1">Bank Name</label>
+            <input type="text" id="staffBankName" class="w-full px-3 py-2 border border-outline-variant/30 rounded-lg text-sm focus:ring-2 focus:ring-primary outline-none" placeholder="e.g., Ecobank, Stanbic" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-on-surface-variant mb-1">Account Number</label>
+            <input type="text" id="staffAccountNumber" class="w-full px-3 py-2 border border-outline-variant/30 rounded-lg text-sm focus:ring-2 focus:ring-primary outline-none" placeholder="e.g., 1234567890" />
+          </div>
+
+          <div class="flex flex-col sm:flex-row justify-end gap-2 pt-2">
+            <button type="button" id="cancelStaffModalBtn" class="px-4 py-2 text-sm font-bold text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors">Cancel</button>
+            <button type="submit" class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary/90 transition-colors">Add Staff</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // ===== STAFF DATA WITH UPDATED PAYROLL FIELDS =====
+      let staffMembers = [
+        {
+          id: "S-001",
+          firstName: "Abena",
+          lastName: "Mensah",
+          middleName: "Ama",
+          basicSalary: 8500.0,
+          allowances: 1200.0,
+          bonuses: 500.0,
+          deductions: 850.0,
+          netPay: 9350.0,
+          status: "Paid",
+          date: "Nov 28, 2024",
+          payPeriod: "Monthly",
+          paymentMethod: "Bank Transfer",
+          bankName: "Ecobank",
+          accountNumber: "1234567890",
+          actions: ["view", "edit", "print", "reminder", "mark_paid", "delete"]
+        },
+        {
+          id: "S-002",
+          firstName: "Kwame",
+          lastName: "Appiah",
+          middleName: "Nkrumah",
+          basicSalary: 6200.0,
+          allowances: 800.0,
+          bonuses: 300.0,
+          deductions: 620.0,
+          netPay: 6680.0,
+          status: "Pending",
+          date: "Nov 28, 2024",
+          payPeriod: "Monthly",
+          paymentMethod: "Bank Transfer",
+          bankName: "-",
+          accountNumber: "-",
+          actions: ["view", "edit", "reminder", "mark_paid", "delete"]
+        },
+        {
+          id: "S-003",
+          firstName: "Ama",
+          lastName: "Serwaa",
+          middleName: "",
+          basicSalary: 4200.0,
+          allowances: 500.0,
+          bonuses: 200.0,
+          deductions: 420.0,
+          netPay: 4480.0,
+          status: "Paid",
+          date: "Nov 28, 2024",
+          payPeriod: "Monthly",
+          paymentMethod: "Bank Transfer",
+          bankName: "-",
+          accountNumber: "-",
+          actions: ["view", "edit", "print", "delete"]
+        },
+        {
+          id: "S-004",
+          firstName: "Kofi",
+          lastName: "Boateng",
+          middleName: "Owusu",
+          basicSalary: 5500.0,
+          allowances: 700.0,
+          bonuses: 250.0,
+          deductions: 550.0,
+          netPay: 5900.0,
+          status: "Paid",
+          date: "Nov 28, 2024",
+          payPeriod: "Monthly",
+          paymentMethod: "Bank Transfer",
+          bankName: "Stanbic",
+          accountNumber: "2345678901",
+          actions: ["view", "edit", "print", "delete"]
+        },
+        {
+          id: "S-005",
+          firstName: "Efua",
+          lastName: "Osei",
+          middleName: "Adwoa",
+          basicSalary: 4800.0,
+          allowances: 600.0,
+          bonuses: 150.0,
+          deductions: 480.0,
+          netPay: 5070.0,
+          status: "Processing",
+          date: "Nov 28, 2024",
+          payPeriod: "Monthly",
+          paymentMethod: "Cheque",
+          bankName: "-",
+          accountNumber: "-",
+          actions: ["view", "edit", "delete"]
+        },
+        {
+          id: "S-006",
+          firstName: "Kwaku",
+          lastName: "Agyeman",
+          middleName: "",
+          basicSalary: 3900.0,
+          allowances: 400.0,
+          bonuses: 100.0,
+          deductions: 390.0,
+          netPay: 4010.0,
+          status: "Paid",
+          date: "Nov 28, 2024",
+          payPeriod: "Monthly",
+          paymentMethod: "Bank Transfer",
+          bankName: "Ecobank",
+          accountNumber: "3456789012",
+          actions: ["view", "edit", "print", "delete"]
+        },
+        {
+          id: "S-007",
+          firstName: "Adwoa",
+          lastName: "Poku",
+          middleName: "Yaa",
+          basicSalary: 7200.0,
+          allowances: 900.0,
+          bonuses: 400.0,
+          deductions: 720.0,
+          netPay: 7780.0,
+          status: "Overdue",
+          date: "Oct 28, 2024",
+          payPeriod: "Monthly",
+          paymentMethod: "Bank Transfer",
+          bankName: "Stanbic",
+          accountNumber: "4567890123",
+          actions: ["view", "edit", "reminder", "mark_paid", "delete"]
+        },
+      ];
+
+      // ===== OWNER & INVENTORY DATA =====
+      const ownerInvoices = [
+        { id: "#INV-2024-001", owner: "Kofi Ansah", amount: 1450.00, status: "Paid", date: "Nov 24, 2024", actions: ["view", "edit", "print"] },
+        { id: "#INV-2024-002", owner: "Efua Mensah", amount: 820.00, status: "Pending", date: "Nov 23, 2024", actions: ["view", "edit", "reminder", "mark_paid"] },
+        { id: "#INV-2024-003", owner: "John Boateng", amount: 2100.00, status: "Overdue", date: "Nov 18, 2024", actions: ["view", "edit", "reminder", "mark_paid"] },
+      ];
+
+      const inventoryPurchases = [
+        { id: "PO-2024-001", supplier: "VetMed Supplies Ltd", total: 3200.00, status: "Paid", date: "Nov 22, 2024", actions: ["view", "edit", "print"] },
+        { id: "PO-2024-002", supplier: "Animal Health International", total: 4850.00, status: "Pending", date: "Nov 20, 2024", actions: ["view", "edit", "reminder", "mark_paid"] },
+        { id: "PO-2024-003", supplier: "PharmaVet Ghana", total: 2100.00, status: "Paid", date: "Nov 15, 2024", actions: ["view", "edit", "print"] },
+      ];
+
+      // ===== PAGINATION =====
+      const ITEMS_PER_PAGE = 5;
+      let ownerPage = 1, inventoryPage = 1, salaryPage = 1;
+      let activeDropdownId = null;
+      let editingRowId = null;
+      let editingType = null;
+      let confirmCallback = null;
+
+      // ===== HELPER FUNCTIONS =====
+      function getStatusBadge(status) {
+        const colors = {
+          Paid: "bg-green-100 text-green-800 border-green-200",
+          Pending: "bg-orange-100 text-orange-800 border-orange-200",
+          Overdue: "bg-red-100 text-red-800 border-red-200",
+          Processing: "bg-blue-100 text-blue-800 border-blue-200",
+        };
+        return `<span class="inline-flex items-center px-2 py-0.5 md:px-2.5 md:py-1 rounded-full text-[10px] md:text-xs font-bold border ${colors[status] || colors["Pending"]}">${status}</span>`;
+      }
+
+      function getActionIcon(action) {
+        const icons = {
+          view: "visibility",
+          edit: "edit",
+          print: "print",
+          reminder: "notifications_active",
+          mark_paid: "check_circle",
+          delete: "delete",
+        };
+        return icons[action] || "more_vert";
+      }
+
+      function getActionLabel(action) {
+        const labels = {
+          view: "View Details",
+          edit: "Edit Row",
+          print: "Print",
+          reminder: "Send Reminder",
+          mark_paid: "Mark as Paid",
+          delete: "Delete",
+        };
+        return labels[action] || action;
+      }
+
+      function getActionColor(action) {
+        const colors = {
+          view: "",
+          edit: "",
+          print: "",
+          reminder: "text-amber-600",
+          mark_paid: "text-emerald-600",
+          delete: "danger",
+        };
+        return colors[action] || "";
+      }
+
+      function toggleDropdown(id) {
+        if (activeDropdownId === id) {
+          activeDropdownId = null;
+          document.querySelectorAll(".action-dropdown-menu").forEach((m) => m.classList.remove("open"));
+          return;
+        }
+        document.querySelectorAll(".action-dropdown-menu").forEach((m) => m.classList.remove("open"));
+        const menu = document.getElementById(`dropdown-${id}`);
+        if (menu) {
+          menu.classList.add("open");
+          activeDropdownId = id;
+        }
+      }
+
+      // ===== CONFIRMATION POPUP =====
+      function showConfirm(title, message, callback) {
+        document.getElementById("confirmTitle").textContent = title;
+        document.getElementById("confirmMessage").textContent = message;
+        document.getElementById("confirmPopup").classList.add("active");
+        confirmCallback = callback;
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirmPopup").classList.remove("active");
+        confirmCallback = null;
+      }
+
+      document.getElementById("confirmDeleteBtn").addEventListener("click", function () {
+        if (confirmCallback) {
+          confirmCallback();
+          closeConfirm();
+        }
+      });
+
+      // ===== VIEW MODAL =====
+      function openViewModal(data, type) {
+        const modal = document.getElementById("viewModal");
+        const content = document.getElementById("viewModalContent");
+        const title = document.getElementById("viewModalTitle");
+
+        let fields = [];
+        if (type === "owner") {
+          title.textContent = `Invoice ${data.id} - ${data.owner}`;
+          fields = [
+            { label: "Invoice ID", value: data.id },
+            { label: "Owner", value: data.owner },
+            { label: "Amount", value: `GHS ${data.amount.toFixed(2)}` },
+            { label: "Status", value: data.status },
+            { label: "Pay Date", value: data.date },
+          ];
+        } else if (type === "inventory") {
+          title.textContent = `Purchase Order ${data.id} - ${data.supplier}`;
+          fields = [
+            { label: "PO #", value: data.id },
+            { label: "Supplier", value: data.supplier },
+            { label: "Total Amount", value: `GHS ${data.total.toFixed(2)}` },
+            { label: "Status", value: data.status },
+            { label: "Payment Date", value: data.date },
+          ];
+        } else if (type === "salary") {
+          const netPay = data.netPay || calculateNetPay(data);
+          title.textContent = `Staff Record - ${data.firstName} ${data.lastName}`;
+          fields = [
+            { label: "Staff ID", value: data.id },
+            { label: "First Name", value: data.firstName },
+            { label: "Last Name", value: data.lastName },
+            { label: "Middle Name", value: data.middleName || "-" },
+            { label: "Basic Salary", value: `GHS ${data.basicSalary.toFixed(2)}` },
+            { label: "Allowances", value: `GHS ${(data.allowances || 0).toFixed(2)}` },
+            { label: "Bonuses", value: `GHS ${(data.bonuses || 0).toFixed(2)}` },
+            { label: "Deductions", value: `GHS ${(data.deductions || 0).toFixed(2)}` },
+            { label: "Net Pay", value: `GHS ${netPay.toFixed(2)}` },
+            { label: "Status", value: data.status },
+            { label: "Pay Date", value: data.date },
+            { label: "Pay Period", value: data.payPeriod || "Monthly" },
+            { label: "Payment Method", value: data.paymentMethod || "Bank Transfer" },
+          ];
+        }
+
+        content.innerHTML = fields.map(f => `
+          <div class="field">
+            <div class="field-label">${f.label}</div>
+            <div class="field-value">${f.value}</div>
+          </div>
+        `).join("");
+
+        modal.classList.add("active");
+      }
+
+      function closeViewModal() {
+        document.getElementById("viewModal").classList.remove("active");
+      }
+
+      document.getElementById("viewModal")?.addEventListener("click", function (e) {
+        if (e.target === this) closeViewModal();
+      });
+
+      // ===== PRINT FUNCTION =====
+      function printRecord(id, type) {
+        let record = null;
+        let title = "";
+        let fields = [];
+
+        if (type === "owner") {
+          record = ownerInvoices.find((r) => r.id === id);
+          if (!record) return;
+          title = `Invoice ${record.id}`;
+          fields = [
+            { label: "Invoice ID", value: record.id },
+            { label: "Owner", value: record.owner },
+            { label: "Amount", value: `GHS ${record.amount.toFixed(2)}` },
+            { label: "Status", value: record.status },
+            { label: "Pay Date", value: record.date },
+          ];
+        } else if (type === "inventory") {
+          record = inventoryPurchases.find((r) => r.id === id);
+          if (!record) return;
+          title = `Purchase Order ${record.id}`;
+          fields = [
+            { label: "PO #", value: record.id },
+            { label: "Supplier", value: record.supplier },
+            { label: "Total Amount", value: `GHS ${record.total.toFixed(2)}` },
+            { label: "Status", value: record.status },
+            { label: "Pay Date", value: record.date },
+          ];
+        } else if (type === "salary") {
+          record = staffMembers.find((r) => r.id === id);
+          if (!record) return;
+          const netPay = record.netPay || calculateNetPay(record);
+          title = `Payroll Slip - ${record.firstName} ${record.lastName}`;
+          fields = [
+            { label: "Staff ID", value: record.id },
+            { label: "Full Name", value: `${record.firstName} ${record.middleName || ""} ${record.lastName}` },
+            { label: "Basic Salary", value: `GHS ${record.basicSalary.toFixed(2)}` },
+            { label: "Allowances", value: `GHS ${(record.allowances || 0).toFixed(2)}` },
+            { label: "Bonuses", value: `GHS ${(record.bonuses || 0).toFixed(2)}` },
+            { label: "Deductions", value: `GHS ${(record.deductions || 0).toFixed(2)}` },
+            { label: "Net Pay", value: `GHS ${netPay.toFixed(2)}` },
+            { label: "Status", value: record.status },
+            { label: "Pay Period", value: record.payPeriod || "Monthly" },
+            { label: "Payment Method", value: record.paymentMethod || "Bank Transfer" },
+          ];
+        }
+
+        const printWindow = window.open("", "_blank", "width=800,height=600");
+        printWindow.document.write(`
+          <html>
+            <head><title>${title}</title>
+            <style>
+              body { font-family: Arial, sans-serif; padding: 2rem; color: #1b1c1c; }
+              .print-header { border-bottom: 2px solid #036469; padding-bottom: 1rem; margin-bottom: 1.5rem; }
+              .print-header h1 { color: #036469; margin: 0; }
+              .print-header p { color: #6f797a; margin: 0.25rem 0 0 0; }
+              .field { display: flex; padding: 0.5rem 0; border-bottom: 1px solid #e4e2e1; }
+              .field-label { font-weight: 600; width: 40%; color: #3f4949; }
+              .field-value { width: 60%; }
+              .print-footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e4e2e1; text-align: center; font-size: 0.8rem; color: #6f797a; }
+            </style>
+          </head>
+          <body>
+            <div class="print-header">
+              <h1>${title}</h1>
+              <p>Printed on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
+            </div>
+            ${fields.map(f => `
+              <div class="field">
+                <div class="field-label">${f.label}</div>
+                <div class="field-value">${f.value}</div>
+              </div>
+            `).join("")}
+            <div class="print-footer">© 2024 addyPets veterinary clinic. All rights reserved.</div>
+            <script>
+              window.onload = function() { window.print(); }
+            <\/script>
+          </body>
+        </html>
+      `);
+        printWindow.document.close();
+        showToast(`🖨️ Print dialog opened for ${id}`, "info");
+      }
+
+      // ===== CALCULATE NET PAY =====
+      function calculateNetPay(staff) {
+        return (staff.basicSalary || 0) + (staff.allowances || 0) + (staff.bonuses || 0) - (staff.deductions || 0);
+      }
+
+      // ===== ACTION HANDLER FOR PAYROLL (3-DOT DROPDOWN) =====
+      function handlePayrollAction(id, action) {
+        const record = staffMembers.find((r) => r.id === id);
+        if (!record) {
+          showToast("Record not found.", "error");
+          return;
+        }
+
+        switch (action) {
+          case "view":
+            openViewModal(record, "salary");
+            break;
+
+          case "edit":
+            if (editingRowId) cancelEdit();
+            editingRowId = id;
+            editingType = "salary";
+            renderPayrollTable();
+            break;
+
+          case "print":
+            printRecord(id, "salary");
+            break;
+
+          case "reminder":
+            showToast(`🔔 Reminder sent to ${record.firstName} ${record.lastName} regarding salary payment.`, "warning");
+            break;
+
+          case "mark_paid":
+            if (record.status === "Paid") {
+              showToast(`${id} is already marked as Paid.`, "info");
+            } else {
+              record.status = "Paid";
+              record.date = new Date().toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              });
+              renderPayrollTable();
+              showToast(`✅ ${id} marked as Paid!`, "success");
+            }
+            break;
+
+          case "delete":
+            showConfirm(
+              "Delete Record",
+              `Are you sure you want to delete ${id}? This action cannot be undone.`,
+              function () {
+                const index = staffMembers.indexOf(record);
+                if (index > -1) {
+                  staffMembers.splice(index, 1);
+                  renderPayrollTable();
+                  showToast(`🗑️ ${id} deleted successfully.`, "error");
+                }
+              }
+            );
+            break;
+
+          default:
+            showToast(`Action ${action} performed on ${id}`, "info");
+        }
+
+        // Close dropdown
+        activeDropdownId = null;
+        document.querySelectorAll(".action-dropdown-menu").forEach((m) => m.classList.remove("open"));
+      }
+
+      // ===== EDIT FUNCTIONS =====
+      function saveEdit(id, type) {
+        const row = document.querySelector(`tr[data-id="${id}"][data-type="${type}"]`);
+        if (!row) return;
+
+        const record = staffMembers.find((r) => r.id === id);
+        if (!record) return;
+
+        const firstName = row.querySelector(".edit-firstname")?.value || record.firstName;
+        const lastName = row.querySelector(".edit-lastname")?.value || record.lastName;
+        const middleName = row.querySelector(".edit-middlename")?.value || record.middleName || "";
+        const basicSalary = parseFloat(row.querySelector(".edit-basicSalary")?.value) || record.basicSalary;
+        const allowances = parseFloat(row.querySelector(".edit-allowances")?.value) || record.allowances || 0;
+        const bonuses = parseFloat(row.querySelector(".edit-bonuses")?.value) || record.bonuses || 0;
+        const deductions = parseFloat(row.querySelector(".edit-deductions")?.value) || record.deductions || 0;
+        const status = row.querySelector(".edit-status")?.value || record.status;
+        const payPeriod = row.querySelector(".edit-payPeriod")?.value || record.payPeriod || "Monthly";
+        const paymentMethod = row.querySelector(".edit-paymentMethod")?.value || record.paymentMethod || "Bank Transfer";
+
+        record.firstName = firstName;
+        record.lastName = lastName;
+        record.middleName = middleName;
+        record.basicSalary = basicSalary;
+        record.allowances = allowances;
+        record.bonuses = bonuses;
+        record.deductions = deductions;
+        record.netPay = calculateNetPay(record);
+        record.status = status;
+        record.payPeriod = payPeriod;
+        record.paymentMethod = paymentMethod;
+
+        editingRowId = null;
+        editingType = null;
+        renderPayrollTable();
+        showToast(`✅ ${id} updated successfully!`, "success");
+      }
+
+      function cancelEdit() {
+        editingRowId = null;
+        editingType = null;
+        renderPayrollTable();
+      }
+
+      // ===== RENDER PAYROLL TABLE WITH 3-DOT DROPDOWN =====
+      function renderPayrollTable() {
+        const tbody = document.getElementById('payrollTableBody');
+        if (!tbody) return;
+
+        // Calculate totals
+        let totalBasic = 0, totalAllowances = 0, totalBonuses = 0, totalDeductions = 0, totalNet = 0;
+        staffMembers.forEach(s => {
+          totalBasic += s.basicSalary || 0;
+          totalAllowances += s.allowances || 0;
+          totalBonuses += s.bonuses || 0;
+          totalDeductions += s.deductions || 0;
+          totalNet += s.netPay || calculateNetPay(s);
+        });
+
+        document.getElementById('totalPayroll').textContent = `GHS ${totalBasic.toFixed(2)}`;
+        document.getElementById('totalAllowances').textContent = `GHS ${totalAllowances.toFixed(2)}`;
+        document.getElementById('totalDeductions').textContent = `GHS ${totalDeductions.toFixed(2)}`;
+        document.getElementById('totalNetPay').textContent = `GHS ${totalNet.toFixed(2)}`;
+        document.getElementById('staffCount').textContent = staffMembers.length;
+
+        const totalPages = Math.ceil(staffMembers.length / ITEMS_PER_PAGE) || 1;
+        if (salaryPage > totalPages) salaryPage = totalPages;
+        const start = (salaryPage - 1) * ITEMS_PER_PAGE;
+        const end = Math.min(start + ITEMS_PER_PAGE, staffMembers.length);
+        const pageData = staffMembers.slice(start, end);
+
+        const info = document.getElementById('salaryPaginationInfo');
+        if (info) {
+          info.textContent = staffMembers.length === 0
+            ? 'No results found'
+            : `Showing ${start + 1}-${end} of ${staffMembers.length} results`;
+        }
+
+        const btns = document.getElementById('salaryPaginationButtons');
+        if (btns) {
+          let html = `<button onclick="changePage('salary', ${salaryPage - 1})" ${salaryPage <= 1 ? 'disabled' : ''} class="px-2 py-1 border rounded text-sm disabled:opacity-40"><span class="material-symbols-outlined text-[16px]">chevron_left</span></button>`;
+          for (let i = 1; i <= totalPages; i++) {
+            html += `<button onclick="changePage('salary', ${i})" class="px-2.5 py-1 text-sm rounded ${i === salaryPage ? 'bg-primary text-white' : 'border hover:bg-surface'}">${i}</button>`;
+          }
+          html += `<button onclick="changePage('salary', ${salaryPage + 1})" ${salaryPage >= totalPages ? 'disabled' : ''} class="px-2 py-1 border rounded text-sm disabled:opacity-40"><span class="material-symbols-outlined text-[16px]">chevron_right</span></button>`;
+          btns.innerHTML = html;
+        }
+
+        tbody.innerHTML = pageData.map(s => {
+          const netPay = s.netPay || calculateNetPay(s);
+          const isEditing = editingRowId === s.id && editingType === 'salary';
+
+          if (isEditing) {
+            return `
+              <tr data-id="${s.id}" data-type="salary" class="editing-row">
+                <td class="px-3 py-2 md:px-4 md:py-3 text-sm font-bold text-primary whitespace-nowrap">${s.id}</td>
+                <td class="px-3 py-2 md:px-4 md:py-3 text-sm whitespace-nowrap"><input type="text" class="edit-firstname" value="${s.firstName}" style="width:100%;"></td>
+                <td class="px-3 py-2 md:px-4 md:py-3 text-sm whitespace-nowrap"><input type="text" class="edit-lastname" value="${s.lastName}" style="width:100%;"></td>
+                <td class="px-3 py-2 md:px-4 md:py-3 text-sm whitespace-nowrap"><input type="text" class="edit-middlename" value="${s.middleName || ''}" style="width:100%;"></td>
+                <td class="px-3 py-2 md:px-4 md:py-3 text-sm text-right font-bold whitespace-nowrap"><input type="number" class="edit-basicSalary" value="${s.basicSalary}" step="0.01" style="width:100%;text-align:right;"></td>
+                <td class="px-3 py-2 md:px-4 md:py-3 text-sm text-right text-primary whitespace-nowrap"><input type="number" class="edit-allowances" value="${s.allowances || 0}" step="0.01" style="width:100%;text-align:right;"></td>
+                <td class="px-3 py-2 md:px-4 md:py-3 text-sm text-right text-emerald-600 whitespace-nowrap"><input type="number" class="edit-bonuses" value="${s.bonuses || 0}" step="0.01" style="width:100%;text-align:right;"></td>
+                <td class="px-3 py-2 md:px-4 md:py-3 text-sm text-right text-amber-600 whitespace-nowrap"><input type="number" class="edit-deductions" value="${s.deductions || 0}" step="0.01" style="width:100%;text-align:right;"></td>
+                <td class="px-3 py-2 md:px-4 md:py-3 text-sm text-right font-bold text-primary whitespace-nowrap">${netPay.toFixed(2)}</td>
+                <td class="px-3 py-2 md:px-4 md:py-3 whitespace-nowrap">
+                  <select class="edit-status" style="width:100%;">
+                    <option value="Paid" ${s.status === 'Paid' ? 'selected' : ''}>Paid</option>
+                    <option value="Pending" ${s.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                    <option value="Overdue" ${s.status === 'Overdue' ? 'selected' : ''}>Overdue</option>
+                    <option value="Processing" ${s.status === 'Processing' ? 'selected' : ''}>Processing</option>
+                  </select>
+                </td>
+                <!-- ✅ Updated: Only Monthly option -->
+                <td class="px-3 py-2 md:px-4 md:py-3 text-sm whitespace-nowrap">
+                  <select class="edit-payPeriod" style="width:100%;">
+                    <option value="Monthly" ${s.payPeriod === "Monthly" ? "selected" : ""}>Monthly</option>
+                  </select>
+                </td>
+                <!-- ✅ Updated: Only Bank Transfer and Cheque -->
+                <td class="px-3 py-2 md:px-4 md:py-3 text-sm whitespace-nowrap">
+                  <select class="edit-paymentMethod" style="width:100%;">
+                    <option value="Bank Transfer" ${s.paymentMethod === "Bank Transfer" ? "selected" : ""}>Bank Transfer</option>
+                    <option value="Cheque" ${s.paymentMethod === "Cheque" ? "selected" : ""}>Cheque</option>
+                  </select>
+                </td>
+                <td class="px-3 py-2 md:px-4 md:py-3">
+                  <div class="edit-actions">
+                    <button class="save-btn" onclick="saveEdit('${s.id}','salary')">Save</button>
+                    <button class="cancel-btn" onclick="cancelEdit()">Cancel</button>
+                  </div>
+                </td>
+              </tr>
+            `;
+          }
+
+          // Generate dropdown ID
+          const dropdownId = `salary-${s.id}`;
+          
+          return `
+            <tr data-id="${s.id}" data-type="salary" class="hover:bg-surface-muted transition-colors">
+              <td class="px-3 py-2 md:px-4 md:py-3 text-sm font-bold text-primary whitespace-nowrap">${s.id}</td>
+              <td class="px-3 py-2 md:px-4 md:py-3 text-sm whitespace-nowrap">${s.firstName}</td>
+              <td class="px-3 py-2 md:px-4 md:py-3 text-sm whitespace-nowrap">${s.lastName}</td>
+              <td class="px-3 py-2 md:px-4 md:py-3 text-sm whitespace-nowrap">${s.middleName || '-'}</td>
+              <td class="px-3 py-2 md:px-4 md:py-3 text-sm text-right font-bold whitespace-nowrap">${(s.basicSalary || 0).toFixed(2)}</td>
+              <td class="px-3 py-2 md:px-4 md:py-3 text-sm text-right text-primary whitespace-nowrap">${(s.allowances || 0).toFixed(2)}</td>
+              <td class="px-3 py-2 md:px-4 md:py-3 text-sm text-right text-emerald-600 whitespace-nowrap">${(s.bonuses || 0).toFixed(2)}</td>
+              <td class="px-3 py-2 md:px-4 md:py-3 text-sm text-right text-amber-600 whitespace-nowrap">${(s.deductions || 0).toFixed(2)}</td>
+              <td class="px-3 py-2 md:px-4 md:py-3 text-sm text-right font-bold text-primary whitespace-nowrap">${netPay.toFixed(2)}</td>
+              <td class="px-3 py-2 md:px-4 md:py-3 whitespace-nowrap">${getStatusBadge(s.status)}</td>
+              <td class="px-3 py-2 md:px-4 md:py-3 text-sm whitespace-nowrap">${s.payPeriod || 'Monthly'}</td>
+              <td class="px-3 py-2 md:px-4 md:py-3 text-sm whitespace-nowrap">${s.paymentMethod || 'Bank Transfer'}</td>
+              <td class="px-3 py-2 md:px-4 md:py-3">
+                <div class="action-dropdown">
+                  <button onclick="toggleDropdown('${dropdownId}')" class="action-dropdown-btn" title="More actions">
+                    <span class="material-symbols-outlined text-[20px]">more_vert</span>
+                  </button>
+                  <div id="dropdown-${dropdownId}" class="action-dropdown-menu">
+                    ${s.actions.map(action => `
+                      <button onclick="handlePayrollAction('${s.id}', '${action}')" class="${getActionColor(action)}">
+                        <span class="material-symbols-outlined text-[18px]">${getActionIcon(action)}</span>
+                        ${getActionLabel(action)}
+                      </button>
+                    `).join("")}
+                  </div>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      }
+
+      // ===== FILTER FUNCTIONS =====
+      function getFilteredData(type) {
+        if (type === "owner") {
+          const search = (document.getElementById("ownerSearch")?.value || "").toLowerCase();
+          const status = document.getElementById("ownerStatusFilter")?.value || "All";
+          return ownerInvoices.filter((inv) => {
+            const matchName = inv.owner.toLowerCase().includes(search);
+            const matchStatus = status === "All" || inv.status === status;
+            return matchName && matchStatus;
+          });
+        } else if (type === "inventory") {
+          const search = (document.getElementById("inventorySearch")?.value || "").toLowerCase();
+          const status = document.getElementById("inventoryStatusFilter")?.value || "All";
+          return inventoryPurchases.filter((p) => {
+            const matchSupplier = p.supplier.toLowerCase().includes(search);
+            const matchStatus = status === "All" || p.status === status;
+            return matchSupplier && matchStatus;
+          });
+        } else if (type === "salary") {
+          const search = (document.getElementById("salarySearch")?.value || "").toLowerCase();
+          const status = document.getElementById("salaryStatusFilter")?.value || "All";
+          return staffMembers.filter((s) => {
+            const matchName = (s.firstName + " " + s.lastName).toLowerCase().includes(search);
+            const matchStatus = status === "All" || s.status === status;
+            return matchName && matchStatus;
+          });
+        }
+        return [];
+      }
+
+      function changePage(type, page) {
+        const filtered = getFilteredData(type);
+        const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE) || 1;
+        if (page < 1 || page > totalPages) return;
+        if (type === "owner") { ownerPage = page; renderOwnerTable(); }
+        else if (type === "inventory") { inventoryPage = page; renderInventoryTable(); }
+        else if (type === "salary") { salaryPage = page; renderPayrollTable(); }
+      }
+
+      // ===== RENDER OWNER & INVENTORY TABLES =====
+      function renderOwnerTable() {
+        const tbody = document.getElementById("ownerTableBody");
+        if (!tbody) return;
+        const filtered = getFilteredData("owner");
+        const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE) || 1;
+        if (ownerPage > totalPages) ownerPage = totalPages;
+        const start = (ownerPage - 1) * ITEMS_PER_PAGE;
+        const end = Math.min(start + ITEMS_PER_PAGE, filtered.length);
+        const pageData = filtered.slice(start, end);
+
+        tbody.innerHTML = pageData.map((inv, index) => {
+          const dropdownId = `owner-${inv.id.replace("#", "")}-${index}`;
+          return `
+            <tr class="hover:bg-surface-muted transition-colors">
+              <td data-label="Invoice ID" class="px-3 py-2 md:px-5 md:py-3 text-sm font-bold text-primary">${inv.id}</td>
+              <td data-label="Owner" class="px-3 py-2 md:px-5 md:py-3 text-sm">${inv.owner}</td>
+              <td data-label="Amount (GHS)" class="px-3 py-2 md:px-5 md:py-3 text-sm text-right font-bold">${inv.amount.toFixed(2)}</td>
+              <td data-label="Status" class="px-3 py-2 md:px-5 md:py-3">${getStatusBadge(inv.status)}</td>
+              <td data-label="Pay Date" class="px-3 py-2 md:px-5 md:py-3 text-sm text-on-surface-variant">${inv.date}</td>
+              <td data-label="Action" class="px-3 py-2 md:px-5 md:py-3">
+                <div class="action-dropdown">
+                  <button onclick="toggleDropdown('${dropdownId}')" class="action-dropdown-btn" title="More actions">
+                    <span class="material-symbols-outlined text-[20px]">more_vert</span>
+                  </button>
+                  <div id="dropdown-${dropdownId}" class="action-dropdown-menu">
+                    ${inv.actions.map(action => `
+                      <button onclick="handleAction('${inv.id}', '${action}', 'owner')" class="${getActionColor(action)}">
+                        <span class="material-symbols-outlined text-[18px]">${getActionIcon(action)}</span>
+                        ${getActionLabel(action)}
+                      </button>
+                    `).join("")}
+                    <div class="menu-divider"></div>
+                    <button onclick="handleAction('${inv.id}', 'delete', 'owner')" class="danger">
+                      <span class="material-symbols-outlined text-[18px]">delete</span>
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join("");
+
+        const info = document.getElementById("ownerPaginationInfo");
+        if (info) {
+          info.textContent = filtered.length === 0 ? "No results found" : `Showing ${start + 1}-${end} of ${filtered.length} results`;
+        }
+
+        const btns = document.getElementById("ownerPaginationButtons");
+        if (btns) {
+          let html = `<button onclick="changePage('owner', ${ownerPage - 1})" ${ownerPage <= 1 ? 'disabled' : ''} class="px-2 py-1 border rounded text-sm disabled:opacity-40"><span class="material-symbols-outlined text-[16px]">chevron_left</span></button>`;
+          for (let i = 1; i <= totalPages; i++) {
+            html += `<button onclick="changePage('owner', ${i})" class="px-2.5 py-1 text-sm rounded ${i === ownerPage ? 'bg-primary text-white' : 'border hover:bg-surface'}">${i}</button>`;
+          }
+          html += `<button onclick="changePage('owner', ${ownerPage + 1})" ${ownerPage >= totalPages ? 'disabled' : ''} class="px-2 py-1 border rounded text-sm disabled:opacity-40"><span class="material-symbols-outlined text-[16px]">chevron_right</span></button>`;
+          btns.innerHTML = html;
+        }
+      }
+
+      function renderInventoryTable() {
+        const tbody = document.getElementById("inventoryTableBody");
+        if (!tbody) return;
+        const filtered = getFilteredData("inventory");
+        const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE) || 1;
+        if (inventoryPage > totalPages) inventoryPage = totalPages;
+        const start = (inventoryPage - 1) * ITEMS_PER_PAGE;
+        const end = Math.min(start + ITEMS_PER_PAGE, filtered.length);
+        const pageData = filtered.slice(start, end);
+
+        tbody.innerHTML = pageData.map((p, index) => {
+          const dropdownId = `inv-${p.id.replace("PO-", "")}-${index}`;
+          return `
+            <tr class="hover:bg-surface-muted">
+              <td data-label="PO #" class="px-3 py-2 md:px-5 md:py-3 text-sm font-bold text-primary">${p.id}</td>
+              <td data-label="Supplier" class="px-3 py-2 md:px-5 md:py-3 text-sm">${p.supplier}</td>
+              <td data-label="Total (GHS)" class="px-3 py-2 md:px-5 md:py-3 text-sm text-right font-bold">${p.total.toFixed(2)}</td>
+              <td data-label="Status" class="px-3 py-2 md:px-5 md:py-3">${getStatusBadge(p.status)}</td>
+              <td data-label="Pay Date" class="px-3 py-2 md:px-5 md:py-3 text-sm text-on-surface-variant">${p.date}</td>
+              <td data-label="Action" class="px-3 py-2 md:px-5 md:py-3">
+                <div class="action-dropdown">
+                  <button onclick="toggleDropdown('${dropdownId}')" class="action-dropdown-btn" title="More actions">
+                    <span class="material-symbols-outlined text-[20px]">more_vert</span>
+                  </button>
+                  <div id="dropdown-${dropdownId}" class="action-dropdown-menu">
+                    ${p.actions.map(action => `
+                      <button onclick="handleAction('${p.id}', '${action}', 'inventory')" class="${getActionColor(action)}">
+                        <span class="material-symbols-outlined text-[18px]">${getActionIcon(action)}</span>
+                        ${getActionLabel(action)}
+                      </button>
+                    `).join("")}
+                    <div class="menu-divider"></div>
+                    <button onclick="handleAction('${p.id}', 'delete', 'inventory')" class="danger">
+                      <span class="material-symbols-outlined text-[18px]">delete</span>
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join("");
+
+        const info = document.getElementById("inventoryPaginationInfo");
+        if (info) {
+          info.textContent = filtered.length === 0 ? "No results found" : `Showing ${start + 1}-${end} of ${filtered.length} results`;
+        }
+
+        const btns = document.getElementById("inventoryPaginationButtons");
+        if (btns) {
+          let html = `<button onclick="changePage('inventory', ${inventoryPage - 1})" ${inventoryPage <= 1 ? 'disabled' : ''} class="px-2 py-1 border rounded text-sm disabled:opacity-40"><span class="material-symbols-outlined text-[16px]">chevron_left</span></button>`;
+          for (let i = 1; i <= totalPages; i++) {
+            html += `<button onclick="changePage('inventory', ${i})" class="px-2.5 py-1 text-sm rounded ${i === inventoryPage ? 'bg-primary text-white' : 'border hover:bg-surface'}">${i}</button>`;
+          }
+          html += `<button onclick="changePage('inventory', ${inventoryPage + 1})" ${inventoryPage >= totalPages ? 'disabled' : ''} class="px-2 py-1 border rounded text-sm disabled:opacity-40"><span class="material-symbols-outlined text-[16px]">chevron_right</span></button>`;
+          btns.innerHTML = html;
+        }
+      }
+
+      // ===== HANDLE ACTION FOR OWNER & INVENTORY =====
+      function handleAction(id, action, type) {
+        let record = null;
+        let dataset = null;
+
+        if (type === "owner") {
+          record = ownerInvoices.find((r) => r.id === id);
+          dataset = ownerInvoices;
+        } else if (type === "inventory") {
+          record = inventoryPurchases.find((r) => r.id === id);
+          dataset = inventoryPurchases;
+        }
+
+        if (!record) {
+          showToast("Record not found.", "error");
+          return;
+        }
+
+        switch (action) {
+          case "view":
+            openViewModal(record, type);
+            break;
+          case "edit":
+            showToast(`✏️ Editing ${id} - edit mode activated.`, "info");
+            break;
+          case "print":
+            printRecord(id, type);
+            break;
+          case "reminder":
+            showToast(`🔔 Reminder sent to ${record.owner || record.supplier}!`, "warning");
+            break;
+          case "mark_paid":
+            if (record.status === "Paid") {
+              showToast(`${id} is already marked as Paid.`, "info");
+            } else {
+              record.status = "Paid";
+              record.date = new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+              if (type === "owner") renderOwnerTable();
+              else renderInventoryTable();
+              showToast(`✅ ${id} marked as Paid!`, "success");
+            }
+            break;
+          case "delete":
+            showConfirm("Delete Record", `Are you sure you want to delete ${id}?`, function () {
+              const index = dataset.indexOf(record);
+              if (index > -1) {
+                dataset.splice(index, 1);
+                if (type === "owner") renderOwnerTable();
+                else renderInventoryTable();
+                showToast(`🗑️ ${id} deleted successfully.`, "error");
+              }
+            });
+            break;
+        }
+
+        activeDropdownId = null;
+        document.querySelectorAll(".action-dropdown-menu").forEach((m) => m.classList.remove("open"));
+      }
+
+      // ===== SETUP FILTERS =====
+      function setupFilters(type) {
+        const searchId = type === "owner" ? "ownerSearch" : type === "inventory" ? "inventorySearch" : "salarySearch";
+        const filterId = type === "owner" ? "ownerStatusFilter" : type === "inventory" ? "inventoryStatusFilter" : "salaryStatusFilter";
+        const search = document.getElementById(searchId);
+        const filter = document.getElementById(filterId);
+
+        if (search) {
+          search.addEventListener("input", () => {
+            if (type === "owner") { ownerPage = 1; renderOwnerTable(); }
+            else if (type === "inventory") { inventoryPage = 1; renderInventoryTable(); }
+            else { salaryPage = 1; renderPayrollTable(); }
+          });
+        }
+        if (filter) {
+          filter.addEventListener("change", () => {
+            if (type === "owner") { ownerPage = 1; renderOwnerTable(); }
+            else if (type === "inventory") { inventoryPage = 1; renderInventoryTable(); }
+            else { salaryPage = 1; renderPayrollTable(); }
+          });
+        }
+      }
+
+      // ===== EXPORT CSV =====
+      function exportCSV(type) {
+        const data = getFilteredData(type);
+        if (!data.length) {
+          showToast("No data to export.", "error");
+          return;
+        }
+        let headers, rows;
+        if (type === "owner") {
+          headers = "Invoice ID,Owner,Amount,Status,Pay Date";
+          rows = data.map((i) => `${i.id},${i.owner},${i.amount},${i.status},${i.date}`);
+        } else if (type === "inventory") {
+          headers = "PO #,Supplier,Total,Status,Pay Date";
+          rows = data.map((p) => `${p.id},${p.supplier},${p.total},${p.status},${p.date}`);
+        } else {
+          headers = "Staff ID,First Name,Last Name,Middle Name,Basic Salary,Allowances,Bonuses,Deductions,Net Pay,Status,Pay Period,Payment Method";
+          rows = data.map((s) => {
+            const netPay = s.netPay || calculateNetPay(s);
+            return `${s.id},${s.firstName},${s.lastName},${s.middleName || ""},${(s.basicSalary || 0).toFixed(2)},${(s.allowances || 0).toFixed(2)},${(s.bonuses || 0).toFixed(2)},${(s.deductions || 0).toFixed(2)},${netPay.toFixed(2)},${s.status},${s.payPeriod || "Monthly"},${s.paymentMethod || "Bank Transfer"}`;
+          });
+        }
+        const csv = [headers, ...rows].join("\n");
+        const blob = new Blob([csv], { type: "text/csv" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${type}_data.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast(`${type} CSV exported!`, "success");
+      }
+
+      // ===== ADD STAFF MODAL =====
+      const addStaffModal = document.getElementById("addStaffModal");
+      const addStaffBtn = document.getElementById("addStaffBtn");
+      const closeStaffModalBtn = document.getElementById("closeStaffModalBtn");
+      const cancelStaffModalBtn = document.getElementById("cancelStaffModalBtn");
+      const staffForm = document.getElementById("addStaffForm");
+
+      function openAddStaffModal() {
+        document.getElementById("staffModalTitle").textContent = "Add New Staff";
+        staffForm.reset();
+        document.getElementById("staffAllowances").value = 0;
+        document.getElementById("staffBonuses").value = 0;
+        document.getElementById("staffDeductions").value = 0;
+        addStaffModal.classList.add("active");
+      }
+
+      function closeStaffModal() {
+        addStaffModal.classList.remove("active");
+      }
+
+      if (addStaffBtn) addStaffBtn.addEventListener("click", openAddStaffModal);
+      if (closeStaffModalBtn) closeStaffModalBtn.addEventListener("click", closeStaffModal);
+      if (cancelStaffModalBtn) cancelStaffModalBtn.addEventListener("click", closeStaffModal);
+      if (addStaffModal) {
+        addStaffModal.addEventListener("click", function (e) {
+          if (e.target === this) closeStaffModal();
+        });
+      }
+
+      if (staffForm) {
+        staffForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const firstName = document.getElementById("staffFirstName").value.trim();
+          const lastName = document.getElementById("staffLastName").value.trim();
+          const middleName = document.getElementById("staffMiddleName").value.trim();
+          const basicSalary = parseFloat(document.getElementById("staffBasicSalary").value) || 0;
+          const allowances = parseFloat(document.getElementById("staffAllowances").value) || 0;
+          const bonuses = parseFloat(document.getElementById("staffBonuses").value) || 0;
+          const deductions = parseFloat(document.getElementById("staffDeductions").value) || 0;
+
+          if (!firstName || !lastName || basicSalary <= 0) {
+            showToast("Please fill all required fields correctly.", "error");
+            return;
+          }
+
+          const newId = `S-${String(staffMembers.length + 1).padStart(3, "0")}`;
+          const netPay = basicSalary + allowances + bonuses - deductions;
+
+          staffMembers.push({
+            id: newId,
+            firstName,
+            lastName,
+            middleName,
+            basicSalary,
+            allowances,
+            bonuses,
+            deductions,
+            netPay,
+            status: "Pending",
+            date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+            payPeriod: document.getElementById("staffPayPeriod").value,
+            paymentMethod: document.getElementById("staffPaymentMethod").value,
+            bankName: document.getElementById("staffBankName").value.trim(),
+            accountNumber: document.getElementById("staffAccountNumber").value.trim(),
+            actions: ["view", "edit", "reminder", "mark_paid", "print", "delete"]
+          });
+
+          closeStaffModal();
+          salaryPage = Math.ceil(staffMembers.length / ITEMS_PER_PAGE);
+          renderPayrollTable();
+          showToast(`✅ ${firstName} ${lastName} added successfully!`, "success");
+        });
+      }
+
+      // ===== TAB SWITCHING =====
+      function switchTab(tabId) {
+        if (editingRowId) cancelEdit();
+        document.querySelectorAll(".tab-panel").forEach((el) => el.classList.add("hidden"));
+        const panel = document.getElementById(`panel-${tabId}`);
+        if (panel) panel.classList.remove("hidden");
+        document.querySelectorAll(".tab-btn").forEach((btn) => btn.classList.remove("active"));
+        const btn = document.querySelector(`[data-tab="${tabId}"]`);
+        if (btn) btn.classList.add("active");
+        document.querySelectorAll(".action-dropdown-menu").forEach((m) => m.classList.remove("open"));
+        activeDropdownId = null;
+      }
+
+      document.querySelectorAll(".tab-btn").forEach((btn) => {
+        btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+      });
+
+      // ===== TOAST =====
+      function showToast(message, type = "success") {
+        const container = document.getElementById("toast-container");
+        if (!container) return;
+        const toast = document.createElement("div");
+        toast.className = `toast toast-${type}`;
+        toast.textContent = message;
+        container.appendChild(toast);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => toast.classList.add("show"));
+        });
+        setTimeout(() => {
+          toast.classList.remove("show");
+          setTimeout(() => {
+            if (toast.parentNode) toast.remove();
+          }, 300);
+        }, 4500);
+      }
+
+      // ===== SIDEBAR LOGIC =====
+      const mobileBurgerBtn = document.getElementById("mobileBurgerBtn");
+      const mobileSidebar = document.getElementById("mobileSidebar");
+      const closeMobileSidebar = document.getElementById("closeMobileSidebar");
+      const mobileOverlay = document.getElementById("mobileOverlay");
+      const desktopSidebar = document.getElementById("desktopSidebar");
+      const collapseSidebarBtn = document.getElementById("collapseSidebarBtn");
+      let isSidebarCollapsed = localStorage.getItem("sidebarCollapsed") === "true";
+
+      function openMobileSidebar() {
+        if (mobileSidebar) mobileSidebar.classList.add("open");
+        if (mobileOverlay) mobileOverlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+      function closeMobileSidebarFunc() {
+        if (mobileSidebar) mobileSidebar.classList.remove("open");
+        if (mobileOverlay) mobileOverlay.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+      function toggleDesktopSidebar() {
+        isSidebarCollapsed = !isSidebarCollapsed;
+        localStorage.setItem("sidebarCollapsed", isSidebarCollapsed);
+        const mainContentWrapper = document.getElementById("mainContentWrapper");
+        if (isSidebarCollapsed) {
+          if (desktopSidebar) desktopSidebar.classList.add("sidebar-collapsed");
+          if (collapseSidebarBtn) collapseSidebarBtn.querySelector(".material-symbols-outlined").textContent = "chevron_right";
+          if (mainContentWrapper) mainContentWrapper.classList.add("main-content-full");
+        } else {
+          if (desktopSidebar) desktopSidebar.classList.remove("sidebar-collapsed");
+          if (collapseSidebarBtn) collapseSidebarBtn.querySelector(".material-symbols-outlined").textContent = "chevron_left";
+          if (mainContentWrapper) mainContentWrapper.classList.remove("main-content-full");
+        }
+      }
+      if (isSidebarCollapsed) {
+        if (desktopSidebar) desktopSidebar.classList.add("sidebar-collapsed");
+        if (collapseSidebarBtn) collapseSidebarBtn.querySelector(".material-symbols-outlined").textContent = "chevron_right";
+      }
+      if (mobileBurgerBtn) mobileBurgerBtn.addEventListener("click", openMobileSidebar);
+      if (closeMobileSidebar) closeMobileSidebar.addEventListener("click", closeMobileSidebarFunc);
+      if (mobileOverlay) mobileOverlay.addEventListener("click", closeMobileSidebarFunc);
+      if (collapseSidebarBtn) collapseSidebarBtn.addEventListener("click", toggleDesktopSidebar);
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && mobileSidebar && mobileSidebar.classList.contains("open")) closeMobileSidebarFunc();
+      });
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 768 && mobileSidebar && mobileSidebar.classList.contains("open")) closeMobileSidebarFunc();
+      });
+
+      function logout() {
+        if (confirm("Are you sure you want to logout?")) {
+          localStorage.removeItem("user");
+          localStorage.removeItem("token");
+          window.location.href = "vet_portal_login.html";
+        }
+      }
+      document.getElementById("logoutBtnMobile")?.addEventListener("click", logout);
+      document.getElementById("logoutBtnDesktop")?.addEventListener("click", logout);
+
+      // ===== INIT =====
+      setupFilters("owner");
+      setupFilters("inventory");
+      setupFilters("salary");
+
+      document.getElementById("exportOwnerCsv")?.addEventListener("click", () => exportCSV("owner"));
+      document.getElementById("exportInventoryCsv")?.addEventListener("click", () => exportCSV("inventory"));
+      document.getElementById("exportSalaryCsv")?.addEventListener("click", () => exportCSV("salary"));
+
+      // Initialize all tables
+      renderOwnerTable();
+      renderInventoryTable();
+      renderPayrollTable();
+
+      console.log("✅ Billing management with updated payroll options loaded.");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,805 @@
+<!doctype html>
+<html class="scroll-smooth" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>addyPets — AI Emergency Assistant</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Open+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-fixed": "#a4eff4",
+              "on-tertiary": "#ffffff",
+              "deep-navy": "#1A3638",
+              tertiary: "#485d5f",
+              "surface-variant": "#e4e2e1",
+              "surface-dim": "#dcd9d9",
+              "on-tertiary-fixed": "#091f20",
+              "on-primary-fixed": "#002022",
+              "on-tertiary-fixed-variant": "#364a4c",
+              "on-secondary-fixed-variant": "#004f52",
+              "inverse-primary": "#88d3d8",
+              "on-surface": "#1b1c1c",
+              "tertiary-fixed-dim": "#b4cbcc",
+              "on-surface-variant": "#3f4949",
+              "surface-muted": "#F4F7F7",
+              surface: "#fbf9f8",
+              "primary-fixed-dim": "#88d3d8",
+              "emergency-red": "#943031",
+              "primary-container": "#2e7d82",
+              error: "#ba1a1a",
+              "on-error-container": "#93000a",
+              "tertiary-fixed": "#d0e7e8",
+              "tertiary-container": "#617677",
+              "surface-container-low": "#f5f3f3",
+              "surface-container-high": "#eae8e7",
+              "surface-container-highest": "#e4e2e1",
+              "on-secondary-container": "#006e72",
+              "surface-container": "#f0eded",
+              "inverse-surface": "#303030",
+              "on-primary": "#ffffff",
+              "secondary-fixed-dim": "#82d4d8",
+              "surface-bright": "#fbf9f8",
+              "on-background": "#1b1c1c",
+              "inverse-on-surface": "#f2f0f0",
+              "secondary-fixed": "#9ef0f4",
+              "error-container": "#ffdad6",
+              "on-error": "#ffffff",
+              secondary: "#00696d",
+              outline: "#6f797a",
+              "on-primary-container": "#e5fdff",
+              "outline-variant": "#bec8c9",
+              "secondary-container": "#9bedf1",
+              "on-secondary-fixed": "#002021",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-fixed-variant": "#004f53",
+              "on-secondary": "#ffffff",
+              primary: "#036469",
+              "on-tertiary-container": "#e6fdfe",
+              "surface-tint": "#0f696e",
+              background: "#fbf9f8",
+              "triage-critical": "#943031",
+              "triage-urgent": "#d97706",
+              "triage-standard": "#059669",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              "2xl": "1rem",
+              full: "9999px",
+            },
+            spacing: {
+              base: "8px",
+              "stack-sm": "12px",
+              "stack-md": "24px",
+              "stack-lg": "48px",
+              "margin-mobile": "16px",
+              "margin-desktop": "40px",
+              gutter: "24px",
+              "container-max": "1200px",
+            },
+            fontFamily: {
+              "headline-lg": ["Plus Jakarta Sans", "sans-serif"],
+              "display-lg": ["Plus Jakarta Sans", "sans-serif"],
+              caption: ["Open Sans", "sans-serif"],
+              "headline-lg-mobile": ["Plus Jakarta Sans", "sans-serif"],
+              "label-md": ["Open Sans", "sans-serif"],
+              "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+              "body-md": ["Open Sans", "sans-serif"],
+              "body-lg": ["Open Sans", "sans-serif"],
+            },
+            fontSize: {
+              "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "600" }],
+              "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+              caption: ["12px", { lineHeight: "16px", fontWeight: "400" }],
+              "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "600" }],
+              "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.05em", fontWeight: "600" }],
+              "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+
+      /* Modal Animation */
+      .modal-backdrop {
+        transition: opacity 0.3s ease-in-out;
+      }
+      .modal-content {
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+      }
+      .modal-hidden .modal-backdrop {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .modal-hidden .modal-content {
+        transform: scale(0.95);
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body class="bg-surface text-on-surface font-body-md antialiased flex flex-col min-h-screen">
+    
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-surface shadow-sm h-20 w-full">
+      <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop w-full max-w-container-max mx-auto h-full">
+        <div class="flex items-center gap-base">
+          <button id="mobile-menu-btn" class="md:hidden p-2 text-on-surface hover:bg-surface-muted rounded-lg transition-colors">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <img alt="addyPets Logo" class="h-10 w-auto object-contain" src="logo.png" />
+          <span class="font-headline-md text-sm md:text-headline-md font-bold text-primary hidden sm:inline">addyPets veterinary clinic</span>
+        </div>
+        
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex items-center gap-gutter flex-1 justify-center">
+          <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="home.html">Home</a>
+          <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="veterinary_services.html">Services</a>
+          <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="about_us.html">About</a>
+          <button id="emergency-btn" class="font-body-md text-body-md text-primary font-bold border-b-2 border-primary border-r-0 border-l-0 border-t-0 pb-1 bg-transparent hover:opacity-80 transition-opacity">
+            Emergency
+          </button>
+        </nav>
+
+        <div class="flex items-center gap-4">
+          <button id="book-appointment-btn" class="hidden md:inline-block bg-primary text-on-primary px-stack-md py-base rounded-full font-label-md transition-transform active:scale-95">
+            Book Appointment
+          </button>
+        </div>
+      </div>
+      
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden md:hidden bg-surface border-t border-outline-variant">
+        <div class="px-margin-mobile py-4 space-y-2 max-w-container-max mx-auto">
+          <a class="block font-body-md text-body-md text-primary cursor-pointer active:opacity-80 transition-colors text-sm" href="home.html">Home</a>
+          <a class="block font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 text-sm" href="veterinary_services.html">Services</a>
+          <a class="block font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 text-sm" href="about_us.html">About</a>
+          <a href="emergency.html" class="block font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer pt-0 text-sm">Emergency</a>
+          <a id="mobile-login-btn" href="vet_portal_login.html" class="block font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer pt-0 text-sm">Login</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Window -->
+    <main class="flex-1 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto py-stack-md w-full">
+      
+      <!-- Hero / Alert Banner -->
+      <section class="bg-emergency-red/5 border border-emergency-red/20 rounded-2xl p-6 md:p-8 mb-8 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-bold text-deep-navy mb-2">🚨 Is your pet experiencing an emergency?</h1>
+          <p class="text-on-surface-variant">Immediate guidance and triage assistance for your pet's critical needs.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3 shrink-0">
+          <a href="tel:+233123456789" class="bg-emergency-red text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined">call</span> Call Clinic Now
+          </a>
+          <button id="toggle-ai-btn" class="bg-primary text-on-primary px-6 py-3 rounded-xl font-bold shadow-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined">auto_awesome</span> Ask AI Assistant
+          </button>
+        </div>
+      </section>
+
+      <!-- AI Symptom Analysis (Initially Hidden) -->
+      <section id="ai-assistant-section" class="hidden mb-8 transition-all duration-500 ease-in-out">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Input & Questions Card -->
+          <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-surface-variant">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">pets</span>
+              <h2 class="text-xl font-bold text-deep-navy">Pet Health Assistant</h2>
+            </div>
+            <p class="text-sm text-on-surface-variant mb-6 bg-surface-muted p-3 rounded-lg border-l-4 border-primary">
+              <span class="font-bold text-deep-navy">AI Symptom Analysis:</span> Not a substitute for veterinary care — for guidance on next steps only.
+            </p>
+            
+            <label class="block text-sm font-bold text-deep-navy mb-2">Describe your pet's symptoms</label>
+            <textarea id="symptom-input" class="w-full p-4 border border-outline-variant rounded-xl mb-6 bg-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-all" rows="3" placeholder='Example: "My dog is vomiting and weak"'></textarea>
+            
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-bold text-deep-navy mb-1">AI Question: How old is your pet?</label>
+                <select id="age-select" class="w-full p-3 border border-outline-variant rounded-xl bg-surface focus:ring-2 focus:ring-primary focus:border-transparent">
+                  <option>Select age range…</option>
+                  <option>under 1 yr</option>
+                  <option>Adult (1–7 yrs)</option>
+                  <option>Senior (7+ yrs)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-deep-navy mb-1">AI Question: What type of animal?</label>
+                <select  id="animal-select" class="w-full p-3 border border-outline-variant rounded-xl bg-surface focus:ring-2 focus:ring-primary focus:border-transparent">
+                  <option>Dog</option>
+                  <option>Cat</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-deep-navy mb-1">AI Question: How long has this been happening?</label>
+                <select id="duration-select" class="w-full p-3 border border-outline-variant rounded-xl bg-surface focus:ring-2 focus:ring-primary focus:border-transparent">
+                  <option>Less than 1 hour</option>
+                  <option>Several hours</option>
+                  <option>Days</option>
+                </select>
+              </div>
+            </div>
+            <button id="get-assessment-btn" class="w-full mt-8 bg-primary text-on-primary py-4 rounded-xl font-bold text-lg hover:bg-secondary transition-colors shadow-md flex items-center justify-center gap-2">
+              <span class="material-symbols-outlined">analytics</span> Get Risk Assessment
+            </button>
+          </div>
+
+          <!-- Placeholder to maintain grid layout balance -->
+          <div class="hidden lg:flex items-center justify-center bg-surface-muted rounded-2xl border border-dashed border-outline-variant p-8 text-center">
+            <div>
+              <span class="material-symbols-outlined text-6xl text-primary/30 mb-4 block">psychology</span>
+              <h3 class="text-xl font-bold text-deep-navy mb-2">AI Triage Engine Ready</h3>
+              <p class="text-on-surface-variant">Fill out the form on the left and click "Get Risk Assessment" to receive an instant triage level and recommended next steps.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Common Emergencies -->
+      <section class="mb-8">
+        <h2 class="text-2xl font-bold text-deep-navy mb-2">Common Emergencies</h2>
+        <p class="text-on-surface-variant mb-6">Tap a category to see typical warning signs and treatment steps.</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          <button class="emergency-card bg-white p-6 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all text-center border border-surface-variant group w-full" data-emergency="Breathing Problems">
+            <div class="w-14 h-14 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+              <span class="material-symbols-outlined text-3xl">air</span>
+            </div>
+            <h3 class="font-bold text-deep-navy">Breathing Problems</h3>
+          </button>
+          <button class="emergency-card bg-white p-6 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all text-center border border-surface-variant group w-full" data-emergency="Poisoning">
+            <div class="w-14 h-14 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+              <span class="material-symbols-outlined text-3xl">skull</span>
+            </div>
+            <h3 class="font-bold text-deep-navy">Poisoning</h3>
+          </button>
+          <button class="emergency-card bg-white p-6 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all text-center border border-surface-variant group w-full" data-emergency="Seizures">
+            <div class="w-14 h-14 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+              <span class="material-symbols-outlined text-3xl">neurology</span>
+            </div>
+            <h3 class="font-bold text-deep-navy">Seizures</h3>
+          </button>
+          <button class="emergency-card bg-white p-6 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all text-center border border-surface-variant group w-full" data-emergency="Bleeding">
+            <div class="w-14 h-14 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+              <span class="material-symbols-outlined text-3xl">bloodtype</span>
+            </div>
+            <h3 class="font-bold text-deep-navy">Bleeding</h3>
+          </button>
+        </div>
+      </section>
+
+      <!-- Clinic Details -->
+      <section class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-surface-variant mb-8">
+        <h2 class="text-2xl font-bold text-deep-navy mb-6">Clinic Details</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="space-y-6">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined">location_on</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-deep-navy text-lg">Accra Clinic (HQ)</h4>
+                <p class="text-on-surface-variant">Spintex Road, Opposite Zenith Bank<br>Accra, Ghana</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined">schedule</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-deep-navy text-lg">Emergency Hours</h4>
+                <p class="text-on-surface-variant">Open 24/7, 365 days a year</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Map Snapshot with Button Overlay -->
+          <div class="relative rounded-xl h-64 overflow-hidden border border-surface-variant group shadow-sm">
+            <img 
+              src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=800" 
+              alt="Map location of addyPets veterinary clinic" 
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+            <div class="absolute inset-0 bg-deep-navy/30 group-hover:bg-deep-navy/20 transition-colors"></div>
+            <div class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+              <span class="material-symbols-outlined text-5xl text-white mb-2 drop-shadow-lg" style="font-variation-settings: 'FILL' 1;">location_on</span>
+              <p class="font-bold text-white text-lg mb-4 drop-shadow-md">addyPets veterinary clinic</p>
+              <a href="https://www.google.com/maps/search/?api=1&query=Spintex+Road+Opposite+Zenith+Bank+Accra+Ghana" target="_blank" class="inline-flex items-center gap-2 bg-primary text-on-primary px-5 py-2.5 rounded-xl font-label-md hover:bg-secondary transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+                <span class="material-symbols-outlined text-sm">open_in_new</span> Open in Google Maps
+              </a>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full py-stack-lg px-margin-mobile md:px-margin-desktop bg-deep-navy text-primary-fixed mt-auto">
+      <div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-stack-md">
+        <div class="flex flex-col items-center md:items-start gap-2">
+          <span class="font-headline-md text-headline-md font-bold text-primary-fixed">addyPets veterinary clinic</span>
+          <p class="font-body-md text-body-md text-surface-variant opacity-80 text-center md:text-left">
+            © 2026 addyPets veterinary clinic — Clinical Excellence & Emotional Empathy.
+          </p>
+        </div>
+        <div class="flex flex-wrap justify-center gap-gutter">
+          <a class="font-body-md text-body-md text-primary-fixed font-bold hover:text-white transition-colors" href="#">Emergency Care</a>
+          <a class="font-body-md text-body-md text-surface-variant hover:text-white transition-colors" href="#">Privacy Policy</a>
+          <a class="font-body-md text-body-md text-surface-variant hover:text-white transition-colors" href="#">Terms of Service</a>
+          <a class="font-body-md text-body-md text-surface-variant hover:text-white transition-colors" href="#">Careers</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Emergency Modal -->
+    <div id="emergency-modal" class="fixed inset-0 z-[60] hidden items-center justify-center modal-hidden">
+      <!-- Backdrop -->
+      <div class="modal-backdrop absolute inset-0 bg-black/50 backdrop-blur-sm" id="modal-backdrop"></div>
+      
+      <!-- Modal Content -->
+      <div class="modal-content relative bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
+        <div class="p-6 md:p-8">
+          <div class="flex justify-between items-start mb-4">
+            <h3 id="modal-title" class="text-2xl font-bold text-deep-navy pr-8"></h3>
+            <button id="close-modal-btn" class="absolute top-6 right-6 p-1 text-on-surface-variant hover:text-emergency-red hover:bg-surface-muted rounded-full transition-colors">
+              <span class="material-symbols-outlined">close</span>
+            </button>
+          </div>
+          
+          <div class="space-y-5">
+            <div>
+              <h4 class="font-bold text-primary mb-1 flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">info</span> What it is:
+              </h4>
+              <p id="modal-description" class="text-on-surface-variant text-sm leading-relaxed"></p>
+            </div>
+            
+            <div>
+              <h4 class="font-bold text-primary mb-1 flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">lightbulb</span> What to do:
+              </h4>
+              <p id="modal-action" class="text-on-surface-variant text-sm leading-relaxed"></p>
+            </div>
+            
+            <div>
+              <h4 class="font-bold text-primary mb-2 flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">list_alt</span> Treatment Steps:
+              </h4>
+              <ol id="modal-steps" class="list-decimal list-inside space-y-3 text-sm text-on-surface-variant pl-2"></ol>
+            </div>
+          </div>
+          
+                   <!-- NEW: Emergency Action Buttons inside Modal -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6 pt-6 border-t border-surface-variant">
+            <a href="tel:+233123456789" class="flex items-center justify-center gap-2 bg-emergency-red text-white px-4 py-3 rounded-xl font-bold hover:opacity-90 transition-opacity shadow-sm">
+              <span class="material-symbols-outlined">call</span> Call Clinic Now
+            </a>
+            <button id="modal-ai-btn" class="flex items-center justify-center gap-2 bg-primary text-on-primary px-4 py-3 rounded-xl font-bold hover:opacity-90 transition-opacity shadow-sm">
+              <span class="material-symbols-outlined">auto_awesome</span> Ask AI Assistant
+            </button>
+          </div>
+          
+          <!-- Original Close Button -->
+          <div class="mt-4 flex justify-end">
+            <button id="modal-close-action" class="text-on-surface-variant px-6 py-2 rounded-xl font-label-md hover:bg-surface-muted transition-colors">
+              Understood, Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Triage Result Popup -->
+    <div id="triage-popup" class="fixed inset-0 z-[70] hidden items-center justify-center modal-hidden">
+      <div class="modal-backdrop absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeTriagePopup()"></div>
+      <div class="modal-content relative bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 p-6 md:p-8 text-center">
+        <button onclick="closeTriagePopup()" class="absolute top-4 right-4 p-1 text-on-surface-variant hover:text-emergency-red hover:bg-surface-muted rounded-full transition-colors">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+        
+        <div id="triage-popup-icon" class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 bg-triage-critical/10 text-triage-critical">
+          <span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">warning</span>
+        </div>
+        
+        <h3 id="triage-popup-level" class="text-2xl font-bold mb-2 text-triage-critical">CRITICAL</h3>
+        <p id="triage-popup-desc" class="text-on-surface-variant mb-6 leading-relaxed">
+          The symptoms described indicate a life-threatening situation. Seek immediate emergency care.
+        </p>
+        
+
+                <!-- Dynamic Actions Container -->
+        <div id="triage-actions" class="flex flex-col gap-3 mb-4">
+          <!-- Buttons injected by JS -->
+        </div>
+
+
+        <p class="text-xs text-on-surface-variant text-center italic border-t border-surface-variant pt-4">
+          This assessment is generated by AI based on limited information and is not a diagnosis.
+        </p>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+
+  // Mobile Menu Toggle
+  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+  if (mobileMenuBtn && mobileMenu) {
+    mobileMenuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+    const mobileMenuLinks = mobileMenu.querySelectorAll("a");
+    mobileMenuLinks.forEach((link) =>
+      link.addEventListener("click", () => mobileMenu.classList.add("hidden"))
+    );
+  }
+
+  // Toggle AI Assistant Section
+  const toggleAiBtn = document.getElementById('toggle-ai-btn');
+  const aiSection = document.getElementById('ai-assistant-section');
+  
+  if (toggleAiBtn && aiSection) {
+    toggleAiBtn.addEventListener('click', () => {
+      aiSection.classList.toggle('hidden');
+      if (!aiSection.classList.contains('hidden')) {
+        setTimeout(() => {
+          aiSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
+    });
+  }
+
+  // AI Triage Logic (Backend Connected)
+  const symptomInput = document.getElementById('symptom-input');
+  const getAssessmentBtn = document.getElementById('get-assessment-btn');
+
+  const triageProfiles = {
+    critical: {
+      level: "CRITICAL",
+      color: "triage-critical",
+      description: "The symptoms described indicate a life-threatening situation. Do not wait. Transport your pet to the nearest emergency veterinary clinic immediately.",
+      icon: "warning"
+    },
+    urgent: {
+      level: "URGENT",
+      color: "triage-urgent",
+      description: "Your pet's symptoms require prompt veterinary attention today. While not immediately life-threatening, delaying care could lead to severe complications.",
+      icon: "error"
+    },
+    standard: {
+      level: "STANDARD",
+      color: "triage-standard",
+      description: "The symptoms appear mild. Monitor your pet closely for any worsening signs. If symptoms persist for more than 48 hours, schedule a standard check-up.",
+      icon: "check_circle"
+    }
+  };
+
+  // This function now talks to your backend instead of guessing locally
+  if (getAssessmentBtn) {
+    getAssessmentBtn.addEventListener('click', async () => {
+      const symptoms = symptomInput.value.trim();
+      const age = document.getElementById('age-select')?.value || "Unknown";
+      const animal = document.getElementById('animal-select')?.value || "Unknown";
+      const duration = document.getElementById('duration-select')?.value || "Unknown";
+
+      if (!symptoms) {
+        alert("Please describe your pet's symptoms first.");
+        return;
+      }
+
+      // Show Loading State
+      const originalBtnText = getAssessmentBtn.innerHTML;
+      getAssessmentBtn.disabled = true;
+      getAssessmentBtn.innerHTML = `<span class="material-symbols-outlined animate-spin" style="animation: spin 1s linear infinite;">progress_activity</span> Analyzing...`;
+
+      try {
+        // Send data to your backend server
+        const response = await fetch('http://localhost:3000/api/triage', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ symptoms, age, animal, duration })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Server responded with status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+
+        // Handle AI Response
+        if (!data.isValid) {
+          alert("We couldn't identify specific symptoms in your description. Please describe what your pet is experiencing (e.g., 'vomiting', 'limping') so we can provide accurate guidance.");
+        } else {
+          openTriagePopup(data.triageLevel.toLowerCase(), data.reasoning);
+        }
+      } catch (error) {
+        console.error("Triage Error:", error);
+        alert("An error occurred while connecting to the AI assistant. Please ensure the backend server is running, or call the clinic directly.");
+      } finally {
+        // Reset Button
+        getAssessmentBtn.disabled = false;
+        getAssessmentBtn.innerHTML = originalBtnText;
+      }
+    });
+  }
+
+   function openTriagePopup(triageType, aiReasoning) {
+    const profile = triageProfiles[triageType] || triageProfiles.standard;
+    const popup = document.getElementById('triage-popup');
+    const iconContainer = document.getElementById('triage-popup-icon');
+    const icon = iconContainer.querySelector('span');
+    const levelText = document.getElementById('triage-popup-level');
+    const descText = document.getElementById('triage-popup-desc');
+    const actionsContainer = document.getElementById('triage-actions');
+
+    levelText.textContent = profile.level;
+    descText.textContent = aiReasoning || profile.description; 
+    icon.textContent = profile.icon;
+    
+    iconContainer.className = `w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 bg-${profile.color}/10 text-${profile.color}`;
+    levelText.className = `text-2xl font-bold mb-2 text-${profile.color}`;
+
+    // Inject Dynamic Action Buttons
+    actionsContainer.innerHTML = ''; 
+    if (triageType === 'critical') {
+      actionsContainer.innerHTML = `
+        <a href="tel:+233123456789" class="w-full bg-emergency-red text-white px-6 py-3 rounded-xl font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-md animate-pulse">
+          <span class="material-symbols-outlined">call</span> Call Emergency Line NOW
+        </a>
+        <a href="https://www.google.com/maps/search/?api=1&query=Spintex+Road+Opposite+Zenith+Bank+Accra+Ghana" target="_blank" class="w-full bg-surface-muted text-on-surface px-6 py-3 rounded-xl font-bold hover:bg-surface-container transition-colors flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined">directions</span> Get Directions to Clinic
+        </a>`;
+    } else if (triageType === 'urgent') {
+      actionsContainer.innerHTML = `
+        <a href="tel:+233123456789" class="w-full bg-primary text-on-primary px-6 py-3 rounded-xl font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-md">
+          <span class="material-symbols-outlined">call</span> Call Clinic for Same-Day Care
+        </a>
+        <button onclick="closeTriagePopup()" class="w-full text-on-surface-variant px-6 py-3 rounded-xl font-bold hover:bg-surface-muted transition-colors">I will monitor for now</button>`;
+    } else {
+      // STANDARD: Passes symptoms back to booking page
+      const encodedSymptoms = encodeURIComponent(symptomInput.value);
+      const bookingUrl = `book_an_appointment.html?ref=ai&symptoms=${encodedSymptoms}&level=standard`;
+      
+      actionsContainer.innerHTML = `
+        <a href="${bookingUrl}" class="w-full bg-primary text-on-primary px-6 py-3 rounded-xl font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-md">
+          <span class="material-symbols-outlined">event_available</span> Book a Standard Appointment
+        </a>
+        <button onclick="closeTriagePopup()" class="w-full text-on-surface-variant px-6 py-3 rounded-xl font-bold hover:bg-surface-muted transition-colors">Close & Monitor at Home</button>`;
+    }
+
+    popup.classList.remove('hidden');
+    setTimeout(() => {
+      popup.classList.remove('modal-hidden');
+    }, 10);
+  }
+  function closeTriagePopup() {
+    const popup = document.getElementById('triage-popup');
+    popup.classList.add('modal-hidden');
+    setTimeout(() => {
+      popup.classList.add('hidden');
+    }, 300);
+  }
+      // Emergency Modal Logic
+      const emergencyData = {
+        "Breathing Problems": {
+          description: "Difficulty breathing, heavy panting, choking, or blue-tinged gums. This is a life-threatening situation requiring immediate oxygen therapy.",
+          action: "Keep your pet calm and minimize movement. Do not put your hands near their mouth if they are actively struggling to breathe.",
+          steps: [
+            "Keep the environment quiet, cool, and well-ventilated.",
+            "Minimize movement; carry small pets, use a flat board as a stretcher for large ones.",
+            "Call the clinic immediately to alert them of your arrival so they can prepare oxygen.",
+            "Transport to the clinic immediately for evaluation and oxygen therapy."
+          ]
+        },
+        "Poisoning": {
+          description: "Ingestion of toxic substances like chocolate, xylitol, grapes, certain plants, or human medications.",
+          action: "Do NOT induce vomiting unless explicitly instructed by a veterinarian. Some substances cause more damage coming back up.",
+          steps: [
+            "Remove the pet from the source of the poison immediately.",
+            "Identify the toxin and estimate the amount ingested (keep the packaging).",
+            "Call the clinic or a pet poison helpline immediately for specific instructions.",
+            "Transport the pet and the toxin packaging to the clinic for decontamination and treatment."
+          ]
+        },
+        "Seizures": {
+          description: "Sudden loss of balance, convulsions, paddling of limbs, or loss of consciousness lasting more than a few seconds.",
+          action: "Keep the area around the pet clear to prevent injury. Do not put your hands in or near their mouth.",
+          steps: [
+            "Move furniture or sharp objects away from the pet to prevent accidental injury.",
+            "Time the seizure. If it lasts over 2-3 minutes, it is a critical emergency.",
+            "Keep the room dark and quiet to reduce sensory stimulation.",
+            "Transport to the clinic immediately after the seizure stops for neurological evaluation."
+          ]
+        },
+        "Bleeding": {
+          description: "External or internal bleeding from trauma, deep cuts, or unknown causes.",
+          action: "Apply gentle, firm pressure to the wound with a clean cloth. Do not use a tourniquet unless explicitly instructed by a vet.",
+          steps: [
+            "Apply direct, firm pressure to the bleeding site with a clean towel or sterile gauze.",
+            "Keep the pet calm and restrict their movement to prevent elevated heart rate.",
+            "If blood soaks through, add more layers on top; do not remove the first layer.",
+            "Transport to the clinic immediately for professional wound management and potential suturing."
+          ]
+        }
+      };
+
+      const modal = document.getElementById('emergency-modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalDescription = document.getElementById('modal-description');
+      const modalAction = document.getElementById('modal-action');
+      const modalSteps = document.getElementById('modal-steps');
+      const closeModalBtn = document.getElementById('close-modal-btn');
+      const modalCloseAction = document.getElementById('modal-close-action');
+      const modalBackdrop = document.getElementById('modal-backdrop');
+
+      function openModal(emergencyType) {
+        const data = emergencyData[emergencyType];
+        if (!data) return;
+
+        modalTitle.textContent = emergencyType;
+        modalDescription.textContent = data.description;
+        modalAction.textContent = data.action;
+        
+        modalSteps.innerHTML = '';
+        data.steps.forEach(step => {
+          const li = document.createElement('li');
+          li.textContent = step;
+          modalSteps.appendChild(li);
+        });
+
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+          modal.classList.remove('modal-hidden');
+        }, 10);
+      }
+
+      function closeModal() {
+        modal.classList.add('modal-hidden');
+        setTimeout(() => {
+          modal.classList.add('hidden');
+        }, 300);
+      }
+
+      document.querySelectorAll('.emergency-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const type = card.getAttribute('data-emergency');
+          openModal(type);
+        });
+      });
+
+            const modalAiBtn = document.getElementById('modal-ai-btn'); 
+
+      // Smart AI Button Logic
+      if (modalAiBtn) {
+        modalAiBtn.addEventListener('click', () => {
+          closeModal(); // Close the modal
+          
+          const currentEmergency = modalTitle.textContent;
+          const aiSection = document.getElementById('ai-assistant-section');
+          
+          if (aiSection) {
+            aiSection.classList.remove('hidden'); // Open AI section
+            
+            const symptomInput = document.getElementById('symptom-input');
+            if (symptomInput) {
+              symptomInput.value = `My pet is experiencing ${currentEmergency.toLowerCase()}. `; // Pre-fill
+              symptomInput.focus();
+            }
+            
+            setTimeout(() => {
+              aiSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 350);
+          }
+        });
+      }
+
+      closeModalBtn.addEventListener('click', closeModal);
+      modalCloseAction.addEventListener('click', closeModal);
+      modalBackdrop.addEventListener('click', closeModal);
+
+      // Emergency and Booking buttons
+      const emergencyBtn = document.getElementById("emergency-btn");
+      if (emergencyBtn) {
+        emergencyBtn.addEventListener("click", () => {
+          window.location.href = "tel:+233123456789";
+        });
+      }
+
+      const bookBtn = document.getElementById("book-appointment-btn");
+      if (bookBtn) {
+        bookBtn.addEventListener("click", () => {
+          window.location.href = "book_an_appointment.html";
+        });
+      }
+
+      // ==========================================
+// AUTO-OPEN EMERGENCY MODAL FROM BOOKING PAGE
+// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const alertKeyword = urlParams.get('alert');
+
+  if (alertKeyword) {
+    // Map the booking page keywords to your exact data-emergency strings
+    const keywordMap = {
+      "bleed": "Bleeding",
+      "bleeding": "Bleeding",
+      "blood": "Bleeding",
+      "poison": "Poisoning",
+      "poisoning": "Poisoning",
+      "toxic": "Poisoning",
+      "seizure": "Seizures",
+      "seizures": "Seizures",
+      "breathing": "Breathing Problems",
+      "choke": "Breathing Problems",
+      "chok": "Breathing Problems",
+      "trauma": "Bleeding",
+      "hit by car": "Bleeding",
+      "hit by a car": "Bleeding"
+    };
+
+    const matchedEmergency = keywordMap[alertKeyword.toLowerCase()];
+
+    if (matchedEmergency) {
+      console.log("Auto-opening emergency module for:", matchedEmergency);
+      
+      // Wait 500ms for smooth page load, then trigger your existing openModal function
+      setTimeout(() => {
+        openModal(matchedEmergency);
+      }, 500);
+    }
+  }
+});
+
+      // ==========================================
+      // AUTO-OPEN EMERGENCY MODAL FROM BOOKING PAGE
+      // ==========================================
+      document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const alertKeyword = urlParams.get('alert');
+
+        if (alertKeyword) {
+          const keywordMap = {
+            "bleed": "Bleeding", "bleeding": "Bleeding", "blood": "Bleeding",
+            "poison": "Poisoning", "poisoning": "Poisoning", "toxic": "Poisoning",
+            "seizure": "Seizures", "seizures": "Seizures",
+            "breathing": "Breathing Problems", "choke": "Breathing Problems", "chok": "Breathing Problems",
+            "trauma": "Bleeding", "hit by car": "Bleeding", "hit by a car": "Bleeding"
+          };
+
+          const matchedEmergency = keywordMap[alertKeyword.toLowerCase()];
+
+          if (matchedEmergency) {
+            console.log("Auto-opening emergency module for:", matchedEmergency);
+            setTimeout(() => {
+              openModal(matchedEmergency);
+            }, 500);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

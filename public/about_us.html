@@ -1,0 +1,766 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;family=Open+Sans:wght@400;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-variant": "#e4e2e1",
+              "on-primary-fixed": "#002022",
+              "on-tertiary-fixed-variant": "#364a4c",
+              "inverse-primary": "#88d3d8",
+              tertiary: "#485d5f",
+              outline: "#6f797a",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed-variant": "#004f53",
+              "error-container": "#ffdad6",
+              "tertiary-fixed": "#d0e7e8",
+              "secondary-fixed": "#9ef0f4",
+              "on-tertiary-fixed": "#091f20",
+              "inverse-on-surface": "#f2f0f0",
+              "on-primary-container": "#e5fdff",
+              "surface-container-low": "#f5f3f3",
+              "on-background": "#1b1c1c",
+              "on-error-container": "#93000a",
+              "secondary-fixed-dim": "#82d4d8",
+              "on-tertiary": "#ffffff",
+              "surface-container-high": "#eae8e7",
+              "on-secondary-container": "#006e72",
+              "surface-container": "#f0eded",
+              "on-primary": "#ffffff",
+              "primary-fixed-dim": "#88d3d8",
+              "emergency-red": "#943031",
+              surface: "#fbf9f8",
+              "inverse-surface": "#303030",
+              "on-secondary-fixed": "#002021",
+              "secondary-container": "#9bedf1",
+              error: "#ba1a1a",
+              "surface-dim": "#dcd9d9",
+              "surface-container-lowest": "#ffffff",
+              "surface-muted": "#F4F7F7",
+              primary: "#036469",
+              background: "#fbf9f8",
+              "on-surface": "#1b1c1c",
+              secondary: "#00696d",
+              "outline-variant": "#bec8c9",
+              "on-error": "#ffffff",
+              "primary-container": "#2e7d82",
+              "surface-container-highest": "#e4e2e1",
+              "on-surface-variant": "#3f4949",
+              "surface-tint": "#0f696e",
+              "tertiary-fixed-dim": "#b4cbcc",
+              "tertiary-container": "#617677",
+              "primary-fixed": "#a4eff4",
+              "deep-navy": "#1A3638",
+              "surface-bright": "#fbf9f8",
+              "on-tertiary-container": "#e6fdfe",
+              "on-secondary-fixed-variant": "#004f52",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              "container-max": "1200px",
+              "stack-lg": "48px",
+              "stack-md": "24px",
+              "margin-desktop": "40px",
+              "margin-mobile": "16px",
+              "stack-sm": "12px",
+              gutter: "24px",
+              base: "8px",
+            },
+            fontFamily: {
+              "headline-lg": ["Plus Jakarta Sans"],
+              caption: ["Open Sans"],
+              "display-lg": ["Plus Jakarta Sans"],
+              "headline-lg-mobile": ["Plus Jakarta Sans"],
+              "label-md": ["Open Sans"],
+              "headline-md": ["Plus Jakarta Sans"],
+              "body-lg": ["Open Sans"],
+              "body-md": ["Open Sans"],
+            },
+            fontSize: {
+              "headline-lg": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "600" },
+              ],
+              caption: ["12px", { lineHeight: "16px", fontWeight: "400" }],
+              "display-lg": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "headline-lg-mobile": [
+                "28px",
+                { lineHeight: "36px", fontWeight: "600" },
+              ],
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #fbf9f8;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #036469;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body class="bg-surface text-on-surface font-body-md overflow-x-hidden">
+    <!-- TopNavBar Navigation Shell -->
+    <header
+      class="bg-surface dark:bg-on-surface w-full top-0 sticky z-50 shadow-sm"
+    >
+      <div
+        class="flex justify-between items-center px-margin-desktop h-20 max-w-container-max mx-auto"
+      >
+        <div class="flex items-center gap-2 md:gap-4">
+          <button
+            id="mobile-menu-btn"
+            class="md:hidden p-2 text-on-surface hover:bg-surface-muted rounded-lg transition-colors"
+          >
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <img
+            alt="addyPets Logo"
+            class="h-10 md:h-12 w-auto object-contain"
+            src="logo.png"
+          />
+          <div
+            class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed cursor-pointer"
+          >
+            addyPets Veterinary Clinic
+          </div>
+        </div>
+        <nav class="hidden md:flex items-center gap-base">
+          <a
+            class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors font-body-md text-body-md px-4 py-2 cursor-pointer active:opacity-80"
+            href="home.html"
+            >Home</a
+          >
+          <a
+            class="text-primary dark:text-primary-fixed border-b-2 border-primary dark:border-primary-fixed pb-1 font-body-md text-body-md px-4 py-2 cursor-pointer active:opacity-80"
+            href="about_us.html"
+            >About Us</a
+          >
+          <a
+            class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors font-body-md text-body-md px-4 py-2 cursor-pointer active:opacity-80"
+            href="veterinary_services.html"
+            >Services</a
+          >
+          <a
+            class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors font-body-md text-body-md px-4 py-2 cursor-pointer active:opacity-80"
+            href="vets_portal.html"
+            >Vets Portal</a
+          >
+        </nav>
+        <div class="flex items-center gap-4">
+          <button
+            id="login-btn"
+            class="hidden lg:block text-primary font-label-md px-4 py-2 hover:bg-secondary-container rounded-lg transition-all"
+          >
+            Login
+          </button>
+          <button
+            id="emergency-btn"
+            class="hidden md:inline-block px-6 py-2 bg-emergency-red text-white font-label-md text-label-md rounded-lg hover:brightness-110 transition-all cursor-pointer shadow-sm text-xs md:text-sm"
+          >
+            Emergency
+          </button>
+        </div>
+      </div>
+      <!-- Mobile Menu -->
+      <div
+        id="mobile-menu"
+        class="hidden md:hidden bg-surface dark:bg-on-surface border-t border-outline-variant"
+      >
+        <div
+          class="px-margin-mobile py-4 space-y-2 max-w-container-max mx-auto"
+        >
+          <a
+            class="block font-body-md text-body-md text-primary dark:text-primary-fixed cursor-pointer active:opacity-80 transition-colors text-sm"
+            href="home.html"
+            >Home</a
+          >
+          <a
+            class="block font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80 text-sm"
+            href="veterinary_services.html"
+            >Services</a
+          >
+          <a
+            class="block font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80 text-sm"
+            href="about_us.html"
+            >About Us</a
+          >
+          <a
+            class="block font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80 text-sm"
+            href="vet_portal_login.html"
+            >Vets Portal</a
+          >
+          <a
+            href="emergency.html"
+            class="block font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer text-sm"
+            >Emergency</a
+          >
+          <a
+            id="mobile-login-btn"
+            href="vet_portal_login.html"
+            class="block font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer pt-0 text-sm"
+            >Login</a
+          >
+        </div>
+      </div>
+    </header>
+    <main>
+      <!-- Hero Section -->
+      <section class="relative py-24 px-margin-mobile md:px-margin-desktop">
+        <div
+          class="max-w-container-max mx-auto grid lg:grid-cols-2 gap-stack-lg items-center"
+        >
+          <div class="space-y-stack-md">
+            <span
+              class="bg-primary-container text-on-primary-container px-4 py-1.5 rounded-full font-label-md text-label-md"
+              >ESTABLISHED 2012</span
+            >
+            <h1
+              class="font-display-lg text-display-lg text-deep-navy leading-tight"
+            >
+              Compassionate Care for Every Tail and Whiskers.
+            </h1>
+            <p
+              class="font-body-lg text-body-lg text-on-surface-variant max-w-lg"
+            >
+              At VetCare Ghana, we believe that world-class veterinary medicine
+              should be delivered with local heart. Our mission is to elevate
+              animal health standards across the region while nurturing the
+              unique bond between humans and their pets.
+            </p>
+            <div class="flex gap-4 pt-4">
+              <div class="flex flex-col">
+                <span class="font-headline-md text-primary">12+</span>
+                <span class="font-caption text-on-surface-variant"
+                  >Years Excellence</span
+                >
+              </div>
+              <div class="w-px h-12 bg-outline-variant"></div>
+              <div class="flex flex-col">
+                <span class="font-headline-md text-primary">15k+</span>
+                <span class="font-caption text-on-surface-variant"
+                  >Pets Treated</span
+                >
+              </div>
+              <div class="w-px h-12 bg-outline-variant"></div>
+              <div class="flex flex-col">
+                <span class="font-headline-md text-primary">24/7</span>
+                <span class="font-caption text-on-surface-variant"
+                  >Emergency Care</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="relative group">
+            <div
+              class="absolute -inset-4 bg-primary/10 rounded-[2rem] -rotate-3 transition-transform group-hover:rotate-0 duration-700"
+            ></div>
+            <img
+              alt="Vet Doctor with Dog"
+              class="relative rounded-[1.5rem] shadow-xl w-full h-[500px] object-cover"
+              data-alt="A professional Ghanaian veterinarian wearing a clean white clinical coat and a stethoscope, smiling warmly while gently examining a Golden Retriever in a bright, modern medical facility. The sunlight streams through large windows, creating a soft, clinical yet inviting glow. The color palette features calm teals, crisp whites, and natural wood tones, reflecting a high-end Corporate Modern aesthetic."
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoEXU24BBYDkP6mgPf2OIfQ3IOeLPJkeKpLrWLGaqb4d4RUbfWSgiAAu4dDmBhDwP1IVI2m8aJqeoFSGutTuyHoZ4Qjo4YyJcnoUW-x68HOHlRPaHpcbX58x1-F2ClBDRoNSEszzHS5Ktb1heL0BFQtq6SppUzgdDe58jTnjs09jUjPxuk2t7hXX0suzWtG6UJzvw0z4PPllSm5CLTk53hoDv5dwpAzRh8qBo_IXUjpATcQKUt_gut4glIu5c3dHJbDHnQkXFKmp8"
+            />
+          </div>
+        </div>
+      </section>
+      <!-- Narrative Section: Bento Grid -->
+      <section class="py-stack-lg bg-surface-muted">
+        <div
+          class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop"
+        >
+          <h2 class="font-headline-lg text-headline-lg text-center mb-stack-lg">
+            Our Journey in Ghana
+          </h2>
+          <div
+            class="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 h-auto md:h-[600px]"
+          >
+            <!-- Big Card -->
+            <div
+              class="md:col-span-2 md:row-span-2 bg-white p-8 rounded-xl shadow-sm border border-outline-variant/30 flex flex-col justify-end relative overflow-hidden group"
+            >
+              <img
+                alt="Ghanaian Community"
+                class="absolute inset-0 w-full h-full object-cover opacity-10 group-hover:scale-105 transition-transform duration-1000"
+                data-alt="A cinematic wide-angle shot of a vibrant community pet health awareness event in a leafy Accra suburb. Local pet owners are gathered around a mobile clinic station, with professional banners featuring VetCare Ghana's teal logo. The lighting is the golden hour of a Ghanaian afternoon, casting warm, long shadows and highlighting the community-focused, trustworthy atmosphere of the clinic's mission."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBug59gbBQhtWXCvnkcp8z-Op7q6DuZOCV_e265aMFW-_9Cies-3kPav1pzO8IbgD_ldVVrH23DdEd49YDrRgNHKSNyh91vOrkxmdmuiztuT5H3CVXGw3EjEYq7Rgq_BM8Nj1BBX8JGY37v_wewoFZq3A94YNj1rw4Juf1g_1XRGhJWVTKiKtDLrJJvAHJMdGKOwsH4n7iT8Tek9-JGYW_M0QlZF9c-yJkrkCkf5jaWRZPkCWMWKZUBW1a1HI5qarpK1S_AiItYLR8"
+              />
+              <div class="relative z-10">
+                <div
+                  class="material-symbols-outlined text-primary text-4xl mb-4"
+                >
+                  volunteer_activism
+                </div>
+                <h3
+                  class="font-headline-md text-headline-md mb-4 text-deep-navy"
+                >
+                  The Mission Beyond Medicine
+                </h3>
+                <p class="font-body-md text-on-surface-variant max-w-xl">
+                  Founded with the vision to bridge the gap in specialized
+                  veterinary care, we've evolved into a hub for community
+                  education. We don't just treat illnesses; we advocate for
+                  animal welfare across Ghana, partnering with local schools and
+                  municipalities to create a safer environment for all
+                  creatures.
+                </p>
+              </div>
+            </div>
+            <!-- Tech Card -->
+            <div
+              class="bg-primary text-white p-8 rounded-xl flex flex-col justify-between"
+            >
+              <span class="material-symbols-outlined text-3xl">biotech</span>
+              <div>
+                <h3 class="font-label-md uppercase tracking-wider mb-2">
+                  Technology
+                </h3>
+                <p class="font-body-md opacity-90">
+                  Investing in state-of-the-art diagnostic imaging and surgical
+                  tools rarely seen in the region.
+                </p>
+              </div>
+            </div>
+            <!-- Heart Card -->
+            <div
+              class="bg-white p-8 rounded-xl shadow-sm border border-outline-variant/30 flex flex-col justify-between"
+            >
+              <span class="material-symbols-outlined text-primary text-3xl"
+                >favorite</span
+              >
+              <div>
+                <h3 class="font-headline-md text-deep-navy text-xl mb-2">
+                  Holistic Ethics
+                </h3>
+                <p class="font-body-md text-on-surface-variant">
+                  We treat every patient as if they were our own family,
+                  ensuring comfort is as important as the cure.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Meet Our Vets -->
+      <section
+        id="meet-our-vets"
+        class="py-24 px-margin-mobile md:px-margin-desktop bg-surface"
+      >
+        <div class="max-w-container-max mx-auto">
+          <div
+            class="flex flex-col md:flex-row justify-between items-end mb-stack-lg gap-4"
+          >
+            <div class="max-w-xl">
+              <h2 class="font-headline-lg text-headline-lg text-deep-navy">
+                Meet Our Expertise
+              </h2>
+              <p class="font-body-md text-on-surface-variant">
+                Our team brings together decades of international experience and
+                local cultural sensitivity.
+              </p>
+            </div>
+            <div class="flex gap-2">
+              <button
+                class="w-12 h-12 rounded-full border border-primary text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+              >
+                <span class="material-symbols-outlined">chevron_left</span>
+              </button>
+              <button
+                class="w-12 h-12 rounded-full border border-primary text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+              >
+                <span class="material-symbols-outlined">chevron_right</span>
+              </button>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Vet Card 1 -->
+            <div
+              class="bg-white rounded-xl overflow-hidden group hover:shadow-xl transition-all duration-300 border border-outline-variant/20"
+            >
+              <div class="relative h-64 overflow-hidden">
+                <img
+                  alt="Dr. Kwame Mensah"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  data-alt="A professional headshot of a senior Ghanaian veterinarian, Dr. Kwame Mensah, with graying hair and a confident, kind expression. He is wearing a medical scrub under a lab coat. The background is a softly blurred modern veterinary clinic office with clinical equipment. The lighting is balanced and professional, emphasizing a mood of deep expertise and reliability."
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4vNqXiXkShLz-J0rdfxp1jT80K-BJ6LZiDJABPa2sSM8XxPQUA7Mfn-GX1vqGqrC_Wp2nIJ4FiFmfJonPNXfp8knonMNcTjsPgZ71FfFWiMQF1cSVZtiCAC-KEVhRRm54HayfDKNrDIsqxF0sUYK9l7EuelZ-wKeVc-KtijSBgoiy65-i6j-3RHXJyMuclbrQcHd8Wh641-U6mZC12TZIEPoPUdOMnttCbO2KXPtiDR8Z2lemrn9p60q-zsbQI5PCT1bzq47Ocak"
+                />
+              </div>
+              <div class="p-6">
+                <h4 class="font-headline-md text-xl text-deep-navy">
+                  Dr. Kwame Mensah
+                </h4>
+                <p class="text-primary font-label-md mb-4">Chief Surgeon</p>
+                <p class="font-caption text-on-surface-variant">
+                  A Royal Veterinary College graduate with 20 years of
+                  experience in small animal surgery.
+                </p>
+              </div>
+            </div>
+            <!-- Vet Card 2 -->
+            <div
+              class="bg-white rounded-xl overflow-hidden group hover:shadow-xl transition-all duration-300 border border-outline-variant/20"
+            >
+              <div class="relative h-64 overflow-hidden">
+                <img
+                  alt="Dr. Abena Boateng"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  data-alt="A close-up professional portrait of Dr. Abena Boateng, a friendly Ghanaian woman veterinarian in her 30s. She has a bright smile and is wearing clean surgical scrubs. The lighting is high-key and cheerful, set against a background of a minimalist medical ward. The image communicates warmth, accessibility, and high professional standards."
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUeoo_2uD1DbPOnewtM7TLKEXNuL7qx3oPz9JZbkXpI9i7_afIfHe2PsE2VAMzHqDaz5jR3FtUNiXtXAgRJmlkZ4-jbH87iA23suqFzyXlhyZHipDb5PhhElAu4Jxps14jExGCioFtGlH_kEaHqFZk4gP4ZcirEvYs0XAW3qf2h7-XH2fP-8S9JrhsO3MIKOAEpD6AjsLzO31L8wUlVgj2sN5iZnTeIg6vdFmg7JwbyoA-mKSWsWL_WWzhwkhTnrCNsqfymwqntdA"
+                />
+              </div>
+              <div class="p-6">
+                <h4 class="font-headline-md text-xl text-deep-navy">
+                  Dr. Abena Boateng
+                </h4>
+                <p class="text-primary font-label-md mb-4">
+                  Exotics Specialist
+                </p>
+                <p class="font-caption text-on-surface-variant">
+                  Passionate about avian and reptilian health, bringing
+                  specialized care to Accra's diverse pets.
+                </p>
+              </div>
+            </div>
+            <!-- Vet Card 3 -->
+            <div
+              class="bg-white rounded-xl overflow-hidden group hover:shadow-xl transition-all duration-300 border border-outline-variant/20"
+            >
+              <div class="relative h-64 overflow-hidden">
+                <img
+                  alt="Dr. Kofi Addo"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  data-alt="A professional studio headshot of Dr. Kofi Addo, a veterinarian with a gentle and patient demeanor. He is wearing a navy blue medical scrub. The lighting is soft and focused, creating a sense of calm and safety. The background is a solid muted gray, ensuring all focus is on his professional and empathetic presence."
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjJRBMeiEYKMeXX73E5yiv_f3x8bIueJIRKdL93ulXRvE9qSXfZMKzAU98o1zYp8GX9WfDD1UV9tWJBKiDHZovGmKXuevhytPDAHU6T6W3mmD0POBMv3351479u4UHfJshfmJ2FMZoEbu6NFYB2o7jaCUaO2xgk_jEKZYMSNO_1aC6exTTPNw8kQ3XiGJIR3C6ZE1CJVemtjOlvLoj1maJ3NJlWf1izQRzb75RDW-ZxOoCTX0oGICuiwUbUv_7bz5Qqa5njEVN5Mg"
+                />
+              </div>
+              <div class="p-6">
+                <h4 class="font-headline-md text-xl text-deep-navy">
+                  Dr. Kofi Addo
+                </h4>
+                <p class="text-primary font-label-md mb-4">Emergency Care</p>
+                <p class="font-caption text-on-surface-variant">
+                  Leading our 24/7 critical care unit with precision and a calm
+                  hand during high-pressure moments.
+                </p>
+              </div>
+            </div>
+            <!-- Vet Card 4 -->
+            <div
+              class="bg-white rounded-xl overflow-hidden group hover:shadow-xl transition-all duration-300 border border-outline-variant/20"
+            >
+              <div class="relative h-64 overflow-hidden">
+                <img
+                  alt="Dr. Sarah Owusu"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  data-alt="A professional headshot of Dr. Sarah Owusu, a senior veterinarian in a bright medical setting. She is holding a digital tablet and smiling with confidence. The aesthetic is clean and modern, featuring bright white walls and polished floors in the background. The lighting is crisp, highlighting the technological integration of the clinic."
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCewqZIXG2QNh82Be5FHR4trruqpRoGMkM5IuYTL1kpsWG_R6oWEx6uiIk-TpeavHAHz4LGSyDDHf1LkNi4WyYf60JE0KxnclfAk-cdx8Mm5lFfJ3eF2bzpt8TCgDwpIn0VyVikO5DUvrM_mzVpNWOG2g8lJKY49dbvbJEfa800H9hkJuOLglxO8YnY5M0LhZSEXLL3PlsgE9tyL8vv3C3DUC7b_YpGEt6rUEdh-XOZE86AJwfeWMZRFJROCF0OPDqMHNWZbHQ2ifc"
+                />
+              </div>
+              <div class="p-6">
+                <h4 class="font-headline-md text-xl text-deep-navy">
+                  Dr. Sarah Owusu
+                </h4>
+                <p class="text-primary font-label-md mb-4">Internal Medicine</p>
+                <p class="font-caption text-on-surface-variant">
+                  Dedicated to diagnostic excellence and long-term wellness
+                  management for chronic pet conditions.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Facility Gallery -->
+      <section class="py-24 bg-deep-navy text-white overflow-hidden">
+        <div
+          class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop"
+        >
+          <div class="text-center mb-stack-lg">
+            <h2 class="font-headline-lg text-headline-lg mb-4">
+              A Modern Sanctuary
+            </h2>
+            <p class="font-body-md opacity-80 max-w-2xl mx-auto">
+              Step inside our world-class facility designed to provide the
+              ultimate comfort for your pets and peace of mind for you.
+            </p>
+          </div>
+          <div class="flex gap-4 overflow-x-auto pb-8 custom-scrollbar snap-x">
+            <div
+              class="flex-none w-80 md:w-[450px] aspect-video rounded-2xl overflow-hidden snap-center"
+            >
+              <img
+                alt="Modern Reception"
+                class="w-full h-full object-cover"
+                data-alt="A wide interior shot of a high-end, modern veterinary clinic reception area in Ghana. The space features curved white desks, light oak wood accents, and plush teal seating. There is a large glass window showing tropical greenery outside. The atmosphere is serene, airy, and clinical yet warm, with soft ambient lighting and a pristine finish."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBF96xYm8OlFy9uMzq2jkEOIlaqi5CYT3TpsMKFYFbD7IX_91T-f1z1-1e8Vr6_fnAN5_Xp9Hkq60JRbvV7Z7wkUbdcsbFVRf0HIftc5iD10pU0mnBAYEB3_BnFJJlm5cvVmi6bPLZj8zSsxffQfpp0OPwo4V7OesEFNXjs3v4J_zi6oMVsYvE23BRoy2xt_KeqNeQ0DWTqKpLG8ct-7M0basEkBNZO-OefZPwsyaLdqlCyhX8uo8O5seBj_B-ERDI3-g7vb3xV3Ow"
+              />
+            </div>
+            <div
+              class="flex-none w-80 md:w-[450px] aspect-video rounded-2xl overflow-hidden snap-center"
+            >
+              <img
+                alt="Operating Room"
+                class="w-full h-full object-cover"
+                data-alt="A state-of-the-art sterile operating room in a modern veterinary clinic. High-tech medical monitors are glowing with vitals data. The room is surgical white and deep teal, with ultra-clean stainless steel surfaces and professional overhead surgical lighting. The image conveys a high level of medical precision and professional excellence."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRl-m1pIdFFgA1Uc6o80_be7yQKxpCYGL1x-alYriWto-qb8YJS7QjoXKIvaD9uHmq87piVvgAxco_BwqIwQEEkPfl0o_wpvgdgR7fRunb7tZYtza1TotKKjV9CoeeJjOPysbD7e-b5lsEoLFlKDO-T4MzLNQLLlbTwyrp68to4wFg6-YI9BhjQG-GcyqxH9v6L5vt2C9L_YXT2mhBekivhRgaSEMUQFfKW3iZeTTEzY4josn_Igx8roJlJ0S1hW3TcMG4Wwh1Iu8"
+              />
+            </div>
+            <div
+              class="flex-none w-80 md:w-[450px] aspect-video rounded-2xl overflow-hidden snap-center"
+            >
+              <img
+                alt="Recovery Ward"
+                class="w-full h-full object-cover"
+                data-alt="A clean and comfortable pet recovery ward with individual glass-fronted spacious kennels. Soft indirect lighting illuminates the ward, and the walls are a calming light blue. Each kennel has a comfortable pet bed. The scene is peaceful and designed for post-operative animal comfort, showing the clinic's dedication to compassionate care."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuC64Pu0ahNsJEupxEPYUxeBWjM3ktqSlPraBYN_BS4bdtG77be2o1oecdcaN9CsEY8JaqLlXDL5cy5asBZMdQTKcUx9yvAcFBCTY_ZFSiySEoaKIhiBfjHqpk2GqnGmu5pxMlIICBEN8KCjUK-PYK5We7QIOTXpyhkgrzVruUh80dfHUQq1vFtU_4SCADtTlB45QMSUj4jETbPci04aqtqbND2nuQIT03QlO2fH7XGQ_GGAkFcMNWQn7kF2WeJm578GtCCjfNyS9hk"
+              />
+            </div>
+            <div
+              class="flex-none w-80 md:w-[450px] aspect-video rounded-2xl overflow-hidden snap-center"
+            >
+              <img
+                alt="Lab Equipment"
+                class="w-full h-full object-cover"
+                data-alt="A detailed shot of modern laboratory equipment inside a veterinary clinic, including a microscope and blood analyzers. The setting is bright and orderly, with a palette of whites and medical blues. The image emphasizes the diagnostic capabilities and scientific expertise of VetCare Ghana."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSNb3wmJ-ECpfvslY8ia1I62Ye4VgULTGpBZAiOPYeIxie6sQGlQUGIy5Xivn4MtRdqhHr_5UCsGcuuqsLLi1KCJFoUgRtYgPVwSjfcP-dCvpXItFZT0tVOhTku47Aqo5opLlmOGrVVL86twoG0kldxIfq5-c9DidDJ9JT5Gd5DqZ8zMOtJGf5aEt1FUvkhh3dial7WuuZi3aclKvBDXv4BKIzygFaqMzUMA8FUos_pXPA4IsXYOYyF0KmyG3uXKSESOrUtLf7iWo"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Final CTA -->
+      <section class="py-stack-lg bg-surface">
+        <div
+          class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center"
+        >
+          <div
+            class="bg-primary-container p-12 rounded-[2.5rem] relative overflow-hidden"
+          >
+            <div
+              class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"
+            ></div>
+            <h2
+              class="font-headline-lg text-on-primary-container relative z-10 mb-6"
+            >
+              Experience Better Care Today
+            </h2>
+            <p
+              class="font-body-lg text-on-primary-container relative z-10 mb-8 opacity-90 max-w-xl mx-auto"
+            >
+              Ready to give your pet the care they deserve? Our doors are always
+              open for you and your furry friends.
+            </p>
+            <div
+              class="flex flex-col sm:flex-row gap-4 justify-center relative z-10"
+            >
+              <button
+                id="book-appointment"
+                class="bg-white text-primary font-label-md px-8 py-4 rounded-full shadow-lg hover:bg-surface-muted transition-all"
+              >
+                Book Appointment
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-----Footer Navigation Shell------>
+    <footer
+      class="bg-deep-navy dark:bg-surface-container-lowest w-full mt-stack-lg"
+    >
+      <div
+        class="flex flex-col md:flex-row justify-between items-center px-margin-desktop py-stack-lg w-full max-w-container-max mx-auto"
+      >
+        <div class="mb-8 md:mb-0">
+          <div
+            class="font-headline-md text-headline-md text-primary-fixed dark:text-primary mb-2"
+          >
+            VetCare Ghana
+          </div>
+          <p
+            class="font-caption text-caption text-tertiary-fixed-dim max-w-xs text-center md:text-left"
+          >
+            © 2024 addyPets veterinary clinic. Providing compassionate care for
+            every pet.
+          </p>
+        </div>
+        <div class="flex flex-wrap justify-center gap-x-8 gap-y-4">
+          <a
+            class="font-caption text-caption text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors cursor-pointer"
+            href="www.facebook.com"
+            >Privacy Policy</a
+          >
+          <a
+            class="font-caption text-caption text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors cursor-pointer"
+            href="www.pintrest.com"
+            >Terms of Service</a
+          >
+          <a
+            class="font-caption text-caption text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors cursor-pointer"
+            href="www.instagram.com"
+            >Contact Us</a
+          >
+          <a
+            class="font-caption text-caption text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors cursor-pointer"
+            href="www.twitter.com"
+            >Ghana Vet Council</a
+          >
+        </div>
+      </div>
+    </footer>
+    <script>
+      // Micro-interactions
+      document.querySelectorAll(".group").forEach((card) => {
+        card.addEventListener("mouseenter", () => {
+          card.classList.add("scale-[1.02]");
+        });
+        card.addEventListener("mouseleave", () => {
+          card.classList.remove("scale-[1.02]");
+        });
+      });
+
+      // Horizontal Scroll behavior for gallery
+      const scrollContainer = document.querySelector(".custom-scrollbar");
+      if (scrollContainer) {
+        scrollContainer.addEventListener("wheel", (evt) => {
+          if (window.innerWidth > 768) {
+            evt.preventDefault();
+            scrollContainer.scrollLeft += evt.deltaY;
+          }
+        });
+      }
+
+      // Mobile Menu Toggle
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+        });
+        const mobileMenuLinks = mobileMenu.querySelectorAll("a");
+        mobileMenuLinks.forEach((link) =>
+          link.addEventListener("click", () =>
+            mobileMenu.classList.add("hidden"),
+          ),
+        );
+      }
+      // ===============================
+      // Mobile Menu Active Link
+      // ===============================
+      const mobileMenuLinks = mobileMenu
+        ? mobileMenu.querySelectorAll("a")
+        : [];
+
+      mobileMenuLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          // close menu after click
+          mobileMenu.classList.add("hidden");
+
+          // remove active styles from all mobile menu links
+          mobileMenuLinks.forEach((el) => {
+            el.classList.remove("text-primary", "font-semibold");
+          });
+
+          // add active styles to the clicked item
+          link.classList.add("text-primary", "font-semibold");
+        });
+      });
+
+      // ===============================
+      // Highlight Current Page
+      // ===============================
+      const currentPage = window.location.pathname.split("/").pop();
+
+      mobileMenuLinks.forEach((link) => {
+        const href = link.getAttribute("href");
+        if (href === currentPage) {
+          link.classList.add("text-primary", "font-semibold");
+        } else {
+          link.classList.remove("text-primary", "font-semibold");
+        }
+      });
+
+      const loginBtn = document.getElementById("login-btn");
+      if (loginBtn) {
+        loginBtn.addEventListener("click", () => {
+          window.location.href = "vet_portal_login.html";
+        });
+      }
+
+      const emergencyBtn = document.getElementById("emergency-btn");
+      if (emergencyBtn) {
+        emergencyBtn.addEventListener("click", () => {
+          window.location.href = "emergency.html";
+        });
+      }
+
+      const bookAppointmentBtn = document.getElementById("book-appointment");
+      if (bookAppointmentBtn) {
+        bookAppointmentBtn.addEventListener("click", () => {
+          window.location.href = "book_an_appointment.html";
+        });
+      }
+    </script>
+  </body>
+</html>

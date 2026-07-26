@@ -1,0 +1,25 @@
+{
+  "name": "pet_clinic_backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "bcryptjs": "^3.0.3",
+    "chart.js": "^4.5.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "flatpickr": "^4.6.13",
+    "groq-sdk": "^1.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "oracledb": "^6.10.0"
+  }
+}

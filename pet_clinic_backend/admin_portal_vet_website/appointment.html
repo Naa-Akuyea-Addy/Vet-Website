@@ -1,0 +1,615 @@
+<!doctype html>
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Appointments - addyPets Admin Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Open+Sans:wght@400;600&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-fixed": "#9ef0f4", "inverse-primary": "#88d3d8", "on-primary-fixed-variant": "#004f53",
+              "tertiary-container": "#617677", "surface-container-lowest": "#ffffff", "surface-container-highest": "#e4e2e1",
+              "deep-navy": "#1A3638", "surface-container-low": "#f5f3f3", error: "#ba1a1a", tertiary: "#485d5f",
+              "on-tertiary-container": "#e6fdfe", "on-secondary-container": "#006e72", "on-surface-variant": "#3f4949",
+              "tertiary-fixed-dim": "#b4cbcc", "surface-container": "#f0eded", "on-tertiary-fixed": "#091f20",
+              "on-secondary": "#ffffff", "primary-fixed": "#a4eff4", "inverse-on-surface": "#f2f0f0",
+              "inverse-surface": "#303030", "surface-dim": "#dcd9d9", "primary-container": "#2e7d82",
+              "secondary-fixed-dim": "#82d4d8", "on-secondary-fixed": "#002021", "primary-fixed-dim": "#88d3d8",
+              "surface-bright": "#fbf9f8", primary: "#036469", outline: "#6f797a", "on-secondary-fixed-variant": "#004f52",
+              "error-container": "#ffdad6", "on-tertiary-fixed-variant": "#364a4c", secondary: "#00696d",
+              "on-primary-container": "#e5fdff", "on-primary": "#ffffff", "on-error-container": "#93000a",
+              "tertiary-fixed": "#d0e7e8", "surface-container-high": "#eae8e7", "outline-variant": "#bec8c9",
+              "on-tertiary": "#ffffff", "surface-tint": "#0f696e", background: "#fbf9f8", "surface-muted": "#F4F7F7",
+              "on-surface": "#1b1c1c", "on-primary-fixed": "#002022", "surface-variant": "#e4e2e1",
+              "on-background": "#1b1c1c", "emergency-red": "#943031", surface: "#fbf9f8", "secondary-container": "#9bedf1",
+              "on-error": "#ffffff",
+            },
+            borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", "2xl": "1rem", full: "9999px" },
+            spacing: { "stack-lg": "48px", "stack-md": "24px", base: "8px", "stack-sm": "12px", "margin-mobile": "16px", "margin-desktop": "40px", gutter: "24px", "container-max": "1200px" },
+            fontFamily: { "headline-lg-mobile": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "body-md": ["Open Sans"], "body-lg": ["Open Sans"], "label-md": ["Open Sans"], "headline-lg": ["Plus Jakarta Sans"], "display-lg": ["Plus Jakarta Sans"], caption: ["Open Sans"] },
+            fontSize: {
+              "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "600" }],
+              "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.05em", fontWeight: "600" }],
+              "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "600" }],
+              "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+              caption: ["12px", { lineHeight: "16px", fontWeight: "400" }],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; vertical-align: middle; }
+      .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: #bec8c9; border-radius: 10px; }
+      .hide-scrollbar::-webkit-scrollbar { display: none; }
+      .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      .sidebar-transition { transition: width 0.3s ease-in-out, transform 0.3s ease-in-out; }
+      .mobile-sidebar { position: fixed; top: 0; left: -100%; width: 280px; height: 100vh; transition: left 0.3s ease-in-out; z-index: 1000; }
+      .mobile-sidebar.open { left: 0; }
+      .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999; display: none; }
+      .overlay.active { display: block; }
+      .sidebar-collapsed .sidebar-text { display: none; }
+      .sidebar-collapsed .sidebar-icon-only { margin: 0 auto; }
+      .sidebar-collapsed { width: 80px !important; }
+      .sidebar-collapsed .sidebar-logo-text, .sidebar-collapsed .emergency-section { display: none; }
+      .sidebar-collapsed .sidebar-logo, .sidebar-collapsed .sidebar-button { margin: 0 auto; justify-content: center; }
+      .sidebar-collapsed #logoutBtnDesktop { justify-content: center; padding: 12px !important; }
+      .sidebar-collapsed .bottom-container { padding: 16px 8px !important; }
+      .main-content-full { width: 100% !important; margin-left: 0 !important; }
+      #mainContentWrapper { transition: all 0.3s ease-in-out; }
+      #mainContentWrapper > header { position: fixed; top: 0; left: 20%; right: 0; width: 80%; z-index: 40; }
+      #desktopSidebar.sidebar-collapsed + #mainContentWrapper > header { left: 80px; width: calc(100% - 80px); }
+      
+      /* Toast & Modal Animations */
+      .toast-container { position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; display: flex; flex-direction: column; gap: 0.75rem; }
+      .toast { padding: 1rem 1.5rem; border-radius: 0.75rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); color: #ffffff; font-weight: 600; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; }
+      .toast.show { opacity: 1; transform: translateY(0); }
+      .toast-success { background: linear-gradient(135deg, #059669, #10b981); }
+      .toast-error { background: linear-gradient(135deg, #dc2626, #ef4444); }
+      .toast-info { background: linear-gradient(135deg, #036469, #2e7d82); }
+      
+      .modal-backdrop { transition: opacity 0.3s ease; }
+      .modal-content { transition: transform 0.3s ease, opacity 0.3s ease; }
+      .modal-hidden .modal-backdrop { opacity: 0; pointer-events: none; }
+      .modal-hidden .modal-content { transform: scale(0.95) translateY(10px); opacity: 0; }
+    </style>
+  </head>
+
+  <body data-page="appointments" class="bg-background text-on-background min-h-screen flex flex-col font-body-md">
+    
+    <!-- Mobile Top Bar -->
+    <div class="md:hidden fixed top-0 left-0 right-0 bg-deep-navy z-50 px-4 py-4 flex items-center justify-between shadow-lg">
+      <div class="flex items-center gap-3">
+        <button id="mobileBurgerBtn" class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"><span class="material-symbols-outlined">menu</span></button>
+        <img alt="Logo" class="w-8 h-8 rounded-full object-cover" src="../../public/logo.png" />
+        <h1 class="font-bold text-primary-fixed text-sm">addyPets</h1>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-white">notifications</span>
+        <span class="material-symbols-outlined text-white">account_circle</span>
+      </div>
+    </div>
+
+    <div id="mobileOverlay" class="overlay"></div>
+
+    <!-- Mobile Sidebar -->
+    <div id="mobileSidebar" class="mobile-sidebar bg-deep-navy flex flex-col shadow-2xl">
+      <div class="flex items-center justify-between p-6 border-b border-white/10">
+        <div class="flex items-center gap-3">
+          <img alt="Logo" class="w-10 h-10 rounded-full object-cover" src="../../public/logo.png" />
+          <div><h1 class="font-bold text-primary-fixed">addyPets</h1><p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p></div>
+        </div>
+        <button id="closeMobileSidebar" class="text-white p-2 hover:bg-white/10 rounded-lg"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto hide-scrollbar">
+        <a href="./Dashboard.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">analytics</span><span>Analytics</span></a>
+        <a href="./clinic_calendar.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">calendar_today</span><span>Calendar</span></a>
+        <a href="./staff_service_settings.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">groups</span><span>Staff</span></a>
+        <a href="./billing.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">payments</span><span>Billing</span></a>
+        <a href="./records.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">description</span><span>Patient Records</span></a>
+        <a href="./message.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">message</span><span>Messages</span></a>
+        <a href="./emergency_management.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold bg-emergency-red/10"><span class="material-symbols-outlined">emergency</span><span>Emergency Cases</span></a>
+        <a href="./appointments.html" class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all font-semibold"><span class="material-symbols-outlined">event_note</span><span>Appointments</span></a>
+        <div class="h-px bg-white/10 my-4"></div>
+        <button id="logoutBtnMobile" class="w-full flex items-center gap-4 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all"><span class="material-symbols-outlined">logout</span><span>Logout</span></button>
+      </nav>
+    </div>
+
+    <!-- Desktop Layout -->
+    <div class="flex min-h-screen w-full">
+      <!-- Desktop Sidebar -->
+      <aside id="desktopSidebar" class="hidden md:flex flex-col bg-deep-navy h-screen sticky top-0 border-r border-outline-variant/10 text-white sidebar-transition" style="width: 20%">
+        <div class="px-6 py-6 flex items-center justify-between border-b border-white/10">
+          <div class="flex items-center gap-3 sidebar-logo">
+            <img alt="Logo" class="w-10 h-10 rounded-full object-cover" src="../../public/logo.png" />
+            <div class="sidebar-logo-text"><h1 class="font-headline-md text-headline-md font-bold text-primary-fixed text-sm">addyPets</h1><p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p></div>
+          </div>
+          <button id="collapseSidebarBtn" class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"><span class="material-symbols-outlined">chevron_left</span></button>
+        </div>
+        <nav class="flex-1 px-3 py-6 space-y-1 overflow-y-auto hide-scrollbar">
+          <a href="./Dashboard.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">analytics</span><span class="sidebar-text">Analytics</span></a>
+          <a href="./clinic_calendar.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">calendar_today</span><span class="sidebar-text">Calendar</span></a>
+          <a href="./staff_service_settings.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">groups</span><span class="sidebar-text">Staff</span></a>
+          <a href="./billing.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">payments</span><span class="sidebar-text">Billing</span></a>
+          <a href="./records.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">description</span><span class="sidebar-text">Patient Records</span></a>
+          <a href="./message.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">message</span><span class="sidebar-text">Messages</span></a>
+          <a href="./emergency_management.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"><span class="material-symbols-outlined sidebar-icon-only">emergency</span><span class="sidebar-text">Emergency Cases</span></a>
+          <a href="./appointments.html" class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all font-semibold sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">event_note</span><span class="sidebar-text">Appointments</span></a>
+        </nav>
+        <div class="p-4 mt-auto bottom-container">
+          <button id="logoutBtnDesktop" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">logout</span><span class="sidebar-text">Logout</span></button>
+          <div class="emergency-section bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10 mt-4">
+            <p class="font-caption text-caption text-tertiary-fixed-dim mb-2">Emergency Hotline</p>
+            <p class="font-label-md text-label-md text-primary-fixed">+233 500 000 000</p>
+          </div>
+        </div>
+      </aside>
+
+      <div id="mainContentWrapper" class="flex-1 flex flex-col bg-surface pt-16 md:pt-0 transition-all duration-300" style="width: 100%; overflow-y: auto">
+        <main class="flex-1 flex flex-col">
+          <!-- Top Bar (Desktop) -->
+          <header class="h-20 bg-surface hidden md:flex items-center justify-between px-margin-desktop sticky top-0 z-40 border-b border-surface-container-highest shrink-0">
+            <div class="flex items-center gap-4 w-1/3">
+              <div class="relative w-full max-w-md">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+                <input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="Search patients, vets, or files..." type="text" />
+              </div>
+            </div>
+            <div class="flex items-center gap-6">
+              <button class="relative p-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-full"><span class="material-symbols-outlined">notifications</span><span class="absolute top-2 right-2 w-2 h-2 bg-emergency-red rounded-full"></span></button>
+              <div class="flex items-center gap-3 cursor-pointer group">
+                <div class="text-right"><p class="font-label-md text-label-md text-on-surface">Dr. Abena Mensah</p><p class="font-caption text-caption text-on-surface-variant">Chief Veterinary Officer</p></div>
+                <img alt="Profile" class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt_l2NtwBrHDxQNGs9rPyaBDSi0T_lttSSni_UFdT12mHBHPojsxTE2haa69Vl-xUxsOfIG9hBjBfFUbTbuzqUZTrwCxsYx-WVkbqBP95JzSas9Gk-vlSi5L3t6i5wijVQgjwTRZWzXWDoOxvbiuiwTwUvQerM7vTOeUAbTgk0LzdJ6ZlyU0xeXqf__Iapv8Wpu9q6UmECwczFqWAIEuCSYFKPwinFOH3N6vq0YJKWoiJViDN71AZUcTRiwGyz_FO9sM63nmOE114" />
+              </div>
+            </div>
+          </header>
+
+          <!-- MAIN CONTENT AREA -->
+          <div class="flex-1 max-w-container-max w-full mx-auto px-4 md:px-margin-desktop py-6 md:py-stack-md flex flex-col gap-6">
+            
+            <!-- Page Header -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div>
+                <h1 class="font-headline-lg text-headline-lg text-deep-navy">Appointment Management</h1>
+                <p class="font-body-md text-body-md text-on-surface-variant mt-1">Manage, reschedule, and track all patient visits.</p>
+              </div>
+              <button id="newAppointmentBtn" class="w-full sm:w-auto bg-primary text-on-primary px-6 py-3 rounded-xl font-label-md flex items-center justify-center gap-2 hover:bg-primary/90 transition-all shadow-sm">
+                <span class="material-symbols-outlined">add</span> New Appointment
+              </button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+              <div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm flex items-center gap-3">
+                <div class="p-2.5 bg-primary/10 rounded-full"><span class="material-symbols-outlined text-primary text-xl">calendar_today</span></div>
+                <div><p class="text-xl font-bold text-on-surface" id="stat-total">0</p><p class="text-xs text-on-surface-variant">Total Today</p></div>
+              </div>
+              <div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm flex items-center gap-3">
+                <div class="p-2.5 bg-amber-100 rounded-full"><span class="material-symbols-outlined text-amber-600 text-xl">pending</span></div>
+                <div><p class="text-xl font-bold text-on-surface" id="stat-pending">0</p><p class="text-xs text-on-surface-variant">Pending</p></div>
+              </div>
+              <div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm flex items-center gap-3">
+                <div class="p-2.5 bg-green-100 rounded-full"><span class="material-symbols-outlined text-green-600 text-xl">check_circle</span></div>
+                <div><p class="text-xl font-bold text-on-surface" id="stat-completed">0</p><p class="text-xs text-on-surface-variant">Completed</p></div>
+              </div>
+              <div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm flex items-center gap-3">
+                <div class="p-2.5 bg-red-100 rounded-full"><span class="material-symbols-outlined text-red-600 text-xl">cancel</span></div>
+                <div><p class="text-xl font-bold text-on-surface" id="stat-cancelled">0</p><p class="text-xs text-on-surface-variant">Cancelled</p></div>
+              </div>
+            </div>
+
+            <!-- Filters Bar -->
+            <div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm flex flex-col md:flex-row gap-3">
+              <div class="relative flex-1">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+                <input id="searchInput" class="w-full pl-10 pr-4 py-2.5 bg-surface-container-low border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="Search pet, owner, or ID..." type="text" />
+              </div>
+              <div class="flex flex-col sm:flex-row gap-3">
+                <select id="filterStatus" class="px-4 py-2.5 bg-surface-container-low border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary outline-none">
+                  <option value="">All Statuses</option><option value="pending">Pending</option><option value="confirmed">Confirmed</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option>
+                </select>
+                <select id="filterVet" class="px-4 py-2.5 bg-surface-container-low border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary outline-none">
+                  <option value="">All Vets</option><option>Dr. Abena Mensah</option><option>Dr. Kwesi Mensah</option><option>Dr. Ama Serwaa</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Appointments List -->
+            <div class="bg-white rounded-xl border border-outline-variant shadow-sm overflow-hidden flex-1 flex flex-col">
+              <!-- Desktop Table Header -->
+              <div class="hidden md:grid grid-cols-12 gap-4 px-6 py-3 bg-surface-muted text-xs font-bold text-on-surface-variant uppercase tracking-wider border-b border-outline-variant shrink-0">
+                <div class="col-span-1">Time</div>
+                <div class="col-span-3">Pet & Owner</div>
+                <div class="col-span-3">Service & Veterinarian</div>
+                <div class="col-span-2">Status</div>
+                <div class="col-span-3 text-right">Actions</div>
+              </div>
+
+              <!-- Dynamic Rows Container -->
+              <div id="appointmentsList" class="divide-y divide-outline-variant/30 overflow-y-auto custom-scrollbar">
+                <!-- Rows injected by JS -->
+              </div>
+
+              <!-- Pagination Footer -->
+              <div class="px-6 py-4 bg-surface-muted/30 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-outline-variant shrink-0">
+                <p class="text-sm text-on-surface-variant">Showing <span id="showingCount" class="font-bold text-on-surface">0</span> appointments</p>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="w-full bg-deep-navy py-4 shrink-0">
+          <div class="px-4 md:px-margin-desktop text-center text-tertiary-fixed-dim text-caption">© 2024 addyPets veterinary clinic. All rights reserved.</div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- View Details Modal -->
+    <!-- NOTE: Added 'flex' to the class list below to fix centering! -->
+    <div id="detailsModal" class="fixed inset-0 z-[60] hidden flex items-center justify-center modal-hidden p-4">
+      <div class="modal-backdrop absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeModal('detailsModal')"></div>
+      <div class="modal-content relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto z-10">
+        <div class="p-6">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold text-deep-navy">Appointment Details</h3>
+            <button onclick="closeModal('detailsModal')" class="p-1 text-on-surface-variant hover:text-error hover:bg-surface-muted rounded-full transition-colors"><span class="material-symbols-outlined">close</span></button>
+          </div>
+          <div id="detailsContent" class="space-y-4 text-sm">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Appointment Modal -->
+    <!-- NOTE: Added 'flex' to the class list below to fix centering! -->
+    <div id="newApptModal" class="fixed inset-0 z-[60] hidden flex items-center justify-center modal-hidden p-4">
+      <div class="modal-backdrop absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeModal('newApptModal')"></div>
+      <div class="modal-content relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto z-10">
+        <div class="p-6">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold text-deep-navy">New Appointment</h3>
+            <button onclick="closeModal('newApptModal')" class="p-1 text-on-surface-variant hover:text-error hover:bg-surface-muted rounded-full transition-colors"><span class="material-symbols-outlined">close</span></button>
+          </div>
+          <form id="newApptForm" class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+              <div><label class="block text-xs font-bold text-on-surface-variant mb-1">Pet Name</label><input type="text" id="newPet" required class="w-full p-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary outline-none"></div>
+              <div><label class="block text-xs font-bold text-on-surface-variant mb-1">Species</label><input type="text" id="newSpecies" required class="w-full p-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary outline-none"></div>
+            </div>
+            <div><label class="block text-xs font-bold text-on-surface-variant mb-1">Owner Name</label><input type="text" id="newOwner" required class="w-full p-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary outline-none"></div>
+            <div class="grid grid-cols-2 gap-4">
+              <div><label class="block text-xs font-bold text-on-surface-variant mb-1">Time</label><input type="time" id="newTime" required class="w-full p-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary outline-none"></div>
+              <div><label class="block text-xs font-bold text-on-surface-variant mb-1">Veterinarian</label>
+                <select id="newVet" required class="w-full p-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary outline-none">
+                  <option>Dr. Abena Mensah</option><option>Dr. Kwesi Mensah</option><option>Dr. Ama Serwaa</option>
+                </select>
+              </div>
+            </div>
+            <div><label class="block text-xs font-bold text-on-surface-variant mb-1">Service</label><input type="text" id="newService" required class="w-full p-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary outline-none"></div>
+            <button type="submit" class="w-full bg-primary text-on-primary py-3 rounded-xl font-bold hover:bg-primary/90 transition-colors mt-2">Create Appointment</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script>
+      // ==========================================
+      // CORE DATA & STATE
+      // ==========================================
+      let appointments = [
+        { id: 1, time: '09:00', ampm: 'AM', pet: 'Buddy', species: 'Golden Retriever', owner: 'John Doe', petId: 'PET-8492', service: 'Annual General Checkup', vet: 'Dr. Abena Mensah', status: 'completed' },
+        { id: 2, time: '10:30', ampm: 'AM', pet: 'Luna', species: 'Persian Cat', owner: 'Jane Smith', petId: 'PET-7721', service: 'Feline Vaccination (F3)', vet: 'Dr. Kwesi Mensah', status: 'pending' },
+        { id: 3, time: '14:00', ampm: 'PM', pet: 'Max', species: 'German Shepherd', owner: 'Emelia Tetteh', petId: 'PET-9904', service: 'Post-Op Surgery Check', vet: 'Dr. Abena Mensah', status: 'confirmed' },
+        { id: 4, time: '15:30', ampm: 'PM', pet: 'Whiskers', species: 'Domestic Shorthair', owner: 'Mary Johnson', petId: 'PET-1102', service: 'Dental Cleaning', vet: 'Dr. Ama Serwaa', status: 'pending' },
+        { id: 5, time: '16:00', ampm: 'PM', pet: 'Rocky', species: 'Boxer', owner: 'Kofi Annan', petId: 'PET-3345', service: 'Skin Allergy Consult', vet: 'Dr. Kwesi Mensah', status: 'cancelled' }
+      ];
+
+      // ==========================================
+      // RENDERING & FILTERING
+      // ==========================================
+      function renderAppointments() {
+        const search = document.getElementById('searchInput').value.toLowerCase();
+        const statusFilter = document.getElementById('filterStatus').value;
+        const vetFilter = document.getElementById('filterVet').value;
+
+        let filtered = appointments.filter(appt => {
+          const matchSearch = !search || 
+            appt.pet.toLowerCase().includes(search) || 
+            appt.owner.toLowerCase().includes(search) || 
+            appt.petId.toLowerCase().includes(search);
+          const matchStatus = !statusFilter || appt.status === statusFilter;
+          const matchVet = !vetFilter || appt.vet === vetFilter;
+          return matchSearch && matchStatus && matchVet;
+        });
+
+        const listContainer = document.getElementById('appointmentsList');
+        listContainer.innerHTML = '';
+
+        if (filtered.length === 0) {
+          listContainer.innerHTML = `
+            <div class="p-12 text-center">
+              <span class="material-symbols-outlined text-5xl text-outline-variant mb-3 block">search_off</span>
+              <p class="text-on-surface-variant font-medium">No appointments found matching your filters.</p>
+            </div>`;
+        } else {
+          filtered.forEach(appt => {
+            listContainer.innerHTML += generateRowHTML(appt);
+          });
+        }
+
+        document.getElementById('showingCount').textContent = filtered.length;
+        updateStats();
+      }
+
+      function generateRowHTML(appt) {
+        const statusConfig = {
+          pending: { bg: 'bg-amber-100', text: 'text-amber-700', dot: 'bg-amber-500', pulse: 'animate-pulse' },
+          confirmed: { bg: 'bg-primary/10', text: 'text-primary', dot: 'bg-primary', pulse: '' },
+          completed: { bg: 'bg-green-100', text: 'text-green-700', dot: 'bg-green-500', pulse: '' },
+          cancelled: { bg: 'bg-red-100', text: 'text-red-700', dot: 'bg-red-500', pulse: '' }
+        };
+        const s = statusConfig[appt.status];
+        const timeColor = appt.status === 'cancelled' ? 'text-on-surface-variant' : (appt.status === 'pending' ? 'text-amber-600' : 'text-primary');
+
+        // Build Dropdown Items based on status
+        let dropdownItems = `
+          <button onclick="viewDetails(${appt.id}); closeAllDropdowns()" class="w-full text-left px-4 py-2.5 text-sm text-on-surface hover:bg-surface-muted flex items-center gap-2 transition-colors">
+            <span class="material-symbols-outlined text-sm">visibility</span> View Details
+          </button>
+        `;
+        
+        if (appt.status === 'pending' || appt.status === 'confirmed') {
+          dropdownItems += `
+            <button onclick="updateStatus(${appt.id}, 'completed'); closeAllDropdowns()" class="w-full text-left px-4 py-2.5 text-sm text-green-600 hover:bg-green-50 flex items-center gap-2 transition-colors">
+              <span class="material-symbols-outlined text-sm">check_circle</span> Mark Complete
+            </button>
+            <button onclick="updateStatus(${appt.id}, 'cancelled'); closeAllDropdowns()" class="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors">
+              <span class="material-symbols-outlined text-sm">close</span> Cancel Appointment
+            </button>
+          `;
+        }
+
+        // The Three Dots Action Column
+        let actions = `
+          <div class="relative inline-block text-left">
+            <button onclick="toggleDropdown(event, ${appt.id})" class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors" title="Actions">
+              <span class="material-symbols-outlined">more_vert</span>
+            </button>
+            <!-- Dropdown Menu -->
+            <div id="dropdown-${appt.id}" class="hidden absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-xl border border-outline-variant z-50 overflow-hidden">
+              ${dropdownItems}
+            </div>
+          </div>
+        `;
+
+        return `
+          <div class="appointment-row hover:bg-surface-muted/50 transition-colors">
+            <!-- Mobile View -->
+            <div class="md:hidden p-4 space-y-3">
+              <div class="flex justify-between items-center">
+                <p class="text-lg font-bold ${timeColor}">${appt.time} ${appt.ampm}</p>
+                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold ${s.bg} ${s.text}">
+                  <span class="w-1.5 h-1.5 rounded-full ${s.dot} ${s.pulse} mr-1.5"></span> ${appt.status.charAt(0).toUpperCase() + appt.status.slice(1)}
+                </span>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary">pets</span></div>
+                <div class="flex-1">
+                  <p class="font-bold text-on-surface text-sm">${appt.pet} <span class="font-normal text-on-surface-variant">(${appt.species})</span></p>
+                  <p class="text-xs text-on-surface-variant">Owner: ${appt.owner} • #${appt.petId}</p>
+                </div>
+                ${actions}
+              </div>
+              <div class="text-sm pl-13">
+                <p class="font-medium text-on-surface">${appt.service}</p>
+                <p class="text-xs text-on-surface-variant flex items-center gap-1 mt-1"><span class="material-symbols-outlined text-xs">medical_services</span> ${appt.vet}</p>
+              </div>
+            </div>
+
+            <!-- Desktop View -->
+            <div class="hidden md:grid grid-cols-12 gap-4 px-6 py-4 items-center">
+              <div class="col-span-1 text-center">
+                <p class="text-lg font-bold ${timeColor}">${appt.time}</p>
+                <p class="text-xs text-on-surface-variant">${appt.ampm}</p>
+              </div>
+              <div class="col-span-3 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary">pets</span></div>
+                <div>
+                  <p class="font-bold text-on-surface text-sm">${appt.pet} <span class="font-normal text-on-surface-variant">(${appt.species})</span></p>
+                  <p class="text-xs text-on-surface-variant">Owner: ${appt.owner} • #${appt.petId}</p>
+                </div>
+              </div>
+              <div class="col-span-3">
+                <p class="font-medium text-on-surface text-sm">${appt.service}</p>
+                <p class="text-xs text-on-surface-variant flex items-center gap-1 mt-1"><span class="material-symbols-outlined text-xs">medical_services</span> ${appt.vet}</p>
+              </div>
+              <div class="col-span-2">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold ${s.bg} ${s.text}">
+                  <span class="w-1.5 h-1.5 rounded-full ${s.dot} ${s.pulse} mr-1.5"></span> ${appt.status.charAt(0).toUpperCase() + appt.status.slice(1)}
+                </span>
+              </div>
+              <div class="col-span-3 flex justify-end">
+                ${actions}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function updateStats() {
+        document.getElementById('stat-total').textContent = appointments.length;
+        document.getElementById('stat-pending').textContent = appointments.filter(a => a.status === 'pending').length;
+        document.getElementById('stat-completed').textContent = appointments.filter(a => a.status === 'completed').length;
+        document.getElementById('stat-cancelled').textContent = appointments.filter(a => a.status === 'cancelled').length;
+      }
+
+      // ==========================================
+      // DROPDOWN LOGIC
+      // ==========================================
+      function toggleDropdown(event, id) {
+        event.stopPropagation(); // Prevent click from bubbling up to the document
+        const dropdown = document.getElementById(`dropdown-${id}`);
+        const isHidden = dropdown.classList.contains('hidden');
+        
+        closeAllDropdowns(); // Close any other open dropdowns first
+        
+        if (isHidden) {
+          dropdown.classList.remove('hidden');
+        }
+      }
+
+      function closeAllDropdowns() {
+        document.querySelectorAll('[id^="dropdown-"]').forEach(el => {
+          el.classList.add('hidden');
+        });
+      }
+
+      // Close dropdown when clicking anywhere outside of it
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.relative.inline-block')) {
+          closeAllDropdowns();
+        }
+      });
+
+      // ==========================================
+      // ACTIONS & INTERACTIONS
+      // ==========================================
+      function updateStatus(id, newStatus) {
+        const appt = appointments.find(a => a.id === id);
+        if (appt) {
+          appt.status = newStatus;
+          renderAppointments();
+          showToast(`Appointment for ${appt.pet} marked as ${newStatus}.`, newStatus === 'cancelled' ? 'error' : 'success');
+        }
+      }
+
+      function viewDetails(id) {
+        const appt = appointments.find(a => a.id === id);
+        if (!appt) return;
+        
+        const content = document.getElementById('detailsContent');
+        content.innerHTML = `
+          <div class="flex items-center gap-4 p-4 bg-surface-muted rounded-xl">
+            <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary text-3xl">pets</span></div>
+            <div>
+              <h4 class="font-bold text-lg text-deep-navy">${appt.pet}</h4>
+              <p class="text-sm text-on-surface-variant">${appt.species} • #${appt.petId}</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div><p class="text-xs font-bold text-on-surface-variant uppercase">Owner</p><p class="font-medium text-on-surface mt-1">${appt.owner}</p></div>
+            <div><p class="text-xs font-bold text-on-surface-variant uppercase">Time</p><p class="font-medium text-on-surface mt-1">${appt.time} ${appt.ampm}</p></div>
+            <div><p class="text-xs font-bold text-on-surface-variant uppercase">Veterinarian</p><p class="font-medium text-on-surface mt-1">${appt.vet}</p></div>
+            <div><p class="text-xs font-bold text-on-surface-variant uppercase">Status</p><p class="font-medium text-primary mt-1 capitalize">${appt.status}</p></div>
+          </div>
+          <div class="pt-4 border-t border-outline-variant">
+            <p class="text-xs font-bold text-on-surface-variant uppercase mb-1">Service Details</p>
+            <p class="text-on-surface">${appt.service}</p>
+          </div>
+        `;
+        openModal('detailsModal');
+      }
+
+      // ==========================================
+      // MODALS & TOASTS
+      // ==========================================
+      function openModal(id) {
+        const modal = document.getElementById(id);
+        modal.classList.remove('hidden');
+        setTimeout(() => modal.classList.remove('modal-hidden'), 10);
+      }
+      function closeModal(id) {
+        const modal = document.getElementById(id);
+        modal.classList.add('modal-hidden');
+        setTimeout(() => modal.classList.add('hidden'), 300);
+      }
+
+      function showToast(message, type = 'info') {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.textContent = message;
+        container.appendChild(toast);
+        setTimeout(() => toast.classList.add('show'), 10);
+        setTimeout(() => {
+          toast.classList.remove('show');
+          setTimeout(() => toast.remove(), 300);
+        }, 3000);
+      }
+
+      // ==========================================
+      // EVENT LISTENERS & INIT
+      // ==========================================
+      document.addEventListener('DOMContentLoaded', () => {
+        renderAppointments();
+
+        // Filters
+        document.getElementById('searchInput').addEventListener('input', renderAppointments);
+        document.getElementById('filterStatus').addEventListener('change', renderAppointments);
+        document.getElementById('filterVet').addEventListener('change', renderAppointments);
+
+        // New Appointment
+        document.getElementById('newAppointmentBtn').addEventListener('click', () => openModal('newApptModal'));
+        document.getElementById('newApptForm').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const timeVal = document.getElementById('newTime').value;
+          const [h, m] = timeVal.split(':');
+          const hour = parseInt(h);
+          
+          const newAppt = {
+            id: Date.now(),
+            time: timeVal,
+            ampm: hour >= 12 ? 'PM' : 'AM',
+            pet: document.getElementById('newPet').value,
+            species: document.getElementById('newSpecies').value,
+            owner: document.getElementById('newOwner').value,
+            petId: 'PET-' + Math.floor(Math.random() * 9000 + 1000),
+            service: document.getElementById('newService').value,
+            vet: document.getElementById('newVet').value,
+            status: 'pending'
+          };
+          
+          appointments.push(newAppt);
+          renderAppointments();
+          closeModal('newApptModal');
+          document.getElementById('newApptForm').reset();
+          showToast(`Appointment for ${newAppt.pet} created successfully!`, 'success');
+        });
+
+        // Sidebar Toggles
+        const mobileBurgerBtn = document.getElementById("mobileBurgerBtn");
+        const mobileSidebar = document.getElementById("mobileSidebar");
+        const closeMobileSidebar = document.getElementById("closeMobileSidebar");
+        const mobileOverlay = document.getElementById("mobileOverlay");
+        const desktopSidebar = document.getElementById("desktopSidebar");
+        const collapseSidebarBtn = document.getElementById("collapseSidebarBtn");
+
+        mobileBurgerBtn.addEventListener("click", () => { mobileSidebar.classList.add("open"); mobileOverlay.classList.add("active"); });
+        closeMobileSidebar.addEventListener("click", () => { mobileSidebar.classList.remove("open"); mobileOverlay.classList.remove("active"); });
+        mobileOverlay.addEventListener("click", () => { mobileSidebar.classList.remove("open"); mobileOverlay.classList.remove("active"); });
+        
+        collapseSidebarBtn.addEventListener("click", () => {
+          const isCollapsed = desktopSidebar.classList.toggle("sidebar-collapsed");
+          collapseSidebarBtn.querySelector(".material-symbols-outlined").textContent = isCollapsed ? "chevron_right" : "chevron_left";
+          document.getElementById("mainContentWrapper").classList.toggle("main-content-full", isCollapsed);
+        });
+      });
+    </script>
+  </body>
+</html>

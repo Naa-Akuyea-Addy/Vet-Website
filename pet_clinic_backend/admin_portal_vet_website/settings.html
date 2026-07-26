@@ -1,0 +1,670 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Clinic Settings | VetCare Ghana</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Open+Sans:wght@400;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      body {
+        font-family: "Open Sans", sans-serif;
+        background-color: #fbf9f8;
+      }
+      .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 24px;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+    </style>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              outline: "#6f797a",
+              "on-background": "#1b1c1c",
+              "inverse-surface": "#303030",
+              "outline-variant": "#bec8c9",
+              "secondary-fixed": "#9ef0f4",
+              "inverse-primary": "#88d3d8",
+              "tertiary-container": "#617677",
+              "on-tertiary-fixed": "#091f20",
+              "surface-container-highest": "#e4e2e1",
+              "surface-container": "#f0eded",
+              "on-surface-variant": "#3f4949",
+              "emergency-red": "#943031",
+              "surface-container-lowest": "#ffffff",
+              "surface-dim": "#dcd9d9",
+              primary: "#036469",
+              "on-surface": "#1b1c1c",
+              "inverse-on-surface": "#f2f0f0",
+              "on-secondary-fixed": "#002021",
+              "tertiary-fixed-dim": "#b4cbcc",
+              "on-tertiary-fixed-variant": "#364a4c",
+              "secondary-container": "#9bedf1",
+              "surface-tint": "#0f696e",
+              "surface-container-high": "#eae8e7",
+              tertiary: "#485d5f",
+              "on-error": "#ffffff",
+              background: "#fbf9f8",
+              "on-secondary-container": "#006e72",
+              error: "#ba1a1a",
+              "on-tertiary-container": "#e6fdfe",
+              "surface-container-low": "#f5f3f3",
+              "primary-fixed-dim": "#88d3d8",
+              "primary-container": "#2e7d82",
+              "tertiary-fixed": "#d0e7e8",
+              surface: "#fbf9f8",
+              "on-tertiary": "#ffffff",
+              "on-secondary-fixed-variant": "#004f52",
+              secondary: "#00696d",
+              "surface-bright": "#fbf9f8",
+              "on-error-container": "#93000a",
+              "surface-muted": "#F4F7F7",
+              "surface-variant": "#e4e2e1",
+              "primary-fixed": "#a4eff4",
+              "error-container": "#ffdad6",
+              "on-primary-container": "#e5fdff",
+              "secondary-fixed-dim": "#82d4d8",
+              "on-primary-fixed": "#002022",
+              "deep-navy": "#1A3638",
+              "on-primary-fixed-variant": "#004f53",
+              "on-secondary": "#ffffff",
+              "on-primary": "#ffffff",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              gutter: "24px",
+              "stack-md": "24px",
+              "margin-mobile": "16px",
+              base: "8px",
+              "stack-sm": "12px",
+              "stack-lg": "48px",
+              "margin-desktop": "40px",
+              "container-max": "1200px",
+            },
+            fontFamily: {
+              "headline-lg": ["Plus Jakarta Sans"],
+              "headline-md": ["Plus Jakarta Sans"],
+              "body-md": ["Open Sans"],
+              "label-md": ["Open Sans"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-background text-on-background min-h-screen">
+    <!-- Side Navigation Bar -->
+    <nav
+      class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low shadow-[4px_0_12px_rgba(26,54,56,0.04)] flex flex-col py-8 px-6 z-50"
+    >
+      <div class="mb-10">
+        <h1 class="font-headline-md text-headline-md font-bold text-primary">
+          VetCare Ghana
+        </h1>
+        <p
+          class="font-label-md text-label-md text-on-surface-variant opacity-70"
+        >
+          Staff Portal
+        </p>
+      </div>
+      <div class="flex-grow space-y-2">
+        <!-- Navigation Items Mapping -->
+        <a
+          class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors group"
+          href="#"
+        >
+          <span class="material-symbols-outlined">analytics</span>
+          <span class="font-label-md text-label-md">Analytics</span>
+        </a>
+        <a
+          class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors group"
+          href="#"
+        >
+          <span class="material-symbols-outlined">calendar_month</span>
+          <span class="font-label-md text-label-md">Calendar</span>
+        </a>
+        <a
+          class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors group"
+          href="#"
+        >
+          <span class="material-symbols-outlined">group</span>
+          <span class="font-label-md text-label-md">Staff</span>
+        </a>
+        <a
+          class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors group"
+          href="#"
+        >
+          <span class="material-symbols-outlined">pets</span>
+          <span class="font-label-md text-label-md">Patients</span>
+        </a>
+        <a
+          class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors group"
+          href="#"
+        >
+          <span class="material-symbols-outlined">person</span>
+          <span class="font-label-md text-label-md">Owners</span>
+        </a>
+        <a
+          class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors group"
+          href="#"
+        >
+          <span class="material-symbols-outlined">payments</span>
+          <span class="font-label-md text-label-md">Billing</span>
+        </a>
+        <a
+          class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors group"
+          href="#"
+        >
+          <span class="material-symbols-outlined">chat</span>
+          <span class="font-label-md text-label-md">Messages</span>
+        </a>
+        <!-- Active State: Settings -->
+        <a
+          class="flex items-center gap-3 p-3 rounded-lg text-primary font-bold bg-secondary-container/30 transition-colors"
+          href="#"
+        >
+          <span
+            class="material-symbols-outlined"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+            >settings</span
+          >
+          <span class="font-label-md text-label-md">Settings</span>
+        </a>
+        <a
+          class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors group"
+          href="#"
+        >
+          <span class="material-symbols-outlined text-emergency-red"
+            >emergency</span
+          >
+          <span class="font-label-md text-label-md">Emergency Cases</span>
+        </a>
+      </div>
+      <button
+        class="mt-auto bg-primary text-on-primary font-label-md py-3 px-4 rounded-lg shadow-sm hover:opacity-90 active:scale-95 transition-all"
+      >
+        New Appointment
+      </button>
+    </nav>
+    <!-- Main Canvas -->
+    <main class="ml-64 min-h-screen">
+      <!-- Top App Bar -->
+      <header
+        class="sticky top-0 z-40 bg-surface h-16 flex justify-between items-center px-gutter shadow-[0_4px_12px_rgba(26,54,56,0.04)]"
+      >
+        <h2 class="font-headline-md text-headline-md font-bold text-primary">
+          Clinic Settings
+        </h2>
+        <div class="flex items-center gap-6">
+          <div class="relative">
+            <input
+              class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-body-md focus:ring-2 focus:ring-primary w-64 transition-all"
+              placeholder="Search settings..."
+              type="text"
+            />
+            <span
+              class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline"
+              >search</span
+            >
+          </div>
+          <div class="flex items-center gap-4">
+            <span
+              class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors"
+              >notifications</span
+            >
+            <span
+              class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors"
+              >help_outline</span
+            >
+            <img
+              class="w-10 h-10 rounded-full object-cover border-2 border-primary/20"
+              data-alt="A professional headshot of a friendly Ghanaian male veterinarian in clean teal medical scrubs, smiling warmly against a soft-focus clinic background. The lighting is natural and bright, conveying expertise and compassionate care in a modern healthcare setting."
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBv6tglsywOCmlttifcjO-_9nxtUfHlHXZF6HfXP3TAMvgx4q2_D6JPr8D-fEOgNx7-5kN00ukfcQp01-DpzBF3RoMUKKx635F93N61SfSjNF8m1tqfzOaQZBa0yrw4vDQdTGZBQquKMlhHN0QaF9Au-bWlOPB80fYWrl0wd8eAombgiRxxUkou7inweac-LGPBsAK8WQWK6cDvq6i6q8pX9C-ommNgQQck1-F1iHZjnJMSMkcR-wyXE-L1rfpNnFtUPSB8USU1Wwk"
+            />
+          </div>
+        </div>
+      </header>
+      <!-- Content Area -->
+      <div class="p-10 max-w-7xl mx-auto space-y-12">
+        <!-- Hero / Visual Identity Section -->
+        <section
+          class="relative h-48 rounded-2xl overflow-hidden shadow-lg group"
+        >
+          <img
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            data-alt="A panoramic wide-angle interior shot of a contemporary, high-end veterinary clinic lobby in Accra, Ghana. The space features polished concrete floors, warm wooden accents, and a bright, airy atmosphere with large windows. The aesthetic is clean and corporate, dominated by a palette of soft teals and crisp whites."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5SG0MK9IfhPRTkGDSwqLHYAf88rZiFSwGdjbaQbkogJHjIzT-VnVcKEQq-RbkpNf898_I0TDtNZD9_82nZUtI0YBsSdGwXBvm1NyNxFfZ-LS5xK3_POdVFm-VP-dcEZDhBV0bgkYcwAYKkz1FrVKbJH0bR0iAtUOp-qMAff7kyvBL75jNBbElHXHy99K00uoXjH5YJQ1_4kNc2yzTZGBbYhyi2hq9Y6BIkjQNalyU65gwZ7DoJrA3Nz7a1_Amx4dsxsbQSyCUEx8"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-deep-navy/80 to-transparent flex flex-col justify-end p-8"
+          >
+            <h3 class="text-white font-headline-lg text-headline-lg">
+              General Administration
+            </h3>
+            <p class="text-white/80 font-body-md">
+              Configure your clinic's identity, billing, and system workflows.
+            </p>
+          </div>
+        </section>
+        <!-- Settings Bento Grid -->
+        <div class="bento-grid">
+          <!-- Clinic Information (Bento Large) -->
+          <section
+            class="col-span-12 lg:col-span-8 bg-surface-container-lowest p-8 rounded-xl shadow-[0_4px_12px_rgba(26,54,56,0.04)] border border-surface-container"
+          >
+            <div class="flex items-center gap-3 mb-8">
+              <span class="material-symbols-outlined text-primary text-3xl"
+                >home_health</span
+              >
+              <h4 class="font-headline-md text-headline-md text-deep-navy">
+                Clinic Information
+              </h4>
+            </div>
+            <form class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+              <div class="space-y-2">
+                <label
+                  class="font-label-md text-label-md text-on-surface-variant"
+                  >Clinic Legal Name</label
+                >
+                <input
+                  class="w-full p-3 bg-surface-muted border border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  type="text"
+                  value="VetCare Ghana - East Legon Branch"
+                />
+              </div>
+              <div class="space-y-2">
+                <label
+                  class="font-label-md text-label-md text-on-surface-variant"
+                  >Primary Email</label
+                >
+                <input
+                  class="w-full p-3 bg-surface-muted border border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  type="email"
+                  value="admin@vetcareghana.com"
+                />
+              </div>
+              <div class="col-span-2 space-y-2">
+                <label
+                  class="font-label-md text-label-md text-on-surface-variant"
+                  >Physical Address</label
+                >
+                <textarea
+                  class="w-full p-3 bg-surface-muted border border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none"
+                  rows="3"
+                >
+No. 15 Jungle Road, East Legon, Accra, Ghana</textarea>
+              </div>
+              <div class="space-y-2">
+                <label
+                  class="font-label-md text-label-md text-on-surface-variant"
+                  >Contact Phone</label
+                >
+                <input
+                  class="w-full p-3 bg-surface-muted border border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  type="tel"
+                  value="+233 24 000 0000"
+                />
+              </div>
+              <div class="space-y-2">
+                <label
+                  class="font-label-md text-label-md text-on-surface-variant"
+                  >VAT / Tax ID</label
+                >
+                <input
+                  class="w-full p-3 bg-surface-muted border border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  type="text"
+                  value="VGH-00982-11"
+                />
+              </div>
+              <div class="col-span-2 flex justify-end gap-4 mt-4">
+                <button
+                  class="px-6 py-2 border border-outline text-on-surface-variant rounded-lg font-label-md hover:bg-surface-container-high transition-colors"
+                  type="button"
+                >
+                  Discard
+                </button>
+                <button
+                  class="px-8 py-2 bg-primary text-on-primary rounded-lg font-label-md shadow-md hover:opacity-90 transition-all"
+                  type="submit"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </section>
+          <!-- Operational Hours (Bento Sidebar) -->
+          <section
+            class="col-span-12 lg:col-span-4 bg-surface-container-lowest p-8 rounded-xl shadow-[0_4px_12px_rgba(26,54,56,0.04)] border border-surface-container"
+          >
+            <div class="flex items-center gap-3 mb-6">
+              <span class="material-symbols-outlined text-primary text-3xl"
+                >schedule</span
+              >
+              <h4
+                class="font-headline-md text-headline-md text-deep-navy text-xl"
+              >
+                Operational Hours
+              </h4>
+            </div>
+            <div class="space-y-4">
+              <div
+                class="flex items-center justify-between py-3 border-b border-surface-container"
+              >
+                <span class="font-label-md text-on-surface-variant"
+                  >Mon - Fri</span
+                >
+                <div class="flex items-center gap-2">
+                  <span
+                    class="bg-primary-container text-on-primary-container px-2 py-1 rounded text-caption"
+                    >08:00 - 18:00</span
+                  >
+                </div>
+              </div>
+              <div
+                class="flex items-center justify-between py-3 border-b border-surface-container"
+              >
+                <span class="font-label-md text-on-surface-variant"
+                  >Saturday</span
+                >
+                <div class="flex items-center gap-2">
+                  <span
+                    class="bg-primary-container text-on-primary-container px-2 py-1 rounded text-caption"
+                    >09:00 - 14:00</span
+                  >
+                </div>
+              </div>
+              <div
+                class="flex items-center justify-between py-3 border-b border-surface-container"
+              >
+                <span class="font-label-md text-on-surface-variant"
+                  >Sunday</span
+                >
+                <span class="text-emergency-red font-label-md">Closed</span>
+              </div>
+              <div class="flex items-center justify-between py-3">
+                <span class="font-label-md text-on-surface-variant"
+                  >Emergency</span
+                >
+                <div class="flex items-center gap-2">
+                  <div
+                    class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"
+                  ></div>
+                  <span class="text-emerald-600 font-label-md"
+                    >24/7 Available</span
+                  >
+                </div>
+              </div>
+            </div>
+            <button
+              class="w-full mt-6 py-2 border-2 border-primary/20 text-primary rounded-lg font-label-md hover:bg-secondary-container/20 transition-all flex items-center justify-center gap-2"
+            >
+              <span class="material-symbols-outlined text-sm">edit</span>
+              Modify Schedule
+            </button>
+          </section>
+          <!-- Service Fees (Bento Medium) -->
+          <section
+            class="col-span-12 lg:col-span-6 bg-surface-container-lowest p-8 rounded-xl shadow-[0_4px_12px_rgba(26,54,56,0.04)] border border-surface-container"
+          >
+            <div class="flex items-center gap-3 mb-6">
+              <span class="material-symbols-outlined text-primary text-3xl"
+                >request_quote</span
+              >
+              <h4 class="font-headline-md text-headline-md text-deep-navy">
+                Service Fees
+              </h4>
+            </div>
+            <div class="grid grid-cols-1 gap-4">
+              <div
+                class="flex items-center justify-between p-4 bg-surface-muted rounded-lg group hover:bg-surface-container transition-all"
+              >
+                <div>
+                  <p class="font-label-md text-deep-navy">Base Consultation</p>
+                  <p class="text-caption text-outline">
+                    Standard 30min appointment
+                  </p>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="font-headline-md text-primary font-bold"
+                    >GH₵ 250</span
+                  >
+                  <span
+                    class="material-symbols-outlined text-outline cursor-pointer group-hover:text-primary"
+                    >edit_square</span
+                  >
+                </div>
+              </div>
+              <div
+                class="flex items-center justify-between p-4 bg-surface-muted rounded-lg group hover:bg-surface-container transition-all"
+              >
+                <div>
+                  <p class="font-label-md text-deep-navy">Emergency Walk-in</p>
+                  <p class="text-caption text-outline">
+                    Immediate attention required
+                  </p>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="font-headline-md text-primary font-bold"
+                    >GH₵ 500</span
+                  >
+                  <span
+                    class="material-symbols-outlined text-outline cursor-pointer group-hover:text-primary"
+                    >edit_square</span
+                  >
+                </div>
+              </div>
+              <div
+                class="flex items-center justify-between p-4 bg-surface-muted rounded-lg group hover:bg-surface-container transition-all"
+              >
+                <div>
+                  <p class="font-label-md text-deep-navy">Follow-up Visit</p>
+                  <p class="text-caption text-outline">
+                    Within 14 days of consultation
+                  </p>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="font-headline-md text-primary font-bold"
+                    >GH₵ 120</span
+                  >
+                  <span
+                    class="material-symbols-outlined text-outline cursor-pointer group-hover:text-primary"
+                    >edit_square</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              class="mt-6 p-4 bg-secondary-container/10 border border-secondary-container/30 rounded-lg flex items-start gap-3"
+            >
+              <span class="material-symbols-outlined text-primary">info</span>
+              <p
+                class="text-caption text-on-secondary-container leading-relaxed"
+              >
+                These are base rates. Dynamic pricing adjustments (night shifts,
+                holiday surges) can be configured in the Advanced Billing
+                module.
+              </p>
+            </div>
+          </section>
+          <!-- Notification Preferences (Bento Medium) -->
+          <section
+            class="col-span-12 lg:col-span-6 bg-surface-container-lowest p-8 rounded-xl shadow-[0_4px_12px_rgba(26,54,56,0.04)] border border-surface-container"
+          >
+            <div class="flex items-center gap-3 mb-6">
+              <span class="material-symbols-outlined text-primary text-3xl"
+                >notifications_active</span
+              >
+              <h4 class="font-headline-md text-headline-md text-deep-navy">
+                Staff Alerts
+              </h4>
+            </div>
+            <div class="space-y-6">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-label-md text-deep-navy">
+                    Emergency SMS Alerts
+                  </p>
+                  <p class="text-caption text-outline">
+                    Instant alerts for triage cases
+                  </p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input checked="" class="sr-only peer" type="checkbox" />
+                  <div
+                    class="w-11 h-6 bg-outline-variant peer-focus:ring-2 peer-focus:ring-primary rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"
+                  ></div>
+                </label>
+              </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-label-md text-deep-navy">
+                    Daily Appointment Summary
+                  </p>
+                  <p class="text-caption text-outline">
+                    Sent via email at 7:00 AM
+                  </p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input checked="" class="sr-only peer" type="checkbox" />
+                  <div
+                    class="w-11 h-6 bg-outline-variant peer-focus:ring-2 peer-focus:ring-primary rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"
+                  ></div>
+                </label>
+              </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-label-md text-deep-navy">
+                    Critical Inventory Alerts
+                  </p>
+                  <p class="text-caption text-outline">
+                    Notify when medical stock is low
+                  </p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input class="sr-only peer" type="checkbox" />
+                  <div
+                    class="w-11 h-6 bg-outline-variant peer-focus:ring-2 peer-focus:ring-primary rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"
+                  ></div>
+                </label>
+              </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-label-md text-deep-navy">Billing Anomalies</p>
+                  <p class="text-caption text-outline">
+                    In-app notifications for discrepancies
+                  </p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input checked="" class="sr-only peer" type="checkbox" />
+                  <div
+                    class="w-11 h-6 bg-outline-variant peer-focus:ring-2 peer-focus:ring-primary rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"
+                  ></div>
+                </label>
+              </div>
+            </div>
+            <div
+              class="mt-8 pt-6 border-t border-surface-container flex justify-end"
+            >
+              <button
+                class="bg-primary text-on-primary px-6 py-2 rounded-lg font-label-md shadow-sm hover:opacity-90 transition-all"
+              >
+                Update Preferences
+              </button>
+            </div>
+          </section>
+        </div>
+        <!-- Danger Zone -->
+        <section
+          class="bg-error-container/20 border-2 border-dashed border-error/30 p-8 rounded-xl flex items-center justify-between"
+        >
+          <div>
+            <h4
+              class="font-headline-md text-headline-md text-emergency-red text-xl"
+            >
+              Advanced Security
+            </h4>
+            <p class="text-body-md text-on-surface-variant">
+              Access critical system logs or reset clinical parameters. Handle
+              with extreme caution.
+            </p>
+          </div>
+          <button
+            class="bg-error text-on-error px-6 py-3 rounded-lg font-label-md hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+          >
+            <span class="material-symbols-outlined"
+              >security_update_warning</span
+            >
+            System Management
+          </button>
+        </section>
+      </div>
+    </main>
+    <script>
+      // Micro-interaction for Save buttons
+      document
+        .querySelectorAll('button[type="submit"], button.bg-primary')
+        .forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            const originalText = btn.innerHTML;
+            btn.innerHTML =
+              '<span class="material-symbols-outlined animate-spin">progress_activity</span>';
+            setTimeout(() => {
+              btn.innerHTML =
+                '<span class="material-symbols-outlined">check_circle</span> Saved';
+              btn.classList.replace("bg-primary", "bg-emerald-600");
+              setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.classList.replace("bg-emerald-600", "bg-primary");
+              }, 2000);
+            }, 800);
+          });
+        });
+
+      // Hover effect for side navigation items
+      const navItems = document.querySelectorAll("nav a");
+      navItems.forEach((item) => {
+        item.addEventListener("mouseenter", () => {
+          if (!item.classList.contains("bg-secondary-container/30")) {
+            item.style.transform = "translateX(4px)";
+          }
+        });
+        item.addEventListener("mouseleave", () => {
+          item.style.transform = "translateX(0)";
+        });
+      });
+    </script>
+  </body>
+</html>

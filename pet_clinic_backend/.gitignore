@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Environment variables (VERY IMPORTANT)
+.env
+
+# Build output (if you add frontend build tools later)
+dist/
+build/
+
+# ORACLE / DATABASE TEMP FILES (optional safety)
+*.db
+*.sqlite
+*.sqlite3
+
+#Package lock files (optional, but can be ignored if you want to manage dependencies manually)
+package-lock.json
