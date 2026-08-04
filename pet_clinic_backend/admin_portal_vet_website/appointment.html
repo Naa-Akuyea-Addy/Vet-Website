@@ -3,96 +3,486 @@
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Appointments - addyPets Admin Portal</title>
+    <title>addyPets | Appointments</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Open+Sans:wght@400;600&amp;display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
-    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        vertical-align: middle;
+      }
+      .custom-scrollbar::-webkit-scrollbar,
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track,
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb,
+      ::-webkit-scrollbar-thumb {
+        background: #bec8c9;
+        border-radius: 10px;
+      }
+      body {
+        background-color: #fbf9f8;
+        color: #1b1c1c;
+      }
+
+      /* Sidebar styles */
+      .sidebar-item-active {
+        background-color: #2e7d82;
+        color: #ffffff;
+      }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .sidebar-transition {
+        transition: width 0.3s ease-in-out, transform 0.3s ease-in-out;
+      }
+      .mobile-sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 280px;
+        height: 100vh;
+        transition: left 0.3s ease-in-out;
+        z-index: 1000;
+      }
+      .mobile-sidebar.open {
+        left: 0;
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        display: none;
+      }
+      .overlay.active {
+        display: block;
+      }
+      .sidebar-collapsed .sidebar-text {
+        display: none;
+      }
+      .sidebar-collapsed .sidebar-icon-only {
+        margin: 0 auto;
+      }
+      .sidebar-collapsed {
+        width: 80px !important;
+      }
+      .sidebar-collapsed .sidebar-logo-text {
+        display: none;
+      }
+      .sidebar-collapsed .sidebar-logo {
+        margin: 0 auto;
+      }
+      .sidebar-collapsed .sidebar-button {
+        justify-content: center;
+      }
+      .sidebar-collapsed .emergency-section {
+        display: none;
+      }
+      .sidebar-collapsed #logoutBtnDesktop {
+        justify-content: center;
+        padding: 12px !important;
+      }
+      .sidebar-collapsed .bottom-container {
+        padding: 16px 8px !important;
+      }
+      .main-content-full {
+        width: 100% !important;
+        margin-left: 0 !important;
+      }
+      #mainContentWrapper {
+        transition: all 0.3s ease-in-out;
+      }
+      .active-nav-item {
+        font-variation-settings: "FILL" 1;
+      }
+
+      /* Toast styles */
+      .toast-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        pointer-events: none;
+      }
+      .toast {
+        min-width: 220px;
+        max-width: 320px;
+        padding: 1rem 1.2rem;
+        border-radius: 0.9rem;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
+        color: #ffffff;
+        font-weight: 600;
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.28s ease, transform 0.28s ease;
+        pointer-events: auto;
+        white-space: pre-line;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .toast-success {
+        background: linear-gradient(135deg, #047857, #059669);
+      }
+      .toast-info {
+        background: linear-gradient(135deg, #0d6efd, #2563eb);
+      }
+      .toast-error {
+        background: linear-gradient(135deg, #b91c1c, #ef4444);
+      }
+      .toast-warning {
+        background: linear-gradient(135deg, #b45309, #d97706);
+      }
+
+      /* Status badges */
+      .status-confirmed {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+      .status-pending {
+        background-color: #fef9c3;
+        color: #854d0e;
+      }
+      .status-cancelled {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+      .status-completed {
+        background-color: #dbeafe;
+        color: #1e40af;
+      }
+
+      /* Dropdown menu styles */
+      .action-dropdown {
+        position: relative;
+        display: inline-block;
+      }
+      .action-dropdown-btn {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 4px;
+        transition: background 0.15s;
+        color: #6f797a;
+      }
+      .action-dropdown-btn:hover {
+        background: #f0eded;
+      }
+      .action-dropdown-menu {
+        position: absolute;
+        right: 0;
+        top: 100%;
+        background: #ffffff;
+        border: 1px solid #bec8c9;
+        border-radius: 0.5rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        min-width: 180px;
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(-8px) scale(0.95);
+        pointer-events: none;
+        transition: opacity 0.15s ease, transform 0.15s ease;
+        overflow: hidden;
+      }
+      .action-dropdown-menu.open {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+      }
+      .action-dropdown-menu button {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        width: 100%;
+        padding: 0.65rem 1rem;
+        font-size: 0.875rem;
+        color: #1b1c1c;
+        text-align: left;
+        transition: background 0.15s;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+      }
+      .action-dropdown-menu button:hover {
+        background: #f4f7f7;
+      }
+      .action-dropdown-menu button.danger {
+        color: #943031;
+      }
+      .action-dropdown-menu button.danger:hover {
+        background: #ffdad6;
+      }
+      .action-dropdown-menu .menu-divider {
+        height: 1px;
+        background: #e4e2e1;
+        margin: 0.25rem 0;
+      }
+
+      /* Modal styles */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 999;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+      .modal-overlay.open {
+        display: flex;
+      }
+      .modal-card {
+        background: white;
+        border-radius: 1.5rem;
+        max-width: 650px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 1.5rem;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Input styles */
+      .input-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: #475569;
+        display: block;
+        margin-bottom: 2px;
+      }
+      .input-label .hint {
+        font-weight: 400;
+        color: #94a3b8;
+        font-size: 10px;
+      }
+
+      /* Row clickable */
+      .row-clickable {
+        cursor: pointer;
+        transition: background-color 0.15s ease;
+      }
+      .row-clickable:hover {
+        background-color: #f8fafc !important;
+      }
+
+      a[data-nav-desktop="emergency"],
+      a[data-nav-mobile="emergency"] {
+        background-color: #943031 !important;
+        color: #ffffff !important;
+      }
+      a[data-nav-desktop="emergency"]:hover,
+      a[data-nav-mobile="emergency"]:hover {
+        background-color: #7a2526 !important;
+        color: #ffffff !important;
+      }
+
+      /* Patient highlight in table */
+      .patient-highlight {
+        background-color: #dbeafe !important;
+        border-left: 4px solid #036469;
+      }
+
+      @media (max-width: 768px) {
+        .sidebar-mobile {
+          position: fixed;
+          left: -280px;
+          top: 0;
+          width: 280px;
+          height: 100vh;
+          z-index: 100;
+          transition: left 0.3s ease;
+        }
+        .sidebar-mobile.open {
+          left: 0;
+        }
+        .sidebar-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 99;
+          display: none;
+        }
+        .sidebar-overlay.active {
+          display: block;
+        }
+      }
+      @media print {
+        .no-print {
+          display: none !important;
+        }
+        .print-content {
+          display: block !important;
+        }
+        body * {
+          visibility: hidden;
+        }
+        .print-content,
+        .print-content * {
+          visibility: visible;
+        }
+        .print-content {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          padding: 20px;
+          background: white;
+        }
+      }
+    </style>
+
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
         theme: {
           extend: {
             colors: {
-              "secondary-fixed": "#9ef0f4", "inverse-primary": "#88d3d8", "on-primary-fixed-variant": "#004f53",
-              "tertiary-container": "#617677", "surface-container-lowest": "#ffffff", "surface-container-highest": "#e4e2e1",
-              "deep-navy": "#1A3638", "surface-container-low": "#f5f3f3", error: "#ba1a1a", tertiary: "#485d5f",
-              "on-tertiary-container": "#e6fdfe", "on-secondary-container": "#006e72", "on-surface-variant": "#3f4949",
-              "tertiary-fixed-dim": "#b4cbcc", "surface-container": "#f0eded", "on-tertiary-fixed": "#091f20",
-              "on-secondary": "#ffffff", "primary-fixed": "#a4eff4", "inverse-on-surface": "#f2f0f0",
-              "inverse-surface": "#303030", "surface-dim": "#dcd9d9", "primary-container": "#2e7d82",
-              "secondary-fixed-dim": "#82d4d8", "on-secondary-fixed": "#002021", "primary-fixed-dim": "#88d3d8",
-              "surface-bright": "#fbf9f8", primary: "#036469", outline: "#6f797a", "on-secondary-fixed-variant": "#004f52",
-              "error-container": "#ffdad6", "on-tertiary-fixed-variant": "#364a4c", secondary: "#00696d",
-              "on-primary-container": "#e5fdff", "on-primary": "#ffffff", "on-error-container": "#93000a",
-              "tertiary-fixed": "#d0e7e8", "surface-container-high": "#eae8e7", "outline-variant": "#bec8c9",
-              "on-tertiary": "#ffffff", "surface-tint": "#0f696e", background: "#fbf9f8", "surface-muted": "#F4F7F7",
-              "on-surface": "#1b1c1c", "on-primary-fixed": "#002022", "surface-variant": "#e4e2e1",
-              "on-background": "#1b1c1c", "emergency-red": "#943031", surface: "#fbf9f8", "secondary-container": "#9bedf1",
+              "secondary-fixed": "#9ef0f4",
+              "inverse-primary": "#88d3d8",
+              "on-primary-fixed-variant": "#004f53",
+              "tertiary-container": "#617677",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-highest": "#e4e2e1",
+              "deep-navy": "#1A3638",
+              "surface-container-low": "#f5f3f3",
+              error: "#ba1a1a",
+              tertiary: "#485d5f",
+              "on-tertiary-container": "#e6fdfe",
+              "on-secondary-container": "#006e72",
+              "on-surface-variant": "#3f4949",
+              "tertiary-fixed-dim": "#b4cbcc",
+              "surface-container": "#f0eded",
+              "on-tertiary-fixed": "#091f20",
+              "on-secondary": "#ffffff",
+              "primary-fixed": "#a4eff4",
+              "inverse-on-surface": "#f2f0f0",
+              "inverse-surface": "#303030",
+              "surface-dim": "#dcd9d9",
+              "primary-container": "#2e7d82",
+              "secondary-fixed-dim": "#82d4d8",
+              "on-secondary-fixed": "#002021",
+              "primary-fixed-dim": "#88d3d8",
+              "surface-bright": "#fbf9f8",
+              primary: "#036469",
+              outline: "#6f797a",
+              "on-secondary-fixed-variant": "#004f52",
+              "error-container": "#ffdad6",
+              "on-tertiary-fixed-variant": "#364a4c",
+              secondary: "#00696d",
+              "on-primary-container": "#e5fdff",
+              "on-primary": "#ffffff",
+              "on-error-container": "#93000a",
+              "tertiary-fixed": "#d0e7e8",
+              "surface-container-high": "#eae8e7",
+              "outline-variant": "#bec8c9",
+              "on-tertiary": "#ffffff",
+              "surface-tint": "#0f696e",
+              background: "#fbf9f8",
+              "surface-muted": "#F4F7F7",
+              "on-surface": "#1b1c1c",
+              "on-primary-fixed": "#002022",
+              "surface-variant": "#e4e2e1",
+              "on-background": "#1b1c1c",
+              "emergency-red": "#943031",
+              surface: "#fbf9f8",
+              "secondary-container": "#9bedf1",
               "on-error": "#ffffff",
             },
-            borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", "2xl": "1rem", full: "9999px" },
-            spacing: { "stack-lg": "48px", "stack-md": "24px", base: "8px", "stack-sm": "12px", "margin-mobile": "16px", "margin-desktop": "40px", gutter: "24px", "container-max": "1200px" },
-            fontFamily: { "headline-lg-mobile": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "body-md": ["Open Sans"], "body-lg": ["Open Sans"], "label-md": ["Open Sans"], "headline-lg": ["Plus Jakarta Sans"], "display-lg": ["Plus Jakarta Sans"], caption: ["Open Sans"] },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              "stack-lg": "48px",
+              "stack-md": "24px",
+              base: "8px",
+              "stack-sm": "12px",
+              "margin-mobile": "16px",
+              "margin-desktop": "40px",
+              gutter: "24px",
+              "container-max": "1200px",
+            },
+            fontFamily: {
+              "headline-lg-mobile": ["Plus Jakarta Sans"],
+              "headline-md": ["Plus Jakarta Sans"],
+              "body-md": ["Open Sans"],
+              "body-lg": ["Open Sans"],
+              "label-md": ["Open Sans"],
+              "headline-lg": ["Plus Jakarta Sans"],
+              "display-lg": ["Plus Jakarta Sans"],
+              caption: ["Open Sans"],
+            },
             fontSize: {
-              "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "600" }],
-              "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+              "headline-lg-mobile": [
+                "28px",
+                { lineHeight: "36px", fontWeight: "600" },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
               "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
               "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
-              "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.05em", fontWeight: "600" }],
-              "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "600" }],
-              "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "headline-lg": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "600" },
+              ],
+              "display-lg": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
               caption: ["12px", { lineHeight: "16px", fontWeight: "400" }],
             },
           },
         },
       };
     </script>
-    <style>
-      .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; vertical-align: middle; }
-      .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-      .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
-      .custom-scrollbar::-webkit-scrollbar-thumb { background: #bec8c9; border-radius: 10px; }
-      .hide-scrollbar::-webkit-scrollbar { display: none; }
-      .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-      .sidebar-transition { transition: width 0.3s ease-in-out, transform 0.3s ease-in-out; }
-      .mobile-sidebar { position: fixed; top: 0; left: -100%; width: 280px; height: 100vh; transition: left 0.3s ease-in-out; z-index: 1000; }
-      .mobile-sidebar.open { left: 0; }
-      .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999; display: none; }
-      .overlay.active { display: block; }
-      .sidebar-collapsed .sidebar-text { display: none; }
-      .sidebar-collapsed .sidebar-icon-only { margin: 0 auto; }
-      .sidebar-collapsed { width: 80px !important; }
-      .sidebar-collapsed .sidebar-logo-text, .sidebar-collapsed .emergency-section { display: none; }
-      .sidebar-collapsed .sidebar-logo, .sidebar-collapsed .sidebar-button { margin: 0 auto; justify-content: center; }
-      .sidebar-collapsed #logoutBtnDesktop { justify-content: center; padding: 12px !important; }
-      .sidebar-collapsed .bottom-container { padding: 16px 8px !important; }
-      .main-content-full { width: 100% !important; margin-left: 0 !important; }
-      #mainContentWrapper { transition: all 0.3s ease-in-out; }
-      #mainContentWrapper > header { position: fixed; top: 0; left: 20%; right: 0; width: 80%; z-index: 40; }
-      #desktopSidebar.sidebar-collapsed + #mainContentWrapper > header { left: 80px; width: calc(100% - 80px); }
-      
-      /* Toast & Modal Animations */
-      .toast-container { position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; display: flex; flex-direction: column; gap: 0.75rem; }
-      .toast { padding: 1rem 1.5rem; border-radius: 0.75rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); color: #ffffff; font-weight: 600; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; }
-      .toast.show { opacity: 1; transform: translateY(0); }
-      .toast-success { background: linear-gradient(135deg, #059669, #10b981); }
-      .toast-error { background: linear-gradient(135deg, #dc2626, #ef4444); }
-      .toast-info { background: linear-gradient(135deg, #036469, #2e7d82); }
-      
-      .modal-backdrop { transition: opacity 0.3s ease; }
-      .modal-content { transition: transform 0.3s ease, opacity 0.3s ease; }
-      .modal-hidden .modal-backdrop { opacity: 0; pointer-events: none; }
-      .modal-hidden .modal-content { transform: scale(0.95) translateY(10px); opacity: 0; }
-    </style>
   </head>
+  <body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col overflow-x-hidden" data-page="appointments">
 
-  <body data-page="appointments" class="bg-background text-on-background min-h-screen flex flex-col font-body-md">
-    
     <!-- Mobile Top Bar -->
     <div class="md:hidden fixed top-0 left-0 right-0 bg-deep-navy z-50 px-4 py-4 flex items-center justify-between shadow-lg">
       <div class="flex items-center gap-3">
-        <button id="mobileBurgerBtn" class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"><span class="material-symbols-outlined">menu</span></button>
+        <button id="mobileBurgerBtn" class="text-white p-2 hover:bg-white/10 rounded-lg transition-all">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
         <img alt="Logo" class="w-8 h-8 rounded-full object-cover" src="../../public/logo.png" />
         <h1 class="font-bold text-primary-fixed text-sm">addyPets</h1>
       </div>
@@ -109,506 +499,1161 @@
       <div class="flex items-center justify-between p-6 border-b border-white/10">
         <div class="flex items-center gap-3">
           <img alt="Logo" class="w-10 h-10 rounded-full object-cover" src="../../public/logo.png" />
-          <div><h1 class="font-bold text-primary-fixed">addyPets</h1><p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p></div>
+          <div>
+            <h1 class="font-bold text-primary-fixed">addyPets</h1>
+            <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
+          </div>
         </div>
-        <button id="closeMobileSidebar" class="text-white p-2 hover:bg-white/10 rounded-lg"><span class="material-symbols-outlined">close</span></button>
+        <button id="closeMobileSidebar" class="text-white p-2 hover:bg-white/10 rounded-lg">
+          <span class="material-symbols-outlined">close</span>
+        </button>
       </div>
       <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto hide-scrollbar">
-        <a href="./Dashboard.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">analytics</span><span>Analytics</span></a>
-        <a href="./clinic_calendar.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">calendar_today</span><span>Calendar</span></a>
-        <a href="./staff_service_settings.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">groups</span><span>Staff</span></a>
-        <a href="./billing.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">payments</span><span>Billing</span></a>
-        <a href="./records.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">description</span><span>Patient Records</span></a>
-        <a href="./message.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">message</span><span>Messages</span></a>
-        <a href="./emergency_management.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold bg-emergency-red/10"><span class="material-symbols-outlined">emergency</span><span>Emergency Cases</span></a>
-        <a href="./appointments.html" class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all font-semibold"><span class="material-symbols-outlined">event_note</span><span>Appointments</span></a>
+        <a href="./Dashboard.html" data-nav-mobile="analytics" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
+          <span class="material-symbols-outlined">analytics</span><span>Analytics</span>
+        </a>
+        <a href="./clinic_calendar.html" data-nav-mobile="calendar" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
+          <span class="material-symbols-outlined">calendar_today</span><span>Calendar</span>
+        </a>
+        <a href="./staff_service_settings.html" data-nav-mobile="staff" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
+          <span class="material-symbols-outlined">groups</span><span>Staff</span>
+        </a>
+        <a href="./appointments.html" data-nav-mobile="appointments" class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all">
+          <span class="material-symbols-outlined">event_note</span><span>Appointments</span>
+        </a>
+        <a href="./billing.html" data-nav-mobile="billing" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
+          <span class="material-symbols-outlined">payments</span><span>Billing</span>
+        </a>
+        <a href="./records.html" data-nav-mobile="records" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
+          <span class="material-symbols-outlined">description</span><span>Patient & Owner Records</span>
+        </a>
+        <a href="./message.html" data-nav-mobile="message" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
+          <span class="material-symbols-outlined">message</span><span>Messages</span>
+        </a>
+        <a href="./emergency_management.html" data-nav-mobile="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold bg-emergency-red/10">
+          <span class="material-symbols-outlined">emergency</span><span>Emergency Cases</span>
+        </a>
         <div class="h-px bg-white/10 my-4"></div>
-        <button id="logoutBtnMobile" class="w-full flex items-center gap-4 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all"><span class="material-symbols-outlined">logout</span><span>Logout</span></button>
+        <a href="#" data-nav-mobile="settings" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
+          <span class="material-symbols-outlined">settings</span><span>Settings</span>
+        </a>
+        <button id="logoutBtnMobile" class="w-full flex items-center gap-4 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all">
+          <span class="material-symbols-outlined">logout</span><span>Logout</span>
+        </button>
       </nav>
+      <div class="p-4 border-t border-white/10">
+        <div class="bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10">
+          <p class="text-xs text-tertiary-fixed-dim mb-2">Emergency Hotline</p>
+          <p class="text-sm text-primary-fixed font-bold">+233 500 000 000</p>
+        </div>
+      </div>
     </div>
 
     <!-- Desktop Layout -->
     <div class="flex min-h-screen w-full">
       <!-- Desktop Sidebar -->
-      <aside id="desktopSidebar" class="hidden md:flex flex-col bg-deep-navy h-screen sticky top-0 border-r border-outline-variant/10 text-white sidebar-transition" style="width: 20%">
+      <aside id="desktopSidebar" class="hidden md:flex flex-col bg-deep-navy h-screen sticky top-0 border-r border-outline-variant/10 text-white sidebar-transition w-64">
         <div class="px-6 py-6 flex items-center justify-between border-b border-white/10">
           <div class="flex items-center gap-3 sidebar-logo">
             <img alt="Logo" class="w-10 h-10 rounded-full object-cover" src="../../public/logo.png" />
-            <div class="sidebar-logo-text"><h1 class="font-headline-md text-headline-md font-bold text-primary-fixed text-sm">addyPets</h1><p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p></div>
+            <div class="sidebar-logo-text">
+              <h1 class="font-bold text-primary-fixed text-sm">addyPets</h1>
+              <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
+            </div>
           </div>
-          <button id="collapseSidebarBtn" class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"><span class="material-symbols-outlined">chevron_left</span></button>
+          <button id="collapseSidebarBtn" class="text-white p-2 hover:bg-white/10 rounded-lg transition-all">
+            <span class="material-symbols-outlined">chevron_left</span>
+          </button>
         </div>
         <nav class="flex-1 px-3 py-6 space-y-1 overflow-y-auto hide-scrollbar">
-          <a href="./Dashboard.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">analytics</span><span class="sidebar-text">Analytics</span></a>
-          <a href="./clinic_calendar.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">calendar_today</span><span class="sidebar-text">Calendar</span></a>
-          <a href="./staff_service_settings.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">groups</span><span class="sidebar-text">Staff</span></a>
-          <a href="./billing.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">payments</span><span class="sidebar-text">Billing</span></a>
-          <a href="./records.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">description</span><span class="sidebar-text">Patient Records</span></a>
-          <a href="./message.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">message</span><span class="sidebar-text">Messages</span></a>
-          <a href="./emergency_management.html" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"><span class="material-symbols-outlined sidebar-icon-only">emergency</span><span class="sidebar-text">Emergency Cases</span></a>
-          <a href="./appointments.html" class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all font-semibold sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">event_note</span><span class="sidebar-text">Appointments</span></a>
+          <a href="./Dashboard.html" data-nav-desktop="analytics" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button">
+            <span class="material-symbols-outlined sidebar-icon-only">analytics</span>
+            <span class="sidebar-text">Analytics</span>
+          </a>
+          <a href="./clinic_calendar.html" data-nav-desktop="calendar" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
+            <span class="material-symbols-outlined sidebar-icon-only">calendar_today</span>
+            <span class="sidebar-text">Calendar</span>
+          </a>
+          <a href="./staff_service_settings.html" data-nav-desktop="staff" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
+            <span class="material-symbols-outlined sidebar-icon-only">groups</span>
+            <span class="sidebar-text">Staff</span>
+          </a>
+          <a href="./appointments.html" data-nav-desktop="appointments" class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all sidebar-button">
+            <span class="material-symbols-outlined sidebar-icon-only">event_note</span>
+            <span class="sidebar-text">Appointments</span>
+          </a>
+          <a href="./billing.html" data-nav-desktop="billing" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
+            <span class="material-symbols-outlined sidebar-icon-only">payments</span>
+            <span class="sidebar-text">Billing</span>
+          </a>
+          <a href="./records.html" data-nav-desktop="records" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
+            <span class="material-symbols-outlined sidebar-icon-only">description</span>
+            <span class="sidebar-text">Patient & Owner Records</span>
+          </a>
+          <a href="./message.html" data-nav-desktop="message" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
+            <span class="material-symbols-outlined sidebar-icon-only">message</span>
+            <span class="sidebar-text">Messages</span>
+          </a>
+          <a href="./emergency_management.html" data-nav-desktop="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10">
+            <span class="material-symbols-outlined sidebar-icon-only">emergency</span>
+            <span class="sidebar-text">Emergency Cases</span>
+          </a>
         </nav>
         <div class="p-4 mt-auto bottom-container">
-          <button id="logoutBtnDesktop" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">logout</span><span class="sidebar-text">Logout</span></button>
+          <button id="logoutBtnDesktop" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all sidebar-button">
+            <span class="material-symbols-outlined sidebar-icon-only">logout</span>
+            <span class="sidebar-text">Logout</span>
+          </button>
           <div class="emergency-section bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10 mt-4">
-            <p class="font-caption text-caption text-tertiary-fixed-dim mb-2">Emergency Hotline</p>
-            <p class="font-label-md text-label-md text-primary-fixed">+233 500 000 000</p>
+            <p class="text-xs text-tertiary-fixed-dim mb-2">Emergency Hotline</p>
+            <p class="text-sm text-primary-fixed font-bold">+233 500 000 000</p>
           </div>
         </div>
       </aside>
 
-      <div id="mainContentWrapper" class="flex-1 flex flex-col bg-surface pt-16 md:pt-0 transition-all duration-300" style="width: 100%; overflow-y: auto">
-        <main class="flex-1 flex flex-col">
-          <!-- Top Bar (Desktop) -->
-          <header class="h-20 bg-surface hidden md:flex items-center justify-between px-margin-desktop sticky top-0 z-40 border-b border-surface-container-highest shrink-0">
-            <div class="flex items-center gap-4 w-1/3">
-              <div class="relative w-full max-w-md">
-                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
-                <input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="Search patients, vets, or files..." type="text" />
-              </div>
+      <!-- Main Content Area -->
+      <div id="mainContentWrapper" class="flex-1 flex flex-col bg-surface pt-16 md:pt-0 transition-all duration-300">
+        <!-- Top Bar (Desktop) -->
+        <header class="h-20 bg-surface hidden md:flex items-center justify-between px-margin-desktop sticky top-0 z-40 border-b border-surface-container-highest">
+          <div class="flex items-center gap-4 w-1/3">
+            <div class="relative w-full max-w-md">
+              <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+              <input id="appointmentSearch" class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="Search appointments..." type="text" />
             </div>
-            <div class="flex items-center gap-6">
-              <button class="relative p-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-full"><span class="material-symbols-outlined">notifications</span><span class="absolute top-2 right-2 w-2 h-2 bg-emergency-red rounded-full"></span></button>
-              <div class="flex items-center gap-3 cursor-pointer group">
-                <div class="text-right"><p class="font-label-md text-label-md text-on-surface">Dr. Abena Mensah</p><p class="font-caption text-caption text-on-surface-variant">Chief Veterinary Officer</p></div>
-                <img alt="Profile" class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt_l2NtwBrHDxQNGs9rPyaBDSi0T_lttSSni_UFdT12mHBHPojsxTE2haa69Vl-xUxsOfIG9hBjBfFUbTbuzqUZTrwCxsYx-WVkbqBP95JzSas9Gk-vlSi5L3t6i5wijVQgjwTRZWzXWDoOxvbiuiwTwUvQerM7vTOeUAbTgk0LzdJ6ZlyU0xeXqf__Iapv8Wpu9q6UmECwczFqWAIEuCSYFKPwinFOH3N6vq0YJKWoiJViDN71AZUcTRiwGyz_FO9sM63nmOE114" />
+          </div>
+          <div class="flex items-center gap-6">
+            <button class="relative p-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-full">
+              <span class="material-symbols-outlined">notifications</span>
+              <span class="absolute top-2 right-2 w-2 h-2 bg-emergency-red rounded-full"></span>
+            </button>
+            <div class="flex items-center gap-3 cursor-pointer group">
+              <div class="text-right">
+                <p class="text-sm font-bold text-on-surface">Dr. Abena Mensah</p>
+                <p class="text-xs text-on-surface-variant">Chief Veterinary Officer</p>
               </div>
+              <img alt="Profile" class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt_l2NtwBrHDxQNGs9rPyaBDSi0T_lttSSni_UFdT12mHBHPojsxTE2haa69Vl-xUxsOfIG9hBjBfFUbTbuzqUZTrwCxsYx-WVkbqBP95JzSas9Gk-vlSi5L3t6i5wijVQgjwTRZWzXWDoOxvbiuiwTwUvQerM7vTOeUAbTgk0LzdJ6ZlyU0xeXqf__Iapv8Wpu9q6UmECwczFqWAIEuCSYFKPwinFOH3N6vq0YJKWoiJViDN71AZUcTRiwGyz_FO9sM63nmOE114" />
             </div>
-          </header>
+          </div>
+        </header>
 
-          <!-- MAIN CONTENT AREA -->
-          <div class="flex-1 max-w-container-max w-full mx-auto px-4 md:px-margin-desktop py-6 md:py-stack-md flex flex-col gap-6">
-            
-            <!-- Page Header -->
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-              <div>
-                <h1 class="font-headline-lg text-headline-lg text-deep-navy">Appointment Management</h1>
-                <p class="font-body-md text-body-md text-on-surface-variant mt-1">Manage, reschedule, and track all patient visits.</p>
-              </div>
-              <button id="newAppointmentBtn" class="w-full sm:w-auto bg-primary text-on-primary px-6 py-3 rounded-xl font-label-md flex items-center justify-center gap-2 hover:bg-primary/90 transition-all shadow-sm">
+        <!-- APPOINTMENTS VIEW -->
+        <main class="flex-grow max-w-container-max mx-auto w-full px-4 md:px-margin-desktop py-stack-lg">
+          <!-- Header & Action Section -->
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-stack-md">
+            <div>
+              <h1 class="font-headline-lg text-headline-lg text-primary">Appointments</h1>
+              <p id="pageSubtitle" class="text-on-surface-variant mt-1">Manage all scheduled appointments</p>
+            </div>
+            <div class="flex gap-3 flex-wrap">
+              <button onclick="exportAppointmentsCSV()" class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">
+                <span class="material-symbols-outlined text-sm">download</span> Export CSV
+              </button>
+              <button onclick="printAppointments()" class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">
+                <span class="material-symbols-outlined text-sm">print</span> Print
+              </button>
+              <button id="add-appointment-btn" class="flex items-center gap-2 px-6 py-3 bg-primary text-on-primary rounded-xl font-label-md shadow-sm hover:opacity-90 transition-all active:scale-95">
                 <span class="material-symbols-outlined">add</span> New Appointment
               </button>
             </div>
+          </div>
 
-            <!-- Stats Cards -->
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-              <div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm flex items-center gap-3">
-                <div class="p-2.5 bg-primary/10 rounded-full"><span class="material-symbols-outlined text-primary text-xl">calendar_today</span></div>
-                <div><p class="text-xl font-bold text-on-surface" id="stat-total">0</p><p class="text-xs text-on-surface-variant">Total Today</p></div>
-              </div>
-              <div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm flex items-center gap-3">
-                <div class="p-2.5 bg-amber-100 rounded-full"><span class="material-symbols-outlined text-amber-600 text-xl">pending</span></div>
-                <div><p class="text-xl font-bold text-on-surface" id="stat-pending">0</p><p class="text-xs text-on-surface-variant">Pending</p></div>
-              </div>
-              <div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm flex items-center gap-3">
-                <div class="p-2.5 bg-green-100 rounded-full"><span class="material-symbols-outlined text-green-600 text-xl">check_circle</span></div>
-                <div><p class="text-xl font-bold text-on-surface" id="stat-completed">0</p><p class="text-xs text-on-surface-variant">Completed</p></div>
-              </div>
-              <div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm flex items-center gap-3">
-                <div class="p-2.5 bg-red-100 rounded-full"><span class="material-symbols-outlined text-red-600 text-xl">cancel</span></div>
-                <div><p class="text-xl font-bold text-on-surface" id="stat-cancelled">0</p><p class="text-xs text-on-surface-variant">Cancelled</p></div>
-              </div>
+          <!-- Stats Row -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white rounded-xl p-4 border border-slate-200">
+              <p class="text-xs text-slate-400 uppercase tracking-wider">Total</p>
+              <p id="totalAppointments" class="text-2xl font-bold text-slate-900">0</p>
             </div>
-
-            <!-- Filters Bar -->
-            <div class="bg-white p-4 rounded-xl border border-outline-variant shadow-sm flex flex-col md:flex-row gap-3">
-              <div class="relative flex-1">
-                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
-                <input id="searchInput" class="w-full pl-10 pr-4 py-2.5 bg-surface-container-low border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="Search pet, owner, or ID..." type="text" />
-              </div>
-              <div class="flex flex-col sm:flex-row gap-3">
-                <select id="filterStatus" class="px-4 py-2.5 bg-surface-container-low border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary outline-none">
-                  <option value="">All Statuses</option><option value="pending">Pending</option><option value="confirmed">Confirmed</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option>
-                </select>
-                <select id="filterVet" class="px-4 py-2.5 bg-surface-container-low border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary outline-none">
-                  <option value="">All Vets</option><option>Dr. Abena Mensah</option><option>Dr. Kwesi Mensah</option><option>Dr. Ama Serwaa</option>
-                </select>
-              </div>
+            <div class="bg-white rounded-xl p-4 border border-slate-200">
+              <p class="text-xs text-slate-400 uppercase tracking-wider">Confirmed</p>
+              <p id="confirmedCount" class="text-2xl font-bold text-emerald-600">0</p>
             </div>
+            <div class="bg-white rounded-xl p-4 border border-slate-200">
+              <p class="text-xs text-slate-400 uppercase tracking-wider">Pending</p>
+              <p id="pendingCount" class="text-2xl font-bold text-amber-600">0</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 border border-slate-200">
+              <p class="text-xs text-slate-400 uppercase tracking-wider">Completed</p>
+              <p id="completedCount" class="text-2xl font-bold text-blue-600">0</p>
+            </div>
+          </div>
 
-            <!-- Appointments List -->
-            <div class="bg-white rounded-xl border border-outline-variant shadow-sm overflow-hidden flex-1 flex flex-col">
-              <!-- Desktop Table Header -->
-              <div class="hidden md:grid grid-cols-12 gap-4 px-6 py-3 bg-surface-muted text-xs font-bold text-on-surface-variant uppercase tracking-wider border-b border-outline-variant shrink-0">
-                <div class="col-span-1">Time</div>
-                <div class="col-span-3">Pet & Owner</div>
-                <div class="col-span-3">Service & Veterinarian</div>
-                <div class="col-span-2">Status</div>
-                <div class="col-span-3 text-right">Actions</div>
+          <!-- Filters -->
+          <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 mb-4">
+            <div class="flex flex-wrap items-center gap-4">
+              <div>
+                <label class="text-xs font-semibold text-slate-400 block mb-1">Filter by Status</label>
+                <select id="statusFilter" class="border border-slate-200 rounded-lg px-3 py-1.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-primary/30" onchange="renderAppointments()">
+                  <option value="all">All Status</option>
+                  <option value="Confirmed">Confirmed</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
               </div>
-
-              <!-- Dynamic Rows Container -->
-              <div id="appointmentsList" class="divide-y divide-outline-variant/30 overflow-y-auto custom-scrollbar">
-                <!-- Rows injected by JS -->
+              <div>
+                <label class="text-xs font-semibold text-slate-400 block mb-1">Date Range</label>
+                <div class="flex items-center gap-2">
+                  <input id="dateFrom" type="date" class="border border-slate-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" onchange="renderAppointments()" />
+                  <span class="text-slate-400">to</span>
+                  <input id="dateTo" type="date" class="border border-slate-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" onchange="renderAppointments()" />
+                </div>
               </div>
+              <button onclick="clearFilters()" class="text-primary text-sm font-medium hover:underline mt-2 md:mt-0">Clear Filters</button>
+            </div>
+          </div>
 
-              <!-- Pagination Footer -->
-              <div class="px-6 py-4 bg-surface-muted/30 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-outline-variant shrink-0">
-                <p class="text-sm text-on-surface-variant">Showing <span id="showingCount" class="font-bold text-on-surface">0</span> appointments</p>
+          <!-- Appointments Table -->
+          <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="overflow-x-auto custom-scrollbar">
+              <table class="w-full border-collapse text-left">
+                <thead class="bg-surface-muted border-b border-outline-variant/30">
+                  <tr>
+                    <th class="px-4 md:px-6 py-3 font-label-md text-on-surface-variant">Patient</th>
+                    <th class="px-4 md:px-6 py-3 font-label-md text-on-surface-variant">Date & Time</th>
+                    <th class="px-4 md:px-6 py-3 font-label-md text-on-surface-variant">Type</th>
+                    <th class="px-4 md:px-6 py-3 font-label-md text-on-surface-variant">Veterinarian</th>
+                    <th class="px-4 md:px-6 py-3 font-label-md text-on-surface-variant">Status</th>
+                    <th class="px-4 md:px-6 py-3 font-label-md text-on-surface-variant text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="appointmentsTbody" class="divide-y divide-outline-variant/20">
+                  <!-- Rows rendered by JS -->
+                </tbody>
+              </table>
+            </div>
+            <!-- Pagination -->
+            <div class="bg-surface-muted px-4 md:px-6 py-3 flex flex-wrap items-center justify-between border-t border-outline-variant/30">
+              <span id="pagination-count" class="text-caption text-on-surface-variant">Showing 0 of 0 appointments</span>
+              <div class="flex gap-2">
+                <button id="prevPageBtn" onclick="changePage(-1)" class="p-2 rounded-lg border border-outline-variant hover:bg-white transition-all disabled:opacity-50" disabled>
+                  <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+                <span id="pageIndicator" class="px-3 py-2 text-sm font-medium">Page 1 of 1</span>
+                <button id="nextPageBtn" onclick="changePage(1)" class="p-2 rounded-lg border border-outline-variant hover:bg-white transition-all disabled:opacity-50" disabled>
+                  <span class="material-symbols-outlined">chevron_right</span>
+                </button>
               </div>
             </div>
           </div>
         </main>
 
-        <!-- Footer -->
-        <footer class="w-full bg-deep-navy py-4 shrink-0">
-          <div class="px-4 md:px-margin-desktop text-center text-tertiary-fixed-dim text-caption">© 2024 addyPets veterinary clinic. All rights reserved.</div>
+        <!-- Shared Footer -->
+        <footer class="w-full bg-deep-navy mt-auto">
+          <div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop py-stack-lg w-full max-w-container-max mx-auto">
+            <div class="text-primary-fixed font-headline-md text-headline-md mb-6 md:mb-0">VetCare Ghana</div>
+            <div class="flex flex-col md:flex-row gap-6 md:gap-12 items-center">
+              <div class="flex gap-8 flex-wrap justify-center">
+                <a class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer">Privacy Policy</a>
+                <a class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer">Terms of Service</a>
+                <a class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer">Contact Us</a>
+                <a class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer">Ghana Vet Council</a>
+              </div>
+              <p class="text-tertiary-fixed-dim font-caption text-caption text-center md:text-right">© 2024 VetCare Ghana. Providing compassionate care for every pet.</p>
+            </div>
+          </div>
         </footer>
       </div>
     </div>
 
-    <!-- View Details Modal -->
-    <!-- NOTE: Added 'flex' to the class list below to fix centering! -->
-    <div id="detailsModal" class="fixed inset-0 z-[60] hidden flex items-center justify-center modal-hidden p-4">
-      <div class="modal-backdrop absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeModal('detailsModal')"></div>
-      <div class="modal-content relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto z-10">
-        <div class="p-6">
-          <div class="flex justify-between items-center mb-4">
-            <h3 class="text-xl font-bold text-deep-navy">Appointment Details</h3>
-            <button onclick="closeModal('detailsModal')" class="p-1 text-on-surface-variant hover:text-error hover:bg-surface-muted rounded-full transition-colors"><span class="material-symbols-outlined">close</span></button>
-          </div>
-          <div id="detailsContent" class="space-y-4 text-sm">
-            <!-- Injected by JS -->
-          </div>
+    <!-- VIEW PATIENT APPOINTMENTS MODAL (Pop-up from records page) -->
+    <div id="viewPatientAppointmentsModal" class="modal-overlay">
+      <div class="modal-card">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">history</span> 
+            <span id="modalPatientName">Patient Appointments</span>
+          </h3>
+          <button onclick="closePatientAppointmentsModal()" class="p-1 hover:bg-slate-100 rounded-lg">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <div id="patientAppointmentsContent" class="space-y-4">
+          <!-- Dynamic content -->
+        </div>
+        <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200">
+          <button onclick="closePatientAppointmentsModal()" class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">Close</button>
+          <button onclick="scheduleNewFromModal()" class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">add</span> New Appointment
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- New Appointment Modal -->
-    <!-- NOTE: Added 'flex' to the class list below to fix centering! -->
-    <div id="newApptModal" class="fixed inset-0 z-[60] hidden flex items-center justify-center modal-hidden p-4">
-      <div class="modal-backdrop absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeModal('newApptModal')"></div>
-      <div class="modal-content relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto z-10">
-        <div class="p-6">
-          <div class="flex justify-between items-center mb-6">
-            <h3 class="text-xl font-bold text-deep-navy">New Appointment</h3>
-            <button onclick="closeModal('newApptModal')" class="p-1 text-on-surface-variant hover:text-error hover:bg-surface-muted rounded-full transition-colors"><span class="material-symbols-outlined">close</span></button>
+    <!-- NEW APPOINTMENT MODAL -->
+    <div id="appointmentModal" class="modal-overlay">
+      <div class="modal-card">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">event_note</span> New Appointment
+          </h3>
+          <button onclick="closeAppointmentModal()" class="p-1 hover:bg-slate-100 rounded-lg">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <form id="appointmentForm" onsubmit="submitAppointment(event)">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="input-label">Patient Name <span class="hint">(required)</span></label>
+              <input id="aptPatient" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="e.g. Kofi" required />
+            </div>
+            <div>
+              <label class="input-label">Owner Name <span class="hint">(required)</span></label>
+              <input id="aptOwner" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="e.g. Kwame Mensah" required />
+            </div>
+            <div>
+              <label class="input-label">Appointment Type <span class="hint">(required)</span></label>
+              <select id="aptType" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" required>
+                <option value="">Select type...</option>
+                <option value="General Checkup">General Checkup</option>
+                <option value="Vaccination">Vaccination</option>
+                <option value="Follow-up">Follow-up</option>
+                <option value="Surgery">Surgery</option>
+                <option value="Emergency">Emergency</option>
+              </select>
+            </div>
+            <div>
+              <label class="input-label">Veterinarian <span class="hint">(required)</span></label>
+              <select id="aptVet" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" required>
+                <option value="">Select vet...</option>
+                <option value="Dr. Abena Mensah">Dr. Abena Mensah</option>
+                <option value="Dr. Kwame Osei">Dr. Kwame Osei</option>
+                <option value="Dr. Sarah Johnson">Dr. Sarah Johnson</option>
+              </select>
+            </div>
+            <div>
+              <label class="input-label">Date <span class="hint">(required)</span></label>
+              <input id="aptDate" type="date" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" required />
+            </div>
+            <div>
+              <label class="input-label">Time <span class="hint">(required)</span></label>
+              <input id="aptTime" type="time" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" required />
+            </div>
+            <div class="md:col-span-2">
+              <label class="input-label">Status</label>
+              <select id="aptStatus" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+                <option value="Confirmed">Confirmed</option>
+                <option value="Pending" selected>Pending</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+            </div>
+            <div class="md:col-span-2">
+              <label class="input-label">Notes</label>
+              <textarea id="aptNotes" rows="2" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Additional notes..."></textarea>
+            </div>
           </div>
-          <form id="newApptForm" class="space-y-4">
-            <div class="grid grid-cols-2 gap-4">
-              <div><label class="block text-xs font-bold text-on-surface-variant mb-1">Pet Name</label><input type="text" id="newPet" required class="w-full p-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary outline-none"></div>
-              <div><label class="block text-xs font-bold text-on-surface-variant mb-1">Species</label><input type="text" id="newSpecies" required class="w-full p-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary outline-none"></div>
-            </div>
-            <div><label class="block text-xs font-bold text-on-surface-variant mb-1">Owner Name</label><input type="text" id="newOwner" required class="w-full p-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary outline-none"></div>
-            <div class="grid grid-cols-2 gap-4">
-              <div><label class="block text-xs font-bold text-on-surface-variant mb-1">Time</label><input type="time" id="newTime" required class="w-full p-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary outline-none"></div>
-              <div><label class="block text-xs font-bold text-on-surface-variant mb-1">Veterinarian</label>
-                <select id="newVet" required class="w-full p-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary outline-none">
-                  <option>Dr. Abena Mensah</option><option>Dr. Kwesi Mensah</option><option>Dr. Ama Serwaa</option>
-                </select>
-              </div>
-            </div>
-            <div><label class="block text-xs font-bold text-on-surface-variant mb-1">Service</label><input type="text" id="newService" required class="w-full p-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary outline-none"></div>
-            <button type="submit" class="w-full bg-primary text-on-primary py-3 rounded-xl font-bold hover:bg-primary/90 transition-colors mt-2">Create Appointment</button>
-          </form>
+          <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200">
+            <button type="button" onclick="closeAppointmentModal()" class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">Cancel</button>
+            <button type="submit" class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2">
+              <span class="material-symbols-outlined text-sm">save</span> Save Appointment
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- VIEW APPOINTMENT DETAILS MODAL -->
+    <div id="viewAppointmentModal" class="modal-overlay">
+      <div class="modal-card">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">receipt_long</span> Appointment Details
+          </h3>
+          <button onclick="closeViewModal()" class="p-1 hover:bg-slate-100 rounded-lg">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <div id="viewAppointmentContent" class="space-y-4"></div>
+        <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200">
+          <button onclick="closeViewModal()" class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">Close</button>
+          <button id="viewPrintReceiptBtn" onclick="printAppointmentReceipt()" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">print</span> Print Receipt
+          </button>
         </div>
       </div>
     </div>
 
     <!-- Toast Container -->
-    <div id="toast-container" class="toast-container"></div>
+    <div id="toast-container" class="toast-container fixed top-20 right-4 z-[100]"></div>
 
     <script>
       // ==========================================
-      // CORE DATA & STATE
+      // 1. APPOINTMENTS DATA (Shared with records.html)
       // ==========================================
-      let appointments = [
-        { id: 1, time: '09:00', ampm: 'AM', pet: 'Buddy', species: 'Golden Retriever', owner: 'John Doe', petId: 'PET-8492', service: 'Annual General Checkup', vet: 'Dr. Abena Mensah', status: 'completed' },
-        { id: 2, time: '10:30', ampm: 'AM', pet: 'Luna', species: 'Persian Cat', owner: 'Jane Smith', petId: 'PET-7721', service: 'Feline Vaccination (F3)', vet: 'Dr. Kwesi Mensah', status: 'pending' },
-        { id: 3, time: '14:00', ampm: 'PM', pet: 'Max', species: 'German Shepherd', owner: 'Emelia Tetteh', petId: 'PET-9904', service: 'Post-Op Surgery Check', vet: 'Dr. Abena Mensah', status: 'confirmed' },
-        { id: 4, time: '15:30', ampm: 'PM', pet: 'Whiskers', species: 'Domestic Shorthair', owner: 'Mary Johnson', petId: 'PET-1102', service: 'Dental Cleaning', vet: 'Dr. Ama Serwaa', status: 'pending' },
-        { id: 5, time: '16:00', ampm: 'PM', pet: 'Rocky', species: 'Boxer', owner: 'Kofi Annan', petId: 'PET-3345', service: 'Skin Allergy Consult', vet: 'Dr. Kwesi Mensah', status: 'cancelled' }
+      let appointmentsData = [
+        { id: 'APT-001', patient: 'Kofi', owner: 'Kwame Mensah', type: 'General Checkup', date: '2024-10-24', time: '10:30', vet: 'Dr. Abena Mensah', status: 'Confirmed', notes: 'Annual wellness exam' },
+        { id: 'APT-002', patient: 'Nala', owner: 'Ama Boateng', type: 'Vaccination', date: '2024-11-02', time: '14:15', vet: 'Dr. Kwame Osei', status: 'Pending', notes: 'Rabies booster' },
+        { id: 'APT-003', patient: 'Snowy', owner: 'Daniel Appiah', type: 'Follow-up', date: '2024-08-15', time: '09:00', vet: 'Dr. Sarah Johnson', status: 'Completed', notes: 'Post-surgery check' },
+        { id: 'APT-004', patient: 'Zazu', owner: 'Ekow Quansah', type: 'Emergency', date: '2024-11-10', time: '16:45', vet: 'Dr. Abena Mensah', status: 'Cancelled', notes: 'Bird had respiratory issues' },
+        { id: 'APT-005', patient: 'Bella', owner: 'Grace Asare', type: 'Surgery', date: '2024-12-05', time: '11:00', vet: 'Dr. Kwame Osei', status: 'Confirmed', notes: 'Spay surgery' },
+        { id: 'APT-006', patient: 'Max', owner: 'John Doe', type: 'General Checkup', date: '2024-12-15', time: '13:30', vet: 'Dr. Sarah Johnson', status: 'Pending', notes: 'Routine checkup' },
+        { id: 'APT-007', patient: 'Luna', owner: 'Jane Smith', type: 'Vaccination', date: '2024-12-20', time: '10:00', vet: 'Dr. Abena Mensah', status: 'Confirmed', notes: 'Annual vaccines' },
+        { id: 'APT-008', patient: 'Rocky', owner: 'Michael Chen', type: 'Follow-up', date: '2024-12-01', time: '15:00', vet: 'Dr. Kwame Osei', status: 'Completed', notes: 'Check healing progress' },
+        { id: 'APT-009', patient: 'Kofi', owner: 'Kwame Mensah', type: 'Vaccination', date: '2024-09-15', time: '09:30', vet: 'Dr. Sarah Johnson', status: 'Completed', notes: 'Rabies booster' },
+        { id: 'APT-010', patient: 'Kofi', owner: 'Kwame Mensah', type: 'Follow-up', date: '2024-08-20', time: '11:00', vet: 'Dr. Abena Mensah', status: 'Completed', notes: 'Follow-up on ear infection' },
       ];
 
+      let modalPatientName = '';
+      let modalPatientId = '';
+
       // ==========================================
-      // RENDERING & FILTERING
+      // 2. SAVE & LOAD APPOINTMENTS
       // ==========================================
-      function renderAppointments() {
-        const search = document.getElementById('searchInput').value.toLowerCase();
-        const statusFilter = document.getElementById('filterStatus').value;
-        const vetFilter = document.getElementById('filterVet').value;
-
-        let filtered = appointments.filter(appt => {
-          const matchSearch = !search || 
-            appt.pet.toLowerCase().includes(search) || 
-            appt.owner.toLowerCase().includes(search) || 
-            appt.petId.toLowerCase().includes(search);
-          const matchStatus = !statusFilter || appt.status === statusFilter;
-          const matchVet = !vetFilter || appt.vet === vetFilter;
-          return matchSearch && matchStatus && matchVet;
-        });
-
-        const listContainer = document.getElementById('appointmentsList');
-        listContainer.innerHTML = '';
-
-        if (filtered.length === 0) {
-          listContainer.innerHTML = `
-            <div class="p-12 text-center">
-              <span class="material-symbols-outlined text-5xl text-outline-variant mb-3 block">search_off</span>
-              <p class="text-on-surface-variant font-medium">No appointments found matching your filters.</p>
-            </div>`;
-        } else {
-          filtered.forEach(appt => {
-            listContainer.innerHTML += generateRowHTML(appt);
-          });
+      function saveAppointmentsToStorage() {
+        try {
+          localStorage.setItem('appointmentsData', JSON.stringify(appointmentsData));
+        } catch (e) {
+          console.warn('Could not save to localStorage:', e);
         }
-
-        document.getElementById('showingCount').textContent = filtered.length;
-        updateStats();
       }
 
-      function generateRowHTML(appt) {
-        const statusConfig = {
-          pending: { bg: 'bg-amber-100', text: 'text-amber-700', dot: 'bg-amber-500', pulse: 'animate-pulse' },
-          confirmed: { bg: 'bg-primary/10', text: 'text-primary', dot: 'bg-primary', pulse: '' },
-          completed: { bg: 'bg-green-100', text: 'text-green-700', dot: 'bg-green-500', pulse: '' },
-          cancelled: { bg: 'bg-red-100', text: 'text-red-700', dot: 'bg-red-500', pulse: '' }
-        };
-        const s = statusConfig[appt.status];
-        const timeColor = appt.status === 'cancelled' ? 'text-on-surface-variant' : (appt.status === 'pending' ? 'text-amber-600' : 'text-primary');
+      function loadAppointmentsFromStorage() {
+        try {
+          const saved = localStorage.getItem('appointmentsData');
+          if (saved) {
+            const parsed = JSON.parse(saved);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              appointmentsData = parsed;
+              return true;
+            }
+          }
+        } catch (e) {
+          console.warn('Could not load from localStorage:', e);
+        }
+        return false;
+      }
 
-        // Build Dropdown Items based on status
-        let dropdownItems = `
-          <button onclick="viewDetails(${appt.id}); closeAllDropdowns()" class="w-full text-left px-4 py-2.5 text-sm text-on-surface hover:bg-surface-muted flex items-center gap-2 transition-colors">
-            <span class="material-symbols-outlined text-sm">visibility</span> View Details
-          </button>
-        `;
+      // Load appointments from localStorage on page load
+      loadAppointmentsFromStorage();
+
+      // ==========================================
+      // 3. CHECK FOR URL PARAMS (from records.html)
+      // ==========================================
+      function checkForPatientParam() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const patientName = urlParams.get('patient');
+        const patientId = urlParams.get('id');
         
-        if (appt.status === 'pending' || appt.status === 'confirmed') {
-          dropdownItems += `
-            <button onclick="updateStatus(${appt.id}, 'completed'); closeAllDropdowns()" class="w-full text-left px-4 py-2.5 text-sm text-green-600 hover:bg-green-50 flex items-center gap-2 transition-colors">
-              <span class="material-symbols-outlined text-sm">check_circle</span> Mark Complete
-            </button>
-            <button onclick="updateStatus(${appt.id}, 'cancelled'); closeAllDropdowns()" class="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors">
-              <span class="material-symbols-outlined text-sm">close</span> Cancel Appointment
-            </button>
-          `;
-        }
-
-        // The Three Dots Action Column
-        let actions = `
-          <div class="relative inline-block text-left">
-            <button onclick="toggleDropdown(event, ${appt.id})" class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors" title="Actions">
-              <span class="material-symbols-outlined">more_vert</span>
-            </button>
-            <!-- Dropdown Menu -->
-            <div id="dropdown-${appt.id}" class="hidden absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-xl border border-outline-variant z-50 overflow-hidden">
-              ${dropdownItems}
-            </div>
-          </div>
-        `;
-
-        return `
-          <div class="appointment-row hover:bg-surface-muted/50 transition-colors">
-            <!-- Mobile View -->
-            <div class="md:hidden p-4 space-y-3">
-              <div class="flex justify-between items-center">
-                <p class="text-lg font-bold ${timeColor}">${appt.time} ${appt.ampm}</p>
-                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold ${s.bg} ${s.text}">
-                  <span class="w-1.5 h-1.5 rounded-full ${s.dot} ${s.pulse} mr-1.5"></span> ${appt.status.charAt(0).toUpperCase() + appt.status.slice(1)}
-                </span>
-              </div>
-              <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary">pets</span></div>
-                <div class="flex-1">
-                  <p class="font-bold text-on-surface text-sm">${appt.pet} <span class="font-normal text-on-surface-variant">(${appt.species})</span></p>
-                  <p class="text-xs text-on-surface-variant">Owner: ${appt.owner} • #${appt.petId}</p>
-                </div>
-                ${actions}
-              </div>
-              <div class="text-sm pl-13">
-                <p class="font-medium text-on-surface">${appt.service}</p>
-                <p class="text-xs text-on-surface-variant flex items-center gap-1 mt-1"><span class="material-symbols-outlined text-xs">medical_services</span> ${appt.vet}</p>
-              </div>
-            </div>
-
-            <!-- Desktop View -->
-            <div class="hidden md:grid grid-cols-12 gap-4 px-6 py-4 items-center">
-              <div class="col-span-1 text-center">
-                <p class="text-lg font-bold ${timeColor}">${appt.time}</p>
-                <p class="text-xs text-on-surface-variant">${appt.ampm}</p>
-              </div>
-              <div class="col-span-3 flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary">pets</span></div>
-                <div>
-                  <p class="font-bold text-on-surface text-sm">${appt.pet} <span class="font-normal text-on-surface-variant">(${appt.species})</span></p>
-                  <p class="text-xs text-on-surface-variant">Owner: ${appt.owner} • #${appt.petId}</p>
-                </div>
-              </div>
-              <div class="col-span-3">
-                <p class="font-medium text-on-surface text-sm">${appt.service}</p>
-                <p class="text-xs text-on-surface-variant flex items-center gap-1 mt-1"><span class="material-symbols-outlined text-xs">medical_services</span> ${appt.vet}</p>
-              </div>
-              <div class="col-span-2">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold ${s.bg} ${s.text}">
-                  <span class="w-1.5 h-1.5 rounded-full ${s.dot} ${s.pulse} mr-1.5"></span> ${appt.status.charAt(0).toUpperCase() + appt.status.slice(1)}
-                </span>
-              </div>
-              <div class="col-span-3 flex justify-end">
-                ${actions}
-              </div>
-            </div>
-          </div>
-        `;
-      }
-
-      function updateStats() {
-        document.getElementById('stat-total').textContent = appointments.length;
-        document.getElementById('stat-pending').textContent = appointments.filter(a => a.status === 'pending').length;
-        document.getElementById('stat-completed').textContent = appointments.filter(a => a.status === 'completed').length;
-        document.getElementById('stat-cancelled').textContent = appointments.filter(a => a.status === 'cancelled').length;
-      }
-
-      // ==========================================
-      // DROPDOWN LOGIC
-      // ==========================================
-      function toggleDropdown(event, id) {
-        event.stopPropagation(); // Prevent click from bubbling up to the document
-        const dropdown = document.getElementById(`dropdown-${id}`);
-        const isHidden = dropdown.classList.contains('hidden');
-        
-        closeAllDropdowns(); // Close any other open dropdowns first
-        
-        if (isHidden) {
-          dropdown.classList.remove('hidden');
+        if (patientName) {
+          modalPatientName = patientName;
+          modalPatientId = patientId || '';
+          // Update the subtitle
+          document.getElementById('pageSubtitle').textContent = `Showing appointments for: ${patientName}`;
+          // Auto-open the patient appointments modal
+          setTimeout(() => {
+            openPatientAppointmentsModal(patientName);
+          }, 500);
         }
       }
 
-      function closeAllDropdowns() {
-        document.querySelectorAll('[id^="dropdown-"]').forEach(el => {
-          el.classList.add('hidden');
-        });
-      }
-
-      // Close dropdown when clicking anywhere outside of it
-      document.addEventListener('click', (e) => {
-        if (!e.target.closest('.relative.inline-block')) {
-          closeAllDropdowns();
-        }
-      });
-
       // ==========================================
-      // ACTIONS & INTERACTIONS
+      // 4. TOAST
       // ==========================================
-      function updateStatus(id, newStatus) {
-        const appt = appointments.find(a => a.id === id);
-        if (appt) {
-          appt.status = newStatus;
-          renderAppointments();
-          showToast(`Appointment for ${appt.pet} marked as ${newStatus}.`, newStatus === 'cancelled' ? 'error' : 'success');
-        }
-      }
-
-      function viewDetails(id) {
-        const appt = appointments.find(a => a.id === id);
-        if (!appt) return;
-        
-        const content = document.getElementById('detailsContent');
-        content.innerHTML = `
-          <div class="flex items-center gap-4 p-4 bg-surface-muted rounded-xl">
-            <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary text-3xl">pets</span></div>
-            <div>
-              <h4 class="font-bold text-lg text-deep-navy">${appt.pet}</h4>
-              <p class="text-sm text-on-surface-variant">${appt.species} • #${appt.petId}</p>
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-4">
-            <div><p class="text-xs font-bold text-on-surface-variant uppercase">Owner</p><p class="font-medium text-on-surface mt-1">${appt.owner}</p></div>
-            <div><p class="text-xs font-bold text-on-surface-variant uppercase">Time</p><p class="font-medium text-on-surface mt-1">${appt.time} ${appt.ampm}</p></div>
-            <div><p class="text-xs font-bold text-on-surface-variant uppercase">Veterinarian</p><p class="font-medium text-on-surface mt-1">${appt.vet}</p></div>
-            <div><p class="text-xs font-bold text-on-surface-variant uppercase">Status</p><p class="font-medium text-primary mt-1 capitalize">${appt.status}</p></div>
-          </div>
-          <div class="pt-4 border-t border-outline-variant">
-            <p class="text-xs font-bold text-on-surface-variant uppercase mb-1">Service Details</p>
-            <p class="text-on-surface">${appt.service}</p>
-          </div>
-        `;
-        openModal('detailsModal');
-      }
-
-      // ==========================================
-      // MODALS & TOASTS
-      // ==========================================
-      function openModal(id) {
-        const modal = document.getElementById(id);
-        modal.classList.remove('hidden');
-        setTimeout(() => modal.classList.remove('modal-hidden'), 10);
-      }
-      function closeModal(id) {
-        const modal = document.getElementById(id);
-        modal.classList.add('modal-hidden');
-        setTimeout(() => modal.classList.add('hidden'), 300);
-      }
-
-      function showToast(message, type = 'info') {
+      function showToast(message, type = 'success') {
         const container = document.getElementById('toast-container');
+        if (!container) return;
         const toast = document.createElement('div');
         toast.className = `toast toast-${type}`;
         toast.textContent = message;
         container.appendChild(toast);
-        setTimeout(() => toast.classList.add('show'), 10);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => toast.classList.add('show'));
+        });
         setTimeout(() => {
           toast.classList.remove('show');
-          setTimeout(() => toast.remove(), 300);
-        }, 3000);
+          setTimeout(() => {
+            if (toast.parentNode) toast.remove();
+          }, 300);
+        }, 4000);
       }
 
       // ==========================================
-      // EVENT LISTENERS & INIT
+      // 5. FORMAT DATE
       // ==========================================
-      document.addEventListener('DOMContentLoaded', () => {
-        renderAppointments();
+      function formatDate(dateStr) {
+        const d = new Date(dateStr + 'T00:00:00');
+        return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+      }
 
-        // Filters
-        document.getElementById('searchInput').addEventListener('input', renderAppointments);
-        document.getElementById('filterStatus').addEventListener('change', renderAppointments);
-        document.getElementById('filterVet').addEventListener('change', renderAppointments);
+      // ==========================================
+      // 6. RENDER APPOINTMENTS
+      // ==========================================
+      function renderAppointments() {
+        const tbody = document.getElementById('appointmentsTbody');
+        const search = document.getElementById('appointmentSearch').value.toLowerCase();
+        const statusFilter = document.getElementById('statusFilter').value;
+        const dateFrom = document.getElementById('dateFrom').value;
+        const dateTo = document.getElementById('dateTo').value;
 
-        // New Appointment
-        document.getElementById('newAppointmentBtn').addEventListener('click', () => openModal('newApptModal'));
-        document.getElementById('newApptForm').addEventListener('submit', (e) => {
-          e.preventDefault();
-          const timeVal = document.getElementById('newTime').value;
-          const [h, m] = timeVal.split(':');
-          const hour = parseInt(h);
-          
-          const newAppt = {
-            id: Date.now(),
-            time: timeVal,
-            ampm: hour >= 12 ? 'PM' : 'AM',
-            pet: document.getElementById('newPet').value,
-            species: document.getElementById('newSpecies').value,
-            owner: document.getElementById('newOwner').value,
-            petId: 'PET-' + Math.floor(Math.random() * 9000 + 1000),
-            service: document.getElementById('newService').value,
-            vet: document.getElementById('newVet').value,
-            status: 'pending'
-          };
-          
-          appointments.push(newAppt);
+        filteredAppointments = appointmentsData.filter(apt => {
+          const matchSearch = apt.patient.toLowerCase().includes(search) || 
+                             apt.owner.toLowerCase().includes(search) ||
+                             apt.id.toLowerCase().includes(search);
+          const matchStatus = statusFilter === 'all' || apt.status === statusFilter;
+          const matchDate = (!dateFrom || apt.date >= dateFrom) && (!dateTo || apt.date <= dateTo);
+          return matchSearch && matchStatus && matchDate;
+        });
+
+        // Update stats
+        document.getElementById('totalAppointments').textContent = appointmentsData.length;
+        document.getElementById('confirmedCount').textContent = appointmentsData.filter(a => a.status === 'Confirmed').length;
+        document.getElementById('pendingCount').textContent = appointmentsData.filter(a => a.status === 'Pending').length;
+        document.getElementById('completedCount').textContent = appointmentsData.filter(a => a.status === 'Completed').length;
+
+        const totalPages = Math.ceil(filteredAppointments.length / itemsPerPage) || 1;
+        if (currentPage > totalPages) currentPage = totalPages;
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = Math.min(start + itemsPerPage, filteredAppointments.length);
+        const pageData = filteredAppointments.slice(start, end);
+
+        if (pageData.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-slate-400">No appointments found</td></tr>`;
+        } else {
+          tbody.innerHTML = pageData.map(apt => {
+            const statusClass = apt.status === 'Confirmed' ? 'status-confirmed' : 
+                               apt.status === 'Pending' ? 'status-pending' : 
+                               apt.status === 'Cancelled' ? 'status-cancelled' : 'status-completed';
+            const dropdownId = `apt-${apt.id}`;
+            // Highlight if this matches the patient from URL
+            const highlightClass = apt.patient === modalPatientName ? 'patient-highlight' : '';
+            return `
+              <tr class="row-clickable ${highlightClass}" onclick="viewAppointment('${apt.id}')">
+                <td class="px-4 md:px-6 py-3">
+                  <div>
+                    <div class="font-label-md text-on-surface">${apt.patient}</div>
+                    <div class="text-caption text-outline">${apt.owner}</div>
+                  </div>
+                </td>
+                <td class="px-4 md:px-6 py-3">
+                  <div class="font-body-md">${formatDate(apt.date)}</div>
+                  <div class="text-caption text-outline">${apt.time}</div>
+                </td>
+                <td class="px-4 md:px-6 py-3 text-body-md">${apt.type}</td>
+                <td class="px-4 md:px-6 py-3 text-body-md">${apt.vet}</td>
+                <td class="px-4 md:px-6 py-3">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${statusClass}">${apt.status.toUpperCase()}</span>
+                </td>
+                <td class="px-4 md:px-6 py-3 text-right">
+                  <div class="action-dropdown">
+                    <button onclick="event.stopPropagation(); toggleDropdown('${dropdownId}')" class="action-dropdown-btn">
+                      <span class="material-symbols-outlined text-[20px]">more_vert</span>
+                    </button>
+                    <div id="dropdown-${dropdownId}" class="action-dropdown-menu">
+                      <button onclick="event.stopPropagation(); viewAppointment('${apt.id}')">
+                        <span class="material-symbols-outlined text-[18px]">visibility</span> View
+                      </button>
+                      <button onclick="event.stopPropagation(); editAppointment('${apt.id}')">
+                        <span class="material-symbols-outlined text-[18px]">edit</span> Edit
+                      </button>
+                      <button onclick="event.stopPropagation(); printAppointmentReceipt('${apt.id}')" class="text-blue-600">
+                        <span class="material-symbols-outlined text-[18px]">print</span> Print Receipt
+                      </button>
+                      <button onclick="event.stopPropagation(); toggleAppointmentStatus('${apt.id}')">
+                        <span class="material-symbols-outlined text-[18px]">sync</span> Toggle Status
+                      </button>
+                      <div class="menu-divider"></div>
+                      <button onclick="event.stopPropagation(); deleteAppointment('${apt.id}')" class="danger">
+                        <span class="material-symbols-outlined text-[18px]">delete</span> Delete
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        }
+
+        document.getElementById('pagination-count').textContent = `Showing ${pageData.length} of ${filteredAppointments.length} appointments`;
+        document.getElementById('pageIndicator').textContent = `Page ${currentPage} of ${totalPages}`;
+        document.getElementById('prevPageBtn').disabled = currentPage === 1;
+        document.getElementById('nextPageBtn').disabled = currentPage === totalPages;
+      }
+
+      // ==========================================
+      // 7. PAGINATION
+      // ==========================================
+      let currentPage = 1;
+      const itemsPerPage = 5;
+      let filteredAppointments = [...appointmentsData];
+      let viewAppointmentId = null;
+
+      function changePage(delta) {
+        const totalPages = Math.ceil(filteredAppointments.length / itemsPerPage) || 1;
+        const newPage = currentPage + delta;
+        if (newPage >= 1 && newPage <= totalPages) {
+          currentPage = newPage;
           renderAppointments();
-          closeModal('newApptModal');
-          document.getElementById('newApptForm').reset();
-          showToast(`Appointment for ${newAppt.pet} created successfully!`, 'success');
-        });
+        }
+      }
 
-        // Sidebar Toggles
-        const mobileBurgerBtn = document.getElementById("mobileBurgerBtn");
-        const mobileSidebar = document.getElementById("mobileSidebar");
-        const closeMobileSidebar = document.getElementById("closeMobileSidebar");
-        const mobileOverlay = document.getElementById("mobileOverlay");
-        const desktopSidebar = document.getElementById("desktopSidebar");
-        const collapseSidebarBtn = document.getElementById("collapseSidebarBtn");
+      // ==========================================
+      // 8. DROPDOWN TOGGLE
+      // ==========================================
+      function toggleDropdown(id) {
+        document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
+        const menu = document.getElementById(`dropdown-${id}`);
+        if (menu) menu.classList.toggle('open');
+      }
 
-        mobileBurgerBtn.addEventListener("click", () => { mobileSidebar.classList.add("open"); mobileOverlay.classList.add("active"); });
-        closeMobileSidebar.addEventListener("click", () => { mobileSidebar.classList.remove("open"); mobileOverlay.classList.remove("active"); });
-        mobileOverlay.addEventListener("click", () => { mobileSidebar.classList.remove("open"); mobileOverlay.classList.remove("active"); });
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.action-dropdown')) {
+          document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
+        }
+      });
+
+      // ==========================================
+      // 9. VIEW PATIENT APPOINTMENTS (POP-UP FROM RECORDS)
+      // ==========================================
+      function openPatientAppointmentsModal(patientName) {
+        modalPatientName = patientName;
+        const modal = document.getElementById('viewPatientAppointmentsModal');
+        const content = document.getElementById('patientAppointmentsContent');
+        const title = document.getElementById('modalPatientName');
         
-        collapseSidebarBtn.addEventListener("click", () => {
-          const isCollapsed = desktopSidebar.classList.toggle("sidebar-collapsed");
-          collapseSidebarBtn.querySelector(".material-symbols-outlined").textContent = isCollapsed ? "chevron_right" : "chevron_left";
-          document.getElementById("mainContentWrapper").classList.toggle("main-content-full", isCollapsed);
+        title.textContent = `${patientName}'s Appointments`;
+        
+        const patientAppts = appointmentsData
+          .filter(a => a.patient.toLowerCase() === patientName.toLowerCase())
+          .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        if (patientAppts.length === 0) {
+          content.innerHTML = `
+            <div class="text-center py-8 text-slate-400">
+              <span class="material-symbols-outlined text-4xl">event_note</span>
+              <p class="mt-2">No appointments found for ${patientName}</p>
+              <button onclick="scheduleNewFromModal()" class="mt-4 px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors">
+                Schedule New Appointment
+              </button>
+            </div>
+          `;
+        } else {
+          const statusColors = {
+            'Confirmed': 'bg-emerald-100 text-emerald-700',
+            'Pending': 'bg-amber-100 text-amber-700',
+            'Completed': 'bg-blue-100 text-blue-700',
+            'Cancelled': 'bg-red-100 text-red-700'
+          };
+
+          content.innerHTML = patientAppts.map(apt => `
+            <div class="bg-slate-50 rounded-lg p-4 border border-slate-200 hover:shadow-md transition-shadow cursor-pointer" onclick="viewAppointment('${apt.id}')">
+              <div class="flex justify-between items-start flex-wrap gap-2">
+                <div>
+                  <div class="font-semibold text-slate-900">${apt.type}</div>
+                  <div class="text-sm text-slate-500">${apt.vet}</div>
+                </div>
+                <div class="text-right">
+                  <div class="text-sm font-medium text-slate-700">${formatDate(apt.date)}</div>
+                  <div class="text-xs text-slate-400">${apt.time}</div>
+                </div>
+              </div>
+              ${apt.notes ? `<p class="text-sm text-slate-600 mt-2">${apt.notes}</p>` : ''}
+              <div class="mt-2 flex justify-between items-center">
+                <span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-bold ${statusColors[apt.status] || 'bg-slate-100 text-slate-700'}">${apt.status.toUpperCase()}</span>
+                <span class="text-xs text-slate-400">${apt.id}</span>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closePatientAppointmentsModal() {
+        document.getElementById('viewPatientAppointmentsModal').classList.remove('open');
+        document.body.style.overflow = '';
+        // Clear the URL parameter
+        if (window.history && window.history.pushState) {
+          const url = new URL(window.location);
+          url.searchParams.delete('patient');
+          url.searchParams.delete('id');
+          window.history.pushState({}, '', url);
+        }
+      }
+
+      function scheduleNewFromModal() {
+        closePatientAppointmentsModal();
+        // Pre-fill patient name if available
+        if (modalPatientName) {
+          document.getElementById('aptPatient').value = modalPatientName;
+          // Try to find owner from existing appointments
+          const existing = appointmentsData.find(a => a.patient === modalPatientName);
+          if (existing) {
+            document.getElementById('aptOwner').value = existing.owner;
+          }
+        }
+        openAppointmentModal();
+      }
+
+      document.getElementById('viewPatientAppointmentsModal')?.addEventListener('click', function(e) {
+        if (e.target === this) closePatientAppointmentsModal();
+      });
+
+      // ==========================================
+      // 10. VIEW APPOINTMENT DETAILS
+      // ==========================================
+      function viewAppointment(id) {
+        const apt = appointmentsData.find(a => a.id === id);
+        if (!apt) { showToast('Appointment not found', 'error'); return; }
+        
+        viewAppointmentId = id;
+        const modal = document.getElementById('viewAppointmentModal');
+        const content = document.getElementById('viewAppointmentContent');
+        
+        const statusColors = {
+          'Confirmed': 'bg-emerald-100 text-emerald-700',
+          'Pending': 'bg-amber-100 text-amber-700',
+          'Completed': 'bg-blue-100 text-blue-700',
+          'Cancelled': 'bg-red-100 text-red-700'
+        };
+        
+        content.innerHTML = `
+          <div class="bg-slate-50 rounded-xl p-4 space-y-3">
+            <div class="grid grid-cols-2 gap-3">
+              <div><p class="text-xs text-slate-400">Appointment ID</p><p class="font-bold text-primary">${apt.id}</p></div>
+              <div><p class="text-xs text-slate-400">Status</p><p><span class="inline-flex px-3 py-1 rounded-full text-sm font-semibold ${statusColors[apt.status] || 'bg-slate-100'}">${apt.status}</span></p></div>
+              <div class="col-span-2"><p class="text-xs text-slate-400">Patient</p><p class="font-bold text-lg">${apt.patient}</p></div>
+              <div><p class="text-xs text-slate-400">Owner</p><p class="font-bold">${apt.owner}</p></div>
+              <div><p class="text-xs text-slate-400">Appointment Type</p><p class="font-bold">${apt.type}</p></div>
+              <div><p class="text-xs text-slate-400">Date</p><p class="font-bold">${formatDate(apt.date)}</p></div>
+              <div><p class="text-xs text-slate-400">Time</p><p class="font-bold">${apt.time}</p></div>
+              <div class="col-span-2"><p class="text-xs text-slate-400">Veterinarian</p><p class="font-bold">${apt.vet}</p></div>
+              ${apt.notes ? `<div class="col-span-2"><p class="text-xs text-slate-400">Notes</p><p class="text-sm">${apt.notes}</p></div>` : ''}
+            </div>
+          </div>
+        `;
+        
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        document.getElementById(`dropdown-apt-${id}`)?.classList.remove('open');
+      }
+
+      function closeViewModal() {
+        document.getElementById('viewAppointmentModal').classList.remove('open');
+        document.body.style.overflow = '';
+        viewAppointmentId = null;
+      }
+
+      document.getElementById('viewAppointmentModal')?.addEventListener('click', function(e) {
+        if (e.target === this) closeViewModal();
+      });
+
+      // ==========================================
+      // 11. PRINT APPOINTMENT RECEIPT
+      // ==========================================
+      function printAppointmentReceipt(id) {
+        const apt = appointmentsData.find(a => a.id === id);
+        if (!apt) { showToast('Appointment not found', 'error'); return; }
+        
+        const win = window.open('', '_blank', 'width=600,height=700');
+        if (!win) { showToast('Please allow popups', 'error'); return; }
+        
+        const statusColors = {
+          'Confirmed': 'status-paid',
+          'Pending': 'status-pending',
+          'Completed': 'status-completed',
+          'Cancelled': 'status-cancelled'
+        };
+        
+        win.document.write(`
+          <html><head><title>Appointment Receipt - ${apt.id}</title>
+          <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { font-family: 'Courier New', monospace; padding: 30px; background: #f5f5f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+            .receipt { background: white; max-width: 520px; width: 100%; padding: 35px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
+            .header { text-align: center; border-bottom: 2px dashed #333; padding-bottom: 18px; margin-bottom: 18px; }
+            .header h2 { font-size: 26px; margin: 0; color: #036469; letter-spacing: 1px; }
+            .header p { font-size: 14px; color: #555; margin: 4px 0; }
+            .header .receipt-id { font-size: 12px; color: #888; margin-top: 6px; }
+            .divider { border-top: 1px dashed #ddd; margin: 12px 0; }
+            .row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 15px; border-bottom: 1px solid #f0f0f0; }
+            .row .label { color: #555; }
+            .row .value { font-weight: 600; color: #1a1a1a; }
+            .status-badge { display: inline-block; padding: 4px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+            .status-paid { background: #d1fae5; color: #065f46; }
+            .status-pending { background: #fef3c7; color: #92400e; }
+            .status-completed { background: #dbeafe; color: #1e40af; }
+            .status-cancelled { background: #fee2e2; color: #991b1b; }
+            .footer { text-align: center; font-size: 12px; color: #888; margin-top: 20px; border-top: 1px dashed #ddd; padding-top: 16px; }
+            .footer p { margin: 2px 0; }
+            .clinic-name { font-size: 22px; font-weight: 700; color: #036469; }
+            .clinic-detail { font-size: 13px; color: #666; }
+          </style>
+          </head><body>
+          <div class="receipt">
+            <div class="header">
+              <div class="clinic-name">🏥 addyPets Veterinary</div>
+              <p class="clinic-detail">123 Vet Street, Accra, Ghana</p>
+              <p class="clinic-detail">📞 +233 500 000 000</p>
+              <div class="receipt-id">Appointment #${apt.id}</div>
+            </div>
+            
+            <div class="row"><span class="label">📅 Date</span><span class="value">${formatDate(apt.date)}</span></div>
+            <div class="row"><span class="label">⏰ Time</span><span class="value">${apt.time}</span></div>
+            <div class="row"><span class="label">🐾 Patient</span><span class="value">${apt.patient}</span></div>
+            <div class="row"><span class="label">👤 Owner</span><span class="value">${apt.owner}</span></div>
+            <div class="row"><span class="label">📋 Type</span><span class="value">${apt.type}</span></div>
+            <div class="row"><span class="label">👨‍⚕️ Veterinarian</span><span class="value">${apt.vet}</span></div>
+            <div class="divider"></div>
+            <div class="row"><span class="label">Status</span><span class="value"><span class="status-badge ${statusColors[apt.status] || 'status-pending'}">${apt.status}</span></span></div>
+            ${apt.notes ? `<div class="row"><span class="label">📝 Notes</span><span class="value" style="font-size:13px;color:#555;">${apt.notes}</span></div>` : ''}
+            
+            <div class="footer">
+              <p style="font-weight:600;color:#036469;">Thank you for choosing addyPets! 🐾</p>
+              <p>This is a computer-generated receipt.</p>
+              <p>Generated: ${new Date().toLocaleString()}</p>
+            </div>
+          </div>
+          <script>
+            window.onload = function() {
+              setTimeout(function() {
+                window.print();
+              }, 600);
+            }
+          <\/script>
+          </body></html>
+        `);
+        win.document.close();
+        showToast(`🖨️ Printing receipt for ${apt.id}`, 'info');
+      }
+
+      // ==========================================
+      // 12. TOGGLE STATUS
+      // ==========================================
+      function toggleAppointmentStatus(id) {
+        const apt = appointmentsData.find(a => a.id === id);
+        if (!apt) { showToast('Appointment not found', 'error'); return; }
+        const statuses = ['Confirmed', 'Pending', 'Completed', 'Cancelled'];
+        let idx = statuses.indexOf(apt.status);
+        apt.status = statuses[(idx + 1) % statuses.length];
+        saveAppointmentsToStorage();
+        renderAppointments();
+        showToast(`✅ ${apt.id} status updated to ${apt.status}`, 'success');
+        document.getElementById(`dropdown-apt-${id}`)?.classList.remove('open');
+      }
+
+      // ==========================================
+      // 13. DELETE APPOINTMENT
+      // ==========================================
+      function deleteAppointment(id) {
+        if (!confirm(`Delete appointment ${id}?`)) return;
+        appointmentsData = appointmentsData.filter(a => a.id !== id);
+        saveAppointmentsToStorage();
+        renderAppointments();
+        showToast(`🗑️ ${id} deleted`, 'info');
+        document.getElementById(`dropdown-apt-${id}`)?.classList.remove('open');
+      }
+
+      // ==========================================
+      // 14. EDIT APPOINTMENT
+      // ==========================================
+      function editAppointment(id) {
+        const apt = appointmentsData.find(a => a.id === id);
+        if (!apt) { showToast('Appointment not found', 'error'); return; }
+        
+        document.getElementById('aptPatient').value = apt.patient;
+        document.getElementById('aptOwner').value = apt.owner;
+        document.getElementById('aptType').value = apt.type;
+        document.getElementById('aptVet').value = apt.vet;
+        document.getElementById('aptDate').value = apt.date;
+        document.getElementById('aptTime').value = apt.time;
+        document.getElementById('aptStatus').value = apt.status;
+        document.getElementById('aptNotes').value = apt.notes || '';
+        
+        document.getElementById('appointmentForm').dataset.editId = id;
+        document.getElementById('appointmentModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+        document.getElementById(`dropdown-apt-${id}`)?.classList.remove('open');
+      }
+
+      // ==========================================
+      // 15. SUBMIT APPOINTMENT
+      // ==========================================
+      function submitAppointment(e) {
+        e.preventDefault();
+        
+        const patient = document.getElementById('aptPatient').value.trim();
+        const owner = document.getElementById('aptOwner').value.trim();
+        const type = document.getElementById('aptType').value;
+        const vet = document.getElementById('aptVet').value;
+        const date = document.getElementById('aptDate').value;
+        const time = document.getElementById('aptTime').value;
+        const status = document.getElementById('aptStatus').value;
+        const notes = document.getElementById('aptNotes').value.trim();
+        
+        if (!patient || !owner || !type || !vet || !date || !time) {
+          showToast('Please fill all required fields', 'error');
+          return;
+        }
+        
+        const editId = document.getElementById('appointmentForm').dataset.editId;
+        
+        if (editId) {
+          const apt = appointmentsData.find(a => a.id === editId);
+          if (apt) {
+            apt.patient = patient;
+            apt.owner = owner;
+            apt.type = type;
+            apt.vet = vet;
+            apt.date = date;
+            apt.time = time;
+            apt.status = status;
+            apt.notes = notes;
+            showToast(`✅ ${editId} updated successfully`, 'success');
+          }
+          delete document.getElementById('appointmentForm').dataset.editId;
+        } else {
+          const ids = appointmentsData.map(a => parseInt(a.id.split('-')[1]) || 0);
+          const nextId = Math.max(0, ...ids) + 1;
+          const newId = `APT-${String(nextId).padStart(3, '0')}`;
+          
+          appointmentsData.push({
+            id: newId,
+            patient,
+            owner,
+            type,
+            vet,
+            date,
+            time,
+            status,
+            notes
+          });
+          showToast(`✅ ${newId} added successfully`, 'success');
+        }
+        
+        saveAppointmentsToStorage();
+        closeAppointmentModal();
+        renderAppointments();
+      }
+
+      // ==========================================
+      // 16. APPOINTMENT MODAL
+      // ==========================================
+      function openAppointmentModal() {
+        document.getElementById('appointmentForm').reset();
+        delete document.getElementById('appointmentForm').dataset.editId;
+        document.getElementById('appointmentModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+        document.getElementById('aptDate').value = new Date().toISOString().split('T')[0];
+        document.getElementById('aptTime').value = '09:00';
+      }
+
+      function closeAppointmentModal() {
+        document.getElementById('appointmentModal').classList.remove('open');
+        document.body.style.overflow = '';
+        document.getElementById('appointmentForm').reset();
+        delete document.getElementById('appointmentForm').dataset.editId;
+      }
+
+      document.getElementById('add-appointment-btn').addEventListener('click', openAppointmentModal);
+      document.getElementById('appointmentModal')?.addEventListener('click', function(e) {
+        if (e.target === this) closeAppointmentModal();
+      });
+
+      // ==========================================
+      // 17. FILTERS
+      // ==========================================
+      function clearFilters() {
+        document.getElementById('statusFilter').value = 'all';
+        document.getElementById('dateFrom').value = '';
+        document.getElementById('dateTo').value = '';
+        document.getElementById('appointmentSearch').value = '';
+        renderAppointments();
+      }
+
+      // ==========================================
+      // 18. EXPORT CSV
+      // ==========================================
+      function exportAppointmentsCSV() {
+        const data = filteredAppointments.length ? filteredAppointments : appointmentsData;
+        if (!data.length) { showToast('No data to export', 'warning'); return; }
+        
+        let csv = 'ID,Patient,Owner,Type,Date,Time,Veterinarian,Status,Notes\n';
+        data.forEach(a => {
+          csv += `${a.id},${a.patient},${a.owner},${a.type},${a.date},${a.time},${a.vet},${a.status},${a.notes || ''}\n`;
         });
+        
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `appointments_${new Date().toISOString().slice(0,10)}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('📊 CSV exported', 'success');
+      }
+
+      // ==========================================
+      // 19. PRINT APPOINTMENTS
+      // ==========================================
+      function printAppointments() {
+        const data = filteredAppointments.length ? filteredAppointments : appointmentsData;
+        if (!data.length) { showToast('No data to print', 'warning'); return; }
+        
+        const win = window.open('', '_blank', 'width=900,height=700');
+        let rows = '';
+        data.forEach(a => {
+          rows += `<tr><td>${a.id}</td><td>${a.patient}</td><td>${a.owner}</td><td>${a.type}</td><td>${formatDate(a.date)}</td><td>${a.time}</td><td>${a.vet}</td><td>${a.status}</td></tr>`;
+        });
+        
+        win.document.write(`
+          <html><head><title>Appointments Report</title>
+          <style>body{font-family:sans-serif;padding:30px;color:#1e293b;}table{width:100%;border-collapse:collapse;margin-top:20px;}th{background:#f1f5f9;padding:8px;border:1px solid #e2e8f0;}td{padding:6px 8px;border:1px solid #e2e8f0;}h2{border-bottom:2px solid #036469;padding-bottom:8px;}.footer{margin-top:24px;font-size:11px;color:#64748b;text-align:center;}</style>
+          </head><body>
+          <h2>Appointments Report</h2>
+          <p>Generated: ${new Date().toLocaleString()}</p>
+          <table><thead><tr><th>ID</th><th>Patient</th><th>Owner</th><th>Type</th><th>Date</th><th>Time</th><th>Vet</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table>
+          <div class="footer">© 2026 addyPets Veterinary Clinic</div>
+          <script>window.onload=function(){window.print();}<\/script>
+          </body></html>
+        `);
+        win.document.close();
+      }
+
+      // ==========================================
+      // 20. SEARCH LISTENER
+      // ==========================================
+      document.getElementById('appointmentSearch')?.addEventListener('input', renderAppointments);
+
+      // ==========================================
+      // 21. SIDEBAR LOGIC
+      // ==========================================
+      const mobileBurgerBtn = document.getElementById('mobileBurgerBtn');
+      const mobileSidebar = document.getElementById('mobileSidebar');
+      const closeMobileSidebar = document.getElementById('closeMobileSidebar');
+      const mobileOverlay = document.getElementById('mobileOverlay');
+      const desktopSidebar = document.getElementById('desktopSidebar');
+      const collapseSidebarBtn = document.getElementById('collapseSidebarBtn');
+      let isSidebarCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+
+      function openMobileSidebar() {
+        mobileSidebar.classList.add('open');
+        mobileOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      
+      function closeMobileSidebarFunc() {
+        mobileSidebar.classList.remove('open');
+        mobileOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+      
+      function toggleDesktopSidebar() {
+        isSidebarCollapsed = !isSidebarCollapsed;
+        localStorage.setItem('sidebarCollapsed', isSidebarCollapsed);
+        const mainContentWrapper = document.getElementById('mainContentWrapper');
+        if (isSidebarCollapsed) {
+          desktopSidebar.classList.add('sidebar-collapsed');
+          collapseSidebarBtn.querySelector('.material-symbols-outlined').textContent = 'chevron_right';
+          mainContentWrapper && mainContentWrapper.classList.add('main-content-full');
+        } else {
+          desktopSidebar.classList.remove('sidebar-collapsed');
+          collapseSidebarBtn.querySelector('.material-symbols-outlined').textContent = 'chevron_left';
+          mainContentWrapper && mainContentWrapper.classList.remove('main-content-full');
+        }
+      }
+
+      if (isSidebarCollapsed) {
+        desktopSidebar.classList.add('sidebar-collapsed');
+        collapseSidebarBtn.querySelector('.material-symbols-outlined').textContent = 'chevron_right';
+      }
+      
+      mobileBurgerBtn?.addEventListener('click', openMobileSidebar);
+      closeMobileSidebar?.addEventListener('click', closeMobileSidebarFunc);
+      mobileOverlay?.addEventListener('click', closeMobileSidebarFunc);
+      collapseSidebarBtn?.addEventListener('click', toggleDesktopSidebar);
+      
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileSidebar.classList.contains('open')) closeMobileSidebarFunc();
+      });
+      
+      window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768 && mobileSidebar.classList.contains('open')) closeMobileSidebarFunc();
+      });
+
+      // ==========================================
+      // 22. HIGHLIGHT ACTIVE PAGE
+      // ==========================================
+      function highlightCurrentPage() {
+        const currentPage = document.body.getAttribute('data-page') || 'appointments';
+        
+        document.querySelectorAll('[data-nav-desktop]').forEach((link) => {
+          if (link.getAttribute('data-nav-desktop') === currentPage) {
+            link.classList.add('bg-primary-container', 'text-on-primary-container');
+            link.classList.remove('text-tertiary-fixed-dim', 'hover:bg-white/5');
+          } else {
+            link.classList.remove('bg-primary-container', 'text-on-primary-container');
+            link.classList.add('text-tertiary-fixed-dim', 'hover:bg-white/5');
+          }
+        });
+        
+        document.querySelectorAll('[data-nav-mobile]').forEach((link) => {
+          if (link.getAttribute('data-nav-mobile') === currentPage) {
+            link.classList.add('bg-primary-container', 'text-on-primary-container');
+            link.classList.remove('text-tertiary-fixed-dim', 'hover:bg-white/5');
+          } else {
+            link.classList.remove('bg-primary-container', 'text-on-primary-container');
+            link.classList.add('text-tertiary-fixed-dim', 'hover:bg-white/5');
+          }
+        });
+      }
+
+      // ==========================================
+      // 23. LOGOUT
+      // ==========================================
+      function logout() {
+        if (confirm('Are you sure you want to logout?')) {
+          localStorage.removeItem('user');
+          localStorage.removeItem('token');
+          window.location.href = 'vet_portal_login.html';
+        }
+      }
+      
+      document.getElementById('logoutBtnMobile')?.addEventListener('click', logout);
+      document.getElementById('logoutBtnDesktop')?.addEventListener('click', logout);
+
+      // ==========================================
+      // 24. NAVIGATION
+      // ==========================================
+      function navigateTo(section) {
+        const pageMap = {
+          analytics: 'Dashboard.html',
+          calendar: 'clinic_calendar.html',
+          staff: 'staff_service_settings.html',
+          billing: 'billing.html',
+          records: 'records.html',
+          message: 'message.html',
+          emergency: 'emergency_management.html',
+          appointments: 'appointments.html',
+          settings: 'settings.html'
+        };
+        if (pageMap[section]) window.location.href = pageMap[section];
+      }
+
+      document.querySelectorAll('[data-nav-desktop]').forEach((link) => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const section = link.getAttribute('data-nav-desktop');
+          navigateTo(section);
+        });
+      });
+
+      document.querySelectorAll('[data-nav-mobile]').forEach((link) => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const section = link.getAttribute('data-nav-mobile');
+          navigateTo(section);
+          closeMobileSidebarFunc();
+        });
+      });
+
+      // ==========================================
+      // 25. INIT
+      // ==========================================
+      document.addEventListener('DOMContentLoaded', function() {
+        highlightCurrentPage();
+        renderAppointments();
+        checkForPatientParam();
       });
     </script>
   </body>
