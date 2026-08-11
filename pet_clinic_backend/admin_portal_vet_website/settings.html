@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>addyPets | Settings</title>
+    <!-- Font Awesome for better icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap"
@@ -37,7 +39,6 @@
         color: #1b1c1c;
       }
 
-      /* Sidebar styles */
       .sidebar-item-active {
         background-color: #2e7d82;
         color: #ffffff;
@@ -326,6 +327,21 @@
       a[data-nav-mobile="emergency"]:hover {
         background-color: #7a2526 !important;
         color: #ffffff !important;
+      }
+
+      /* POS Integration Styles */
+      .pos-provider-card {
+        transition: all 0.2s ease;
+        border: 2px solid #e2e8f0;
+      }
+      .pos-provider-card:hover {
+        border-color: #036469;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+      }
+      .pos-provider-card.active {
+        border-color: #036469;
+        background-color: #f0fdf4;
       }
 
       @media (max-width: 768px) {
@@ -974,54 +990,125 @@
             </div>
 
             <!-- ============================================ -->
-            <!-- 5. INTEGRATIONS TAB -->
+            <!-- 5. INTEGRATIONS TAB - UPDATED WITH POS -->
             <!-- ============================================ -->
             <div id="tab-integrations" class="tab-panel p-4 md:p-6">
               <h2 class="text-lg font-bold text-slate-900 mb-6">Integrations</h2>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="border border-slate-200 rounded-lg p-4">
-                  <div class="flex items-center justify-between mb-2">
-                    <div class="flex items-center gap-3">
-                      <span class="material-symbols-outlined text-primary">payments</span>
-                      <h3 class="font-semibold text-slate-800">Payment Gateways</h3>
+              
+              <!-- POS System Integration -->
+              <div class="mb-8">
+                <h3 class="font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                  <i class="fas fa-cash-register text-primary text-lg"></i> POS System Integration
+                </h3>
+                <p class="text-sm text-slate-500 mb-4">Connect your Point of Sale system for seamless transactions</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <!-- POS Provider 1 -->
+                  <div class="pos-provider-card bg-white rounded-xl p-4 border border-slate-200 cursor-pointer active" onclick="selectPOS('square')">
+                    <div class="flex items-center gap-3 mb-3">
+                      <i class="fas fa-cube text-2xl text-primary"></i>
+                      <div>
+                        <h4 class="font-semibold text-slate-800">Square</h4>
+                        <span class="text-xs text-emerald-600">Connected</span>
+                      </div>
                     </div>
-                    <span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full">Active</span>
+                    <p class="text-sm text-slate-500">Full-featured POS with inventory management</p>
+                    <div class="mt-3 flex items-center gap-2 text-sm">
+                      <span class="text-slate-400">Status:</span>
+                      <span class="text-emerald-600 font-medium">Active</span>
+                    </div>
+                    <button onclick="event.stopPropagation(); showToast('Square POS settings opened', 'info')" class="mt-3 text-primary text-sm font-medium hover:underline">Configure</button>
                   </div>
-                  <p class="text-sm text-slate-500 mb-3">Stripe, PayPal, Mobile Money</p>
-                  <button onclick="showToast('Payment gateway settings opened', 'info')" class="text-primary text-sm font-medium hover:underline">Configure</button>
+                  
+                  <!-- POS Provider 2 -->
+                  <div class="pos-provider-card bg-white rounded-xl p-4 border border-slate-200 cursor-pointer" onclick="selectPOS('clover')">
+                    <div class="flex items-center gap-3 mb-3">
+                      <i class="fas fa-leaf text-2xl text-primary"></i>
+                      <div>
+                        <h4 class="font-semibold text-slate-800">Clover</h4>
+                        <span class="text-xs text-amber-600">Pending Setup</span>
+                      </div>
+                    </div>
+                    <p class="text-sm text-slate-500">All-in-one POS for retail and service businesses</p>
+                    <div class="mt-3 flex items-center gap-2 text-sm">
+                      <span class="text-slate-400">Status:</span>
+                      <span class="text-amber-600 font-medium">Pending</span>
+                    </div>
+                    <button onclick="event.stopPropagation(); showToast('Clover POS setup started', 'info')" class="mt-3 text-primary text-sm font-medium hover:underline">Set up</button>
+                  </div>
+                  
+                  <!-- POS Provider 3 -->
+                  <div class="pos-provider-card bg-white rounded-xl p-4 border border-slate-200 cursor-pointer" onclick="selectPOS('custom')">
+                    <div class="flex items-center gap-3 mb-3">
+                      <i class="fas fa-code text-2xl text-primary"></i>
+                      <div>
+                        <h4 class="font-semibold text-slate-800">Custom API</h4>
+                        <span class="text-xs text-slate-400">Configure</span>
+                      </div>
+                    </div>
+                    <p class="text-sm text-slate-500">Connect via REST API to any POS system</p>
+                    <div class="mt-3 flex items-center gap-2 text-sm">
+                      <span class="text-slate-400">Status:</span>
+                      <span class="text-slate-600 font-medium">Not Configured</span>
+                    </div>
+                    <button onclick="event.stopPropagation(); openCustomPOSModal()" class="mt-3 text-primary text-sm font-medium hover:underline">Configure API</button>
+                  </div>
                 </div>
-                <div class="border border-slate-200 rounded-lg p-4">
-                  <div class="flex items-center justify-between mb-2">
-                    <div class="flex items-center gap-3">
-                      <span class="material-symbols-outlined text-primary">science</span>
-                      <h3 class="font-semibold text-slate-800">Lab Services</h3>
+              </div>
+
+              <!-- Other Integrations -->
+              <div class="border-t border-slate-200 pt-6">
+                <h3 class="font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                  <i class="fas fa-plug text-primary text-lg"></i> Other Integrations
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="border border-slate-200 rounded-lg p-4">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center gap-3">
+                        <i class="fas fa-credit-card text-xl text-primary"></i>
+                        <h4 class="font-semibold text-slate-800">Payment Gateways</h4>
+                      </div>
+                      <span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full">Active</span>
                     </div>
-                    <span class="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full">Pending</span>
+                    <p class="text-sm text-slate-500 mb-3">Stripe, PayPal, Mobile Money</p>
+                    <button onclick="showToast('Payment gateway settings opened', 'info')" class="text-primary text-sm font-medium hover:underline">Configure</button>
                   </div>
-                  <p class="text-sm text-slate-500 mb-3">Connect to diagnostic labs</p>
-                  <button onclick="showToast('Lab integration settings opened', 'info')" class="text-primary text-sm font-medium hover:underline">Configure</button>
-                </div>
-                <div class="border border-slate-200 rounded-lg p-4">
-                  <div class="flex items-center justify-between mb-2">
-                    <div class="flex items-center gap-3">
-                      <span class="material-symbols-outlined text-primary">pharmacy</span>
-                      <h3 class="font-semibold text-slate-800">Pharmacy</h3>
+                  
+                  <div class="border border-slate-200 rounded-lg p-4">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center gap-3">
+                        <i class="fas fa-flask text-xl text-primary"></i>
+                        <h4 class="font-semibold text-slate-800">Lab Services</h4>
+                      </div>
+                      <span class="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full">Pending</span>
                     </div>
-                    <span class="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full">Pending</span>
+                    <p class="text-sm text-slate-500 mb-3">Connect to diagnostic labs</p>
+                    <button onclick="showToast('Lab integration settings opened', 'info')" class="text-primary text-sm font-medium hover:underline">Configure</button>
                   </div>
-                  <p class="text-sm text-slate-500 mb-3">E-prescriptions and pharmacy integration</p>
-                  <button onclick="showToast('Pharmacy integration settings opened', 'info')" class="text-primary text-sm font-medium hover:underline">Configure</button>
-                </div>
-                <div class="border border-slate-200 rounded-lg p-4">
-                  <div class="flex items-center justify-between mb-2">
-                    <div class="flex items-center gap-3">
-                      <span class="material-symbols-outlined text-primary">email</span>
-                      <h3 class="font-semibold text-slate-800">Email Provider</h3>
+                  
+                  <div class="border border-slate-200 rounded-lg p-4">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center gap-3">
+                        <i class="fas fa-prescription-bottle text-xl text-primary"></i>
+                        <h4 class="font-semibold text-slate-800">Pharmacy</h4>
+                      </div>
+                      <span class="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full">Pending</span>
                     </div>
-                    <span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full">Active</span>
+                    <p class="text-sm text-slate-500 mb-3">E-prescriptions and pharmacy integration</p>
+                    <button onclick="showToast('Pharmacy integration settings opened', 'info')" class="text-primary text-sm font-medium hover:underline">Configure</button>
                   </div>
-                  <p class="text-sm text-slate-500 mb-3">SendGrid, Mailgun, SES</p>
-                  <button onclick="showToast('Email provider settings opened', 'info')" class="text-primary text-sm font-medium hover:underline">Configure</button>
+                  
+                  <div class="border border-slate-200 rounded-lg p-4">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center gap-3">
+                        <i class="fas fa-envelope text-xl text-primary"></i>
+                        <h4 class="font-semibold text-slate-800">Email Provider</h4>
+                      </div>
+                      <span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full">Active</span>
+                    </div>
+                    <p class="text-sm text-slate-500 mb-3">SendGrid, Mailgun, SES</p>
+                    <button onclick="showToast('Email provider settings opened', 'info')" class="text-primary text-sm font-medium hover:underline">Configure</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1171,6 +1258,51 @@
       </div>
     </div>
 
+    <!-- CUSTOM POS API MODAL -->
+    <div id="customPOSModal" class="modal-overlay">
+      <div class="modal-card">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+            <i class="fas fa-code text-primary"></i> Custom POS API Configuration
+          </h3>
+          <button onclick="closeCustomPOSModal()" class="p-1 hover:bg-slate-100 rounded-lg">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <form id="customPOSForm" onsubmit="saveCustomPOS(event)">
+          <div class="grid grid-cols-1 gap-4">
+            <div>
+              <label class="input-label">API Endpoint <span class="hint">(required)</span></label>
+              <input id="posApiEndpoint" type="url" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="https://api.yourpos.com/v1" required />
+            </div>
+            <div>
+              <label class="input-label">API Key <span class="hint">(required)</span></label>
+              <input id="posApiKey" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="sk_live_..." required />
+            </div>
+            <div>
+              <label class="input-label">Secret Key</label>
+              <input id="posSecretKey" type="password" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="••••••••" />
+            </div>
+            <div>
+              <label class="input-label">POS Type</label>
+              <select id="posType" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+                <option value="square">Square</option>
+                <option value="clover">Clover</option>
+                <option value="custom">Custom REST API</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200">
+            <button type="button" onclick="closeCustomPOSModal()" class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">Cancel</button>
+            <button type="submit" class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2">
+              <i class="fas fa-save text-sm"></i> Save Configuration
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <!-- Toast Container -->
     <div id="toast-container" class="toast-container fixed top-20 right-4 z-[100]"></div>
 
@@ -1255,17 +1387,23 @@
       }
 
       // ==========================================
-      // 3. SETTINGS TAB SWITCHING
+      // 3. SETTINGS TAB SWITCHING - FIXED
       // ==========================================
       function switchSettingsTab(tabId) {
         currentSettingsTab = tabId;
         document.querySelectorAll('.tab-panel').forEach(el => el.classList.remove('active'));
-        document.getElementById(`tab-${tabId}`).classList.add('active');
+        const targetPanel = document.getElementById(`tab-${tabId}`);
+        if (targetPanel) targetPanel.classList.add('active');
         document.querySelectorAll('.settings-tab-btn').forEach(btn => btn.classList.remove('active'));
-        document.querySelector(`.settings-tab-btn[data-tab="${tabId}"]`).classList.add('active');
+        const activeBtn = document.querySelector(`.settings-tab-btn[data-tab="${tabId}"]`);
+        if (activeBtn) activeBtn.classList.add('active');
+        
         if (tabId === 'roles') {
           renderRolesTable();
           renderPermissionMatrix();
+        }
+        if (tabId === 'notifications') {
+          renderNotificationTypes();
         }
       }
 
@@ -1404,7 +1542,6 @@
       function openAddRoleModal() {
         document.getElementById('addRoleModal').classList.add('open');
         document.body.style.overflow = 'hidden';
-        // Populate base role select
         const baseSelect = document.getElementById('roleBase');
         baseSelect.innerHTML = '<option value="">None (start from scratch)</option>';
         roles.forEach(r => {
@@ -1440,14 +1577,12 @@
           permissions: {}
         };
 
-        // Copy permissions from base role if selected
         if (baseRoleId) {
           const baseRole = roles.find(r => r.id === baseRoleId);
           if (baseRole) {
             newRole.permissions = JSON.parse(JSON.stringify(baseRole.permissions));
           }
         } else {
-          // Default: no permissions
           modulePermissions.forEach(mod => {
             newRole.permissions[mod] = { view: false, create: false, edit: false, delete: false };
           });
@@ -1551,7 +1686,67 @@
       }
 
       // ==========================================
-      // 9. SAVE FUNCTIONS
+      // 9. POS FUNCTIONS
+      // ==========================================
+      function selectPOS(provider) {
+        document.querySelectorAll('.pos-provider-card').forEach(el => el.classList.remove('active'));
+        const cards = document.querySelectorAll('.pos-provider-card');
+        cards.forEach(card => {
+          if (card.onclick && card.onclick.toString().includes(provider)) {
+            card.classList.add('active');
+          }
+        });
+        // Find the clicked card by checking its content
+        const allCards = document.querySelectorAll('.pos-provider-card');
+        allCards.forEach(card => {
+          const text = card.textContent.toLowerCase();
+          if (text.includes(provider)) {
+            card.classList.add('active');
+          }
+        });
+        showToast(`Selected ${provider.charAt(0).toUpperCase() + provider.slice(1)} POS`, 'info');
+      }
+
+      function openCustomPOSModal() {
+        document.getElementById('customPOSModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+        // Pre-fill with some example data
+        document.getElementById('posApiEndpoint').value = 'https://api.yourpos.com/v1';
+        document.getElementById('posApiKey').value = '';
+        document.getElementById('posSecretKey').value = '';
+      }
+
+      function closeCustomPOSModal() {
+        document.getElementById('customPOSModal').classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      function saveCustomPOS(e) {
+        e.preventDefault();
+        const endpoint = document.getElementById('posApiEndpoint').value.trim();
+        const apiKey = document.getElementById('posApiKey').value.trim();
+        const secretKey = document.getElementById('posSecretKey').value.trim();
+        const posType = document.getElementById('posType').value;
+
+        if (!endpoint || !apiKey) {
+          showToast('Please enter both API Endpoint and API Key', 'error');
+          return;
+        }
+
+        // Save configuration
+        const config = { endpoint, apiKey, secretKey, posType };
+        localStorage.setItem('posConfig', JSON.stringify(config));
+        
+        closeCustomPOSModal();
+        showToast('✅ Custom POS configuration saved successfully!', 'success');
+      }
+
+      document.getElementById('customPOSModal')?.addEventListener('click', function(e) {
+        if (e.target === this) closeCustomPOSModal();
+      });
+
+      // ==========================================
+      // 10. SAVE FUNCTIONS
       // ==========================================
       function saveAllSettings() {
         showToast('✅ All settings saved successfully!', 'success');
@@ -1571,7 +1766,6 @@
 
       function savePreferences() {
         const theme = document.getElementById('prefTheme').value;
-        const color = document.getElementById('prefColor').value;
         if (theme === 'dark') {
           document.documentElement.classList.add('dark');
         } else {
@@ -1623,7 +1817,7 @@
       }
 
       // ==========================================
-      // 10. SIDEBAR LOGIC
+      // 11. SIDEBAR LOGIC
       // ==========================================
       const mobileBurgerBtn = document.getElementById('mobileBurgerBtn');
       const mobileSidebar = document.getElementById('mobileSidebar');
@@ -1679,7 +1873,7 @@
       });
 
       // ==========================================
-      // 11. HIGHLIGHT ACTIVE PAGE
+      // 12. HIGHLIGHT ACTIVE PAGE
       // ==========================================
       function highlightCurrentPage() {
         const currentPage = document.body.getAttribute('data-page') || 'settings';
@@ -1706,7 +1900,7 @@
       }
 
       // ==========================================
-      // 12. LOGOUT
+      // 13. LOGOUT
       // ==========================================
       function logout() {
         if (confirm('Are you sure you want to logout?')) {
@@ -1720,7 +1914,7 @@
       document.getElementById('logoutBtnDesktop')?.addEventListener('click', logout);
 
       // ==========================================
-      // 13. NAVIGATION
+      // 14. NAVIGATION
       // ==========================================
       function navigateTo(section) {
         const pageMap = {
@@ -1756,18 +1950,23 @@
       });
 
       // ==========================================
-      // 14. INIT
+      // 15. INIT
       // ==========================================
       document.addEventListener('DOMContentLoaded', function() {
         highlightCurrentPage();
         renderRolesTable();
         renderPermissionMatrix();
         renderNotificationTypes();
-        // Set default date for clinic setup
-        const today = new Date().toISOString().split('T')[0];
-        document.querySelectorAll('input[type="date"]').forEach(el => {
-          if (!el.value) el.value = today;
-        });
+        // Check for saved POS config
+        try {
+          const savedPOS = localStorage.getItem('posConfig');
+          if (savedPOS) {
+            const config = JSON.parse(savedPOS);
+            if (config.posType && config.endpoint) {
+              showToast(`POS System: ${config.posType} configured`, 'info');
+            }
+          }
+        } catch (e) {}
       });
     </script>
   </body>

@@ -402,16 +402,15 @@
         color: #1e40af;
       }
       a[data-nav-desktop="emergency"],
-a[data-nav-mobile="emergency"] {
-  background-color: #943031 !important;
-  color: #ffffff !important;
-}
-
-a[data-nav-desktop="emergency"]:hover,
-a[data-nav-mobile="emergency"]:hover {
-  background-color: #7a2526 !important; /* Slightly darker red on hover */
-  color: #ffffff !important;
-}
+      a[data-nav-mobile="emergency"] {
+        background-color: #943031 !important;
+        color: #ffffff !important;
+      }
+      a[data-nav-desktop="emergency"]:hover,
+      a[data-nav-mobile="emergency"]:hover {
+        background-color: #7a2526 !important;
+        color: #ffffff !important;
+      }
     </style>
   </head>
 
@@ -820,7 +819,7 @@ a[data-nav-mobile="emergency"]:hover {
       </div>
     </div>
 
-    <!-- ============ INTAKE MODAL (Redesigned) ============ -->
+    <!-- ============ INTAKE MODAL (Redesigned with Auto-fill from Website) ============ -->
     <div id="intakeModal" class="modal-backdrop">
       <div class="modal-content p-6">
         <div class="flex justify-between items-center mb-5">
@@ -842,7 +841,7 @@ a[data-nav-mobile="emergency"]:hover {
             </select>
           </div>
 
-          <!-- Greyed out / Readonly Fields (Auto-populated) -->
+          <!-- Greyed out / Readonly Fields (Auto-populated from website) -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div>
               <label class="block font-label-md text-label-md text-on-surface-variant mb-1">Patient Name</label>
@@ -1536,7 +1535,7 @@ a[data-nav-mobile="emergency"]:hover {
         const lookup = document.getElementById('patientLookup');
         lookup.innerHTML = '<option value="">-- Select a patient --</option>';
         
-        // Populate with patients who don't have a vet assigned yet, or all website patients
+        // Populate with patients from website/database
         patients.forEach(p => {
           const opt = document.createElement('option');
           opt.value = p.id;

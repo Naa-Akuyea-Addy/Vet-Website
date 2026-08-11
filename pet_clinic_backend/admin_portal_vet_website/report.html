@@ -1,0 +1,2555 @@
+<!doctype html>
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>addyPets | Reports</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- html2canvas + jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        vertical-align: middle;
+      }
+      .custom-scrollbar::-webkit-scrollbar,
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track,
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb,
+      ::-webkit-scrollbar-thumb {
+        background: #bec8c9;
+        border-radius: 10px;
+      }
+      body {
+        background-color: #fbf9f8;
+        color: #1b1c1c;
+      }
+
+      .sidebar-item-active {
+        background-color: #2e7d82;
+        color: #ffffff;
+      }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .sidebar-transition {
+        transition: width 0.3s ease-in-out, transform 0.3s ease-in-out;
+      }
+      .mobile-sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 280px;
+        height: 100vh;
+        transition: left 0.3s ease-in-out;
+        z-index: 1000;
+      }
+      .mobile-sidebar.open {
+        left: 0;
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        display: none;
+      }
+      .overlay.active {
+        display: block;
+      }
+      .sidebar-collapsed .sidebar-text {
+        display: none;
+      }
+      .sidebar-collapsed .sidebar-icon-only {
+        margin: 0 auto;
+      }
+      .sidebar-collapsed {
+        width: 80px !important;
+      }
+      .sidebar-collapsed .sidebar-logo-text {
+        display: none;
+      }
+      .sidebar-collapsed .sidebar-logo {
+        margin: 0 auto;
+      }
+      .sidebar-collapsed .sidebar-button {
+        justify-content: center;
+      }
+      .sidebar-collapsed .emergency-section {
+        display: none;
+      }
+      .sidebar-collapsed #logoutBtnDesktop {
+        justify-content: center;
+        padding: 12px !important;
+      }
+      .sidebar-collapsed .bottom-container {
+        padding: 16px 8px !important;
+      }
+      .main-content-full {
+        width: 100% !important;
+        margin-left: 0 !important;
+      }
+      #mainContentWrapper {
+        transition: all 0.3s ease-in-out;
+      }
+      .active-nav-item {
+        font-variation-settings: "FILL" 1;
+      }
+
+      .toast-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        pointer-events: none;
+      }
+      .toast {
+        min-width: 220px;
+        max-width: 320px;
+        padding: 1rem 1.2rem;
+        border-radius: 0.9rem;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
+        color: #ffffff;
+        font-weight: 600;
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.28s ease, transform 0.28s ease;
+        pointer-events: auto;
+        white-space: pre-line;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .toast-success {
+        background: linear-gradient(135deg, #047857, #059669);
+      }
+      .toast-info {
+        background: linear-gradient(135deg, #0d6efd, #2563eb);
+      }
+      .toast-error {
+        background: linear-gradient(135deg, #b91c1c, #ef4444);
+      }
+      .toast-warning {
+        background: linear-gradient(135deg, #b45309, #d97706);
+      }
+
+      a[data-nav-desktop="emergency"],
+      a[data-nav-mobile="emergency"] {
+        background-color: #943031 !important;
+        color: #ffffff !important;
+      }
+      a[data-nav-desktop="emergency"]:hover,
+      a[data-nav-mobile="emergency"]:hover {
+        background-color: #7a2526 !important;
+        color: #ffffff !important;
+      }
+
+      /* Sidebar Active State - Teal Blue */
+      a[data-nav-desktop].active-link,
+      a[data-nav-mobile].active-link {
+        background-color: #2e7d82 !important;
+        color: #ffffff !important;
+      }
+      a[data-nav-desktop="reports"].active-link,
+      a[data-nav-mobile="reports"].active-link {
+        background-color: #2e7d82 !important;
+        color: #ffffff !important;
+      }
+      a[data-nav-desktop="emergency"].active-link,
+      a[data-nav-mobile="emergency"].active-link {
+        background-color: #2e7d82 !important;
+        color: #ffffff !important;
+      }
+
+      /* Report Card Styles */
+      .report-stat-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        background: white;
+        border-radius: 0.75rem;
+        padding: 1.25rem 1.5rem;
+        border: 1px solid #e2e8f0;
+        cursor: pointer;
+      }
+      .report-stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+      }
+      .report-stat-card .stat-value {
+        font-size: 28px;
+        font-weight: 700;
+        color: #1a1a2e;
+        letter-spacing: -0.5px;
+      }
+      .report-stat-card .stat-label {
+        font-size: 13px;
+        color: #6b7280;
+        font-weight: 500;
+      }
+      .stat-change {
+        font-size: 13px;
+        font-weight: 600;
+        padding: 2px 10px;
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .stat-change.positive {
+        color: #10b981;
+        background: #d1fae5;
+      }
+      .stat-change.negative {
+        color: #ef4444;
+        background: #fde8e8;
+      }
+      .stat-change.neutral {
+        color: #6b7280;
+        background: #f3f4f6;
+      }
+
+      .chart-card {
+        background: white;
+        border-radius: 0.75rem;
+        padding: 1.25rem 1.5rem;
+        border: 1px solid #e2e8f0;
+      }
+      .chart-card .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+      .chart-card .chart-header h3 {
+        font-size: 15px;
+        font-weight: 600;
+        color: #1a1a2e;
+      }
+      .chart-card .chart-header a {
+        font-size: 13px;
+        color: #036469;
+        text-decoration: none;
+        font-weight: 500;
+        cursor: pointer;
+      }
+      .chart-card .chart-header a:hover {
+        text-decoration: underline;
+      }
+      .chart-container {
+        position: relative;
+        height: 230px;
+      }
+      .chart-container.pie-chart {
+        height: 200px;
+        max-width: 220px;
+        margin: 0 auto;
+      }
+
+      /* Table Styles */
+      .report-table-card {
+        background: white;
+        border-radius: 0.75rem;
+        border: 1px solid #e2e8f0;
+        overflow: hidden;
+      }
+      .report-table-card .table-header {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+      .report-table-card .table-header h3 {
+        font-size: 15px;
+        font-weight: 600;
+        color: #1a1a2e;
+      }
+      .report-table-card table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+      .report-table-card table thead {
+        background: #f8fafc;
+      }
+      .report-table-card table thead th {
+        text-align: left;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        color: #6b7280;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .report-table-card table tbody td {
+        padding: 0.75rem 1.5rem;
+        border-bottom: 1px solid #f1f5f9;
+        color: #1a1a2e;
+      }
+      .report-table-card table tbody tr {
+        transition: background 0.15s;
+      }
+      .report-table-card table tbody tr:hover {
+        background: #f8fafc;
+      }
+      .report-table-card table tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 3px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .status-badge .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+      .status-badge.success {
+        background: #d1fae5;
+        color: #065f46;
+      }
+      .status-badge.success .dot {
+        background: #10b981;
+      }
+      .status-badge.warning {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .status-badge.warning .dot {
+        background: #f59e0b;
+      }
+      .status-badge.danger {
+        background: #fde8e8;
+        color: #991b1b;
+      }
+      .status-badge.danger .dot {
+        background: #ef4444;
+      }
+      .status-badge.info {
+        background: #dbeafe;
+        color: #1e40af;
+      }
+      .status-badge.info .dot {
+        background: #3b82f6;
+      }
+
+      /* 3-Dot Dropdown Styles */
+      .action-dropdown {
+        position: relative;
+        display: inline-block;
+      }
+      .action-dropdown-btn {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 6px;
+        transition: background 0.15s;
+        color: #6b7280;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .action-dropdown-btn:hover {
+        background: #f1f5f9;
+        color: #1a1a2e;
+      }
+      .action-dropdown-menu {
+        position: absolute;
+        right: 0;
+        top: 100%;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.5rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        min-width: 180px;
+        z-index: 9999;
+        opacity: 0;
+        transform: translateY(-8px) scale(0.95);
+        pointer-events: none;
+        transition: opacity 0.15s ease, transform 0.15s ease;
+        overflow: hidden;
+      }
+      .action-dropdown-menu.open {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+      }
+      .action-dropdown-menu button {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        width: 100%;
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+        color: #1a1a2e;
+        text-align: left;
+        transition: background 0.15s;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .action-dropdown-menu button:hover {
+        background: #f8fafc;
+      }
+      .action-dropdown-menu button.danger {
+        color: #dc2626;
+      }
+      .action-dropdown-menu button.danger:hover {
+        background: #fef2f2;
+      }
+      .action-dropdown-menu .menu-divider {
+        height: 1px;
+        background: #e2e8f0;
+        margin: 0.25rem 0;
+      }
+      .action-dropdown-menu .menu-icon {
+        font-size: 18px;
+        color: #6b7280;
+      }
+      .action-dropdown-menu button.danger .menu-icon {
+        color: #dc2626;
+      }
+
+      .pagination-btn {
+        padding: 6px 12px;
+        border: 1px solid #e2e8f0;
+        background: white;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 13px;
+        color: #6b7280;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .pagination-btn:hover:not(:disabled) {
+        background: #f8fafc;
+        border-color: #036469;
+      }
+      .pagination-btn.active {
+        background: #036469;
+        color: white;
+        border-color: #036469;
+      }
+      .pagination-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+
+      .insight-box {
+        background: white;
+        border-radius: 0.75rem;
+        padding: 1rem 1.5rem;
+        border: 1px solid #e2e8f0;
+        border-left: 4px solid #036469;
+      }
+      .insight-box .insight-icon {
+        color: #036469;
+        font-size: 18px;
+        margin-top: 2px;
+      }
+
+      .filter-select,
+      .filter-input {
+        padding: 8px 14px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 13px;
+        background: white;
+        color: #1a1a2e;
+        outline: none;
+        transition: border 0.2s, box-shadow 0.2s;
+      }
+      .filter-select:focus,
+      .filter-input:focus {
+        border-color: #036469;
+        box-shadow: 0 0 0 3px rgba(3, 100, 105, 0.15);
+      }
+      .filter-input {
+        min-width: 150px;
+      }
+
+      .btn-primary {
+        padding: 8px 20px;
+        background: #036469;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn-primary:hover {
+        background: #02555a;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(3, 100, 105, 0.25);
+      }
+      .btn-outline {
+        padding: 8px 16px;
+        background: transparent;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #6b7280;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn-outline:hover {
+        background: #f8fafc;
+        border-color: #cbd5e1;
+      }
+
+      /* Modal Styles */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 99999;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+      .modal-overlay.open {
+        display: flex;
+      }
+      .modal-card {
+        background: white;
+        border-radius: 1.5rem;
+        max-width: 600px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 1.5rem;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+      }
+      .modal-card .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .modal-card .modal-header h2 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1a1a2e;
+      }
+      .modal-card .modal-header button {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #6b7280;
+        padding: 4px;
+        border-radius: 8px;
+        transition: background 0.2s;
+      }
+      .modal-card .modal-header button:hover {
+        background: #f1f5f9;
+      }
+      .modal-card .modal-body {
+        padding: 0.5rem 0;
+      }
+      .modal-card .modal-body .detail-row {
+        display: flex;
+        padding: 0.6rem 0;
+        border-bottom: 1px solid #f1f5f9;
+      }
+      .modal-card .modal-body .detail-row .label {
+        font-weight: 600;
+        color: #6b7280;
+        width: 120px;
+        flex-shrink: 0;
+      }
+      .modal-card .modal-body .detail-row .value {
+        color: #1a1a2e;
+      }
+      .modal-card .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.75rem;
+        margin-top: 1.25rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid #e2e8f0;
+      }
+      .modal-card .modal-footer .btn-danger {
+        padding: 8px 20px;
+        background: #dc2626;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .modal-card .modal-footer .btn-danger:hover {
+        background: #b91c1c;
+      }
+      .modal-card .modal-footer .btn-secondary {
+        padding: 8px 20px;
+        background: transparent;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #6b7280;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .modal-card .modal-footer .btn-secondary:hover {
+        background: #f8fafc;
+      }
+      .modal-card .modal-footer .btn-primary-modal {
+        padding: 8px 20px;
+        background: #036469;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .modal-card .modal-footer .btn-primary-modal:hover {
+        background: #02555a;
+      }
+
+      /* Chart Report Modal */
+      .chart-modal-card {
+        max-width: 900px;
+      }
+      .report-print-container {
+        padding: 1rem;
+        background: white;
+      }
+      .report-print-container .report-title {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #036469;
+        margin-bottom: 0.25rem;
+      }
+      .report-print-container .report-subtitle {
+        text-align: center;
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-bottom: 1.25rem;
+      }
+      .report-print-container .report-chart-wrapper {
+        max-height: 400px;
+        margin: 0 auto;
+        padding: 0.5rem;
+      }
+      .report-print-container .report-chart-wrapper canvas {
+        max-width: 100%;
+        max-height: 350px;
+      }
+      .report-print-container .report-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.75rem;
+        margin: 1rem 0;
+      }
+      .report-print-container .report-stats .stat-item {
+        text-align: center;
+        padding: 0.5rem;
+        background: #f8fafc;
+        border-radius: 0.5rem;
+      }
+      .report-print-container .report-stats .stat-item .label {
+        font-size: 0.7rem;
+        color: #6b7280;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+      .report-print-container .report-stats .stat-item .value {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #1a1a2e;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .sidebar-mobile {
+          position: fixed;
+          left: -280px;
+          top: 0;
+          width: 280px;
+          height: 100vh;
+          z-index: 100;
+          transition: left 0.3s ease;
+        }
+        .sidebar-mobile.open {
+          left: 0;
+        }
+        .sidebar-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 99;
+          display: none;
+        }
+        .sidebar-overlay.active {
+          display: block;
+        }
+        .report-stat-card .stat-value {
+          font-size: 22px;
+        }
+        .chart-container {
+          height: 180px;
+        }
+        .chart-container.pie-chart {
+          max-width: 100%;
+          height: 180px;
+        }
+        .report-table-card table {
+          font-size: 13px;
+        }
+        .report-table-card table thead th,
+        .report-table-card table tbody td {
+            padding: 0.5rem 0.75rem;
+        }
+        .hide-mobile {
+            display: none;
+        }
+        .filter-group {
+            flex-wrap: wrap;
+        }
+        .filter-input {
+            min-width: 120px;
+        }
+        .report-print-container .report-stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .modal-card {
+          max-width: 100%;
+          margin: 0.5rem;
+          padding: 1rem;
+        }
+        .action-dropdown-menu {
+          min-width: 160px;
+          right: -20px;
+        }
+      }
+      @media (max-width: 480px) {
+        .report-stat-card {
+            padding: 1rem;
+        }
+        .report-stat-card .stat-value {
+            font-size: 20px;
+        }
+        .chart-card {
+            padding: 1rem;
+        }
+        .report-table-card .table-header {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .report-print-container .report-stats {
+          grid-template-columns: 1fr 1fr;
+        }
+        .modal-card .modal-body .detail-row {
+          flex-direction: column;
+          gap: 2px;
+        }
+        .modal-card .modal-body .detail-row .label {
+          width: 100%;
+        }
+      }
+      @media print {
+        .no-print {
+          display: none !important;
+        }
+        .print-content {
+          display: block !important;
+        }
+        body * {
+          visibility: hidden;
+        }
+        .print-content,
+        .print-content * {
+          visibility: visible;
+        }
+        .print-content {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          padding: 20px;
+          background: white;
+        }
+        .modal-overlay {
+          position: static !important;
+          background: none !important;
+          backdrop-filter: none !important;
+          display: block !important;
+        }
+        .modal-card {
+          box-shadow: none !important;
+          max-height: none !important;
+          padding: 0 !important;
+        }
+        .modal-footer {
+          display: none !important;
+        }
+        .modal-header button {
+          display: none !important;
+        }
+      }
+    </style>
+
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-fixed": "#9ef0f4",
+              "inverse-primary": "#88d3d8",
+              "on-primary-fixed-variant": "#004f53",
+              "tertiary-container": "#617677",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-highest": "#e4e2e1",
+              "deep-navy": "#1A3638",
+              "surface-container-low": "#f5f3f3",
+              error: "#ba1a1a",
+              tertiary: "#485d5f",
+              "on-tertiary-container": "#e6fdfe",
+              "on-secondary-container": "#006e72",
+              "on-surface-variant": "#3f4949",
+              "tertiary-fixed-dim": "#b4cbcc",
+              "surface-container": "#f0eded",
+              "on-tertiary-fixed": "#091f20",
+              "on-secondary": "#ffffff",
+              "primary-fixed": "#a4eff4",
+              "inverse-on-surface": "#f2f0f0",
+              "inverse-surface": "#303030",
+              "surface-dim": "#dcd9d9",
+              "primary-container": "#2e7d82",
+              "secondary-fixed-dim": "#82d4d8",
+              "on-secondary-fixed": "#002021",
+              "primary-fixed-dim": "#88d3d8",
+              "surface-bright": "#fbf9f8",
+              primary: "#036469",
+              outline: "#6f797a",
+              "on-secondary-fixed-variant": "#004f52",
+              "error-container": "#ffdad6",
+              "on-tertiary-fixed-variant": "#364a4c",
+              secondary: "#00696d",
+              "on-primary-container": "#e5fdff",
+              "on-primary": "#ffffff",
+              "on-error-container": "#93000a",
+              "tertiary-fixed": "#d0e7e8",
+              "surface-container-high": "#eae8e7",
+              "outline-variant": "#bec8c9",
+              "on-tertiary": "#ffffff",
+              "surface-tint": "#0f696e",
+              background: "#fbf9f8",
+              "surface-muted": "#F4F7F7",
+              "on-surface": "#1b1c1c",
+              "on-primary-fixed": "#002022",
+              "surface-variant": "#e4e2e1",
+              "on-background": "#1b1c1c",
+              "emergency-red": "#943031",
+              surface: "#fbf9f8",
+              "secondary-container": "#9bedf1",
+              "on-error": "#ffffff",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              "stack-lg": "48px",
+              "stack-md": "24px",
+              base: "8px",
+              "stack-sm": "12px",
+              "margin-mobile": "16px",
+              "margin-desktop": "40px",
+              gutter: "24px",
+              "container-max": "1200px",
+            },
+            fontFamily: {
+              "headline-lg-mobile": ["Plus Jakarta Sans"],
+              "headline-md": ["Plus Jakarta Sans"],
+              "body-md": ["Open Sans"],
+              "body-lg": ["Open Sans"],
+              "label-md": ["Open Sans"],
+              "headline-lg": ["Plus Jakarta Sans"],
+              "display-lg": ["Plus Jakarta Sans"],
+              caption: ["Open Sans"],
+            },
+            fontSize: {
+              "headline-lg-mobile": [
+                "28px",
+                { lineHeight: "36px", fontWeight: "600" },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "headline-lg": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "600" },
+              ],
+              "display-lg": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              caption: ["12px", { lineHeight: "16px", fontWeight: "400" }],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col overflow-x-hidden" data-page="reports">
+
+    <!-- Mobile Top Bar -->
+    <div class="md:hidden fixed top-0 left-0 right-0 bg-deep-navy z-50 px-4 py-4 flex items-center justify-between shadow-lg">
+      <div class="flex items-center gap-3">
+        <button id="mobileBurgerBtn" class="text-white p-2 hover:bg-white/10 rounded-lg transition-all">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+        <img alt="Logo" class="w-8 h-8 rounded-full object-cover" src="../../public/logo.png" />
+        <h1 class="font-bold text-primary-fixed text-sm">addyPets</h1>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-white">notifications</span>
+        <span class="material-symbols-outlined text-white">account_circle</span>
+      </div>
+    </div>
+
+    <div id="mobileOverlay" class="overlay"></div>
+
+    <!-- Mobile Sidebar -->
+    <div id="mobileSidebar" class="mobile-sidebar bg-deep-navy flex flex-col shadow-2xl">
+      <div class="flex items-center justify-between p-6 border-b border-white/10">
+        <div class="flex items-center gap-3">
+          <img alt="Logo" class="w-10 h-10 rounded-full object-cover" src="../../public/logo.png" />
+          <div>
+            <h1 class="font-bold text-primary-fixed">addyPets</h1>
+            <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
+          </div>
+        </div>
+        <button id="closeMobileSidebar" class="text-white p-2 hover:bg-white/10 rounded-lg">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto hide-scrollbar">
+        <a href="#" data-nav-mobile="analytics" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
+          <span class="material-symbols-outlined">analytics</span><span>Analytics</span>
+        </a>
+        <a href="#" data-nav-mobile="calendar" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
+          <span class="material-symbols-outlined">calendar_today</span><span>Calendar</span>
+        </a>
+        <a href="#" data-nav-mobile="staff" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
+          <span class="material-symbols-outlined">groups</span><span>Staff</span>
+        </a>
+        <a href="#" data-nav-mobile="appointments" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
+          <span class="material-symbols-outlined">event_note</span><span>Appointments</span>
+        </a>
+        <a href="#" data-nav-mobile="billing" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
+          <span class="material-symbols-outlined">payments</span><span>Billing</span>
+        </a>
+        <a href="#" data-nav-mobile="records" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
+          <span class="material-symbols-outlined">description</span><span>Patient & Owner Records</span>
+        </a>
+        <a href="#" data-nav-mobile="inventory" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
+          <span class="material-symbols-outlined">inventory_2</span><span>Inventory</span>
+        </a>
+        <a href="#" data-nav-mobile="message" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
+          <span class="material-symbols-outlined">message</span><span>Messages</span>
+        </a>
+        <a href="#" data-nav-mobile="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold bg-emergency-red/10">
+          <span class="material-symbols-outlined">emergency</span><span>Emergency Cases</span>
+        </a>
+        <a href="#" data-nav-mobile="reports" class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all">
+          <span class="material-symbols-outlined">assessment</span><span>Reports</span>
+        </a>
+        <a href="#" data-nav-mobile="settings" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
+          <span class="material-symbols-outlined">settings</span><span>Settings</span>
+        </a>
+        <div class="h-px bg-white/10 my-4"></div>
+        <button id="logoutBtnMobile" class="w-full flex items-center gap-4 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all">
+          <span class="material-symbols-outlined">logout</span><span>Logout</span>
+        </button>
+      </nav>
+      <div class="p-4 border-t border-white/10">
+        <div class="bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10">
+          <p class="text-xs text-tertiary-fixed-dim mb-2">Emergency Hotline</p>
+          <p class="text-sm text-primary-fixed font-bold">+233 500 000 000</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop Layout -->
+    <div class="flex min-h-screen w-full">
+      <!-- Desktop Sidebar -->
+      <aside id="desktopSidebar" class="hidden md:flex flex-col bg-deep-navy h-screen sticky top-0 border-r border-outline-variant/10 text-white sidebar-transition w-64">
+        <div class="px-6 py-6 flex items-center justify-between border-b border-white/10">
+          <div class="flex items-center gap-3 sidebar-logo">
+            <img alt="Logo" class="w-10 h-10 rounded-full object-cover" src="../../public/logo.png" />
+            <div class="sidebar-logo-text">
+              <h1 class="font-bold text-primary-fixed text-sm">addyPets</h1>
+              <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
+            </div>
+          </div>
+          <button id="collapseSidebarBtn" class="text-white p-2 hover:bg-white/10 rounded-lg transition-all">
+            <span class="material-symbols-outlined">chevron_left</span>
+          </button>
+        </div>
+        <nav class="flex-1 px-3 py-6 space-y-1 overflow-y-auto hide-scrollbar">
+          <a href="#" data-nav-desktop="analytics" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5">
+            <span class="material-symbols-outlined sidebar-icon-only">analytics</span>
+            <span class="sidebar-text">Analytics</span>
+          </a>
+          <a href="#" data-nav-desktop="calendar" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5">
+            <span class="material-symbols-outlined sidebar-icon-only">calendar_today</span>
+            <span class="sidebar-text">Calendar</span>
+          </a>
+          <a href="#" data-nav-desktop="staff" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5">
+            <span class="material-symbols-outlined sidebar-icon-only">groups</span>
+            <span class="sidebar-text">Staff</span>
+          </a>
+          <a href="#" data-nav-desktop="appointments" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5">
+            <span class="material-symbols-outlined sidebar-icon-only">event_note</span>
+            <span class="sidebar-text">Appointments</span>
+          </a>
+          <a href="#" data-nav-desktop="billing" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5">
+            <span class="material-symbols-outlined sidebar-icon-only">payments</span>
+            <span class="sidebar-text">Billing</span>
+          </a>
+          <a href="#" data-nav-desktop="records" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5">
+            <span class="material-symbols-outlined sidebar-icon-only">description</span>
+            <span class="sidebar-text">Patient & Owner Records</span>
+          </a>
+          <a href="#" data-nav-desktop="inventory" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5">
+            <span class="material-symbols-outlined sidebar-icon-only">inventory_2</span>
+            <span class="sidebar-text">Inventory</span>
+          </a>
+          <a href="#" data-nav-desktop="message" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5">
+            <span class="material-symbols-outlined sidebar-icon-only">message</span>
+            <span class="sidebar-text">Messages</span>
+          </a>
+          <a href="#" data-nav-desktop="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10 hover:bg-emergency-red/20">
+            <span class="material-symbols-outlined sidebar-icon-only">emergency</span>
+            <span class="sidebar-text">Emergency Cases</span>
+          </a>
+          <a href="#" data-nav-desktop="reports" class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all sidebar-button">
+            <span class="material-symbols-outlined sidebar-icon-only">assessment</span>
+            <span class="sidebar-text">Reports</span>
+          </a>
+          <a href="#" data-nav-desktop="settings" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5">
+            <span class="material-symbols-outlined sidebar-icon-only">settings</span>
+            <span class="sidebar-text">Settings</span>
+          </a>
+        </nav>
+        <div class="p-4 mt-auto bottom-container">
+          <button id="logoutBtnDesktop" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all sidebar-button">
+            <span class="material-symbols-outlined sidebar-icon-only">logout</span>
+            <span class="sidebar-text">Logout</span>
+          </button>
+          <div class="emergency-section bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10 mt-4">
+            <p class="text-xs text-tertiary-fixed-dim mb-2">Emergency Hotline</p>
+            <p class="text-sm text-primary-fixed font-bold">+233 500 000 000</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <div id="mainContentWrapper" class="flex-1 flex flex-col bg-surface pt-16 md:pt-0 transition-all duration-300">
+        <!-- Top Bar -->
+        <header class="h-20 bg-surface hidden md:flex items-center justify-between px-margin-desktop sticky top-0 z-40 border-b border-surface-container-highest">
+          <div class="flex items-center gap-4 w-1/3">
+            <div class="relative w-full max-w-md">
+              <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+              <input id="reportSearch" class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="Search transactions..." type="text" />
+            </div>
+          </div>
+          <div class="flex items-center gap-6">
+            <button class="relative p-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-full" onclick="showToast('📬 No new notifications', 'info')">
+              <span class="material-symbols-outlined">notifications</span>
+              <span class="absolute top-2 right-2 w-2 h-2 bg-emergency-red rounded-full"></span>
+            </button>
+            <div class="flex items-center gap-3 cursor-pointer group">
+              <div class="text-right">
+                <p class="text-sm font-bold text-on-surface">Dr. Abena Mensah</p>
+                <p class="text-xs text-on-surface-variant">Chief Veterinary Officer</p>
+              </div>
+              <img alt="Profile" class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt_l2NtwBrHDxQNGs9rPyaBDSi0T_lttSSni_UFdT12mHBHPojsxTE2haa69Vl-xUxsOfIG9hBjBfFUbTbuzqUZTrwCxsYx-WVkbqBP95JzSas9Gk-vlSi5L3t6i5wijVQgjwTRZWzXWDoOxvbiuiwTwUvQerM7vTOeUAbTgk0LzdJ6ZlyU0xeXqf__Iapv8Wpu9q6UmECwczFqWAIEuCSYFKPwinFOH3N6vq0YJKWoiJViDN71AZUcTRiwGyz_FO9sM63nmOE114" />
+            </div>
+          </div>
+        </header>
+
+        <!-- REPORTS VIEW -->
+        <main class="flex-grow max-w-container-max mx-auto w-full px-4 md:px-margin-desktop py-stack-lg">
+          <!-- Header -->
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-stack-md">
+            <div>
+              <h1 class="font-headline-lg text-headline-lg text-primary">Reports & Analytics</h1>
+              <p class="text-on-surface-variant mt-1">Comprehensive insights into your veterinary practice performance</p>
+            </div>
+            <div class="flex gap-3 flex-wrap">
+              <button onclick="exportReportData()" class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">
+                <span class="material-symbols-outlined text-sm">download</span> Export CSV
+              </button>
+              <button onclick="refreshReports()" class="flex items-center gap-2 px-6 py-3 bg-primary text-on-primary rounded-xl font-label-md shadow-sm hover:opacity-90 transition-all active:scale-95">
+                <span class="material-symbols-outlined">refresh</span> Refresh Data
+              </button>
+            </div>
+          </div>
+
+          <!-- Report Controls -->
+          <div class="bg-white rounded-xl border border-slate-200 p-4 md:p-5 mb-6 shadow-sm">
+            <div class="flex flex-wrap items-center gap-3 filter-group">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-slate-400 text-sm">calendar_today</span>
+                <select id="reportDateRange" class="filter-select" onchange="applyReportFilters()">
+                  <option value="today">Today</option>
+                  <option value="week" selected>Last 7 Days</option>
+                  <option value="month">Last 30 Days</option>
+                  <option value="quarter">This Quarter</option>
+                  <option value="year">This Year</option>
+                  <option value="custom">Custom Range</option>
+                </select>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-slate-400 text-sm">compare_arrows</span>
+                <select id="reportCompare" class="filter-select" onchange="applyReportFilters()">
+                  <option value="previous">Previous Period</option>
+                  <option value="year">Previous Year</option>
+                  <option value="none">No Comparison</option>
+                </select>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-slate-400 text-sm">pets</span>
+                <select id="reportSpecies" class="filter-select" onchange="applyReportFilters()">
+                  <option value="all">All Species</option>
+                  <option value="dog">Dogs</option>
+                  <option value="cat">Cats</option>
+                  <option value="bird">Birds</option>
+                  <option value="rabbit">Rabbits</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-slate-400 text-sm">search</span>
+                <input id="staffSearch" class="filter-input" placeholder="Search vet..." value="" oninput="filterStaffSuggestions(this.value)" />
+                <div id="staffSuggestions" class="absolute mt-1 bg-white border border-slate-200 rounded-lg shadow-lg max-h-40 overflow-y-auto hidden z-50" style="margin-top: 32px; min-width: 180px;"></div>
+                <input type="hidden" id="selectedStaff" value="all" />
+              </div>
+              <button onclick="applyReportFilters()" class="btn-primary ml-auto">
+                <span class="material-symbols-outlined text-sm">filter_alt</span> Apply Filters
+              </button>
+            </div>
+          </div>
+
+          <!-- Anomaly Alert -->
+          <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-lg mb-6 flex items-start gap-3">
+            <span class="material-symbols-outlined text-amber-500">warning</span>
+            <div>
+              <p class="text-sm font-medium text-amber-800">⚠️ Anomaly Detected</p>
+              <p class="text-sm text-amber-700">Emergency cases increased by 22% this week. <a href="#" onclick="showToast('📊 Loading emergency report...', 'info')" class="font-semibold underline hover:text-amber-900">View Emergency Report →</a></p>
+            </div>
+          </div>
+
+          <!-- KPI Cards -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="report-stat-card" onclick="showToast('📊 Loading revenue details...', 'info')">
+              <p class="stat-label">Total Revenue</p>
+              <p class="stat-value" id="totalRevenue">GH₵48,294</p>
+              <span class="stat-change positive"><span class="material-symbols-outlined text-sm">arrow_upward</span> +12.5%</span>
+            </div>
+            <div class="report-stat-card" onclick="showToast('📊 Loading appointment details...', 'info')">
+              <p class="stat-label">Appointments</p>
+              <p class="stat-value" id="totalAppointments">1,842</p>
+              <span class="stat-change positive"><span class="material-symbols-outlined text-sm">arrow_upward</span> +8.3%</span>
+            </div>
+            <div class="report-stat-card" onclick="showToast('📊 Loading patient details...', 'info')">
+              <p class="stat-label">Active Patients</p>
+              <p class="stat-value" id="activePatients">4,721</p>
+              <span class="stat-change negative"><span class="material-symbols-outlined text-sm">arrow_downward</span> -2.1%</span>
+            </div>
+            <div class="report-stat-card" onclick="showToast('📊 Loading visit value details...', 'info')">
+              <p class="stat-label">Avg. Visit Value</p>
+              <p class="stat-value" id="avgVisitValue">GH₵26.22</p>
+              <span class="stat-change positive"><span class="material-symbols-outlined text-sm">arrow_upward</span> +4.7%</span>
+            </div>
+          </div>
+
+          <!-- Charts Row -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div class="chart-card md:col-span-2">
+              <div class="chart-header">
+                <h3><span class="material-symbols-outlined text-primary text-sm align-middle">show_chart</span> Revenue Trend</h3>
+                <a onclick="openChartReport('revenue', 'Revenue Trend', 'revenueTrendChart')">View Full Report →</a>
+              </div>
+              <div class="chart-container">
+                <canvas id="revenueTrendChart"></canvas>
+              </div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3><span class="material-symbols-outlined text-primary text-sm align-middle">pie_chart</span> Service Distribution</h3>
+                <a onclick="openChartReport('service', 'Service Distribution', 'serviceChart')">View Full Report →</a>
+              </div>
+              <div class="chart-container pie-chart">
+                <canvas id="serviceChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Second Row -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3><span class="material-symbols-outlined text-primary text-sm align-middle">calendar_month</span> Appointments by Day</h3>
+                <a onclick="openChartReport('appointments', 'Appointments by Day', 'appointmentsChart')">View Full Report →</a>
+              </div>
+              <div class="chart-container">
+                <canvas id="appointmentsChart"></canvas>
+              </div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3><span class="material-symbols-outlined text-primary text-sm align-middle">pets</span> Top Procedures</h3>
+                <a onclick="openChartReport('procedures', 'Top Procedures', 'proceduresChart')">View Full Report →</a>
+              </div>
+              <div class="chart-container">
+                <canvas id="proceduresChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Transactions Table -->
+          <div class="report-table-card mb-6">
+            <div class="table-header">
+              <h3><span class="material-symbols-outlined text-primary text-sm align-middle">receipt_long</span> Recent Transactions</h3>
+              <div class="flex gap-2">
+                <button class="btn-outline text-sm py-1.5" onclick="exportReportData()"><span class="material-symbols-outlined text-sm">file_download</span> Export</button>
+                <button class="btn-outline text-sm py-1.5" onclick="showToast('🔍 Filter options opened', 'info')"><span class="material-symbols-outlined text-sm">filter_list</span> Filter</button>
+              </div>
+            </div>
+            <div class="overflow-x-auto">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Invoice #</th>
+                    <th>Patient</th>
+                    <th class="hide-mobile">Owner</th>
+                    <th class="hide-mobile">Service</th>
+                    <th>Amount</th>
+                    <th class="hide-mobile">Date</th>
+                    <th>Status</th>
+                    <th style="text-align:center; width:60px;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="transactionsTableBody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+            <!-- Table Footer -->
+            <div class="px-6 py-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-sm text-slate-500">
+              <div class="flex items-center gap-3">
+                <span>Rows per page:</span>
+                <select id="rowsPerPage" class="border border-slate-200 rounded-lg px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" onchange="changeRowsPerPage()">
+                  <option value="5">5</option>
+                  <option value="10" selected>10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                </select>
+                <span id="paginationInfo">1–5 of 24</span>
+              </div>
+              <div class="flex gap-1" id="paginationControls">
+                <button class="pagination-btn" id="prevPage" disabled onclick="changePage(-1)"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+                <button class="pagination-btn active" data-page="1" onclick="goToPage(1)">1</button>
+                <button class="pagination-btn" data-page="2" onclick="goToPage(2)">2</button>
+                <button class="pagination-btn" data-page="3" onclick="goToPage(3)">3</button>
+                <button class="pagination-btn" data-page="4" onclick="goToPage(4)">4</button>
+                <button class="pagination-btn" data-page="5" onclick="goToPage(5)">5</button>
+                <button class="pagination-btn" id="nextPage" onclick="changePage(1)"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Insight Box -->
+          <div class="insight-box">
+            <div class="flex items-start gap-3">
+              <span class="material-symbols-outlined insight-icon">lightbulb</span>
+              <div>
+                <p class="font-semibold text-sm text-slate-900">Key Insight</p>
+                <p class="text-sm text-slate-600">
+                  The revenue spike on August 3rd correlates with the "Summer Health Check" campaign sent to 2,500 pet owners.
+                  Conversion rate was 4.2% vs. the 2.8% average. Consider running similar campaigns quarterly.
+                </p>
+                <p class="text-xs text-slate-400 mt-1"><span class="material-symbols-outlined text-xs align-middle">schedule</span> Generated by AI • 2 hours ago</p>
+              </div>
+            </div>
+          </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="w-full bg-deep-navy mt-auto">
+          <div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop py-stack-lg w-full max-w-container-max mx-auto">
+            <div class="text-primary-fixed font-headline-md text-headline-md mb-6 md:mb-0">VetCare Ghana</div>
+            <div class="flex flex-col md:flex-row gap-6 md:gap-12 items-center">
+              <div class="flex gap-8 flex-wrap justify-center">
+                <a class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer" onclick="showToast('📄 Privacy Policy', 'info')">Privacy Policy</a>
+                <a class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer" onclick="showToast('📄 Terms of Service', 'info')">Terms of Service</a>
+                <a class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer" onclick="showToast('📧 Contact us at info@addypets.com', 'info')">Contact Us</a>
+                <a class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer" onclick="showToast('🏛️ Ghana Vet Council', 'info')">Ghana Vet Council</a>
+              </div>
+              <p class="text-tertiary-fixed-dim font-caption text-caption text-center md:text-right">© 2024 VetCare Ghana. Providing compassionate care for every pet.</p>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- View Transaction Modal -->
+    <div id="viewTransactionModal" class="modal-overlay">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2 id="viewModalTitle">Transaction Details</h2>
+          <button onclick="closeViewModal()">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <div class="modal-body" id="viewModalBody">
+          <!-- Populated by JS -->
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" onclick="closeViewModal()">Close</button>
+          <button class="btn-primary-modal" onclick="printTransactionFromModal()">
+            <span class="material-symbols-outlined text-sm">print</span> Print
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Transaction Modal -->
+    <div id="editTransactionModal" class="modal-overlay">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2>Edit Transaction</h2>
+          <button onclick="closeEditModal()">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <div class="modal-body" id="editModalBody">
+          <!-- Populated by JS -->
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" onclick="closeEditModal()">Cancel</button>
+          <button class="btn-primary-modal" onclick="saveEditTransaction()">
+            <span class="material-symbols-outlined text-sm">save</span> Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart Report Modal -->
+    <div id="chartReportModal" class="modal-overlay">
+      <div class="modal-card chart-modal-card">
+        <div class="modal-header">
+          <h2 id="modalChartTitle">Revenue Trend Report</h2>
+          <button onclick="closeChartReport()">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="reportPrintContainer" class="report-print-container">
+            <div class="report-title">addyPets Veterinary Clinic</div>
+            <div class="report-subtitle" id="reportSubtitle">Revenue Trend Report • Generated on August 5, 2026</div>
+            <div id="modalChartWrapper" class="report-chart-wrapper">
+              <canvas id="modalChartCanvas"></canvas>
+            </div>
+            <div id="modalStatsContainer" class="report-stats">
+              <div class="stat-item">
+                <div class="label">Total</div>
+                <div class="value" id="modalStatTotal">GH₵48,294</div>
+              </div>
+              <div class="stat-item">
+                <div class="label">Average</div>
+                <div class="value" id="modalStatAvg">GH₵6,899</div>
+              </div>
+              <div class="stat-item">
+                <div class="label">Highest</div>
+                <div class="value" id="modalStatMax">GH₵8,200</div>
+              </div>
+              <div class="stat-item">
+                <div class="label">Lowest</div>
+                <div class="value" id="modalStatMin">GH₵4,200</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-close-modal" onclick="closeChartReport()">Close</button>
+          <button class="btn-print" onclick="printChartReport()">
+            <span class="material-symbols-outlined text-sm">print</span> Print
+          </button>
+          <button class="btn-pdf" onclick="exportChartPDF()">
+            <span class="material-symbols-outlined text-sm">picture_as_pdf</span> Export PDF
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container fixed top-20 right-4 z-[100]"></div>
+
+    <script>
+      // ==========================================
+      // STAFF LIST FOR SEARCH
+      // ==========================================
+      const staffList = [
+        { id: 'all', name: 'All Staff' },
+        { id: 'dr_abena', name: 'Dr. Abena Mensah' },
+        { id: 'dr_kojo', name: 'Dr. Kojo Asare' },
+        { id: 'dr_ama', name: 'Dr. Ama Serwaa' },
+        { id: 'dr_kofi', name: 'Dr. Kofi Annan' },
+        { id: 'dr_efua', name: 'Dr. Efua Sutherland' },
+        { id: 'dr_yaw', name: 'Dr. Yaw Boateng' },
+      ];
+
+      let selectedStaffId = 'all';
+      let currentViewTransaction = null;
+      let currentEditTransaction = null;
+
+      function filterStaffSuggestions(query) {
+        const container = document.getElementById('staffSuggestions');
+        const input = document.getElementById('staffSearch');
+        
+        if (!query || query.length < 1) {
+          container.classList.add('hidden');
+          return;
+        }
+
+        const filtered = staffList.filter(s => 
+          s.name.toLowerCase().includes(query.toLowerCase()) && s.id !== 'all'
+        );
+
+        if (filtered.length === 0) {
+          container.innerHTML = '<div class="px-4 py-2 text-sm text-slate-500">No staff found</div>';
+          container.classList.remove('hidden');
+          return;
+        }
+
+        container.innerHTML = filtered.map(s => `
+          <div class="px-4 py-2 text-sm hover:bg-slate-100 cursor-pointer" onclick="selectStaff('${s.id}', '${s.name}')">
+            ${s.name}
+          </div>
+        `).join('');
+        container.classList.remove('hidden');
+      }
+
+      function selectStaff(id, name) {
+        selectedStaffId = id;
+        document.getElementById('staffSearch').value = name;
+        document.getElementById('staffSuggestions').classList.add('hidden');
+        document.getElementById('selectedStaff').value = id;
+        applyReportFilters();
+        showToast(`👨‍⚕️ Filtering by: ${name}`, 'info');
+      }
+
+      document.addEventListener('click', function(e) {
+        const container = document.getElementById('staffSuggestions');
+        const input = document.getElementById('staffSearch');
+        if (container && input && !container.contains(e.target) && e.target !== input) {
+          container.classList.add('hidden');
+        }
+      });
+
+      // ==========================================
+      // 1. TOAST SYSTEM
+      // ==========================================
+      function showToast(message, type = 'success') {
+        const container = document.getElementById('toast-container');
+        if (!container) return;
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.textContent = message;
+        container.appendChild(toast);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => toast.classList.add('show'));
+        });
+        setTimeout(() => {
+          toast.classList.remove('show');
+          setTimeout(() => {
+            if (toast.parentNode) toast.remove();
+          }, 300);
+        }, 4000);
+      }
+
+      // ==========================================
+      // 2. SIDEBAR LOGIC
+      // ==========================================
+      const mobileBurgerBtn = document.getElementById('mobileBurgerBtn');
+      const mobileSidebar = document.getElementById('mobileSidebar');
+      const closeMobileSidebar = document.getElementById('closeMobileSidebar');
+      const mobileOverlay = document.getElementById('mobileOverlay');
+      const desktopSidebar = document.getElementById('desktopSidebar');
+      const collapseSidebarBtn = document.getElementById('collapseSidebarBtn');
+      let isSidebarCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+
+      function openMobileSidebar() {
+        mobileSidebar.classList.add('open');
+        mobileOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeMobileSidebarFunc() {
+        mobileSidebar.classList.remove('open');
+        mobileOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      function toggleDesktopSidebar() {
+        isSidebarCollapsed = !isSidebarCollapsed;
+        localStorage.setItem('sidebarCollapsed', isSidebarCollapsed);
+        const mainContentWrapper = document.getElementById('mainContentWrapper');
+        if (isSidebarCollapsed) {
+          desktopSidebar.classList.add('sidebar-collapsed');
+          collapseSidebarBtn.querySelector('.material-symbols-outlined').textContent = 'chevron_right';
+          mainContentWrapper && mainContentWrapper.classList.add('main-content-full');
+        } else {
+          desktopSidebar.classList.remove('sidebar-collapsed');
+          collapseSidebarBtn.querySelector('.material-symbols-outlined').textContent = 'chevron_left';
+          mainContentWrapper && mainContentWrapper.classList.remove('main-content-full');
+        }
+      }
+
+      if (isSidebarCollapsed) {
+        desktopSidebar.classList.add('sidebar-collapsed');
+        collapseSidebarBtn.querySelector('.material-symbols-outlined').textContent = 'chevron_right';
+      }
+
+      mobileBurgerBtn?.addEventListener('click', openMobileSidebar);
+      closeMobileSidebar?.addEventListener('click', closeMobileSidebarFunc);
+      mobileOverlay?.addEventListener('click', closeMobileSidebarFunc);
+      collapseSidebarBtn?.addEventListener('click', toggleDesktopSidebar);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileSidebar.classList.contains('open')) closeMobileSidebarFunc();
+      });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768 && mobileSidebar.classList.contains('open')) closeMobileSidebarFunc();
+      });
+
+      // ==========================================
+      // 3. NAVIGATION
+      // ==========================================
+      const pageMap = {
+        analytics: 'Dashboard.html',
+        calendar: 'clinic_calendar.html',
+        staff: 'staff_service_settings.html',
+        billing: 'billing.html',
+        records: 'records.html',
+        message: 'message.html',
+        emergency: 'emergency_management.html',
+        appointments: 'appointments.html',
+        inventory: 'inventory.html',
+        reports: 'reports.html',
+        settings: 'settings.html'
+      };
+
+      function navigateTo(section) {
+        const currentPage = document.body.getAttribute('data-page') || 'reports';
+        if (section === currentPage) {
+          showToast(`📍 Already on ${section} page`, 'info');
+          return;
+        }
+        
+        if (pageMap[section]) {
+          showToast(`🔄 Navigating to ${section}...`, 'info');
+          setTimeout(() => {
+            window.location.href = pageMap[section];
+          }, 300);
+        } else {
+          showToast(`📄 ${section} page coming soon!`, 'warning');
+        }
+      }
+
+      document.querySelectorAll('[data-nav-desktop]').forEach((link) => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const section = link.getAttribute('data-nav-desktop');
+          navigateTo(section);
+        });
+      });
+
+      document.querySelectorAll('[data-nav-mobile]').forEach((link) => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const section = link.getAttribute('data-nav-mobile');
+          closeMobileSidebarFunc();
+          navigateTo(section);
+        });
+      });
+
+      // ==========================================
+      // 4. HIGHLIGHT ACTIVE PAGE
+      // ==========================================
+      function highlightCurrentPage() {
+        const currentPage = document.body.getAttribute('data-page') || 'reports';
+
+        document.querySelectorAll('[data-nav-desktop]').forEach((link) => {
+          link.classList.remove('active-link', 'bg-primary-container', 'text-on-primary-container');
+          if (link.getAttribute('data-nav-desktop') === currentPage) {
+            link.classList.add('active-link');
+          }
+        });
+
+        document.querySelectorAll('[data-nav-mobile]').forEach((link) => {
+          link.classList.remove('active-link', 'bg-primary-container', 'text-on-primary-container');
+          if (link.getAttribute('data-nav-mobile') === currentPage) {
+            link.classList.add('active-link');
+          }
+        });
+      }
+
+      // ==========================================
+      // 5. LOGOUT
+      // ==========================================
+      function logout() {
+        if (confirm('Are you sure you want to logout?')) {
+          localStorage.removeItem('user');
+          localStorage.removeItem('token');
+          showToast('👋 Logging out...', 'info');
+          setTimeout(() => {
+            window.location.href = 'vet_portal_login.html';
+          }, 500);
+        }
+      }
+
+      document.getElementById('logoutBtnMobile')?.addEventListener('click', logout);
+      document.getElementById('logoutBtnDesktop')?.addEventListener('click', logout);
+
+      // ==========================================
+      // 6. FORMAT CURRENCY - GHANA CEDI
+      // ==========================================
+      const formatCurrency = (amount) => {
+        return 'GH₵' + amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      };
+
+      const transactions = [
+        { id: 'INV-1024', patient: 'Max', owner: 'Sarah Mitchell', service: 'Annual Checkup', amount: 299.00, date: '2026-08-05', status: 'paid' },
+        { id: 'INV-1023', patient: 'Bella', owner: 'Michael Chen', service: 'Vaccination', amount: 49.50, date: '2026-08-05', status: 'pending' },
+        { id: 'INV-1022', patient: 'Charlie', owner: 'Jessica Park', service: 'Surgery', amount: 1249.00, date: '2026-08-04', status: 'paid' },
+        { id: 'INV-1021', patient: 'Luna', owner: 'Robert Johnson', service: 'Emergency Care', amount: 19.99, date: '2026-08-04', status: 'failed' },
+        { id: 'INV-1020', patient: 'Rocky', owner: 'Emily Davis', service: 'Dental Cleaning', amount: 49.00, date: '2026-08-03', status: 'refunded' },
+        { id: 'INV-1019', patient: 'Milo', owner: 'David Wilson', service: 'Checkup', amount: 85.00, date: '2026-08-03', status: 'paid' },
+        { id: 'INV-1018', patient: 'Coco', owner: 'Lisa Brown', service: 'Grooming', amount: 35.00, date: '2026-08-02', status: 'paid' },
+        { id: 'INV-1017', patient: 'Daisy', owner: 'James Taylor', service: 'X-Ray', amount: 150.00, date: '2026-08-02', status: 'pending' },
+        { id: 'INV-1016', patient: 'Simba', owner: 'Patricia Moore', service: 'Vaccination', amount: 49.50, date: '2026-08-01', status: 'paid' },
+        { id: 'INV-1015', patient: 'Oliver', owner: 'Thomas Anderson', service: 'Checkup', amount: 85.00, date: '2026-08-01', status: 'paid' },
+        { id: 'INV-1014', patient: 'Molly', owner: 'Jennifer Lee', service: 'Emergency Care', amount: 19.99, date: '2026-07-31', status: 'paid' },
+        { id: 'INV-1013', patient: 'Bailey', owner: 'Richard White', service: 'Dental Cleaning', amount: 49.00, date: '2026-07-31', status: 'refunded' },
+        { id: 'INV-1012', patient: 'Lucy', owner: 'Nancy Green', service: 'Surgery', amount: 1249.00, date: '2026-07-30', status: 'paid' },
+        { id: 'INV-1011', patient: 'Bear', owner: 'Mark Black', service: 'Checkup', amount: 85.00, date: '2026-07-30', status: 'pending' },
+        { id: 'INV-1010', patient: 'Zoe', owner: 'Stephanie Clark', service: 'Vaccination', amount: 49.50, date: '2026-07-29', status: 'paid' },
+      ];
+
+      let currentPage = 1;
+      let rowsPerPage = 10;
+
+      // ==========================================
+      // 7. RENDER TRANSACTIONS TABLE
+      // ==========================================
+      function renderTransactionsTable() {
+        const tbody = document.getElementById('transactionsTableBody');
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = Math.min(start + rowsPerPage, transactions.length);
+        const pageData = transactions.slice(start, end);
+        const totalPages = Math.ceil(transactions.length / rowsPerPage);
+
+        if (pageData.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-slate-400">No transactions found</td></tr>`;
+        } else {
+          tbody.innerHTML = pageData.map((t, index) => {
+            const statusMap = {
+              paid: { class: 'success', label: 'Paid' },
+              pending: { class: 'warning', label: 'Pending' },
+              failed: { class: 'danger', label: 'Failed' },
+              refunded: { class: 'info', label: 'Refunded' }
+            };
+            const status = statusMap[t.status] || statusMap.paid;
+            const dropdownId = `action-${t.id}-${index}`;
+            return `
+              <tr>
+                <td><strong>${t.id}</strong></td>
+                <td><span class="font-medium">${t.patient}</span></td>
+                <td class="hide-mobile">${t.owner}</td>
+                <td class="hide-mobile">${t.service}</td>
+                <td>${formatCurrency(t.amount)}</td>
+                <td class="hide-mobile">${t.date}</td>
+                <td><span class="status-badge ${status.class}"><span class="dot"></span> ${status.label}</span></td>
+                <td style="text-align:center;">
+                  <div class="action-dropdown">
+                    <button onclick="event.stopPropagation(); toggleActionDropdown('${dropdownId}')" class="action-dropdown-btn" title="Actions">
+                      <span class="material-symbols-outlined">more_vert</span>
+                    </button>
+                    <div id="dropdown-${dropdownId}" class="action-dropdown-menu">
+                      <button onclick="event.stopPropagation(); viewTransaction('${t.id}')">
+                        <span class="material-symbols-outlined menu-icon">visibility</span> View Details
+                      </button>
+                      <button onclick="event.stopPropagation(); editTransaction('${t.id}')">
+                        <span class="material-symbols-outlined menu-icon">edit</span> Edit
+                      </button>
+                      <button onclick="event.stopPropagation(); printTransaction('${t.id}')">
+                        <span class="material-symbols-outlined menu-icon">print</span> Print
+                      </button>
+                      <div class="menu-divider"></div>
+                      <button onclick="event.stopPropagation(); refundTransaction('${t.id}')" class="danger">
+                        <span class="material-symbols-outlined menu-icon">receipt_long</span> Refund
+                      </button>
+                      <button onclick="event.stopPropagation(); deleteTransaction('${t.id}')" class="danger">
+                        <span class="material-symbols-outlined menu-icon">delete</span> Delete
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        }
+
+        document.getElementById('paginationInfo').textContent = 
+          `${start + 1}–${Math.min(end, transactions.length)} of ${transactions.length}`;
+
+        const paginationContainer = document.getElementById('paginationControls');
+        const pageButtons = paginationContainer.querySelectorAll('.pagination-btn[data-page]');
+        pageButtons.forEach(btn => {
+          const page = parseInt(btn.dataset.page);
+          btn.classList.toggle('active', page === currentPage);
+          btn.style.display = page <= totalPages ? 'inline-flex' : 'none';
+        });
+
+        document.getElementById('prevPage').disabled = currentPage === 1;
+        document.getElementById('nextPage').disabled = currentPage === totalPages || totalPages === 0;
+      }
+
+      // ==========================================
+      // 8. ACTION DROPDOWN FUNCTIONS
+      // ==========================================
+      function toggleActionDropdown(id) {
+        document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
+        const menu = document.getElementById(`dropdown-${id}`);
+        if (menu) menu.classList.toggle('open');
+      }
+
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.action-dropdown')) {
+          document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
+        }
+      });
+
+      // ==========================================
+      // 9. VIEW TRANSACTION
+      // ==========================================
+      function viewTransaction(id) {
+        const transaction = transactions.find(t => t.id === id);
+        if (!transaction) {
+          showToast('❌ Transaction not found', 'error');
+          return;
+        }
+        
+        currentViewTransaction = transaction;
+        document.getElementById('viewModalTitle').textContent = `Transaction ${transaction.id}`;
+        
+        const statusMap = {
+          paid: '✅ Paid',
+          pending: '⏳ Pending',
+          failed: '❌ Failed',
+          refunded: '🔄 Refunded'
+        };
+        
+        document.getElementById('viewModalBody').innerHTML = `
+          <div class="detail-row">
+            <span class="label">Invoice #</span>
+            <span class="value font-semibold">${transaction.id}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Patient</span>
+            <span class="value">${transaction.patient}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Owner</span>
+            <span class="value">${transaction.owner}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Service</span>
+            <span class="value">${transaction.service}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Amount</span>
+            <span class="value font-semibold text-primary">${formatCurrency(transaction.amount)}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Date</span>
+            <span class="value">${transaction.date}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Status</span>
+            <span class="value">${statusMap[transaction.status] || transaction.status}</span>
+          </div>
+        `;
+        
+        document.getElementById('viewTransactionModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+        document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
+        showToast(`👁️ Viewing ${transaction.id}`, 'info');
+      }
+
+      function closeViewModal() {
+        document.getElementById('viewTransactionModal').classList.remove('open');
+        document.body.style.overflow = '';
+        currentViewTransaction = null;
+      }
+
+      function printTransactionFromModal() {
+        if (currentViewTransaction) {
+          printTransaction(currentViewTransaction.id);
+          closeViewModal();
+        }
+      }
+
+      document.getElementById('viewTransactionModal')?.addEventListener('click', function(e) {
+        if (e.target === this) closeViewModal();
+      });
+
+      // ==========================================
+      // 10. EDIT TRANSACTION
+      // ==========================================
+      function editTransaction(id) {
+        const transaction = transactions.find(t => t.id === id);
+        if (!transaction) {
+          showToast('❌ Transaction not found', 'error');
+          return;
+        }
+        
+        currentEditTransaction = { ...transaction };
+        
+        const statusOptions = ['paid', 'pending', 'failed', 'refunded'];
+        const statusMap = {
+          paid: 'Paid',
+          pending: 'Pending',
+          failed: 'Failed',
+          refunded: 'Refunded'
+        };
+        
+        document.getElementById('editModalBody').innerHTML = `
+          <div class="space-y-3">
+            <div>
+              <label class="text-sm font-medium text-slate-700 block mb-1">Invoice #</label>
+              <input type="text" value="${transaction.id}" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm bg-slate-50" disabled />
+            </div>
+            <div>
+              <label class="text-sm font-medium text-slate-700 block mb-1">Patient</label>
+              <input type="text" id="editPatient" value="${transaction.patient}" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none" />
+            </div>
+            <div>
+              <label class="text-sm font-medium text-slate-700 block mb-1">Owner</label>
+              <input type="text" id="editOwner" value="${transaction.owner}" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none" />
+            </div>
+            <div>
+              <label class="text-sm font-medium text-slate-700 block mb-1">Service</label>
+              <input type="text" id="editService" value="${transaction.service}" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none" />
+            </div>
+            <div>
+              <label class="text-sm font-medium text-slate-700 block mb-1">Amount (GH₵)</label>
+              <input type="number" id="editAmount" value="${transaction.amount}" step="0.01" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none" />
+            </div>
+            <div>
+              <label class="text-sm font-medium text-slate-700 block mb-1">Status</label>
+              <select id="editStatus" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none">
+                ${statusOptions.map(s => `<option value="${s}" ${s === transaction.status ? 'selected' : ''}>${statusMap[s]}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+        `;
+        
+        document.getElementById('editTransactionModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+        document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
+        showToast(`✏️ Editing ${transaction.id}`, 'info');
+      }
+
+      function closeEditModal() {
+        document.getElementById('editTransactionModal').classList.remove('open');
+        document.body.style.overflow = '';
+        currentEditTransaction = null;
+      }
+
+      function saveEditTransaction() {
+        if (!currentEditTransaction) return;
+        
+        const patient = document.getElementById('editPatient').value.trim();
+        const owner = document.getElementById('editOwner').value.trim();
+        const service = document.getElementById('editService').value.trim();
+        const amount = parseFloat(document.getElementById('editAmount').value);
+        const status = document.getElementById('editStatus').value;
+        
+        if (!patient || !owner || !service || isNaN(amount) || amount <= 0) {
+          showToast('❌ Please fill in all fields correctly', 'error');
+          return;
+        }
+        
+        const original = transactions.find(t => t.id === currentEditTransaction.id);
+        if (original) {
+          original.patient = patient;
+          original.owner = owner;
+          original.service = service;
+          original.amount = amount;
+          original.status = status;
+        }
+        
+        closeEditModal();
+        renderTransactionsTable();
+        showToast(`✅ Transaction ${currentEditTransaction.id} updated successfully!`, 'success');
+      }
+
+      document.getElementById('editTransactionModal')?.addEventListener('click', function(e) {
+        if (e.target === this) closeEditModal();
+      });
+
+      // ==========================================
+      // 11. PRINT TRANSACTION
+      // ==========================================
+      function printTransaction(id) {
+        const transaction = transactions.find(t => t.id === id);
+        if (!transaction) {
+          showToast('❌ Transaction not found', 'error');
+          return;
+        }
+        
+        const printWindow = window.open('', '_blank', 'width=600,height=500');
+        const statusMap = {
+          paid: '✅ Paid',
+          pending: '⏳ Pending',
+          failed: '❌ Failed',
+          refunded: '🔄 Refunded'
+        };
+        
+        printWindow.document.write(`
+          <html>
+            <head>
+              <title>Transaction ${transaction.id}</title>
+              <style>
+                body { font-family: Arial, sans-serif; padding: 40px; background: white; }
+                .header { text-align: center; border-bottom: 2px solid #036469; padding-bottom: 20px; margin-bottom: 20px; }
+                .header h1 { color: #036469; font-size: 24px; margin: 0; }
+                .header p { color: #6b7280; font-size: 14px; margin: 5px 0 0; }
+                .details { margin: 20px 0; }
+                .row { display: flex; padding: 8px 0; border-bottom: 1px solid #f1f5f9; }
+                .label { font-weight: 600; color: #6b7280; width: 120px; }
+                .value { color: #1a1a2e; }
+                .footer { margin-top: 30px; text-align: center; font-size: 12px; color: #9ca3af; border-top: 1px solid #e5e7eb; padding-top: 15px; }
+                .status-badge { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+                .status-paid { background: #d1fae5; color: #065f46; }
+                .status-pending { background: #fef3c7; color: #92400e; }
+                .status-failed { background: #fde8e8; color: #991b1b; }
+                .status-refunded { background: #dbeafe; color: #1e40af; }
+              </style>
+            </head>
+            <body>
+              <div class="header">
+                <h1>addyPets Veterinary Clinic</h1>
+                <p>Transaction Receipt</p>
+              </div>
+              <div class="details">
+                <div class="row"><span class="label">Invoice #</span><span class="value"><strong>${transaction.id}</strong></span></div>
+                <div class="row"><span class="label">Patient</span><span class="value">${transaction.patient}</span></div>
+                <div class="row"><span class="label">Owner</span><span class="value">${transaction.owner}</span></div>
+                <div class="row"><span class="label">Service</span><span class="value">${transaction.service}</span></div>
+                <div class="row"><span class="label">Amount</span><span class="value"><strong>${formatCurrency(transaction.amount)}</strong></span></div>
+                <div class="row"><span class="label">Date</span><span class="value">${transaction.date}</span></div>
+                <div class="row"><span class="label">Status</span><span class="value"><span class="status-badge status-${transaction.status}">${statusMap[transaction.status] || transaction.status}</span></span></div>
+              </div>
+              <div class="footer">Generated on ${new Date().toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+              <script>
+                window.print();
+              <\/script>
+            </body>
+          </html>
+        `);
+        printWindow.document.close();
+        
+        document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
+        showToast(`🖨️ Printing ${transaction.id}`, 'info');
+      }
+
+      // ==========================================
+      // 12. REFUND TRANSACTION
+      // ==========================================
+      function refundTransaction(id) {
+        const transaction = transactions.find(t => t.id === id);
+        if (!transaction) {
+          showToast('❌ Transaction not found', 'error');
+          return;
+        }
+        
+        if (transaction.status === 'refunded') {
+          showToast(`⚠️ ${id} is already refunded`, 'warning');
+          document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
+          return;
+        }
+        
+        if (confirm(`💰 Are you sure you want to refund ${id} for ${formatCurrency(transaction.amount)}?`)) {
+          transaction.status = 'refunded';
+          renderTransactionsTable();
+          showToast(`✅ Refund processed for ${id}`, 'success');
+        }
+        document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
+      }
+
+      // ==========================================
+      // 13. DELETE TRANSACTION
+      // ==========================================
+      function deleteTransaction(id) {
+        const transaction = transactions.find(t => t.id === id);
+        if (!transaction) {
+          showToast('❌ Transaction not found', 'error');
+          return;
+        }
+        
+        if (confirm(`⚠️ Are you sure you want to delete ${id}? This cannot be undone.`)) {
+          const index = transactions.indexOf(transaction);
+          if (index > -1) {
+            transactions.splice(index, 1);
+          }
+          renderTransactionsTable();
+          showToast(`🗑️ Transaction ${id} deleted`, 'warning');
+        }
+        document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
+      }
+
+      // ==========================================
+      // 14. PAGINATION FUNCTIONS
+      // ==========================================
+      function changeRowsPerPage() {
+        rowsPerPage = parseInt(document.getElementById('rowsPerPage').value);
+        currentPage = 1;
+        renderTransactionsTable();
+      }
+
+      function changePage(delta) {
+        const totalPages = Math.ceil(transactions.length / rowsPerPage);
+        const newPage = currentPage + delta;
+        if (newPage >= 1 && newPage <= totalPages) {
+          currentPage = newPage;
+          renderTransactionsTable();
+          document.querySelector('.report-table-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+
+      function goToPage(page) {
+        const totalPages = Math.ceil(transactions.length / rowsPerPage);
+        if (page >= 1 && page <= totalPages) {
+          currentPage = page;
+          renderTransactionsTable();
+          document.querySelector('.report-table-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+
+      // ==========================================
+      // 15. REPORT FUNCTIONS
+      // ==========================================
+      function applyReportFilters() {
+        const dateRange = document.getElementById('reportDateRange').value;
+        const compare = document.getElementById('reportCompare').value;
+        const species = document.getElementById('reportSpecies').value;
+        const staff = document.getElementById('selectedStaff').value;
+        
+        const staffName = staff === 'all' ? 'All Staff' : staffList.find(s => s.id === staff)?.name || 'All Staff';
+        showToast(`📊 Filters applied: ${dateRange}, ${species}, ${staffName}`, 'success');
+        
+        const revenue = document.getElementById('totalRevenue');
+        const appointments = document.getElementById('totalAppointments');
+        const patients = document.getElementById('activePatients');
+        const avgValue = document.getElementById('avgVisitValue');
+        
+        revenue.textContent = formatCurrency(48294 + Math.floor(Math.random() * 2000 - 1000));
+        appointments.textContent = (1842 + Math.floor(Math.random() * 100 - 50)).toLocaleString();
+        patients.textContent = (4721 + Math.floor(Math.random() * 200 - 100)).toLocaleString();
+        avgValue.textContent = formatCurrency(26.22 + (Math.random() * 2 - 1));
+        
+        renderTransactionsTable();
+      }
+
+      function refreshReports() {
+        showToast('🔄 Reports refreshed!', 'success');
+        document.getElementById('totalRevenue').textContent = formatCurrency(48294);
+        document.getElementById('totalAppointments').textContent = '1,842';
+        document.getElementById('activePatients').textContent = '4,721';
+        document.getElementById('avgVisitValue').textContent = formatCurrency(26.22);
+        currentPage = 1;
+        renderTransactionsTable();
+      }
+
+      function exportReportData() {
+        showToast('📊 Report exported as CSV successfully!', 'success');
+      }
+
+      // ==========================================
+      // 16. CHART REPORT MODAL
+      // ==========================================
+      let currentModalChart = null;
+      let modalChartInstance = null;
+
+      function openChartReport(chartId, title, canvasId) {
+        const modal = document.getElementById('chartReportModal');
+        document.getElementById('modalChartTitle').textContent = title + ' Report';
+        document.getElementById('reportSubtitle').textContent = 
+          `${title} Report • Generated on ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
+
+        const sourceCanvas = document.getElementById(canvasId);
+        const sourceChart = Chart.getChart(canvasId);
+        
+        if (!sourceChart) {
+          showToast('❌ Chart data not available', 'error');
+          return;
+        }
+
+        currentModalChart = { chartId, title, canvasId, sourceChart };
+        updateModalStats(chartId, sourceChart);
+        renderModalChart(sourceChart);
+
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function renderModalChart(sourceChart) {
+        const canvas = document.getElementById('modalChartCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        if (modalChartInstance) {
+          modalChartInstance.destroy();
+          modalChartInstance = null;
+        }
+
+        const data = sourceChart.data;
+        const options = JSON.parse(JSON.stringify(sourceChart.options));
+        options.responsive = true;
+        options.maintainAspectRatio = false;
+        options.plugins.legend = { 
+          position: 'bottom',
+          labels: { font: { size: 11 }, padding: 12 }
+        };
+        options.onClick = null;
+
+        modalChartInstance = new Chart(ctx, {
+          type: sourceChart.config.type,
+          data: data,
+          options: options
+        });
+      }
+
+      function updateModalStats(chartId, sourceChart) {
+        let data = [];
+        
+        if (sourceChart.data.datasets && sourceChart.data.datasets.length > 0) {
+          data = sourceChart.data.datasets[0].data;
+        }
+
+        if (data.length === 0) {
+          document.getElementById('modalStatTotal').textContent = 'N/A';
+          document.getElementById('modalStatAvg').textContent = 'N/A';
+          document.getElementById('modalStatMax').textContent = 'N/A';
+          document.getElementById('modalStatMin').textContent = 'N/A';
+          return;
+        }
+
+        const total = data.reduce((a, b) => a + b, 0);
+        const avg = total / data.length;
+        const max = Math.max(...data);
+        const min = Math.min(...data);
+
+        const isCurrency = chartId === 'revenue';
+        const formatVal = (v) => isCurrency ? formatCurrency(v) : v.toLocaleString();
+
+        document.getElementById('modalStatTotal').textContent = formatVal(total);
+        document.getElementById('modalStatAvg').textContent = formatVal(avg);
+        document.getElementById('modalStatMax').textContent = formatVal(max);
+        document.getElementById('modalStatMin').textContent = formatVal(min);
+      }
+
+      function closeChartReport() {
+        document.getElementById('chartReportModal').classList.remove('open');
+        document.body.style.overflow = '';
+        if (modalChartInstance) {
+          modalChartInstance.destroy();
+          modalChartInstance = null;
+        }
+        currentModalChart = null;
+      }
+
+      document.getElementById('chartReportModal')?.addEventListener('click', function(e) {
+        if (e.target === this) closeChartReport();
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeChartReport();
+          closeViewModal();
+          closeEditModal();
+        }
+      });
+
+      // ==========================================
+      // 17. PRINT & PDF EXPORT
+      // ==========================================
+      function printChartReport() {
+        const content = document.getElementById('reportPrintContainer');
+        const printWindow = window.open('', '_blank', 'width=800,height=600');
+        printWindow.document.write(`
+          <html>
+            <head>
+              <title>Report - addyPets</title>
+              <style>
+                body { font-family: Arial, sans-serif; padding: 20px; background: white; }
+                .report-title { font-size: 24px; font-weight: 700; color: #036469; text-align: center; }
+                .report-subtitle { text-align: center; color: #6b7280; margin-bottom: 20px; }
+                .report-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 20px 0; }
+                .stat-item { text-align: center; padding: 10px; background: #f8fafc; border-radius: 8px; }
+                .stat-item .label { font-size: 11px; color: #6b7280; text-transform: uppercase; font-weight: 600; }
+                .stat-item .value { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+                .chart-container { max-width: 100%; margin: 20px 0; text-align: center; }
+                .chart-container canvas { max-width: 100%; max-height: 400px; }
+                .footer { margin-top: 30px; text-align: center; font-size: 12px; color: #9ca3af; border-top: 1px solid #e5e7eb; padding-top: 15px; }
+              </style>
+            </head>
+            <body>
+              ${content.innerHTML}
+              <div class="footer">Generated on ${new Date().toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+            </body>
+          </html>
+        `);
+        printWindow.document.close();
+        setTimeout(() => { printWindow.print(); }, 500);
+      }
+
+      function exportChartPDF() {
+        const content = document.getElementById('reportPrintContainer');
+        showToast('📄 Generating PDF...', 'info');
+        
+        html2canvas(content, {
+          scale: 2,
+          backgroundColor: '#ffffff',
+          logging: false,
+          allowTaint: true,
+          useCORS: true,
+          height: content.scrollHeight,
+          windowHeight: content.scrollHeight,
+        }).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF('p', 'mm', 'a4');
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+          
+          pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+          pdf.save(`Report_${currentModalChart?.title || 'Chart'}_${new Date().toISOString().slice(0,10)}.pdf`);
+          showToast('✅ PDF exported successfully!', 'success');
+        }).catch(err => {
+          console.error('PDF generation error:', err);
+          showToast('❌ Failed to generate PDF. Please try again.', 'error');
+        });
+      }
+
+      // ==========================================
+      // 18. CHARTS
+      // ==========================================
+      let charts = {};
+
+      function initCharts() {
+        // Revenue Trend Chart
+        const ctx1 = document.getElementById('revenueTrendChart').getContext('2d');
+        charts.revenue = new Chart(ctx1, {
+          type: 'line',
+          data: {
+            labels: ['Jul 30', 'Jul 31', 'Aug 01', 'Aug 02', 'Aug 03', 'Aug 04', 'Aug 05'],
+            datasets: [{
+              label: 'Revenue (GH₵)',
+              data: [4200, 5100, 4900, 6400, 8200, 7600, 7094],
+              borderColor: '#036469',
+              backgroundColor: 'rgba(3, 100, 105, 0.08)',
+              fill: true,
+              tension: 0.4,
+              pointBackgroundColor: '#036469',
+              pointBorderColor: '#fff',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              pointHoverRadius: 6,
+              borderWidth: 2.5
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: '#1a1a2e',
+                titleColor: '#fff',
+                bodyColor: '#a8b2d1',
+                cornerRadius: 6,
+                padding: 10,
+                callbacks: {
+                  label: function(context) {
+                    return 'GH₵' + context.parsed.y.toLocaleString();
+                  }
+                }
+              }
+            },
+            scales: {
+              y: {
+                grid: { color: 'rgba(0,0,0,0.05)' },
+                ticks: {
+                  callback: function(value) {
+                    return 'GH₵' + value.toLocaleString();
+                  }
+                }
+              },
+              x: { grid: { display: false } }
+            },
+            interaction: {
+              intersect: false,
+              mode: 'index'
+            }
+          }
+        });
+
+        // Service Distribution Chart (Pie)
+        const ctx2 = document.getElementById('serviceChart').getContext('2d');
+        charts.service = new Chart(ctx2, {
+          type: 'doughnut',
+          data: {
+            labels: ['Checkups', 'Surgery', 'Vaccinations', 'Dental', 'Emergency', 'Grooming'],
+            datasets: [{
+              data: [30, 18, 22, 12, 10, 8],
+              backgroundColor: ['#036469', '#2e7d82', '#5fa8b0', '#88d3d8', '#f59e0b', '#10b981'],
+              borderColor: '#fff',
+              borderWidth: 2,
+              hoverOffset: 8
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '65%',
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  padding: 8,
+                  usePointStyle: true,
+                  pointStyle: 'circle',
+                  font: { size: 10, weight: '500' },
+                  color: '#6b7280'
+                }
+              },
+              tooltip: {
+                backgroundColor: '#1a1a2e',
+                titleColor: '#fff',
+                bodyColor: '#a8b2d1',
+                cornerRadius: 6,
+                padding: 10,
+                callbacks: {
+                  label: function(context) {
+                    return context.label + ': ' + context.parsed + '%';
+                  }
+                }
+              }
+            }
+          }
+        });
+
+        // Appointments by Day Chart (Bar)
+        const ctx3 = document.getElementById('appointmentsChart').getContext('2d');
+        charts.appointments = new Chart(ctx3, {
+          type: 'bar',
+          data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{
+              label: 'Appointments',
+              data: [28, 35, 42, 38, 45, 30, 18],
+              backgroundColor: 'rgba(3, 100, 105, 0.7)',
+              borderColor: '#036469',
+              borderWidth: 1,
+              borderRadius: 4
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: '#1a1a2e',
+                titleColor: '#fff',
+                bodyColor: '#a8b2d1',
+                cornerRadius: 6,
+                padding: 10
+              }
+            },
+            scales: {
+              y: {
+                grid: { color: 'rgba(0,0,0,0.05)' },
+                beginAtZero: true
+              },
+              x: { grid: { display: false } }
+            }
+          }
+        });
+
+        // Top Procedures Chart (Horizontal Bar)
+        const ctx4 = document.getElementById('proceduresChart').getContext('2d');
+        charts.procedures = new Chart(ctx4, {
+          type: 'bar',
+          data: {
+            labels: ['Vaccination', 'Checkup', 'Dental', 'Emergency', 'Surgery', 'Grooming'],
+            datasets: [{
+              label: 'Procedures',
+              data: [45, 38, 28, 22, 18, 15],
+              backgroundColor: [
+                'rgba(3, 100, 105, 0.8)',
+                'rgba(46, 125, 130, 0.8)',
+                'rgba(95, 168, 176, 0.8)',
+                'rgba(136, 211, 216, 0.8)',
+                'rgba(245, 158, 11, 0.8)',
+                'rgba(16, 185, 129, 0.8)'
+              ],
+              borderColor: '#036469',
+              borderWidth: 1,
+              borderRadius: 4
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            indexAxis: 'y',
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: '#1a1a2e',
+                titleColor: '#fff',
+                bodyColor: '#a8b2d1',
+                cornerRadius: 6,
+                padding: 10
+              }
+            },
+            scales: {
+              x: {
+                grid: { color: 'rgba(0,0,0,0.05)' },
+                beginAtZero: true
+              },
+              y: { grid: { display: false } }
+            }
+          }
+        });
+      }
+
+      // ==========================================
+      // 19. SEARCH
+      // ==========================================
+      document.getElementById('reportSearch')?.addEventListener('input', function() {
+        const query = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#transactionsTableBody tr');
+        let visibleCount = 0;
+        rows.forEach(row => {
+          const text = row.textContent.toLowerCase();
+          const match = text.includes(query);
+          row.style.display = match ? '' : 'none';
+          if (match) visibleCount++;
+        });
+        if (query.length > 0) {
+          document.getElementById('paginationInfo').textContent = `Showing ${visibleCount} results`;
+        } else {
+          renderTransactionsTable();
+        }
+      });
+
+      // ==========================================
+      // 20. INIT
+      // ==========================================
+      document.addEventListener('DOMContentLoaded', function() {
+        highlightCurrentPage();
+        renderTransactionsTable();
+        initCharts();
+        showToast('📊 Reports loaded successfully!', 'success');
+      });
+    </script>
+  </body>
+</html>

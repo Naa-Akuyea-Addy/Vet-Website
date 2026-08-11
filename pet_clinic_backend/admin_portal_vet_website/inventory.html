@@ -6,562 +6,161 @@
     <title>addyPets | Inventory Management</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-      rel="stylesheet"
-    />
-
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <style>
-      .material-symbols-outlined {
-        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-        vertical-align: middle;
-      }
-      .custom-scrollbar::-webkit-scrollbar,
-      ::-webkit-scrollbar {
-        width: 6px;
-      }
-      .custom-scrollbar::-webkit-scrollbar-track,
-      ::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      .custom-scrollbar::-webkit-scrollbar-thumb,
-      ::-webkit-scrollbar-thumb {
-        background: #bec8c9;
-        border-radius: 10px;
-      }
-      body {
-        background-color: #fbf9f8;
-        color: #1b1c1c;
-      }
-
-      .sidebar-item-active {
-        background-color: #2e7d82;
-        color: #ffffff;
-      }
-      .hide-scrollbar::-webkit-scrollbar {
-        display: none;
-      }
-      .hide-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
-      .sidebar-transition {
-        transition: width 0.3s ease-in-out, transform 0.3s ease-in-out;
-      }
-      .mobile-sidebar {
-        position: fixed;
-        top: 0;
-        left: -100%;
-        width: 280px;
-        height: 100vh;
-        transition: left 0.3s ease-in-out;
-        z-index: 1000;
-      }
-      .mobile-sidebar.open {
-        left: 0;
-      }
-      .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 999;
-        display: none;
-      }
-      .overlay.active {
-        display: block;
-      }
-      .sidebar-collapsed .sidebar-text {
-        display: none;
-      }
-      .sidebar-collapsed .sidebar-icon-only {
-        margin: 0 auto;
-      }
-      .sidebar-collapsed {
-        width: 80px !important;
-      }
-      .sidebar-collapsed .sidebar-logo-text {
-        display: none;
-      }
-      .sidebar-collapsed .sidebar-logo {
-        margin: 0 auto;
-      }
-      .sidebar-collapsed .sidebar-button {
-        justify-content: center;
-      }
-      .sidebar-collapsed .emergency-section {
-        display: none;
-      }
-      .sidebar-collapsed #logoutBtnDesktop {
-        justify-content: center;
-        padding: 12px !important;
-      }
-      .sidebar-collapsed .bottom-container {
-        padding: 16px 8px !important;
-      }
-      .main-content-full {
-        width: 100% !important;
-        margin-left: 0 !important;
-      }
-      #mainContentWrapper {
-        transition: all 0.3s ease-in-out;
-      }
-      .active-nav-item {
-        font-variation-settings: "FILL" 1;
-      }
-
-      .toast-container {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-        pointer-events: none;
-      }
-      .toast {
-        min-width: 220px;
-        max-width: 320px;
-        padding: 1rem 1.2rem;
-        border-radius: 0.9rem;
-        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
-        color: #ffffff;
-        font-weight: 600;
-        opacity: 0;
-        transform: translateY(24px);
-        transition: opacity 0.28s ease, transform 0.28s ease;
-        pointer-events: auto;
-        white-space: pre-line;
-      }
-      .toast.show {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .toast-success {
-        background: linear-gradient(135deg, #047857, #059669);
-      }
-      .toast-info {
-        background: linear-gradient(135deg, #0d6efd, #2563eb);
-      }
-      .toast-error {
-        background: linear-gradient(135deg, #b91c1c, #ef4444);
-      }
-      .toast-warning {
-        background: linear-gradient(135deg, #b45309, #d97706);
-      }
-
-      .status-in-stock {
-        background-color: #dcfce7;
-        color: #166534;
-      }
-      .status-low-stock {
-        background-color: #fef9c3;
-        color: #854d0e;
-      }
-      .status-out-of-stock {
-        background-color: #fee2e2;
-        color: #991b1b;
-      }
-      .status-expired {
-        background-color: #fecaca;
-        color: #7f1d1d;
-      }
-      .status-expiring-soon {
-        background-color: #fde68a;
-        color: #78350f;
-      }
-      .status-mixed {
-        background-color: #e0e7ff;
-        color: #3730a3;
-      }
-
-      .action-dropdown {
-        position: relative;
-        display: inline-block;
-      }
-      .action-dropdown-btn {
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        padding: 4px;
-        border-radius: 4px;
-        transition: background 0.15s;
-        color: #6f797a;
-      }
-      .action-dropdown-btn:hover {
-        background: #f0eded;
-      }
-      .action-dropdown-menu {
+      .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; vertical-align: middle; }
+      .custom-scrollbar::-webkit-scrollbar, ::-webkit-scrollbar { width: 6px; }
+      .custom-scrollbar::-webkit-scrollbar-track, ::-webkit-scrollbar-track { background: transparent; }
+      .custom-scrollbar::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb { background: #bec8c9; border-radius: 10px; }
+      body { background-color: #fbf9f8; color: #1b1c1c; }
+      .sidebar-item-active { background-color: #2e7d82; color: #ffffff; }
+      .hide-scrollbar::-webkit-scrollbar { display: none; }
+      .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      .sidebar-transition { transition: width 0.3s ease-in-out, transform 0.3s ease-in-out; }
+      .mobile-sidebar { position: fixed; top: 0; left: -100%; width: 280px; height: 100vh; transition: left 0.3s ease-in-out; z-index: 1000; }
+      .mobile-sidebar.open { left: 0; }
+      .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999; display: none; }
+      .overlay.active { display: block; }
+      .sidebar-collapsed .sidebar-text { display: none; }
+      .sidebar-collapsed .sidebar-icon-only { margin: 0 auto; }
+      .sidebar-collapsed { width: 80px !important; }
+      .sidebar-collapsed .sidebar-logo-text { display: none; }
+      .sidebar-collapsed .sidebar-logo { margin: 0 auto; }
+      .sidebar-collapsed .sidebar-button { justify-content: center; }
+      .sidebar-collapsed .emergency-section { display: none; }
+      .sidebar-collapsed #logoutBtnDesktop { justify-content: center; padding: 12px !important; }
+      .sidebar-collapsed .bottom-container { padding: 16px 8px !important; }
+      .main-content-full { width: 100% !important; margin-left: 0 !important; }
+      #mainContentWrapper { transition: all 0.3s ease-in-out; }
+      .active-nav-item { font-variation-settings: "FILL" 1; }
+      .toast-container { display: flex; flex-direction: column; gap: 0.75rem; pointer-events: none; }
+      .toast { min-width: 220px; max-width: 320px; padding: 1rem 1.2rem; border-radius: 0.9rem; box-shadow: 0 18px 40px rgba(15,23,42,0.14); color: #ffffff; font-weight: 600; opacity: 0; transform: translateY(24px); transition: opacity 0.28s ease, transform 0.28s ease; pointer-events: auto; white-space: pre-line; }
+      .toast.show { opacity: 1; transform: translateY(0); }
+      .toast-success { background: linear-gradient(135deg, #047857, #059669); }
+      .toast-info { background: linear-gradient(135deg, #0d6efd, #2563eb); }
+      .toast-error { background: linear-gradient(135deg, #b91c1c, #ef4444); }
+      .toast-warning { background: linear-gradient(135deg, #b45309, #d97706); }
+      .status-in-stock { background-color: #dcfce7; color: #166534; }
+      .status-low-stock { background-color: #fef9c3; color: #854d0e; }
+      .status-out-of-stock { background-color: #fee2e2; color: #991b1b; }
+      .status-expired { background-color: #fecaca; color: #7f1d1d; }
+      .status-expiring-soon { background-color: #fde68a; color: #78350f; }
+      .status-mixed { background-color: #e0e7ff; color: #3730a3; }
+      .action-dropdown { position: relative; display: inline-block; }
+      .action-dropdown-btn { background: transparent; border: none; cursor: pointer; padding: 4px; border-radius: 4px; transition: background 0.15s; color: #6f797a; }
+      .action-dropdown-btn:hover { background: #f0eded; }
+      .action-dropdown-menu { position: absolute; right: 0; top: 100%; background: #ffffff; border: 1px solid #bec8c9; border-radius: 0.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.12); min-width: 180px; z-index: 999; opacity: 0; transform: translateY(-8px) scale(0.95); pointer-events: none; transition: opacity 0.15s ease, transform 0.15s ease; overflow: hidden; }
+      .action-dropdown-menu.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+      .action-dropdown-menu button { display: flex; align-items: center; gap: 0.75rem; width: 100%; padding: 0.65rem 1rem; font-size: 0.875rem; color: #1b1c1c; text-align: left; transition: background 0.15s; border: none; background: transparent; cursor: pointer; }
+      .action-dropdown-menu button:hover { background: #f4f7f7; }
+      .action-dropdown-menu button.danger { color: #943031; }
+      .action-dropdown-menu button.danger:hover { background: #ffdad6; }
+      .action-dropdown-menu .menu-divider { height: 1px; background: #e4e2e1; margin: 0.25rem 0; }
+      .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 999; display: none; align-items: center; justify-content: center; padding: 1rem; }
+      .modal-overlay.open { display: flex; }
+      .modal-card { background: white; border-radius: 1.5rem; max-width: 650px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 1.5rem; box-shadow: 0 25px 60px rgba(0,0,0,0.2); }
+      .input-label { font-size: 11px; font-weight: 600; color: #475569; display: block; margin-bottom: 2px; }
+      .input-label .hint { font-weight: 400; color: #94a3b8; font-size: 10px; }
+      .row-clickable { cursor: pointer; transition: background-color 0.15s ease; }
+      .row-clickable:hover { background-color: #f8fafc !important; }
+      a[data-nav-desktop="emergency"], a[data-nav-mobile="emergency"] { background-color: #943031 !important; color: #ffffff !important; }
+      a[data-nav-desktop="emergency"]:hover, a[data-nav-mobile="emergency"]:hover { background-color: #7a2526 !important; color: #ffffff !important; }
+      .stat-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+      .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.05); }
+      select:disabled { opacity: 0.6; cursor: not-allowed; background-color: #f1f5f9; }
+      .batch-expired { background-color: #fee2e2; border-left: 4px solid #dc2626; }
+      .batch-in-stock { background-color: #dcfce7; border-left: 4px solid #16a34a; }
+      .batch-expiring { background-color: #fef3c7; border-left: 4px solid #f59e0b; }
+      .filter-supplier-suggestions { position: absolute; z-index: 50; width: 100%; max-height: 150px; overflow-y: auto; background: white; border: 1px solid #e2e8f0; border-radius: 0.5rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); display: none; }
+      .filter-supplier-suggestions.show { display: block; }
+      .filter-supplier-suggestions .suggestion-item { padding: 0.5rem 1rem; cursor: pointer; transition: background 0.15s; font-size: 0.875rem; }
+      .filter-supplier-suggestions .suggestion-item:hover { background-color: #f1f5f9; }
+      .filter-supplier-suggestions .suggestion-item.selected { background-color: #dbeafe; }
+      
+      /* Notification bell styles */
+      .notification-badge {
         position: absolute;
-        right: 0;
-        top: 100%;
-        background: #ffffff;
-        border: 1px solid #bec8c9;
-        border-radius: 0.5rem;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-        min-width: 180px;
-        z-index: 999;
-        opacity: 0;
-        transform: translateY(-8px) scale(0.95);
-        pointer-events: none;
-        transition: opacity 0.15s ease, transform 0.15s ease;
-        overflow: hidden;
-      }
-      .action-dropdown-menu.open {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        pointer-events: auto;
-      }
-      .action-dropdown-menu button {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        width: 100%;
-        padding: 0.65rem 1rem;
-        font-size: 0.875rem;
-        color: #1b1c1c;
-        text-align: left;
-        transition: background 0.15s;
-        border: none;
-        background: transparent;
-        cursor: pointer;
-      }
-      .action-dropdown-menu button:hover {
-        background: #f4f7f7;
-      }
-      .action-dropdown-menu button.danger {
-        color: #943031;
-      }
-      .action-dropdown-menu button.danger:hover {
-        background: #ffdad6;
-      }
-      .action-dropdown-menu .menu-divider {
-        height: 1px;
-        background: #e4e2e1;
-        margin: 0.25rem 0;
-      }
-
-      .modal-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(4px);
-        z-index: 999;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: 1rem;
-      }
-      .modal-overlay.open {
-        display: flex;
-      }
-      .modal-card {
-        background: white;
-        border-radius: 1.5rem;
-        max-width: 650px;
-        width: 100%;
-        max-height: 90vh;
-        overflow-y: auto;
-        padding: 1.5rem;
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
-      }
-
-      .input-label {
-        font-size: 11px;
-        font-weight: 600;
-        color: #475569;
-        display: block;
-        margin-bottom: 2px;
-      }
-      .input-label .hint {
-        font-weight: 400;
-        color: #94a3b8;
+        top: -4px;
+        right: -4px;
+        background: #dc2626;
+        color: white;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
         font-size: 10px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #fbf9f8;
       }
-
-      .row-clickable {
-        cursor: pointer;
-        transition: background-color 0.15s ease;
-      }
-      .row-clickable:hover {
-        background-color: #f8fafc !important;
-      }
-
-      a[data-nav-desktop="emergency"],
-      a[data-nav-mobile="emergency"] {
-        background-color: #943031 !important;
-        color: #ffffff !important;
-      }
-      a[data-nav-desktop="emergency"]:hover,
-      a[data-nav-mobile="emergency"]:hover {
-        background-color: #7a2526 !important;
-        color: #ffffff !important;
-      }
-
-      .stat-card {
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-      }
-      .stat-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
-      }
-
-      select:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-        background-color: #f1f5f9;
-      }
-
-      .batch-expired {
-        background-color: #fee2e2;
+      .notification-item {
+        padding: 10px 14px;
+        border-radius: 8px;
         border-left: 4px solid #dc2626;
-      }
-      .batch-in-stock {
-        background-color: #dcfce7;
-        border-left: 4px solid #16a34a;
-      }
-      .batch-expiring {
-        background-color: #fef3c7;
-        border-left: 4px solid #f59e0b;
-      }
-
-      /* Supplier search autocomplete for filter */
-      .filter-supplier-suggestions {
-        position: absolute;
-        z-index: 50;
-        width: 100%;
-        max-height: 150px;
-        overflow-y: auto;
-        background: white;
-        border: 1px solid #e2e8f0;
-        border-radius: 0.5rem;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        display: none;
-      }
-      .filter-supplier-suggestions.show {
-        display: block;
-      }
-      .filter-supplier-suggestions .suggestion-item {
-        padding: 0.5rem 1rem;
+        background: #fef2f2;
+        margin-bottom: 6px;
         cursor: pointer;
         transition: background 0.15s;
-        font-size: 0.875rem;
       }
-      .filter-supplier-suggestions .suggestion-item:hover {
-        background-color: #f1f5f9;
-      }
-      .filter-supplier-suggestions .suggestion-item.selected {
-        background-color: #dbeafe;
-      }
-
-      /* Mobile Responsive */
+      .notification-item:hover { background: #fee2e2; }
+      .notification-item .title { font-weight: 600; font-size: 13px; color: #1a1a1a; }
+      .notification-item .desc { font-size: 12px; color: #6b7280; }
+      
       @media (max-width: 768px) {
-        .sidebar-mobile {
-          position: fixed;
-          left: -280px;
-          top: 0;
-          width: 280px;
-          height: 100vh;
-          z-index: 100;
-          transition: left 0.3s ease;
-        }
-        .sidebar-mobile.open {
-          left: 0;
-        }
-        .sidebar-overlay {
-          position: fixed;
-          inset: 0;
-          background: rgba(0, 0, 0, 0.5);
-          z-index: 99;
-          display: none;
-        }
-        .sidebar-overlay.active {
-          display: block;
-        }
-        
-        .stat-card {
-          padding: 12px;
-        }
-        .stat-card p {
-          font-size: 0.7rem;
-        }
-        .stat-card h3 {
-          font-size: 1.1rem;
-        }
-        
-        .modal-card {
-          margin: 0.5rem;
-          padding: 1rem;
-          max-width: 100%;
-        }
-        
-        .action-dropdown-menu {
-          right: -10px;
-          min-width: 160px;
-        }
+        .sidebar-mobile { position: fixed; left: -280px; top: 0; width: 280px; height: 100vh; z-index: 100; transition: left 0.3s ease; }
+        .sidebar-mobile.open { left: 0; }
+        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; display: none; }
+        .sidebar-overlay.active { display: block; }
+        .stat-card { padding: 12px; }
+        .stat-card p { font-size: 0.7rem; }
+        .stat-card h3 { font-size: 1.1rem; }
+        .modal-card { margin: 0.5rem; padding: 1rem; max-width: 100%; }
+        .action-dropdown-menu { right: -10px; min-width: 160px; }
       }
-      
       @media (max-width: 480px) {
-        .stat-card {
-          padding: 8px;
-        }
-        .stat-card p {
-          font-size: 0.6rem;
-        }
-        .stat-card h3 {
-          font-size: 0.9rem;
-        }
-        
-        .toast {
-          min-width: 180px;
-          max-width: 260px;
-          font-size: 0.8rem;
-          padding: 0.7rem 1rem;
-        }
+        .stat-card { padding: 8px; }
+        .stat-card p { font-size: 0.6rem; }
+        .stat-card h3 { font-size: 0.9rem; }
+        .toast { min-width: 180px; max-width: 260px; font-size: 0.8rem; padding: 0.7rem 1rem; }
       }
-      
-      @media print {
-        .no-print {
-          display: none !important;
-        }
-        .print-content {
-          display: block !important;
-        }
-        body * {
-          visibility: hidden;
-        }
-        .print-content,
-        .print-content * {
-          visibility: visible;
-        }
-        .print-content {
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          padding: 20px;
-          background: white;
-        }
-      }
+      @media print { .no-print { display: none !important; } .print-content { display: block !important; } body * { visibility: hidden; } .print-content, .print-content * { visibility: visible; } .print-content { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; background: white; } }
     </style>
-
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
         theme: {
           extend: {
             colors: {
-              "secondary-fixed": "#9ef0f4",
-              "inverse-primary": "#88d3d8",
-              "on-primary-fixed-variant": "#004f53",
-              "tertiary-container": "#617677",
-              "surface-container-lowest": "#ffffff",
-              "surface-container-highest": "#e4e2e1",
-              "deep-navy": "#1A3638",
-              "surface-container-low": "#f5f3f3",
-              error: "#ba1a1a",
-              tertiary: "#485d5f",
-              "on-tertiary-container": "#e6fdfe",
-              "on-secondary-container": "#006e72",
-              "on-surface-variant": "#3f4949",
-              "tertiary-fixed-dim": "#b4cbcc",
-              "surface-container": "#f0eded",
-              "on-tertiary-fixed": "#091f20",
-              "on-secondary": "#ffffff",
-              "primary-fixed": "#a4eff4",
-              "inverse-on-surface": "#f2f0f0",
-              "inverse-surface": "#303030",
-              "surface-dim": "#dcd9d9",
-              "primary-container": "#2e7d82",
-              "secondary-fixed-dim": "#82d4d8",
-              "on-secondary-fixed": "#002021",
-              "primary-fixed-dim": "#88d3d8",
-              "surface-bright": "#fbf9f8",
-              primary: "#036469",
-              outline: "#6f797a",
-              "on-secondary-fixed-variant": "#004f52",
-              "error-container": "#ffdad6",
-              "on-tertiary-fixed-variant": "#364a4c",
-              secondary: "#00696d",
-              "on-primary-container": "#e5fdff",
-              "on-primary": "#ffffff",
-              "on-error-container": "#93000a",
-              "tertiary-fixed": "#d0e7e8",
-              "surface-container-high": "#eae8e7",
-              "outline-variant": "#bec8c9",
-              "on-tertiary": "#ffffff",
-              "surface-tint": "#0f696e",
-              background: "#fbf9f8",
-              "surface-muted": "#F4F7F7",
-              "on-surface": "#1b1c1c",
-              "on-primary-fixed": "#002022",
-              "surface-variant": "#e4e2e1",
-              "on-background": "#1b1c1c",
-              "emergency-red": "#943031",
-              surface: "#fbf9f8",
-              "secondary-container": "#9bedf1",
+              "secondary-fixed": "#9ef0f4", "inverse-primary": "#88d3d8", "on-primary-fixed-variant": "#004f53",
+              "tertiary-container": "#617677", "surface-container-lowest": "#ffffff", "surface-container-highest": "#e4e2e1",
+              "deep-navy": "#1A3638", "surface-container-low": "#f5f3f3", error: "#ba1a1a", tertiary: "#485d5f",
+              "on-tertiary-container": "#e6fdfe", "on-secondary-container": "#006e72", "on-surface-variant": "#3f4949",
+              "tertiary-fixed-dim": "#b4cbcc", "surface-container": "#f0eded", "on-tertiary-fixed": "#091f20",
+              "on-secondary": "#ffffff", "primary-fixed": "#a4eff4", "inverse-on-surface": "#f2f0f0",
+              "inverse-surface": "#303030", "surface-dim": "#dcd9d9", "primary-container": "#2e7d82",
+              "secondary-fixed-dim": "#82d4d8", "on-secondary-fixed": "#002021", "primary-fixed-dim": "#88d3d8",
+              "surface-bright": "#fbf9f8", primary: "#036469", outline: "#6f797a", "on-secondary-fixed-variant": "#004f52",
+              "error-container": "#ffdad6", "on-tertiary-fixed-variant": "#364a4c", secondary: "#00696d",
+              "on-primary-container": "#e5fdff", "on-primary": "#ffffff", "on-error-container": "#93000a",
+              "tertiary-fixed": "#d0e7e8", "surface-container-high": "#eae8e7", "outline-variant": "#bec8c9",
+              "on-tertiary": "#ffffff", "surface-tint": "#0f696e", background: "#fbf9f8", "surface-muted": "#F4F7F7",
+              "on-surface": "#1b1c1c", "on-primary-fixed": "#002022", "surface-variant": "#e4e2e1",
+              "on-background": "#1b1c1c", "emergency-red": "#943031", surface: "#fbf9f8", "secondary-container": "#9bedf1",
               "on-error": "#ffffff",
             },
-            borderRadius: {
-              DEFAULT: "0.25rem",
-              lg: "0.5rem",
-              xl: "0.75rem",
-              full: "9999px",
-            },
-            spacing: {
-              "stack-lg": "48px",
-              "stack-md": "24px",
-              base: "8px",
-              "stack-sm": "12px",
-              "margin-mobile": "16px",
-              "margin-desktop": "40px",
-              gutter: "24px",
-              "container-max": "1200px",
-            },
-            fontFamily: {
-              "headline-lg-mobile": ["Plus Jakarta Sans"],
-              "headline-md": ["Plus Jakarta Sans"],
-              "body-md": ["Open Sans"],
-              "body-lg": ["Open Sans"],
-              "label-md": ["Open Sans"],
-              "headline-lg": ["Plus Jakarta Sans"],
-              "display-lg": ["Plus Jakarta Sans"],
-              caption: ["Open Sans"],
-            },
+            borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+            spacing: { "stack-lg": "48px", "stack-md": "24px", base: "8px", "stack-sm": "12px", "margin-mobile": "16px", "margin-desktop": "40px", gutter: "24px", "container-max": "1200px" },
+            fontFamily: { "headline-lg-mobile": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "body-md": ["Open Sans"], "body-lg": ["Open Sans"], "label-md": ["Open Sans"], "headline-lg": ["Plus Jakarta Sans"], "display-lg": ["Plus Jakarta Sans"], caption: ["Open Sans"] },
             fontSize: {
-              "headline-lg-mobile": [
-                "28px",
-                { lineHeight: "36px", fontWeight: "600" },
-              ],
-              "headline-md": [
-                "24px",
-                { lineHeight: "32px", fontWeight: "600" },
-              ],
+              "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "600" }],
+              "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
               "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
               "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
-              "label-md": [
-                "14px",
-                {
-                  lineHeight: "20px",
-                  letterSpacing: "0.05em",
-                  fontWeight: "600",
-                },
-              ],
-              "headline-lg": [
-                "32px",
-                { lineHeight: "40px", fontWeight: "600" },
-              ],
-              "display-lg": [
-                "48px",
-                {
-                  lineHeight: "56px",
-                  letterSpacing: "-0.02em",
-                  fontWeight: "700",
-                },
-              ],
+              "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.05em", fontWeight: "600" }],
+              "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "600" }],
+              "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
               caption: ["12px", { lineHeight: "16px", fontWeight: "400" }],
             },
           },
@@ -574,15 +173,27 @@
     <!-- Mobile Top Bar -->
     <div class="md:hidden fixed top-0 left-0 right-0 bg-deep-navy z-50 px-4 py-4 flex items-center justify-between shadow-lg">
       <div class="flex items-center gap-3">
-        <button id="mobileBurgerBtn" class="text-white p-2 hover:bg-white/10 rounded-lg transition-all">
-          <span class="material-symbols-outlined">menu</span>
-        </button>
+        <button id="mobileBurgerBtn" class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"><span class="material-symbols-outlined">menu</span></button>
         <img alt="Logo" class="w-8 h-8 rounded-full object-cover" src="../../public/logo.png" />
         <h1 class="font-bold text-primary-fixed text-sm">addyPets</h1>
       </div>
       <div class="flex items-center gap-3">
-        <span class="material-symbols-outlined text-white">notifications</span>
+        <button id="notificationBell" class="relative text-white hover:text-primary-fixed transition-colors" onclick="toggleNotifications()">
+          <span class="material-symbols-outlined">notifications</span>
+          <span id="notificationBadge" class="notification-badge hidden">0</span>
+        </button>
         <span class="material-symbols-outlined text-white">account_circle</span>
+      </div>
+    </div>
+
+    <!-- Notification Dropdown -->
+    <div id="notificationDropdown" class="hidden fixed top-16 right-4 w-80 max-h-96 bg-white rounded-xl shadow-xl border border-slate-200 z-50 overflow-y-auto">
+      <div class="p-3 border-b border-slate-200 font-bold text-sm text-slate-900 flex items-center justify-between">
+        <span>📬 Inventory Alerts</span>
+        <button onclick="clearAllNotifications()" class="text-xs text-primary hover:underline">Clear all</button>
+      </div>
+      <div id="notificationList" class="p-2">
+        <p class="text-sm text-slate-400 text-center py-4">No new notifications</p>
       </div>
     </div>
 
@@ -593,50 +204,23 @@
       <div class="flex items-center justify-between p-6 border-b border-white/10">
         <div class="flex items-center gap-3">
           <img alt="Logo" class="w-10 h-10 rounded-full object-cover" src="../../public/logo.png" />
-          <div>
-            <h1 class="font-bold text-primary-fixed">addyPets</h1>
-            <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
-          </div>
+          <div><h1 class="font-bold text-primary-fixed">addyPets</h1><p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p></div>
         </div>
-        <button id="closeMobileSidebar" class="text-white p-2 hover:bg-white/10 rounded-lg">
-          <span class="material-symbols-outlined">close</span>
-        </button>
+        <button id="closeMobileSidebar" class="text-white p-2 hover:bg-white/10 rounded-lg"><span class="material-symbols-outlined">close</span></button>
       </div>
       <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto hide-scrollbar">
-        <a href="./Dashboard.html" data-nav-mobile="analytics" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">analytics</span><span>Analytics</span>
-        </a>
-        <a href="./clinic_calendar.html" data-nav-mobile="calendar" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">calendar_today</span><span>Calendar</span>
-        </a>
-        <a href="./staff_service_settings.html" data-nav-mobile="staff" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">groups</span><span>Staff</span>
-        </a>
-        <a href="./appointments.html" data-nav-mobile="appointments" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">event_note</span><span>Appointments</span>
-        </a>
-        <a href="./billing.html" data-nav-mobile="billing" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">payments</span><span>Billing</span>
-        </a>
-        <a href="./records.html" data-nav-mobile="records" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">description</span><span>Patient & Owner Records</span>
-        </a>
-        <a href="./inventory.html" data-nav-mobile="inventory" class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all">
-          <span class="material-symbols-outlined">inventory_2</span><span>Inventory</span>
-        </a>
-        <a href="./message.html" data-nav-mobile="message" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">message</span><span>Messages</span>
-        </a>
-        <a href="./emergency_management.html" data-nav-mobile="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold bg-emergency-red/10">
-          <span class="material-symbols-outlined">emergency</span><span>Emergency Cases</span>
-        </a>
+        <a href="./Dashboard.html" data-nav-mobile="analytics" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">analytics</span><span>Analytics</span></a>
+        <a href="./clinic_calendar.html" data-nav-mobile="calendar" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">calendar_today</span><span>Calendar</span></a>
+        <a href="./staff_service_settings.html" data-nav-mobile="staff" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">groups</span><span>Staff</span></a>
+        <a href="./appointments.html" data-nav-mobile="appointments" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">event_note</span><span>Appointments</span></a>
+        <a href="./billing.html" data-nav-mobile="billing" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">payments</span><span>Billing</span></a>
+        <a href="./records.html" data-nav-mobile="records" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">description</span><span>Patient & Owner Records</span></a>
+        <a href="./inventory.html" data-nav-mobile="inventory" class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all"><span class="material-symbols-outlined">inventory_2</span><span>Inventory</span></a>
+        <a href="./message.html" data-nav-mobile="message" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">message</span><span>Messages</span></a>
+        <a href="./emergency_management.html" data-nav-mobile="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold bg-emergency-red/10"><span class="material-symbols-outlined">emergency</span><span>Emergency Cases</span></a>
         <div class="h-px bg-white/10 my-4"></div>
-        <a href="#" data-nav-mobile="settings" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">settings</span><span>Settings</span>
-        </a>
-        <button id="logoutBtnMobile" class="w-full flex items-center gap-4 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all">
-          <span class="material-symbols-outlined">logout</span><span>Logout</span>
-        </button>
+        <a href="#" data-nav-mobile="settings" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
+        <button id="logoutBtnMobile" class="w-full flex items-center gap-4 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all"><span class="material-symbols-outlined">logout</span><span>Logout</span></button>
       </nav>
       <div class="p-4 border-t border-white/10">
         <div class="bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10">
@@ -653,58 +237,23 @@
         <div class="px-6 py-6 flex items-center justify-between border-b border-white/10">
           <div class="flex items-center gap-3 sidebar-logo">
             <img alt="Logo" class="w-10 h-10 rounded-full object-cover" src="../../public/logo.png" />
-            <div class="sidebar-logo-text">
-              <h1 class="font-bold text-primary-fixed text-sm">addyPets</h1>
-              <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
-            </div>
+            <div class="sidebar-logo-text"><h1 class="font-bold text-primary-fixed text-sm">addyPets</h1><p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p></div>
           </div>
-          <button id="collapseSidebarBtn" class="text-white p-2 hover:bg-white/10 rounded-lg transition-all">
-            <span class="material-symbols-outlined">chevron_left</span>
-          </button>
+          <button id="collapseSidebarBtn" class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"><span class="material-symbols-outlined">chevron_left</span></button>
         </div>
         <nav class="flex-1 px-3 py-6 space-y-1 overflow-y-auto hide-scrollbar">
-          <a href="./Dashboard.html" data-nav-desktop="analytics" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">analytics</span>
-            <span class="sidebar-text">Analytics</span>
-          </a>
-          <a href="./clinic_calendar.html" data-nav-desktop="calendar" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">calendar_today</span>
-            <span class="sidebar-text">Calendar</span>
-          </a>
-          <a href="./staff_service_settings.html" data-nav-desktop="staff" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">groups</span>
-            <span class="sidebar-text">Staff</span>
-          </a>
-          <a href="./appointments.html" data-nav-desktop="appointments" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">event_note</span>
-            <span class="sidebar-text">Appointments</span>
-          </a>
-          <a href="./billing.html" data-nav-desktop="billing" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">payments</span>
-            <span class="sidebar-text">Billing</span>
-          </a>
-          <a href="./records.html" data-nav-desktop="records" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">description</span>
-            <span class="sidebar-text">Patient & Owner Records</span>
-          </a>
-          <a href="./inventory.html" data-nav-desktop="inventory" class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">inventory_2</span>
-            <span class="sidebar-text">Inventory</span>
-          </a>
-          <a href="./message.html" data-nav-desktop="message" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">message</span>
-            <span class="sidebar-text">Messages</span>
-          </a>
-          <a href="./emergency_management.html" data-nav-desktop="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10">
-            <span class="material-symbols-outlined sidebar-icon-only">emergency</span>
-            <span class="sidebar-text">Emergency Cases</span>
-          </a>
+          <a href="./Dashboard.html" data-nav-desktop="analytics" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">analytics</span><span class="sidebar-text">Analytics</span></a>
+          <a href="./clinic_calendar.html" data-nav-desktop="calendar" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">calendar_today</span><span class="sidebar-text">Calendar</span></a>
+          <a href="./staff_service_settings.html" data-nav-desktop="staff" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">groups</span><span class="sidebar-text">Staff</span></a>
+          <a href="./appointments.html" data-nav-desktop="appointments" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">event_note</span><span class="sidebar-text">Appointments</span></a>
+          <a href="./billing.html" data-nav-desktop="billing" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">payments</span><span class="sidebar-text">Billing</span></a>
+          <a href="./records.html" data-nav-desktop="records" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">description</span><span class="sidebar-text">Patient & Owner Records</span></a>
+          <a href="./inventory.html" data-nav-desktop="inventory" class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">inventory_2</span><span class="sidebar-text">Inventory</span></a>
+          <a href="./message.html" data-nav-desktop="message" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">message</span><span class="sidebar-text">Messages</span></a>
+          <a href="./emergency_management.html" data-nav-desktop="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"><span class="material-symbols-outlined sidebar-icon-only">emergency</span><span class="sidebar-text">Emergency Cases</span></a>
         </nav>
         <div class="p-4 mt-auto bottom-container">
-          <button id="logoutBtnDesktop" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">logout</span>
-            <span class="sidebar-text">Logout</span>
-          </button>
+          <button id="logoutBtnDesktop" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">logout</span><span class="sidebar-text">Logout</span></button>
           <div class="emergency-section bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10 mt-4">
             <p class="text-xs text-tertiary-fixed-dim mb-2">Emergency Hotline</p>
             <p class="text-sm text-primary-fixed font-bold">+233 500 000 000</p>
@@ -723,15 +272,12 @@
             </div>
           </div>
           <div class="flex items-center gap-6">
-            <button class="relative p-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-full">
+            <button id="notificationBellDesktop" class="relative p-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-full" onclick="toggleNotifications()">
               <span class="material-symbols-outlined">notifications</span>
-              <span class="absolute top-2 right-2 w-2 h-2 bg-emergency-red rounded-full"></span>
+              <span id="notificationBadgeDesktop" class="notification-badge hidden">0</span>
             </button>
             <div class="flex items-center gap-3 cursor-pointer group">
-              <div class="text-right">
-                <p class="text-sm font-bold text-on-surface">Dr. Abena Mensah</p>
-                <p class="text-xs text-on-surface-variant">Chief Veterinary Officer</p>
-              </div>
+              <div class="text-right"><p class="text-sm font-bold text-on-surface">Dr. Abena Mensah</p><p class="text-xs text-on-surface-variant">Chief Veterinary Officer</p></div>
               <img alt="Profile" class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt_l2NtwBrHDxQNGs9rPyaBDSi0T_lttSSni_UFdT12mHBHPojsxTE2haa69Vl-xUxsOfIG9hBjBfFUbTbuzqUZTrwCxsYx-WVkbqBP95JzSas9Gk-vlSi5L3t6i5wijVQgjwTRZWzXWDoOxvbiuiwTwUvQerM7vTOeUAbTgk0LzdJ6ZlyU0xeXqf__Iapv8Wpu9q6UmECwczFqWAIEuCSYFKPwinFOH3N6vq0YJKWoiJViDN71AZUcTRiwGyz_FO9sM63nmOE114" />
             </div>
           </div>
@@ -746,15 +292,9 @@
               <p class="text-on-surface-variant mt-1">Track and manage all clinic supplies and medications</p>
             </div>
             <div class="flex gap-3 flex-wrap">
-              <button onclick="exportInventoryCSV()" class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">
-                <span class="material-symbols-outlined text-sm">download</span> Export CSV
-              </button>
-              <button onclick="printInventory()" class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">
-                <span class="material-symbols-outlined text-sm">print</span> Print
-              </button>
-              <button onclick="openAddItemModal()" class="flex items-center gap-2 px-6 py-3 bg-primary text-on-primary rounded-xl font-label-md shadow-sm hover:opacity-90 transition-all active:scale-95">
-                <span class="material-symbols-outlined">add</span> Add Item
-              </button>
+              <button onclick="exportInventoryCSV()" class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors"><span class="material-symbols-outlined text-sm">download</span> Export CSV</button>
+              <button onclick="printInventory()" class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors"><span class="material-symbols-outlined text-sm">print</span> Print</button>
+              <button onclick="openAddItemModal()" class="flex items-center gap-2 px-6 py-3 bg-primary text-on-primary rounded-xl font-label-md shadow-sm hover:opacity-90 transition-all active:scale-95"><span class="material-symbols-outlined">add</span> Add Item</button>
             </div>
           </div>
 
@@ -782,7 +322,26 @@
             </div>
           </div>
 
-          <!-- Filters - Supplier now a search box -->
+          <!-- NEW: Min, Max, Buffer Stock KPI Cards -->
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+            <div class="stat-card bg-white rounded-xl p-4 border border-slate-200">
+              <p class="text-xs text-slate-400 uppercase tracking-wider">Critical Stock Level</p>
+              <p id="minStockKPI" class="text-2xl font-bold text-red-600">0</p>
+              <p class="text-xs text-slate-500">Items below minimum threshold</p>
+            </div>
+            <div class="stat-card bg-white rounded-xl p-4 border border-slate-200">
+              <p class="text-xs text-slate-400 uppercase tracking-wider">Maximum Stock Level</p>
+              <p id="maxStockKPI" class="text-2xl font-bold text-slate-900">0</p>
+              <p class="text-xs text-slate-500">Highest quantity in inventory</p>
+            </div>
+            <div class="stat-card bg-white rounded-xl p-4 border border-slate-200">
+              <p class="text-xs text-slate-400 uppercase tracking-wider">Buffer / Safety Stock</p>
+              <p id="bufferStockKPI" class="text-2xl font-bold text-blue-600">0</p>
+              <p class="text-xs text-slate-500">Items at critical level that need reordering</p>
+            </div>
+          </div>
+
+          <!-- Filters -->
           <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 mb-4">
             <div class="flex flex-wrap items-center gap-4">
               <div>
@@ -809,6 +368,7 @@
                   <option value="Expired">Expired</option>
                   <option value="Expiring Soon">Expiring Soon</option>
                   <option value="Mixed">Mixed</option>
+                  <option value="Critical">Critical</option>
                 </select>
               </div>
               <div class="relative">
@@ -831,28 +391,23 @@
                     <th class="px-4 md:px-6 py-3 font-label-md text-on-surface-variant">Item</th>
                     <th class="px-4 md:px-6 py-3 font-label-md text-on-surface-variant">Category</th>
                     <th class="px-4 md:px-6 py-3 font-label-md text-on-surface-variant">Total Qty</th>
+                    <th class="px-4 md:px-6 py-3 font-label-md text-on-surface-variant">Min Stock</th>
                     <th class="px-4 md:px-6 py-3 font-label-md text-on-surface-variant">Unit</th>
                     <th class="px-4 md:px-6 py-3 font-label-md text-on-surface-variant">Price</th>
                     <th class="px-4 md:px-6 py-3 font-label-md text-on-surface-variant">Status</th>
                     <th class="px-4 md:px-6 py-3 font-label-md text-on-surface-variant text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody id="inventoryTbody" class="divide-y divide-outline-variant/20">
-                  <!-- Rows rendered by JS -->
-                </tbody>
+                <tbody id="inventoryTbody" class="divide-y divide-outline-variant/20"></tbody>
               </table>
             </div>
             <!-- Pagination -->
             <div class="bg-surface-muted px-4 md:px-6 py-3 flex flex-wrap items-center justify-between border-t border-outline-variant/30">
               <span id="pagination-count" class="text-caption text-on-surface-variant">Showing 0 of 0 items</span>
               <div class="flex gap-2">
-                <button id="prevPageBtn" onclick="changePage(-1)" class="p-2 rounded-lg border border-outline-variant hover:bg-white transition-all disabled:opacity-50" disabled>
-                  <span class="material-symbols-outlined">chevron_left</span>
-                </button>
+                <button id="prevPageBtn" onclick="changePage(-1)" class="p-2 rounded-lg border border-outline-variant hover:bg-white transition-all disabled:opacity-50" disabled><span class="material-symbols-outlined">chevron_left</span></button>
                 <span id="pageIndicator" class="px-3 py-2 text-sm font-medium">Page 1 of 1</span>
-                <button id="nextPageBtn" onclick="changePage(1)" class="p-2 rounded-lg border border-outline-variant hover:bg-white transition-all disabled:opacity-50" disabled>
-                  <span class="material-symbols-outlined">chevron_right</span>
-                </button>
+                <button id="nextPageBtn" onclick="changePage(1)" class="p-2 rounded-lg border border-outline-variant hover:bg-white transition-all disabled:opacity-50" disabled><span class="material-symbols-outlined">chevron_right</span></button>
               </div>
             </div>
           </div>
@@ -876,96 +431,38 @@
       </div>
     </div>
 
-    <!-- ADD ITEM MODAL -->
+    <!-- MODALS -->
     <div id="addItemModal" class="modal-overlay">
       <div class="modal-card">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-            <span class="material-symbols-outlined text-primary">inventory_2</span> Add Inventory Item
-          </h3>
-          <button onclick="closeAddItemModal()" class="p-1 hover:bg-slate-100 rounded-lg">
-            <span class="material-symbols-outlined">close</span>
-          </button>
+          <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2"><span class="material-symbols-outlined text-primary">inventory_2</span> Add Inventory Item</h3>
+          <button onclick="closeAddItemModal()" class="p-1 hover:bg-slate-100 rounded-lg"><span class="material-symbols-outlined">close</span></button>
         </div>
         <form id="addItemForm" onsubmit="submitInventoryItem(event)">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="input-label">Item Name <span class="hint">(required)</span></label>
-              <input id="invName" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="e.g. Amoxicillin 500mg" required />
-            </div>
-            <div>
-              <label class="input-label">Category <span class="hint">(required)</span></label>
-              <select id="invCategory" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" required>
-                <option value="">Select Category</option>
-                <option value="Medication">Medication</option>
-                <option value="Surgical Supplies">Surgical Supplies</option>
-                <option value="Consumables">Consumables</option>
-                <option value="Diagnostics">Diagnostics</option>
-                <option value="Equipment">Equipment</option>
-                <option value="Preventative">Preventative</option>
-                <option value="Food">Food</option>
-                <option value="Office/Admin">Office/Admin</option>
-              </select>
-            </div>
-            <div>
-              <label class="input-label">Unit <span class="hint">(required)</span></label>
-              <select id="invUnit" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" required>
-                <option value="tablet">Tablet</option>
-                <option value="vial">Vial</option>
-                <option value="ml">ml</option>
-                <option value="kg">kg</option>
-                <option value="box">Box</option>
-                <option value="pack">Pack</option>
-                <option value="unit">Unit</option>
-                <option value="pair">Pair</option>
-                <option value="bottle">Bottle</option>
-              </select>
-            </div>
-            <div>
-              <label class="input-label">Cost per Unit (GHS)</label>
-              <input id="invCost" type="number" step="0.01" value="0.00" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
-            </div>
-            <div>
-              <label class="input-label">Selling Price (GHS)</label>
-              <input id="invPrice" type="number" step="0.01" value="0.00" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
-            </div>
-            <div>
-              <label class="input-label">Supplier</label>
-              <input id="invSupplier" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="e.g. VetPharm Ltd" />
-            </div>
-            <div>
-              <label class="input-label">Minimum Stock Level</label>
-              <input id="invMinStock" type="number" min="0" value="10" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
-            </div>
-            <div>
-              <label class="input-label">Location</label>
-              <input id="invLocation" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="e.g. Shelf A, Fridge B" />
-            </div>
-            <div class="md:col-span-2">
-              <label class="input-label">Notes</label>
-              <textarea id="invNotes" rows="2" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Additional notes..."></textarea>
-            </div>
+            <div><label class="input-label">Item Name <span class="hint">(required)</span></label><input id="invName" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="e.g. Amoxicillin 500mg" required /></div>
+            <div><label class="input-label">Category <span class="hint">(required)</span></label><select id="invCategory" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" required><option value="">Select Category</option><option value="Medication">Medication</option><option value="Surgical Supplies">Surgical Supplies</option><option value="Consumables">Consumables</option><option value="Diagnostics">Diagnostics</option><option value="Equipment">Equipment</option><option value="Preventative">Preventative</option><option value="Food">Food</option><option value="Office/Admin">Office/Admin</option></select></div>
+            <div><label class="input-label">Unit <span class="hint">(required)</span></label><select id="invUnit" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" required><option value="tablet">Tablet</option><option value="vial">Vial</option><option value="ml">ml</option><option value="kg">kg</option><option value="box">Box</option><option value="pack">Pack</option><option value="unit">Unit</option><option value="pair">Pair</option><option value="bottle">Bottle</option></select></div>
+            <div><label class="input-label">Cost per Unit (GHS)</label><input id="invCost" type="number" step="0.01" value="0.00" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" /></div>
+            <div><label class="input-label">Selling Price (GHS)</label><input id="invPrice" type="number" step="0.01" value="0.00" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" /></div>
+            <div><label class="input-label">Supplier</label><input id="invSupplier" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="e.g. VetPharm Ltd" /></div>
+            <div><label class="input-label">Minimum Stock Level</label><input id="invMinStock" type="number" min="0" value="10" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" /></div>
+            <div><label class="input-label">Location</label><input id="invLocation" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="e.g. Shelf A, Fridge B" /></div>
+            <div class="md:col-span-2"><label class="input-label">Notes</label><textarea id="invNotes" rows="2" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Additional notes..."></textarea></div>
           </div>
           <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200">
             <button type="button" onclick="closeAddItemModal()" class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">Cancel</button>
-            <button type="submit" class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2">
-              <span class="material-symbols-outlined text-sm">save</span> Save Item
-            </button>
+            <button type="submit" class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2"><span class="material-symbols-outlined text-sm">save</span> Save Item</button>
           </div>
         </form>
       </div>
     </div>
 
-    <!-- ADD NEW BATCH MODAL -->
     <div id="addBatchModal" class="modal-overlay">
       <div class="modal-card">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-            <span class="material-symbols-outlined text-primary">add</span> Add New Batch
-          </h3>
-          <button onclick="closeAddBatchModal()" class="p-1 hover:bg-slate-100 rounded-lg">
-            <span class="material-symbols-outlined">close</span>
-          </button>
+          <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2"><span class="material-symbols-outlined text-primary">add</span> Add New Batch</h3>
+          <button onclick="closeAddBatchModal()" class="p-1 hover:bg-slate-100 rounded-lg"><span class="material-symbols-outlined">close</span></button>
         </div>
         <form id="addBatchForm" onsubmit="submitNewBatch(event)">
           <div class="bg-slate-50 p-4 rounded-lg mb-4">
@@ -974,59 +471,34 @@
           </div>
           <input type="hidden" id="batchItemId" />
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="input-label">Quantity <span class="hint">(required)</span></label>
-              <input id="batchQuantity" type="number" min="1" value="1" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" required />
-            </div>
-            <div>
-              <label class="input-label">Expiry Date <span class="hint">(required)</span></label>
-              <input id="batchExpiry" type="date" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" required />
-            </div>
-            <div>
-              <label class="input-label">Batch Number <span class="hint">(auto-generated)</span></label>
-              <input id="batchNumber" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm bg-slate-50" readonly />
-            </div>
-            <div>
-              <label class="input-label">Supplier</label>
-              <input id="batchSupplier" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Supplier name" />
-            </div>
-            <div class="md:col-span-2">
-              <label class="input-label">Notes</label>
-              <input id="batchNotes" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Additional notes..." />
-            </div>
+            <div><label class="input-label">Quantity <span class="hint">(required)</span></label><input id="batchQuantity" type="number" min="1" value="1" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" required /></div>
+            <div><label class="input-label">Expiry Date <span class="hint">(required)</span></label><input id="batchExpiry" type="date" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" required /></div>
+            <div><label class="input-label">Batch Number <span class="hint">(auto-generated)</span></label><input id="batchNumber" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm bg-slate-50" readonly /></div>
+            <div><label class="input-label">Supplier</label><input id="batchSupplier" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Supplier name" /></div>
+            <div class="md:col-span-2"><label class="input-label">Notes</label><input id="batchNotes" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Additional notes..." /></div>
           </div>
           <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200">
             <button type="button" onclick="closeAddBatchModal()" class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">Cancel</button>
-            <button type="submit" class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2">
-              <span class="material-symbols-outlined text-sm">save</span> Add Batch
-            </button>
+            <button type="submit" class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2"><span class="material-symbols-outlined text-sm">save</span> Add Batch</button>
           </div>
         </form>
       </div>
     </div>
 
-    <!-- VIEW BATCHES MODAL -->
     <div id="viewBatchesModal" class="modal-overlay">
       <div class="modal-card">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-            <span class="material-symbols-outlined text-primary">inventory</span> <span id="viewBatchesTitle">Batches</span>
-          </h3>
-          <button onclick="closeViewBatchesModal()" class="p-1 hover:bg-slate-100 rounded-lg">
-            <span class="material-symbols-outlined">close</span>
-          </button>
+          <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2"><span class="material-symbols-outlined text-primary">inventory</span> <span id="viewBatchesTitle">Batches</span></h3>
+          <button onclick="closeViewBatchesModal()" class="p-1 hover:bg-slate-100 rounded-lg"><span class="material-symbols-outlined">close</span></button>
         </div>
         <div id="viewBatchesContent" class="space-y-4"></div>
         <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200">
           <button onclick="closeViewBatchesModal()" class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">Close</button>
-          <button id="addBatchFromViewBtn" onclick="openAddBatchFromView()" class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2">
-            <span class="material-symbols-outlined text-sm">add</span> Add Batch
-          </button>
+          <button id="addBatchFromViewBtn" onclick="openAddBatchFromView()" class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2"><span class="material-symbols-outlined text-sm">add</span> Add Batch</button>
         </div>
       </div>
     </div>
 
-    <!-- Toast Container -->
     <div id="toast-container" class="toast-container fixed top-20 right-4 z-[100]"></div>
 
     <script>
@@ -1034,186 +506,18 @@
       // 1. INVENTORY DATA WITH BATCHES
       // ==========================================
       let inventoryData = [
-        { 
-          id: 'INV-001', 
-          name: 'Amoxicillin 500mg', 
-          category: 'Medication', 
-          unit: 'tablet', 
-          cost: 0.85, 
-          price: 2.50, 
-          supplier: 'VetPharm Ltd',
-          minStock: 50, 
-          location: 'Fridge B', 
-          notes: 'Broad-spectrum antibiotic',
-          batches: [
-            { batchId: 'BATCH-001', quantity: 150, expiry: '2026-05-15', supplier: 'VetPharm Ltd', notes: '' }
-          ]
-        },
-        { 
-          id: 'INV-002', 
-          name: 'Surgical Gloves (Sterile)', 
-          category: 'Surgical Supplies', 
-          unit: 'pair', 
-          cost: 0.45, 
-          price: 1.20, 
-          supplier: 'MedEquip Africa',
-          minStock: 50, 
-          location: 'Storage Room A', 
-          notes: 'Size M, Latex-free',
-          batches: [
-            { batchId: 'BATCH-002', quantity: 200, expiry: '', supplier: 'MedEquip Africa', notes: '' }
-          ]
-        },
-        { 
-          id: 'INV-003', 
-          name: 'Tramadol 50mg', 
-          category: 'Medication', 
-          unit: 'tablet', 
-          cost: 0.35, 
-          price: 1.80, 
-          supplier: 'VetPharm Ltd',
-          minStock: 20, 
-          location: 'Fridge A', 
-          notes: 'Pain relief',
-          batches: [
-            { batchId: 'BATCH-003', quantity: 30, expiry: '2025-12-20', supplier: 'VetPharm Ltd', notes: '' }
-          ]
-        },
-        { 
-          id: 'INV-004', 
-          name: 'Syringes 5ml', 
-          category: 'Consumables', 
-          unit: 'unit', 
-          cost: 0.12, 
-          price: 0.50, 
-          supplier: 'Animal Health Ltd',
-          minStock: 100, 
-          location: 'Storage Room B', 
-          notes: 'Luer lock',
-          batches: [
-            { batchId: 'BATCH-004', quantity: 500, expiry: '', supplier: 'Animal Health Ltd', notes: '' }
-          ]
-        },
-        { 
-          id: 'INV-005', 
-          name: 'IV Fluids 500ml', 
-          category: 'Consumables', 
-          unit: 'bag', 
-          cost: 4.50, 
-          price: 8.00, 
-          supplier: 'PharmaVet',
-          minStock: 20, 
-          location: 'Fridge C', 
-          notes: 'Normal saline',
-          batches: [
-            { batchId: 'BATCH-005', quantity: 45, expiry: '2026-08-10', supplier: 'PharmaVet', notes: '' }
-          ]
-        },
-        { 
-          id: 'INV-006', 
-          name: 'Rabies Vaccine', 
-          category: 'Medication', 
-          unit: 'vial', 
-          cost: 15.00, 
-          price: 45.00, 
-          supplier: 'VetPharm Ltd',
-          minStock: 15, 
-          location: 'Fridge B', 
-          notes: 'Keep refrigerated',
-          batches: [
-            { batchId: 'BATCH-006', quantity: 12, expiry: '2025-10-30', supplier: 'VetPharm Ltd', notes: '' }
-          ]
-        },
-        { 
-          id: 'INV-007', 
-          name: 'Bandages (Assorted)', 
-          category: 'Consumables', 
-          unit: 'pack', 
-          cost: 2.50, 
-          price: 5.00, 
-          supplier: 'VetCare Supplies',
-          minStock: 30, 
-          location: 'Storage Room A', 
-          notes: 'Various sizes',
-          batches: [
-            { batchId: 'BATCH-007', quantity: 80, expiry: '', supplier: 'VetCare Supplies', notes: '' }
-          ]
-        },
-        { 
-          id: 'INV-008', 
-          name: 'Surgical Sutures', 
-          category: 'Surgical Supplies', 
-          unit: 'pack', 
-          cost: 8.00, 
-          price: 15.00, 
-          supplier: 'MedEquip Africa',
-          minStock: 10, 
-          location: 'Storage Room B', 
-          notes: 'Absorbable',
-          batches: [
-            { batchId: 'BATCH-008', quantity: 25, expiry: '2026-12-01', supplier: 'MedEquip Africa', notes: '' }
-          ]
-        },
-        { 
-          id: 'INV-009', 
-          name: 'Antiseptic Solution', 
-          category: 'Consumables', 
-          unit: 'bottle', 
-          cost: 3.00, 
-          price: 6.50, 
-          supplier: 'PetHealth Distributors',
-          minStock: 15, 
-          location: 'Storage Room A', 
-          notes: 'Chlorhexidine based',
-          batches: [
-            { batchId: 'BATCH-009', quantity: 35, expiry: '', supplier: 'PetHealth Distributors', notes: '' }
-          ]
-        },
-        { 
-          id: 'INV-010', 
-          name: 'Heartworm Prevention', 
-          category: 'Preventative', 
-          unit: 'pack', 
-          cost: 12.00, 
-          price: 30.00, 
-          supplier: 'VetPharm Ltd',
-          minStock: 10, 
-          location: 'Fridge A', 
-          notes: 'Monthly dosage',
-          batches: [
-            { batchId: 'BATCH-010', quantity: 8, expiry: '2026-06-15', supplier: 'VetPharm Ltd', notes: '' }
-          ]
-        },
-        { 
-          id: 'INV-011', 
-          name: 'Stethoscope', 
-          category: 'Equipment', 
-          unit: 'unit', 
-          cost: 45.00, 
-          price: 120.00, 
-          supplier: 'MedEquip Africa',
-          minStock: 2, 
-          location: 'Equipment Room', 
-          notes: 'Littmann Classic',
-          batches: [
-            { batchId: 'BATCH-011', quantity: 3, expiry: '', supplier: 'MedEquip Africa', notes: '' }
-          ]
-        },
-        { 
-          id: 'INV-012', 
-          name: 'Prescription Diet (Dog)', 
-          category: 'Food', 
-          unit: 'bag', 
-          cost: 18.00, 
-          price: 35.00, 
-          supplier: 'PetHealth Distributors',
-          minStock: 5, 
-          location: 'Storage Room C', 
-          notes: 'Gastrointestinal',
-          batches: [
-            { batchId: 'BATCH-012', quantity: 20, expiry: '2025-09-01', supplier: 'PetHealth Distributors', notes: '' }
-          ]
-        },
+        { id: 'INV-001', name: 'Amoxicillin 500mg', category: 'Medication', unit: 'tablet', cost: 0.85, price: 2.50, supplier: 'VetPharm Ltd', minStock: 50, location: 'Fridge B', notes: 'Broad-spectrum antibiotic', batches: [ { batchId: 'BATCH-001', quantity: 150, expiry: '2026-05-15', supplier: 'VetPharm Ltd', notes: '' } ] },
+        { id: 'INV-002', name: 'Surgical Gloves (Sterile)', category: 'Surgical Supplies', unit: 'pair', cost: 0.45, price: 1.20, supplier: 'MedEquip Africa', minStock: 50, location: 'Storage Room A', notes: 'Size M, Latex-free', batches: [ { batchId: 'BATCH-002', quantity: 200, expiry: '', supplier: 'MedEquip Africa', notes: '' } ] },
+        { id: 'INV-003', name: 'Tramadol 50mg', category: 'Medication', unit: 'tablet', cost: 0.35, price: 1.80, supplier: 'VetPharm Ltd', minStock: 20, location: 'Fridge A', notes: 'Pain relief', batches: [ { batchId: 'BATCH-003', quantity: 30, expiry: '2025-12-20', supplier: 'VetPharm Ltd', notes: '' } ] },
+        { id: 'INV-004', name: 'Syringes 5ml', category: 'Consumables', unit: 'unit', cost: 0.12, price: 0.50, supplier: 'Animal Health Ltd', minStock: 100, location: 'Storage Room B', notes: 'Luer lock', batches: [ { batchId: 'BATCH-004', quantity: 500, expiry: '', supplier: 'Animal Health Ltd', notes: '' } ] },
+        { id: 'INV-005', name: 'IV Fluids 500ml', category: 'Consumables', unit: 'bag', cost: 4.50, price: 8.00, supplier: 'PharmaVet', minStock: 20, location: 'Fridge C', notes: 'Normal saline', batches: [ { batchId: 'BATCH-005', quantity: 45, expiry: '2026-08-10', supplier: 'PharmaVet', notes: '' } ] },
+        { id: 'INV-006', name: 'Rabies Vaccine', category: 'Medication', unit: 'vial', cost: 15.00, price: 45.00, supplier: 'VetPharm Ltd', minStock: 15, location: 'Fridge B', notes: 'Keep refrigerated', batches: [ { batchId: 'BATCH-006', quantity: 12, expiry: '2025-10-30', supplier: 'VetPharm Ltd', notes: '' } ] },
+        { id: 'INV-007', name: 'Bandages (Assorted)', category: 'Consumables', unit: 'pack', cost: 2.50, price: 5.00, supplier: 'VetCare Supplies', minStock: 30, location: 'Storage Room A', notes: 'Various sizes', batches: [ { batchId: 'BATCH-007', quantity: 80, expiry: '', supplier: 'VetCare Supplies', notes: '' } ] },
+        { id: 'INV-008', name: 'Surgical Sutures', category: 'Surgical Supplies', unit: 'pack', cost: 8.00, price: 15.00, supplier: 'MedEquip Africa', minStock: 10, location: 'Storage Room B', notes: 'Absorbable', batches: [ { batchId: 'BATCH-008', quantity: 25, expiry: '2026-12-01', supplier: 'MedEquip Africa', notes: '' } ] },
+        { id: 'INV-009', name: 'Antiseptic Solution', category: 'Consumables', unit: 'bottle', cost: 3.00, price: 6.50, supplier: 'PetHealth Distributors', minStock: 15, location: 'Storage Room A', notes: 'Chlorhexidine based', batches: [ { batchId: 'BATCH-009', quantity: 35, expiry: '', supplier: 'PetHealth Distributors', notes: '' } ] },
+        { id: 'INV-010', name: 'Heartworm Prevention', category: 'Preventative', unit: 'pack', cost: 12.00, price: 30.00, supplier: 'VetPharm Ltd', minStock: 10, location: 'Fridge A', notes: 'Monthly dosage', batches: [ { batchId: 'BATCH-010', quantity: 8, expiry: '2026-06-15', supplier: 'VetPharm Ltd', notes: '' } ] },
+        { id: 'INV-011', name: 'Stethoscope', category: 'Equipment', unit: 'unit', cost: 45.00, price: 120.00, supplier: 'MedEquip Africa', minStock: 2, location: 'Equipment Room', notes: 'Littmann Classic', batches: [ { batchId: 'BATCH-011', quantity: 3, expiry: '', supplier: 'MedEquip Africa', notes: '' } ] },
+        { id: 'INV-012', name: 'Prescription Diet (Dog)', category: 'Food', unit: 'bag', cost: 18.00, price: 35.00, supplier: 'PetHealth Distributors', minStock: 5, location: 'Storage Room C', notes: 'Gastrointestinal', batches: [ { batchId: 'BATCH-012', quantity: 20, expiry: '2025-09-01', supplier: 'PetHealth Distributors', notes: '' } ] },
       ];
 
       // ==========================================
@@ -1223,9 +527,132 @@
       const itemsPerPage = 6;
       let filteredInventory = [...inventoryData];
       let viewItemId = null;
+      let notifications = [];
+      let notificationIdCounter = 0;
 
       // ==========================================
-      // 3. TOAST
+      // 3. NOTIFICATION SYSTEM
+      // ==========================================
+      function addNotification(title, description, type = 'critical') {
+        const id = ++notificationIdCounter;
+        notifications.push({ id, title, description, type, timestamp: new Date() });
+        updateNotificationBadge();
+        renderNotifications();
+        showToast(`🔔 ${title}`, 'warning');
+      }
+
+      function updateNotificationBadge() {
+        const count = notifications.length;
+        ['notificationBadge', 'notificationBadgeDesktop'].forEach(id => {
+          const badge = document.getElementById(id);
+          if (badge) {
+            if (count > 0) {
+              badge.textContent = count > 9 ? '9+' : count;
+              badge.classList.remove('hidden');
+            } else {
+              badge.classList.add('hidden');
+            }
+          }
+        });
+      }
+
+      function renderNotifications() {
+        const list = document.getElementById('notificationList');
+        if (!list) return;
+        if (notifications.length === 0) {
+          list.innerHTML = '<p class="text-sm text-slate-400 text-center py-4">No new notifications</p>';
+          return;
+        }
+        list.innerHTML = notifications.map(n => `
+          <div class="notification-item" onclick="markNotificationRead(${n.id})">
+            <div class="title">${n.title}</div>
+            <div class="desc">${n.description}</div>
+            <div class="text-[10px] text-slate-400 mt-1">${n.timestamp.toLocaleTimeString()}</div>
+          </div>
+        `).join('');
+      }
+
+      function toggleNotifications() {
+        const dropdown = document.getElementById('notificationDropdown');
+        if (dropdown) {
+          dropdown.classList.toggle('hidden');
+          if (!dropdown.classList.contains('hidden')) {
+            renderNotifications();
+          }
+        }
+      }
+
+      function markNotificationRead(id) {
+        notifications = notifications.filter(n => n.id !== id);
+        updateNotificationBadge();
+        renderNotifications();
+      }
+
+      function clearAllNotifications() {
+        notifications = [];
+        updateNotificationBadge();
+        renderNotifications();
+        const dropdown = document.getElementById('notificationDropdown');
+        if (dropdown) dropdown.classList.add('hidden');
+        showToast('All notifications cleared', 'info');
+      }
+
+      // Click outside to close notification dropdown
+      document.addEventListener('click', function(e) {
+        const dropdown = document.getElementById('notificationDropdown');
+        if (dropdown && !dropdown.classList.contains('hidden')) {
+          if (!e.target.closest('#notificationBell') && !e.target.closest('#notificationBellDesktop') && !e.target.closest('#notificationDropdown')) {
+            dropdown.classList.add('hidden');
+          }
+        }
+      });
+
+      // ==========================================
+      // 4. CHECK CRITICAL STOCK & SEND NOTIFICATIONS
+      // ==========================================
+      function checkCriticalStock() {
+        let criticalItems = [];
+        inventoryData.forEach(item => {
+          const totalQty = getTotalQuantity(item);
+          if (totalQty <= item.minStock && totalQty > 0) {
+            criticalItems.push(item);
+          }
+          if (totalQty === 0) {
+            criticalItems.push(item);
+          }
+        });
+
+        // Update Buffer Stock KPI (count of critical items)
+        document.getElementById('bufferStockKPI').textContent = criticalItems.length;
+
+        // Send notifications for critical items
+        criticalItems.forEach(item => {
+          const totalQty = getTotalQuantity(item);
+          const status = totalQty === 0 ? 'Out of Stock' : 'Critical Low Stock';
+          const msg = totalQty === 0 
+            ? `${item.name} is completely out of stock! Please reorder immediately.`
+            : `${item.name} is at critical level (${totalQty}/${item.minStock} units remaining). Please reorder.`;
+          addNotification(`⚠️ ${status}: ${item.name}`, msg);
+        });
+
+        // Also check for items that are at exactly minStock or slightly above (warning level)
+        const warningItems = inventoryData.filter(item => {
+          const totalQty = getTotalQuantity(item);
+          return totalQty > item.minStock && totalQty <= item.minStock * 1.2;
+        });
+        warningItems.forEach(item => {
+          const totalQty = getTotalQuantity(item);
+          if (!criticalItems.includes(item)) {
+            addNotification(`📊 Approaching Critical: ${item.name}`, 
+              `${item.name} is approaching critical level (${totalQty}/${item.minStock} units). Consider reordering soon.`);
+          }
+        });
+
+        return criticalItems;
+      }
+
+      // ==========================================
+      // 5. HELPER FUNCTIONS
       // ==========================================
       function showToast(message, type = 'success') {
         const container = document.getElementById('toast-container');
@@ -1234,25 +661,14 @@
         toast.className = `toast toast-${type}`;
         toast.textContent = message;
         container.appendChild(toast);
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => toast.classList.add('show'));
-        });
+        requestAnimationFrame(() => { requestAnimationFrame(() => toast.classList.add('show')); });
         setTimeout(() => {
           toast.classList.remove('show');
-          setTimeout(() => {
-            if (toast.parentNode) toast.remove();
-          }, 300);
+          setTimeout(() => { if (toast.parentNode) toast.remove(); }, 300);
         }, 4000);
       }
 
-      // ==========================================
-      // 4. HELPER FUNCTIONS
-      // ==========================================
-      function formatDate(dateStr) {
-        if (!dateStr) return 'N/A';
-        const d = new Date(dateStr + 'T00:00:00');
-        return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
-      }
+      function formatDate(dateStr) { if (!dateStr) return 'N/A'; const d = new Date(dateStr + 'T00:00:00'); return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }); }
 
       function getBatchStatus(batch) {
         if (!batch.expiry) return 'In Stock';
@@ -1266,13 +682,7 @@
 
       function getOverallStatus(item) {
         if (!item.batches || item.batches.length === 0) return 'Out of Stock';
-        
-        let totalQty = 0;
-        let hasExpired = false;
-        let hasInStock = false;
-        let hasExpiringSoon = false;
-        let allExpired = true;
-        
+        let totalQty = 0, hasExpired = false, hasInStock = false, hasExpiringSoon = false, allExpired = true;
         item.batches.forEach(batch => {
           totalQty += batch.quantity;
           const status = getBatchStatus(batch);
@@ -1280,7 +690,6 @@
           if (status === 'In Stock') { hasInStock = true; allExpired = false; }
           if (status === 'Expiring Soon') { hasExpiringSoon = true; allExpired = false; }
         });
-        
         if (totalQty === 0) return 'Out of Stock';
         if (allExpired) return 'Expired';
         if (hasExpired && (hasInStock || hasExpiringSoon)) return 'Mixed';
@@ -1290,28 +699,13 @@
       }
 
       function getStatusClass(status) {
-        const map = {
-          'In Stock': 'status-in-stock',
-          'Low Stock': 'status-low-stock',
-          'Out of Stock': 'status-out-of-stock',
-          'Expired': 'status-expired',
-          'Expiring Soon': 'status-expiring-soon',
-          'Mixed': 'status-mixed'
-        };
+        const map = { 'In Stock': 'status-in-stock', 'Low Stock': 'status-low-stock', 'Out of Stock': 'status-out-of-stock', 'Expired': 'status-expired', 'Expiring Soon': 'status-expiring-soon', 'Mixed': 'status-mixed' };
         return map[status] || 'status-in-stock';
       }
 
-      function getTotalQuantity(item) {
-        if (!item.batches) return 0;
-        return item.batches.reduce((sum, batch) => sum + batch.quantity, 0);
-      }
+      function getTotalQuantity(item) { if (!item.batches) return 0; return item.batches.reduce((sum, batch) => sum + batch.quantity, 0); }
 
-      function getTotalValue(items) {
-        return items.reduce((sum, item) => {
-          const qty = getTotalQuantity(item);
-          return sum + (item.cost || 0) * qty;
-        }, 0);
-      }
+      function getTotalValue(items) { return items.reduce((sum, item) => sum + (item.cost || 0) * getTotalQuantity(item), 0); }
 
       function generateBatchId(itemId) {
         const existing = inventoryData.find(i => i.id === itemId);
@@ -1325,38 +719,22 @@
         const suppliers = new Set();
         inventoryData.forEach(item => {
           if (item.supplier) suppliers.add(item.supplier);
-          if (item.batches) {
-            item.batches.forEach(batch => {
-              if (batch.supplier) suppliers.add(batch.supplier);
-            });
-          }
+          if (item.batches) item.batches.forEach(batch => { if (batch.supplier) suppliers.add(batch.supplier); });
         });
         return Array.from(suppliers).sort();
       }
 
       // ==========================================
-      // 5. FILTER SUPPLIER SEARCH / AUTOCOMPLETE
+      // 6. FILTER SUPPLIER SEARCH
       // ==========================================
       function showFilterSupplierSuggestions(input) {
         const suggestionsDiv = document.getElementById('filterSupplierSuggestions');
         const query = input.value.toLowerCase().trim();
         const suppliers = getAllSuppliers();
-        
         let matches = suppliers.filter(s => s.toLowerCase().includes(query));
-        
-        if (!query) {
-          matches = suppliers.slice(0, 8);
-        }
-        
-        if (matches.length === 0) {
-          suggestionsDiv.innerHTML = `<div class="suggestion-item text-slate-400">No suppliers found</div>`;
-          suggestionsDiv.classList.add('show');
-          return;
-        }
-        
-        suggestionsDiv.innerHTML = matches.map(s => 
-          `<div class="suggestion-item" onclick="selectFilterSupplier('${s.replace(/'/g, "\\'")}')">${s}</div>`
-        ).join('');
+        if (!query) matches = suppliers.slice(0, 8);
+        if (matches.length === 0) { suggestionsDiv.innerHTML = `<div class="suggestion-item text-slate-400">No suppliers found</div>`; suggestionsDiv.classList.add('show'); return; }
+        suggestionsDiv.innerHTML = matches.map(s => `<div class="suggestion-item" onclick="selectFilterSupplier('${s.replace(/'/g, "\\'")}')">${s}</div>`).join('');
         suggestionsDiv.classList.add('show');
       }
 
@@ -1366,7 +744,6 @@
         renderInventory();
       }
 
-      // Close suggestions on outside click
       document.addEventListener('click', function(e) {
         if (!e.target.closest('#supplierFilter') && !e.target.closest('#filterSupplierSuggestions')) {
           document.getElementById('filterSupplierSuggestions')?.classList.remove('show');
@@ -1374,7 +751,7 @@
       });
 
       // ==========================================
-      // 6. RENDER INVENTORY
+      // 7. RENDER INVENTORY + KPI (Min, Max, Buffer)
       // ==========================================
       function renderInventory() {
         const tbody = document.getElementById('inventoryTbody');
@@ -1384,27 +761,43 @@
         const supplierFilter = document.getElementById('supplierFilter').value.toLowerCase().trim();
 
         filteredInventory = inventoryData.filter(item => {
-          const matchSearch = item.name.toLowerCase().includes(search) ||
-                             item.id.toLowerCase().includes(search) ||
-                             item.category.toLowerCase().includes(search);
+          const matchSearch = item.name.toLowerCase().includes(search) || item.id.toLowerCase().includes(search) || item.category.toLowerCase().includes(search);
           const matchCategory = categoryFilter === 'all' || item.category === categoryFilter;
           const status = getOverallStatus(item);
-          const matchStatus = statusFilter === 'all' || status === statusFilter;
-          const matchSupplier = !supplierFilter || 
-                               (item.supplier && item.supplier.toLowerCase().includes(supplierFilter)) ||
-                               (item.batches && item.batches.some(b => b.supplier && b.supplier.toLowerCase().includes(supplierFilter)));
+          const matchStatus = statusFilter === 'all' || status === statusFilter || (statusFilter === 'Critical' && getTotalQuantity(item) <= item.minStock);
+          const matchSupplier = !supplierFilter || (item.supplier && item.supplier.toLowerCase().includes(supplierFilter)) || (item.batches && item.batches.some(b => b.supplier && b.supplier.toLowerCase().includes(supplierFilter)));
           return matchSearch && matchCategory && matchStatus && matchSupplier;
         });
 
-        // Update stats
-        document.getElementById('totalItems').textContent = inventoryData.length;
+        // --- KPI stats ---
+        const totalItems = inventoryData.length;
         const inStock = inventoryData.filter(i => getOverallStatus(i) === 'In Stock').length;
         const lowStock = inventoryData.filter(i => getOverallStatus(i) === 'Low Stock').length;
         const outOfStock = inventoryData.filter(i => getOverallStatus(i) === 'Out of Stock' || getOverallStatus(i) === 'Expired').length;
+        const totalValue = getTotalValue(inventoryData);
+
+        // Min Stock: Number of items at or below their minimum threshold
+        const criticalItems = inventoryData.filter(item => getTotalQuantity(item) <= item.minStock);
+        const minStockCount = criticalItems.length;
+
+        // Max Stock: The highest quantity in inventory (simple max)
+        const quantities = inventoryData.map(item => getTotalQuantity(item));
+        const maxQty = quantities.length ? Math.max(...quantities) : 0;
+
+        // Buffer Stock: Number of items at critical level (same as minStock KPI)
+        const bufferStockCount = criticalItems.length;
+
+        document.getElementById('totalItems').textContent = totalItems;
         document.getElementById('inStockCount').textContent = inStock;
         document.getElementById('lowStockCount').textContent = lowStock;
         document.getElementById('outOfStockCount').textContent = outOfStock;
-        document.getElementById('totalValue').textContent = `GHS ${getTotalValue(inventoryData).toFixed(2)}`;
+        document.getElementById('totalValue').textContent = `GHS ${totalValue.toFixed(2)}`;
+        document.getElementById('minStockKPI').textContent = minStockCount;
+        document.getElementById('maxStockKPI').textContent = maxQty;
+        document.getElementById('bufferStockKPI').textContent = bufferStockCount;
+
+        // Check critical stock and send notifications
+        checkCriticalStock();
 
         // Pagination
         const totalPages = Math.ceil(filteredInventory.length / itemsPerPage) || 1;
@@ -1414,7 +807,7 @@
         const pageData = filteredInventory.slice(start, end);
 
         if (pageData.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="7" class="px-6 py-8 text-center text-slate-400">No inventory items found</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="8" class="px-6 py-8 text-center text-slate-400">No inventory items found</td></tr>`;
         } else {
           tbody.innerHTML = pageData.map(item => {
             const totalQty = getTotalQuantity(item);
@@ -1423,41 +816,27 @@
             const dropdownId = `inv-${item.id}`;
             const hasMultipleBatches = item.batches && item.batches.length > 1;
             const batchIndicator = hasMultipleBatches ? ` (${item.batches.length} batches)` : '';
-            
+            const isCritical = totalQty <= item.minStock;
+            const rowClass = isCritical ? 'bg-red-50' : '';
+
             return `
-                <tr class="row-clickable" onclick="viewBatches('${item.id}')">
-                    <td class="px-4 md:px-6 py-3">
-                        <div>
-                            <div class="font-label-md text-on-surface">${item.name}</div>
-                            <div class="text-caption text-outline">${item.id}${batchIndicator}</div>
-                        </div>
-                    </td>
+                <tr class="row-clickable ${rowClass}" onclick="viewBatches('${item.id}')">
+                    <td class="px-4 md:px-6 py-3"><div><div class="font-label-md text-on-surface">${item.name}</div><div class="text-caption text-outline">${item.id}${batchIndicator}</div></div></td>
                     <td class="px-4 md:px-6 py-3 text-body-md">${item.category}</td>
                     <td class="px-4 md:px-6 py-3 font-medium text-on-surface">${totalQty}</td>
+                    <td class="px-4 md:px-6 py-3 font-medium text-red-600">${item.minStock}</td>
                     <td class="px-4 md:px-6 py-3 text-body-md">${item.unit}</td>
                     <td class="px-4 md:px-6 py-3 font-mono">GHS ${(item.price || 0).toFixed(2)}</td>
-                    <td class="px-4 md:px-6 py-3">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${statusClass}">${status.toUpperCase()}</span>
-                    </td>
+                    <td class="px-4 md:px-6 py-3"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${statusClass}">${status.toUpperCase()}</span></td>
                     <td class="px-4 md:px-6 py-3 text-right">
                         <div class="action-dropdown">
-                            <button onclick="event.stopPropagation(); toggleDropdown('${dropdownId}')" class="action-dropdown-btn">
-                                <span class="material-symbols-outlined text-[20px]">more_vert</span>
-                            </button>
+                            <button onclick="event.stopPropagation(); toggleDropdown('${dropdownId}')" class="action-dropdown-btn"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
                             <div id="dropdown-${dropdownId}" class="action-dropdown-menu">
-                                <button onclick="event.stopPropagation(); viewBatches('${item.id}')">
-                                    <span class="material-symbols-outlined text-[18px]">visibility</span> View Batches
-                                </button>
-                                <button onclick="event.stopPropagation(); openAddBatch('${item.id}')" class="text-emerald-600">
-                                    <span class="material-symbols-outlined text-[18px]">add</span> Add Batch
-                                </button>
-                                <button onclick="event.stopPropagation(); editItem('${item.id}')">
-                                    <span class="material-symbols-outlined text-[18px]">edit</span> Edit Item
-                                </button>
+                                <button onclick="event.stopPropagation(); viewBatches('${item.id}')"><span class="material-symbols-outlined text-[18px]">visibility</span> View Batches</button>
+                                <button onclick="event.stopPropagation(); openAddBatch('${item.id}')" class="text-emerald-600"><span class="material-symbols-outlined text-[18px]">add</span> Add Batch</button>
+                                <button onclick="event.stopPropagation(); editItem('${item.id}')"><span class="material-symbols-outlined text-[18px]">edit</span> Edit Item</button>
                                 <div class="menu-divider"></div>
-                                <button onclick="event.stopPropagation(); deleteItem('${item.id}')" class="danger">
-                                    <span class="material-symbols-outlined text-[18px]">delete</span> Delete
-                                </button>
+                                <button onclick="event.stopPropagation(); deleteItem('${item.id}')" class="danger"><span class="material-symbols-outlined text-[18px]">delete</span> Delete</button>
                             </div>
                         </div>
                     </td>
@@ -1473,20 +852,14 @@
       }
 
       // ==========================================
-      // 7. PAGINATION
+      // 8. PAGINATION
       // ==========================================
       function changePage(delta) {
         const totalPages = Math.ceil(filteredInventory.length / itemsPerPage) || 1;
         const newPage = currentPage + delta;
-        if (newPage >= 1 && newPage <= totalPages) {
-          currentPage = newPage;
-          renderInventory();
-        }
+        if (newPage >= 1 && newPage <= totalPages) { currentPage = newPage; renderInventory(); }
       }
 
-      // ==========================================
-      // 8. DROPDOWN TOGGLE
-      // ==========================================
       function toggleDropdown(id) {
         document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
         const menu = document.getElementById(`dropdown-${id}`);
@@ -1494,9 +867,7 @@
       }
 
       document.addEventListener('click', function(e) {
-        if (!e.target.closest('.action-dropdown')) {
-          document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
-        }
+        if (!e.target.closest('.action-dropdown')) document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
       });
 
       // ==========================================
@@ -1509,76 +880,43 @@
         const modal = document.getElementById('viewBatchesModal');
         const content = document.getElementById('viewBatchesContent');
         const title = document.getElementById('viewBatchesTitle');
-
         title.textContent = `${item.name} - Batches`;
-        
         if (!item.batches || item.batches.length === 0) {
           content.innerHTML = `<div class="text-center py-8 text-slate-400">No batches found for this item.</div>`;
         } else {
           const totalQty = getTotalQuantity(item);
           const status = getOverallStatus(item);
           const statusClass = getStatusClass(status);
-          
           let batchHTML = `
             <div class="bg-slate-50 p-4 rounded-lg mb-4">
-              <div class="grid grid-cols-2 gap-4">
-                <div><span class="text-xs text-slate-400">Total Quantity</span><p class="font-bold">${totalQty} ${item.unit}</p></div>
-                <div><span class="text-xs text-slate-400">Overall Status</span><p><span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-bold ${statusClass}">${status.toUpperCase()}</span></p></div>
-              </div>
-            </div>
-            <div class="space-y-3">
+              <div class="grid grid-cols-2 gap-4"><div><span class="text-xs text-slate-400">Total Quantity</span><p class="font-bold">${totalQty} ${item.unit}</p></div><div><span class="text-xs text-slate-400">Overall Status</span><p><span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-bold ${statusClass}">${status.toUpperCase()}</span></p></div></div>
+            </div><div class="space-y-3">
           `;
-          
           item.batches.forEach((batch, index) => {
             const batchStatus = getBatchStatus(batch);
-            const batchClass = batchStatus === 'Expired' ? 'batch-expired' : 
-                              batchStatus === 'Expiring Soon' ? 'batch-expiring' : 
-                              'batch-in-stock';
-            
+            const batchClass = batchStatus === 'Expired' ? 'batch-expired' : batchStatus === 'Expiring Soon' ? 'batch-expiring' : 'batch-in-stock';
             batchHTML += `
               <div class="${batchClass} p-4 rounded-lg border border-slate-200">
                 <div class="flex justify-between items-start flex-wrap gap-2">
-                  <div>
-                    <div class="font-semibold text-slate-900">${batch.batchId}</div>
-                    <div class="text-sm text-slate-500">Qty: ${batch.quantity} ${item.unit}</div>
-                    <div class="text-sm text-slate-500">Expiry: ${batch.expiry ? formatDate(batch.expiry) : 'N/A'}</div>
-                  </div>
-                  <div class="text-right">
-                    <span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-bold ${getStatusClass(batchStatus)}">${batchStatus.toUpperCase()}</span>
-                    <div class="text-xs text-slate-400 mt-1">${batch.supplier || 'No supplier'}</div>
-                  </div>
+                  <div><div class="font-semibold text-slate-900">${batch.batchId}</div><div class="text-sm text-slate-500">Qty: ${batch.quantity} ${item.unit}</div><div class="text-sm text-slate-500">Expiry: ${batch.expiry ? formatDate(batch.expiry) : 'N/A'}</div></div>
+                  <div class="text-right"><span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-bold ${getStatusClass(batchStatus)}">${batchStatus.toUpperCase()}</span><div class="text-xs text-slate-400 mt-1">${batch.supplier || 'No supplier'}</div></div>
                 </div>
                 ${batch.notes ? `<div class="text-sm text-slate-500 mt-2">${batch.notes}</div>` : ''}
-                <div class="mt-2 flex gap-2">
-                  <button onclick="event.stopPropagation(); openRemoveBatch('${item.id}', '${batch.batchId}')" class="text-xs text-red-600 hover:underline">Remove</button>
-                </div>
+                <div class="mt-2 flex gap-2"><button onclick="event.stopPropagation(); openRemoveBatch('${item.id}', '${batch.batchId}')" class="text-xs text-red-600 hover:underline">Remove</button></div>
               </div>
             `;
           });
-          
           batchHTML += `</div>`;
           content.innerHTML = batchHTML;
         }
-
-        document.getElementById('addBatchFromViewBtn').onclick = function() {
-          closeViewBatchesModal();
-          setTimeout(() => openAddBatch(id), 300);
-        };
-
+        document.getElementById('addBatchFromViewBtn').onclick = function() { closeViewBatchesModal(); setTimeout(() => openAddBatch(id), 300); };
         modal.classList.add('open');
         document.body.style.overflow = 'hidden';
         document.getElementById(`dropdown-inv-${id}`)?.classList.remove('open');
       }
 
-      function closeViewBatchesModal() {
-        document.getElementById('viewBatchesModal').classList.remove('open');
-        document.body.style.overflow = '';
-        viewItemId = null;
-      }
-
-      document.getElementById('viewBatchesModal')?.addEventListener('click', function(e) {
-        if (e.target === this) closeViewBatchesModal();
-      });
+      function closeViewBatchesModal() { document.getElementById('viewBatchesModal').classList.remove('open'); document.body.style.overflow = ''; viewItemId = null; }
+      document.getElementById('viewBatchesModal')?.addEventListener('click', function(e) { if (e.target === this) closeViewBatchesModal(); });
 
       // ==========================================
       // 10. ADD BATCH
@@ -1586,7 +924,6 @@
       function openAddBatch(id) {
         const item = inventoryData.find(i => i.id === id);
         if (!item) { showToast('Item not found', 'error'); return; }
-
         document.getElementById('batchItemId').value = id;
         document.getElementById('batchItemName').textContent = item.name;
         document.getElementById('batchCurrentStock').textContent = getTotalQuantity(item);
@@ -1595,94 +932,49 @@
         document.getElementById('batchNumber').value = generateBatchId(id);
         document.getElementById('batchSupplier').value = item.supplier || '';
         document.getElementById('batchNotes').value = '';
-
         document.getElementById('addBatchModal').classList.add('open');
         document.body.style.overflow = 'hidden';
         document.getElementById(`dropdown-inv-${id}`)?.classList.remove('open');
       }
 
-      function openAddBatchFromView() {
-        if (viewItemId) {
-          closeViewBatchesModal();
-          setTimeout(() => openAddBatch(viewItemId), 300);
-        }
-      }
-
-      function closeAddBatchModal() {
-        document.getElementById('addBatchModal').classList.remove('open');
-        document.body.style.overflow = '';
-      }
+      function openAddBatchFromView() { if (viewItemId) { closeViewBatchesModal(); setTimeout(() => openAddBatch(viewItemId), 300); } }
+      function closeAddBatchModal() { document.getElementById('addBatchModal').classList.remove('open'); document.body.style.overflow = ''; }
 
       function submitNewBatch(e) {
         e.preventDefault();
         const itemId = document.getElementById('batchItemId').value;
         const item = inventoryData.find(i => i.id === itemId);
         if (!item) { showToast('Item not found', 'error'); return; }
-
         const quantity = parseInt(document.getElementById('batchQuantity').value) || 0;
         const expiry = document.getElementById('batchExpiry').value;
         const batchId = document.getElementById('batchNumber').value;
         const supplier = document.getElementById('batchSupplier').value.trim() || item.supplier || '';
         const notes = document.getElementById('batchNotes').value.trim();
-
-        if (quantity <= 0) {
-          showToast('Please enter a valid quantity', 'error');
-          return;
-        }
-
-        if (!expiry) {
-          showToast('Please select an expiry date', 'error');
-          return;
-        }
-
-        // Add the new batch
-        item.batches.push({
-          batchId: batchId,
-          quantity: quantity,
-          expiry: expiry,
-          supplier: supplier,
-          notes: notes
-        });
-
+        if (quantity <= 0) { showToast('Please enter a valid quantity', 'error'); return; }
+        if (!expiry) { showToast('Please select an expiry date', 'error'); return; }
+        item.batches.push({ batchId, quantity, expiry, supplier, notes });
         closeAddBatchModal();
         renderInventory();
         showToast(`✅ New batch ${batchId} added to ${item.name} (${quantity} ${item.unit})`, 'success');
       }
-
-      document.getElementById('addBatchModal')?.addEventListener('click', function(e) {
-        if (e.target === this) closeAddBatchModal();
-      });
+      document.getElementById('addBatchModal')?.addEventListener('click', function(e) { if (e.target === this) closeAddBatchModal(); });
 
       // ==========================================
       // 11. REMOVE BATCH
       // ==========================================
       function openRemoveBatch(itemId, batchId) {
         if (!confirm(`Remove batch ${batchId} from inventory?`)) return;
-        
         const item = inventoryData.find(i => i.id === itemId);
         if (!item) { showToast('Item not found', 'error'); return; }
-        
         const batchIndex = item.batches.findIndex(b => b.batchId === batchId);
         if (batchIndex === -1) { showToast('Batch not found', 'error'); return; }
-        
         const batch = item.batches[batchIndex];
         const qty = batch.quantity;
-        
-        // Remove the batch
         item.batches.splice(batchIndex, 1);
-        
-        // If no batches left, create a placeholder
-        if (item.batches.length === 0) {
-          item.batches.push({ batchId: 'BATCH-001', quantity: 0, expiry: '', supplier: '', notes: '' });
-        }
-        
+        if (item.batches.length === 0) item.batches.push({ batchId: 'BATCH-001', quantity: 0, expiry: '', supplier: '', notes: '' });
         renderInventory();
         showToast(`🗑️ Batch ${batchId} removed (${qty} ${item.unit})`, 'info');
-        
-        // Refresh view if modal is open
-        if (document.getElementById('viewBatchesModal').classList.contains('open')) {
-          viewBatches(itemId);
-        }
+        if (document.getElementById('viewBatchesModal').classList.contains('open')) viewBatches(itemId);
       }
 
       // ==========================================
@@ -1694,12 +986,7 @@
         document.body.style.overflow = 'hidden';
         document.getElementById('invMinStock').value = 10;
       }
-
-      function closeAddItemModal() {
-        document.getElementById('addItemModal').classList.remove('open');
-        document.body.style.overflow = '';
-        delete document.getElementById('addItemForm').dataset.editId;
-      }
+      function closeAddItemModal() { document.getElementById('addItemModal').classList.remove('open'); document.body.style.overflow = ''; delete document.getElementById('addItemForm').dataset.editId; }
 
       function submitInventoryItem(e) {
         e.preventDefault();
@@ -1712,60 +999,20 @@
         const minStock = parseInt(document.getElementById('invMinStock').value) || 0;
         const location = document.getElementById('invLocation').value.trim();
         const notes = document.getElementById('invNotes').value.trim();
-
-        if (!name || !category) {
-          showToast('Please fill in all required fields', 'error');
-          return;
-        }
-
+        if (!name || !category) { showToast('Please fill in all required fields', 'error'); return; }
         const editId = document.getElementById('addItemForm').dataset.editId;
-
         if (editId) {
           const item = inventoryData.find(i => i.id === editId);
-          if (item) {
-            item.name = name;
-            item.category = category;
-            item.unit = unit;
-            item.cost = cost;
-            item.price = price;
-            item.supplier = supplier;
-            item.minStock = minStock;
-            item.location = location;
-            item.notes = notes;
-            showToast(`✅ ${editId} updated successfully`, 'success');
-          }
+          if (item) { item.name = name; item.category = category; item.unit = unit; item.cost = cost; item.price = price; item.supplier = supplier; item.minStock = minStock; item.location = location; item.notes = notes; showToast(`✅ ${editId} updated successfully`, 'success'); }
           delete document.getElementById('addItemForm').dataset.editId;
         } else {
           const ids = inventoryData.map(i => parseInt(i.id.split('-')[1]) || 0);
           const nextId = Math.max(0, ...ids) + 1;
           const newId = `INV-${String(nextId).padStart(3, '0')}`;
-          
-          // Create with initial batch
-          const newItem = {
-            id: newId,
-            name,
-            category,
-            unit,
-            cost,
-            price,
-            supplier,
-            minStock,
-            location,
-            notes,
-            batches: [
-              { 
-                batchId: 'BATCH-001', 
-                quantity: 0, 
-                expiry: '', 
-                supplier: supplier || '', 
-                notes: '' 
-              }
-            ]
-          };
+          const newItem = { id: newId, name, category, unit, cost, price, supplier, minStock, location, notes, batches: [ { batchId: 'BATCH-001', quantity: 0, expiry: '', supplier: supplier || '', notes: '' } ] };
           inventoryData.push(newItem);
           showToast(`✅ ${newId} - ${name} added successfully`, 'success');
         }
-
         closeAddItemModal();
         renderInventory();
       }
@@ -1776,7 +1023,6 @@
       function editItem(id) {
         const item = inventoryData.find(i => i.id === id);
         if (!item) { showToast('Item not found', 'error'); return; }
-
         document.getElementById('invName').value = item.name;
         document.getElementById('invCategory').value = item.category;
         document.getElementById('invUnit').value = item.unit;
@@ -1786,9 +1032,7 @@
         document.getElementById('invMinStock').value = item.minStock || 0;
         document.getElementById('invLocation').value = item.location || '';
         document.getElementById('invNotes').value = item.notes || '';
-
         document.getElementById('addItemForm').dataset.editId = id;
-
         document.getElementById('addItemModal').classList.add('open');
         document.body.style.overflow = 'hidden';
         document.getElementById(`dropdown-inv-${id}`)?.classList.remove('open');
@@ -1823,7 +1067,6 @@
       function exportInventoryCSV() {
         const data = filteredInventory.length ? filteredInventory : inventoryData;
         if (!data.length) { showToast('No data to export', 'warning'); return; }
-
         let csv = 'ID,Name,Category,Batch ID,Quantity,Unit,Cost,Price,Supplier,Expiry,Status,Location,Notes\n';
         data.forEach(item => {
           if (item.batches && item.batches.length > 0) {
@@ -1835,7 +1078,6 @@
             csv += `${item.id},${item.name},${item.category},N/A,0,${item.unit},${item.cost||0},${item.price||0},${item.supplier||''},N/A,Out of Stock,${item.location||''},${item.notes||''}\n`;
           }
         });
-
         const blob = new Blob([csv], { type: 'text/csv' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -1852,22 +1094,20 @@
       function printInventory() {
         const data = filteredInventory.length ? filteredInventory : inventoryData;
         if (!data.length) { showToast('No data to print', 'warning'); return; }
-
         const win = window.open('', '_blank', 'width=1000,height=700');
         let rows = '';
         data.forEach(item => {
           const totalQty = getTotalQuantity(item);
           const status = getOverallStatus(item);
-          rows += `<tr><td>${item.id}</td><td>${item.name}</td><td>${item.category}</td><td>${totalQty}</td><td>${item.unit}</td><td>${(item.price||0).toFixed(2)}</td><td>${item.supplier||''}</td><td>${status}</td><td>${item.batches ? item.batches.length : 0}</td></tr>`;
+          rows += `<tr><td>${item.id}</td><td>${item.name}</td><td>${item.category}</td><td>${totalQty}</td><td>${item.minStock}</td><td>${item.unit}</td><td>${(item.price||0).toFixed(2)}</td><td>${item.supplier||''}</td><td>${status}</td><td>${item.batches ? item.batches.length : 0}</td></tr>`;
         });
-
         win.document.write(`
           <html><head><title>Inventory Report</title>
           <style>body{font-family:sans-serif;padding:30px;color:#1e293b;}table{width:100%;border-collapse:collapse;margin-top:20px;}th{background:#f1f5f9;padding:8px;border:1px solid #e2e8f0;}td{padding:6px 8px;border:1px solid #e2e8f0;}h2{border-bottom:2px solid #036469;padding-bottom:8px;}.footer{margin-top:24px;font-size:11px;color:#64748b;text-align:center;}</style>
           </head><body>
           <h2>Inventory Report</h2>
           <p>Generated: ${new Date().toLocaleString()}</p>
-          <table><thead><tr><th>ID</th><th>Name</th><th>Category</th><th>Total Qty</th><th>Unit</th><th>Price</th><th>Supplier</th><th>Status</th><th>Batches</th></tr></thead><tbody>${rows}</tbody></table>
+          <table><thead><tr><th>ID</th><th>Name</th><th>Category</th><th>Total Qty</th><th>Min Stock</th><th>Unit</th><th>Price</th><th>Supplier</th><th>Status</th><th>Batches</th></tr></thead><tbody>${rows}</tbody></table>
           <p style="margin-top:16px;font-weight:bold;">Total Value: GHS ${getTotalValue(data).toFixed(2)}</p>
           <div class="footer">© 2026 addyPets Veterinary Clinic</div>
           <script>window.onload=function(){window.print();}<\/script>
@@ -1876,13 +1116,10 @@
         win.document.close();
       }
 
-      // ==========================================
-      // 18. SEARCH LISTENER
-      // ==========================================
       document.getElementById('inventorySearch')?.addEventListener('input', renderInventory);
 
       // ==========================================
-      // 19. SIDEBAR LOGIC
+      // 18. SIDEBAR LOGIC
       // ==========================================
       const mobileBurgerBtn = document.getElementById('mobileBurgerBtn');
       const mobileSidebar = document.getElementById('mobileSidebar');
@@ -1892,17 +1129,8 @@
       const collapseSidebarBtn = document.getElementById('collapseSidebarBtn');
       let isSidebarCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
 
-      function openMobileSidebar() {
-        mobileSidebar.classList.add('open');
-        mobileOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      }
-
-      function closeMobileSidebarFunc() {
-        mobileSidebar.classList.remove('open');
-        mobileOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-      }
+      function openMobileSidebar() { mobileSidebar.classList.add('open'); mobileOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+      function closeMobileSidebarFunc() { mobileSidebar.classList.remove('open'); mobileOverlay.classList.remove('active'); document.body.style.overflow = ''; }
 
       function toggleDesktopSidebar() {
         isSidebarCollapsed = !isSidebarCollapsed;
@@ -1919,30 +1147,20 @@
         }
       }
 
-      if (isSidebarCollapsed) {
-        desktopSidebar.classList.add('sidebar-collapsed');
-        collapseSidebarBtn.querySelector('.material-symbols-outlined').textContent = 'chevron_right';
-      }
+      if (isSidebarCollapsed) { desktopSidebar.classList.add('sidebar-collapsed'); collapseSidebarBtn.querySelector('.material-symbols-outlined').textContent = 'chevron_right'; }
 
       mobileBurgerBtn?.addEventListener('click', openMobileSidebar);
       closeMobileSidebar?.addEventListener('click', closeMobileSidebarFunc);
       mobileOverlay?.addEventListener('click', closeMobileSidebarFunc);
       collapseSidebarBtn?.addEventListener('click', toggleDesktopSidebar);
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && mobileSidebar.classList.contains('open')) closeMobileSidebarFunc();
-      });
-
-      window.addEventListener('resize', () => {
-        if (window.innerWidth >= 768 && mobileSidebar.classList.contains('open')) closeMobileSidebarFunc();
-      });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && mobileSidebar.classList.contains('open')) closeMobileSidebarFunc(); });
+      window.addEventListener('resize', () => { if (window.innerWidth >= 768 && mobileSidebar.classList.contains('open')) closeMobileSidebarFunc(); });
 
       // ==========================================
-      // 20. HIGHLIGHT ACTIVE PAGE
+      // 19. HIGHLIGHT ACTIVE PAGE
       // ==========================================
       function highlightCurrentPage() {
         const currentPage = document.body.getAttribute('data-page') || 'inventory';
-
         document.querySelectorAll('[data-nav-desktop]').forEach((link) => {
           if (link.getAttribute('data-nav-desktop') === currentPage) {
             link.classList.add('bg-primary-container', 'text-on-primary-container');
@@ -1952,7 +1170,6 @@
             link.classList.add('text-tertiary-fixed-dim', 'hover:bg-white/5');
           }
         });
-
         document.querySelectorAll('[data-nav-mobile]').forEach((link) => {
           if (link.getAttribute('data-nav-mobile') === currentPage) {
             link.classList.add('bg-primary-container', 'text-on-primary-container');
@@ -1965,79 +1182,33 @@
       }
 
       // ==========================================
-      // 21. LOGOUT
+      // 20. LOGOUT
       // ==========================================
-      function logout() {
-        if (confirm('Are you sure you want to logout?')) {
-          localStorage.removeItem('user');
-          localStorage.removeItem('token');
-          window.location.href = 'vet_portal_login.html';
-        }
-      }
-
+      function logout() { if (confirm('Are you sure you want to logout?')) { localStorage.removeItem('user'); localStorage.removeItem('token'); window.location.href = 'vet_portal_login.html'; } }
       document.getElementById('logoutBtnMobile')?.addEventListener('click', logout);
       document.getElementById('logoutBtnDesktop')?.addEventListener('click', logout);
 
       // ==========================================
-      // 22. NAVIGATION
+      // 21. NAVIGATION
       // ==========================================
       function navigateTo(section) {
-        const pageMap = {
-          analytics: 'Dashboard.html',
-          calendar: 'clinic_calendar.html',
-          staff: 'staff_service_settings.html',
-          billing: 'billing.html',
-          records: 'records.html',
-          message: 'message.html',
-          emergency: 'emergency_management.html',
-          appointments: 'appointments.html',
-          inventory: 'inventory.html',
-          settings: 'settings.html'
-        };
+        const pageMap = { analytics: 'Dashboard.html', calendar: 'clinic_calendar.html', staff: 'staff_service_settings.html', billing: 'billing.html', records: 'records.html', message: 'message.html', emergency: 'emergency_management.html', appointments: 'appointments.html', inventory: 'inventory.html', settings: 'settings.html' };
         if (pageMap[section]) window.location.href = pageMap[section];
       }
-
-      document.querySelectorAll('[data-nav-desktop]').forEach((link) => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const section = link.getAttribute('data-nav-desktop');
-          navigateTo(section);
-        });
-      });
-
-      document.querySelectorAll('[data-nav-mobile]').forEach((link) => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const section = link.getAttribute('data-nav-mobile');
-          navigateTo(section);
-          closeMobileSidebarFunc();
-        });
-      });
+      document.querySelectorAll('[data-nav-desktop]').forEach((link) => { link.addEventListener('click', (e) => { e.preventDefault(); navigateTo(link.getAttribute('data-nav-desktop')); }); });
+      document.querySelectorAll('[data-nav-mobile]').forEach((link) => { link.addEventListener('click', (e) => { e.preventDefault(); navigateTo(link.getAttribute('data-nav-mobile')); closeMobileSidebarFunc(); }); });
 
       // ==========================================
-      // 23. DEBUG FUNCTION
+      // 22. INIT
       // ==========================================
-      function debugInventory() {
-        console.log('=== INVENTORY STATUS ===');
-        inventoryData.forEach(item => {
-          const status = getOverallStatus(item);
-          const totalQty = getTotalQuantity(item);
-          console.log(`${item.id}: ${item.name} - Qty: ${totalQty} | Batches: ${item.batches.length} | Status: ${status}`);
-          item.batches.forEach(b => {
-            console.log(`  ${b.batchId}: ${b.quantity} ${item.unit} | Exp: ${b.expiry || 'N/A'} | Status: ${getBatchStatus(b)}`);
-          });
-        });
-        console.log('=======================');
-      }
-
-      // ==========================================
-      // 24. INIT
-      // ==========================================
-      document.addEventListener('DOMContentLoaded', function() {
-        highlightCurrentPage();
-        renderInventory();
-        // Expose debug function to console
-        window.debugInventory = debugInventory;
+      document.addEventListener('DOMContentLoaded', function() { 
+        highlightCurrentPage(); 
+        renderInventory(); 
+        // Initial check for critical stock
+        setTimeout(() => {
+          checkCriticalStock();
+        }, 1000);
+        window.debugInventory = function() { console.log('Inventory Data:', inventoryData); }; 
       });
     </script>
   </body>

@@ -51,7 +51,6 @@
         .sidebar-link.emergency:hover { background-color: #7a2526; color: #ffffff; }
         .sidebar-link.emergency .sidebar-icon-only { color: #ffffff; }
 
-        /* Billing highlight styles */
         .sidebar-link.billing-highlight {
             background-color: #036469 !important;
             color: #ffffff !important;
@@ -107,6 +106,22 @@
         .badge-emerald { background: #d1fae5; color: #065f46; }
         .badge-amber { background: #fef3c7; color: #92400e; }
         .badge-red { background: #fee2e2; color: #991b1b; }
+        .badge-purple { background: #ede9fe; color: #5b21b6; }
+        .badge-blue { background: #dbeafe; color: #1e40af; }
+
+        /* Mortuary billing specific */
+        .mortuary-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .mortuary-disposition-cremation { background: #fef3c7; color: #92400e; }
+        .mortuary-disposition-cremation-private { background: #dbeafe; color: #1e40af; }
+        .mortuary-disposition-burial { background: #d1fae5; color: #065f46; }
+        .mortuary-disposition-home { background: #ede9fe; color: #5b21b6; }
+        .mortuary-disposition-necropsy { background: #fce4ec; color: #b91c1c; }
 
         @media (max-width: 768px) {
             .sidebar-mobile { position: fixed; left: -280px; top: 0; width: 280px; height: 100vh; z-index: 100; transition: left 0.3s ease; }
@@ -150,7 +165,7 @@
 </head>
 <body data-page="billing" class="bg-background text-on-background font-body-md min-h-screen flex flex-col md:flex-row">
 
-    <!-- Mobile Top Bar -->
+    <!-- Mobile Top Bar (unchanged) -->
     <div class="md:hidden fixed top-0 left-0 right-0 bg-deep-navy z-50 px-4 py-4 flex items-center justify-between shadow-lg">
         <button id="mobileBurgerBtn" class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"><span class="material-symbols-outlined">menu</span></button>
         <img alt="Logo" class="w-8 h-8 rounded-full object-cover" src="../../public/logo.png" />
@@ -161,7 +176,7 @@
 
     <div id="mobileOverlay" class="overlay"></div>
 
-    <!-- Mobile Sidebar -->
+    <!-- Mobile Sidebar (unchanged) -->
     <div id="mobileSidebar" class="mobile-sidebar bg-deep-navy flex flex-col shadow-2xl">
         <div class="flex items-center justify-between p-6 border-b border-white/10">
             <div class="flex items-center gap-3">
@@ -174,7 +189,6 @@
             <a href="./Dashboard.html" data-nav-mobile="analytics" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-link"><span class="material-symbols-outlined text-[24px] sidebar-icon-only">analytics</span><span class="sidebar-text">Analytics</span></a>
             <a href="./clinic_calendar.html" data-nav-mobile="calendar" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-link"><span class="material-symbols-outlined text-[24px] sidebar-icon-only">calendar_today</span><span class="sidebar-text">Calendar</span></a>
             <a href="./staff_service_settings.html" data-nav-mobile="staff" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-link"><span class="material-symbols-outlined text-[24px] sidebar-icon-only">groups</span><span class="sidebar-text">Staff</span></a>
-            <!-- Billing link with data-nav-mobile -->
             <a href="#" onclick="switchSection('billing')" data-nav-mobile="billing" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-link"><span class="material-symbols-outlined text-[24px] sidebar-icon-only">payments</span><span class="sidebar-text">Billing</span></a>
             <a href="./records.html" data-nav-mobile="records" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-link"><span class="material-symbols-outlined text-[24px] sidebar-icon-only">description</span><span class="sidebar-text">Patient & Owner Records</span></a>
             <a href="./message.html" data-nav-mobile="message" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-link"><span class="material-symbols-outlined text-[24px] sidebar-icon-only">message</span><span class="sidebar-text">Messages</span></a>
@@ -190,7 +204,7 @@
 
     <!-- Desktop Layout -->
     <div class="flex min-h-screen w-full">
-        <!-- Desktop Sidebar -->
+        <!-- Desktop Sidebar (unchanged) -->
         <aside id="desktopSidebar" class="hidden md:flex flex-col bg-deep-navy h-screen sticky top-0 border-r border-outline-variant/10 text-white sidebar-transition w-64">
             <div class="px-6 py-6 flex items-center justify-between border-b border-white/10 flex-shrink-0">
                 <div class="flex items-center gap-3 sidebar-logo">
@@ -203,7 +217,6 @@
                 <a href="./Dashboard.html" data-nav-desktop="analytics" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-link"><span class="material-symbols-outlined sidebar-icon-only text-[24px]">analytics</span><span class="sidebar-text text-sm font-medium">Analytics</span></a>
                 <a href="./clinic_calendar.html" data-nav-desktop="calendar" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-link"><span class="material-symbols-outlined sidebar-icon-only text-[24px]">calendar_today</span><span class="sidebar-text text-sm font-medium">Calendar</span></a>
                 <a href="./staff_service_settings.html" data-nav-desktop="staff" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-link"><span class="material-symbols-outlined sidebar-icon-only text-[24px]">groups</span><span class="sidebar-text text-sm font-medium">Staff</span></a>
-                <!-- Billing link with data-nav-desktop -->
                 <a href="#" onclick="switchSection('billing')" data-nav-desktop="billing" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-link"><span class="material-symbols-outlined sidebar-icon-only text-[24px]">payments</span><span class="sidebar-text text-sm font-medium">Billing</span></a>
                 <a href="./records.html" data-nav-desktop="records" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-link"><span class="material-symbols-outlined sidebar-icon-only text-[24px]">description</span><span class="sidebar-text text-sm font-medium">Patient & Owner Records</span></a>
                 <a href="./message.html" data-nav-desktop="message" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-link"><span class="material-symbols-outlined sidebar-icon-only text-[24px]">message</span><span class="sidebar-text text-sm font-medium">Messages</span></a>
@@ -217,7 +230,7 @@
 
         <!-- Main Content -->
         <div id="mainContentWrapper" class="flex-1 flex flex-col bg-surface pt-16 md:pt-0 transition-all duration-300">
-            <!-- Top Bar -->
+            <!-- Top Bar (unchanged) -->
             <header class="h-20 bg-surface hidden md:flex items-center justify-between px-6 sticky top-0 z-40 border-b border-surface-container-highest">
                 <div class="flex items-center gap-4 w-1/3">
                     <div class="relative w-full max-w-md">
@@ -243,14 +256,13 @@
                         <button onclick="switchSection('payroll')" data-nav-desktop="payroll" class="nav-btn flex items-center gap-2" data-section="payroll"><span class="material-symbols-outlined text-sm">payments</span><span class="hidden sm:inline">Payroll</span></button>
                         <button onclick="switchSection('payslip')" data-nav-desktop="payslip" class="nav-btn flex items-center gap-2" data-section="payslip"><span class="material-symbols-outlined text-sm">receipt_long</span><span class="hidden sm:inline">Payslip</span></button>
                         <button onclick="switchSection('reports')" data-nav-desktop="reports" class="nav-btn flex items-center gap-2" data-section="reports"><span class="material-symbols-outlined text-sm">assessment</span><span class="hidden sm:inline">Reports</span></button>
-                        <!-- Billing nav button with data-nav-desktop -->
                         <button onclick="switchSection('billing')" data-nav-desktop="billing" class="nav-btn flex items-center gap-2" data-section="billing"><span class="material-symbols-outlined text-sm">payments</span><span class="hidden sm:inline">Billing</span></button>
                         <div class="flex-1"></div>
                         <span class="text-xs text-slate-400 flex items-center px-2">🔍 Click to switch</span>
                     </div>
                 </section>
 
-                <!-- DASHBOARD SECTION -->
+                <!-- DASHBOARD SECTION (unchanged) -->
                 <div id="section-dashboard" class="section-panel">
                     <div id="dashboardStats" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                         <div class="stat-card"><div class="flex items-center justify-between"><p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Payroll (MTD)</p><span class="material-symbols-outlined text-slate-400">payments</span></div><h3 id="totalPayrollDisplay" class="text-xl md:text-2xl font-bold text-slate-900 mt-1">GHS 0.00</h3><div class="mt-2 text-xs flex items-center gap-1.5 text-emerald-600 font-medium"><span id="payrollChange">↑ 0%</span> <span class="text-slate-400">vs last month</span></div></div>
@@ -260,7 +272,7 @@
                     <section class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
                         <button onclick="switchSection('payroll')" class="quick-action-btn bg-white border border-slate-200 rounded-xl p-4 text-left hover:shadow-md transition-all flex items-center gap-4"><span class="material-symbols-outlined text-blue-600 text-2xl">payments</span><div><p class="font-semibold text-sm">Payroll Management</p><p class="text-xs text-slate-500">View and manage staff payroll</p></div><span class="ml-auto text-slate-300 material-symbols-outlined">chevron_right</span></button>
                         <button onclick="switchSection('payslip')" class="quick-action-btn bg-white border border-slate-200 rounded-xl p-4 text-left hover:shadow-md transition-all flex items-center gap-4"><span class="material-symbols-outlined text-emerald-600 text-2xl">receipt_long</span><div><p class="font-semibold text-sm">Payslip Generator</p><p class="text-xs text-slate-500">Generate staff payslips</p></div><span class="ml-auto text-slate-300 material-symbols-outlined">chevron_right</span></button>
-                        <button onclick="switchSection('billing')" class="quick-action-btn bg-white border border-slate-200 rounded-xl p-4 text-left hover:shadow-md transition-all flex items-center gap-4"><span class="material-symbols-outlined text-amber-600 text-2xl">payments</span><div><p class="font-semibold text-sm">Billing & Payments</p><p class="text-xs text-slate-500">Manage medication & inventory transactions</p></div><span class="ml-auto text-slate-300 material-symbols-outlined">chevron_right</span></button>
+                        <button onclick="switchSection('billing')" class="quick-action-btn bg-white border border-slate-200 rounded-xl p-4 text-left hover:shadow-md transition-all flex items-center gap-4"><span class="material-symbols-outlined text-amber-600 text-2xl">payments</span><div><p class="font-semibold text-sm">Billing & Payments</p><p class="text-xs text-slate-500">Manage medication, inventory & mortuary transactions</p></div><span class="ml-auto text-slate-300 material-symbols-outlined">chevron_right</span></button>
                     </section>
                     <section class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 mt-6">
                         <h3 class="text-sm font-semibold text-slate-700 mb-3">Quick Links</h3>
@@ -273,7 +285,7 @@
                     </section>
                 </div>
 
-                <!-- PAYROLL SECTION -->
+                <!-- PAYROLL SECTION (unchanged) -->
                 <div id="section-payroll" class="section-panel">
                     <section class="bg-white p-3 md:p-4 rounded-xl border border-slate-200 flex flex-wrap items-center justify-between gap-3 md:gap-4">
                         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
@@ -292,7 +304,7 @@
                     </section>
                 </div>
 
-                <!-- PAYSLIP SECTION -->
+                <!-- PAYSLIP SECTION (unchanged) -->
                 <div id="section-payslip" class="section-panel">
                     <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                         <div class="p-4 md:p-6">
@@ -314,7 +326,7 @@
                     </div>
                 </div>
 
-                <!-- REPORTS SECTION -->
+                <!-- REPORTS SECTION (unchanged) -->
                 <div id="section-reports" class="section-panel">
                     <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                         <div class="p-4 md:p-6">
@@ -335,7 +347,7 @@
                     </div>
                 </div>
 
-                <!-- ====== BILLING SECTION ====== -->
+                <!-- ====== BILLING SECTION (UPDATED WITH MORTUARY) ====== -->
                 <div id="section-billing" class="section-panel active">
                     <!-- Billing Stats -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
@@ -345,10 +357,12 @@
                         <div class="stat-card"><div class="flex items-center justify-between"><span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Pending Invoices</span><span class="material-symbols-outlined text-slate-400 text-xl">receipt_long</span></div><p id="pendingCountDisplay" class="text-2xl font-bold text-amber-600 mt-1">0</p><span class="text-xs text-slate-500">awaiting payment</span></div>
                     </div>
 
-                    <!-- Billing Tabs & Filters -->
+                    <!-- Billing Tabs & Filters (UPDATED with Mortuary tab) -->
                     <div class="flex flex-wrap items-center gap-2 bg-white p-2 rounded-xl border border-slate-200 shadow-sm mb-4">
                         <button onclick="switchBillingTab('medication')" class="billing-tab-btn active flex items-center gap-1" data-tab="medication"><span class="material-symbols-outlined text-sm">medication</span> Medication Sales</button>
                         <button onclick="switchBillingTab('inventory')" class="billing-tab-btn flex items-center gap-1" data-tab="inventory"><span class="material-symbols-outlined text-sm">inventory_2</span> Inventory Purchases</button>
+                        <!-- NEW: Mortuary Billing Tab -->
+                        <button onclick="switchBillingTab('mortuary')" class="billing-tab-btn flex items-center gap-1" data-tab="mortuary"><span class="material-symbols-outlined text-sm">heart_broken</span> Mortuary Services</button>
                         <div class="flex-1"></div>
                         <div class="flex items-center gap-2">
                             <input id="billingSearch" type="text" placeholder="Search item..." class="border border-slate-200 rounded-full px-3 py-1.5 text-sm w-40 md:w-56 focus:outline-none focus:ring-2 focus:ring-primary/30" oninput="applyBillingFilters()" />
@@ -356,12 +370,21 @@
                         </div>
                     </div>
 
-                    <!-- Billing Table -->
+                    <!-- Billing Table (UPDATED with Mortuary data) -->
                     <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                         <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse min-w-[680px]">
+                            <table class="w-full text-left border-collapse min-w-[750px]">
                                 <thead class="bg-slate-50 border-b border-slate-200 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                                    <tr><th class="px-4 md:px-6 py-3">Transaction ID</th><th class="px-4 md:px-6 py-3">Item</th><th class="px-4 md:px-6 py-3 text-center">Qty</th><th class="px-4 md:px-6 py-3 text-right">Unit Price</th><th class="px-4 md:px-6 py-3 text-right">Total (GHS)</th><th class="px-4 md:px-6 py-3 text-center">Status</th><th class="px-4 md:px-6 py-3 text-center">Date</th><th class="px-4 md:px-6 py-3 text-right">Action</th></tr>
+                                    <tr>
+                                        <th class="px-4 md:px-6 py-3">Transaction ID</th>
+                                        <th class="px-4 md:px-6 py-3">Patient / Item</th>
+                                        <th class="px-4 md:px-6 py-3 text-center">Qty</th>
+                                        <th class="px-4 md:px-6 py-3 text-right">Unit Price</th>
+                                        <th class="px-4 md:px-6 py-3 text-right">Total (GHS)</th>
+                                        <th class="px-4 md:px-6 py-3 text-center">Status</th>
+                                        <th class="px-4 md:px-6 py-3 text-center">Date</th>
+                                        <th class="px-4 md:px-6 py-3 text-right">Action</th>
+                                    </tr>
                                 </thead>
                                 <tbody id="billingTableBody" class="divide-y divide-slate-100 text-sm"></tbody>
                             </table>
@@ -390,16 +413,16 @@
         </div>
     </div>
 
-    <!-- STAFF DETAILS MODAL -->
+    <!-- STAFF DETAILS MODAL (unchanged) -->
     <div id="staffModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4"><div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto"><div class="p-4 md:p-6"><div class="flex justify-between items-start mb-4"><h3 class="text-xl font-bold text-slate-900" id="modalStaffName">Staff Details</h3><button onclick="closeModal()" class="p-1 hover:bg-slate-100 rounded-lg transition-colors"><span class="material-symbols-outlined">close</span></button></div><div id="modalContent" class="space-y-4"></div><div class="flex flex-col sm:flex-row justify-end gap-3 mt-6 pt-4 border-t border-slate-200"><button onclick="closeModal()" class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">Close</button><button onclick="printStaffStatement()" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"><span class="material-symbols-outlined text-sm">print</span> Print Statement</button></div></div></div></div>
 
-    <!-- LOAN CALCULATOR MODAL -->
+    <!-- LOAN CALCULATOR MODAL (unchanged) -->
     <div id="loanModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4"><div class="bg-white rounded-2xl shadow-2xl max-w-md w-full"><div class="p-4 md:p-6"><div class="flex justify-between items-start mb-4"><h3 class="text-xl font-bold text-slate-900">Loan Calculator</h3><button onclick="closeLoanModal()" class="p-1 hover:bg-slate-100 rounded-lg transition-colors"><span class="material-symbols-outlined">close</span></button></div><div class="space-y-4"><div><label class="block text-sm font-medium text-slate-700 mb-1">Monthly Net Salary (GHS)</label><input id="loanSalary" type="number" value="5000" class="w-full border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"></div><div><label class="block text-sm font-medium text-slate-700 mb-1">DTI Ratio (%)</label><input id="loanDTI" type="number" value="28" class="w-full border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"></div><div class="bg-blue-50 p-4 rounded-xl"><p class="text-sm text-slate-600">Estimated Max Loan</p><p id="loanResult" class="text-2xl font-bold text-blue-600">GHS 42,000.00</p><p class="text-xs text-slate-500 mt-1">Based on DTI ratio and monthly salary</p></div></div><div class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200"><button onclick="closeLoanModal()" class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">Close</button><button onclick="calculateLoan()" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">Calculate</button></div></div></div></div>
 
-    <!-- NEW TRANSACTION MODAL -->
-    <div id="transactionModal" class="modal-overlay"><div class="modal-card"><div class="flex items-center justify-between mb-4"><h3 class="text-xl font-bold text-slate-900 flex items-center gap-2"><span class="material-symbols-outlined text-primary">receipt_long</span> New Transaction</h3><button onclick="closeTransactionModal()" class="p-1 hover:bg-slate-100 rounded-lg"><span class="material-symbols-outlined">close</span></button></div><form id="transactionForm" onsubmit="submitTransaction(event)"><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="input-label">Transaction Type</label><select id="txnType" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" required><option value="medication">Medication Sale</option><option value="inventory">Inventory Purchase</option></select></div><div><label class="input-label">Item Name <span class="hint">(required)</span></label><input id="txnItem" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="e.g. Antibiotics" required /></div><div><label class="input-label">Quantity</label><input id="txnQty" type="number" value="1" min="1" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" required /></div><div><label class="input-label">Unit Price (GHS)</label><input id="txnPrice" type="number" step="0.01" value="10.00" min="0.01" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" required /></div><div><label class="input-label">Status</label><select id="txnStatus" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"><option value="Paid">Paid</option><option value="Pending">Pending</option><option value="Overdue">Overdue</option></select></div><div><label class="input-label">Date</label><input id="txnDate" type="date" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" /></div><div class="md:col-span-2"><label class="input-label">Notes (optional)</label><input id="txnNotes" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Supplier or additional info" /></div></div><div class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200"><button type="button" onclick="closeTransactionModal()" class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">Cancel</button><button type="submit" class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2"><span class="material-symbols-outlined text-sm">save</span> Save Transaction</button></div></form></div></div>
+    <!-- NEW TRANSACTION MODAL (unchanged) -->
+    <div id="transactionModal" class="modal-overlay"><div class="modal-card"><div class="flex items-center justify-between mb-4"><h3 class="text-xl font-bold text-slate-900 flex items-center gap-2"><span class="material-symbols-outlined text-primary">receipt_long</span> New Transaction</h3><button onclick="closeTransactionModal()" class="p-1 hover:bg-slate-100 rounded-lg"><span class="material-symbols-outlined">close</span></button></div><form id="transactionForm" onsubmit="submitTransaction(event)"><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="input-label">Transaction Type</label><select id="txnType" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" required><option value="medication">Medication Sale</option><option value="inventory">Inventory Purchase</option><option value="mortuary">Mortuary Service</option></select></div><div><label class="input-label">Item/Patient Name <span class="hint">(required)</span></label><input id="txnItem" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="e.g. Antibiotics or Max (Dog)" required /></div><div><label class="input-label">Quantity</label><input id="txnQty" type="number" value="1" min="1" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" required /></div><div><label class="input-label">Unit Price (GHS)</label><input id="txnPrice" type="number" step="0.01" value="10.00" min="0.01" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" required /></div><div><label class="input-label">Status</label><select id="txnStatus" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"><option value="Paid">Paid</option><option value="Pending">Pending</option><option value="Overdue">Overdue</option></select></div><div><label class="input-label">Date</label><input id="txnDate" type="date" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" /></div><div class="md:col-span-2"><label class="input-label">Notes (optional)</label><input id="txnNotes" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Supplier, disposition, or additional info" /></div></div><div class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200"><button type="button" onclick="closeTransactionModal()" class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">Cancel</button><button type="submit" class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2"><span class="material-symbols-outlined text-sm">save</span> Save Transaction</button></div></form></div></div>
 
-    <!-- VIEW TRANSACTION DETAILS MODAL -->
+    <!-- VIEW TRANSACTION DETAILS MODAL (unchanged) -->
     <div id="viewTransactionModal" class="modal-overlay">
         <div class="modal-card">
             <div class="flex items-center justify-between mb-4">
@@ -422,7 +445,7 @@
     </div>
 
     <script>
-        // ===== STAFF DATA =====
+        // ===== STAFF DATA (unchanged) =====
         const staffData = [
             { id: 'EMP-8821', name: 'Jane Doe', initials: 'JD', dept: 'Dev', netSalary: 5400.00, maxLoan: 45000.00, insurance: 'Gold Cover', status: 'Paid', color: 'blue', email: 'jane.doe@company.com', actions: ['view', 'edit', 'print', 'reminder', 'mark_paid', 'delete'] },
             { id: 'EMP-8822', name: 'John Smith', initials: 'JS', dept: 'Engineering', netSalary: 6800.00, maxLoan: 58000.00, insurance: 'Platinum Cover', status: 'Paid', color: 'purple', email: 'john.smith@company.com', actions: ['view', 'edit', 'print', 'reminder', 'mark_paid', 'delete'] },
@@ -434,7 +457,7 @@
             { id: 'EMP-8828', name: 'James Taylor', initials: 'JT', dept: 'Operations', netSalary: 5800.00, maxLoan: 46000.00, insurance: 'Gold Cover', status: 'Paid', color: 'cyan', email: 'james.taylor@company.com', actions: ['view', 'edit', 'print', 'delete'] },
         ];
 
-        // ===== BILLING DATA =====
+        // ===== BILLING DATA (UPDATED with Mortuary) =====
         let billingData = {
             medication: [
                 { id: 'MED-001', item: 'Antibiotics (Amoxicillin)', qty: 50, unitPrice: 25.00, total: 1250.00, status: 'Paid', date: '2026-07-28', notes: 'Batch #A12' },
@@ -453,6 +476,135 @@
                 { id: 'INV-004', item: 'Bandages (Assorted)', qty: 150, unitPrice: 3.00, total: 450.00, status: 'Paid', date: '2026-07-25', notes: '' },
                 { id: 'INV-005', item: 'Surgical Sutures', qty: 30, unitPrice: 15.00, total: 450.00, status: 'Paid', date: '2026-07-24', notes: 'MedEquip Africa' },
                 { id: 'INV-006', item: 'Antiseptic Solution', qty: 40, unitPrice: 8.00, total: 320.00, status: 'Overdue', date: '2026-07-23', notes: 'PetHealth Distributors' },
+            ],
+            // NEW: Mortuary billing data
+            mortuary: [
+                { 
+                    id: 'MOR-B-001', 
+                    patient: 'Max', 
+                    owner: 'Sarah Mitchell', 
+                    species: 'Dog', 
+                    disposition: 'Private Cremation', 
+                    qty: 1, 
+                    unitPrice: 430.00, 
+                    total: 430.00, 
+                    status: 'Paid', 
+                    date: '2026-08-06', 
+                    notes: 'Cremation completed, ashes returned in wooden urn',
+                    storageDays: 1,
+                    baseFee: 250,
+                    storageFee: 15,
+                    dispositionFee: 180,
+                    necropsyFee: 0
+                },
+                { 
+                    id: 'MOR-B-002', 
+                    patient: 'Bella', 
+                    owner: 'Michael Chen', 
+                    species: 'Cat', 
+                    disposition: 'Communal Cremation', 
+                    qty: 1, 
+                    unitPrice: 380.00, 
+                    total: 380.00, 
+                    status: 'Paid', 
+                    date: '2026-08-05', 
+                    notes: 'Communal cremation completed',
+                    storageDays: 1,
+                    baseFee: 250,
+                    storageFee: 15,
+                    dispositionFee: 120,
+                    necropsyFee: 0
+                },
+                { 
+                    id: 'MOR-B-003', 
+                    patient: 'Charlie', 
+                    owner: 'Jessica Park', 
+                    species: 'Dog', 
+                    disposition: 'Necropsy', 
+                    qty: 1, 
+                    unitPrice: 520.00, 
+                    total: 520.00, 
+                    status: 'Pending', 
+                    date: '2026-08-03', 
+                    notes: 'Necropsy in progress at lab',
+                    storageDays: 7,
+                    baseFee: 250,
+                    storageFee: 105,
+                    dispositionFee: 220,
+                    necropsyFee: 220
+                },
+                { 
+                    id: 'MOR-B-004', 
+                    patient: 'Luna', 
+                    owner: 'Robert Johnson', 
+                    species: 'Cat', 
+                    disposition: 'Pet Cemetery Burial', 
+                    qty: 1, 
+                    unitPrice: 430.00, 
+                    total: 430.00, 
+                    status: 'Pending', 
+                    date: '2026-08-02', 
+                    notes: 'Awaiting cemetery confirmation',
+                    storageDays: 8,
+                    baseFee: 250,
+                    storageFee: 120,
+                    dispositionFee: 150,
+                    necropsyFee: 0
+                },
+                { 
+                    id: 'MOR-B-005', 
+                    patient: 'Rocky', 
+                    owner: 'Emily Davis', 
+                    species: 'Dog', 
+                    disposition: 'Home Burial', 
+                    qty: 1, 
+                    unitPrice: 315.00, 
+                    total: 315.00, 
+                    status: 'Paid', 
+                    date: '2026-08-01', 
+                    notes: 'Owner took for home burial',
+                    storageDays: 1,
+                    baseFee: 250,
+                    storageFee: 15,
+                    dispositionFee: 50,
+                    necropsyFee: 0
+                },
+                { 
+                    id: 'MOR-B-006', 
+                    patient: 'Milo', 
+                    owner: 'David Wilson', 
+                    species: 'Rabbit', 
+                    disposition: 'Private Cremation', 
+                    qty: 1, 
+                    unitPrice: 430.00, 
+                    total: 430.00, 
+                    status: 'Pending', 
+                    date: '2026-07-31', 
+                    notes: 'Awaiting cremation pickup',
+                    storageDays: 10,
+                    baseFee: 250,
+                    storageFee: 150,
+                    dispositionFee: 180,
+                    necropsyFee: 0
+                },
+                { 
+                    id: 'MOR-B-007', 
+                    patient: 'Coco', 
+                    owner: 'Lisa Brown', 
+                    species: 'Bird', 
+                    disposition: 'Pet Cemetery Burial', 
+                    qty: 1, 
+                    unitPrice: 430.00, 
+                    total: 430.00, 
+                    status: 'Overdue', 
+                    date: '2026-07-30', 
+                    notes: 'Overdue - payment required',
+                    storageDays: 11,
+                    baseFee: 250,
+                    storageFee: 165,
+                    dispositionFee: 150,
+                    necropsyFee: 0
+                },
             ]
         };
 
@@ -474,7 +626,6 @@
         function highlightBillingPage() {
             const currentPage = document.body.getAttribute("data-page") || "billing";
             
-            // Desktop sidebar links
             document.querySelectorAll("[data-nav-desktop]").forEach((link) => {
                 const linkPage = link.getAttribute("data-nav-desktop");
                 if (linkPage === "billing") {
@@ -488,7 +639,6 @@
                 }
             });
             
-            // Mobile sidebar links
             document.querySelectorAll("[data-nav-mobile]").forEach((link) => {
                 const linkPage = link.getAttribute("data-nav-mobile");
                 if (linkPage === "billing") {
@@ -502,7 +652,6 @@
                 }
             });
 
-            // Nav buttons - highlight billing nav button
             document.querySelectorAll("[data-nav-desktop]").forEach((link) => {
                 if (link.tagName === "BUTTON") {
                     const linkPage = link.getAttribute("data-nav-desktop");
@@ -539,7 +688,6 @@
             const target = document.getElementById(`section-${sectionId}`);
             if (target) target.classList.add('active');
             
-            // Update nav buttons
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('active', 'billing-active');
             });
@@ -552,7 +700,6 @@
                 }
             }
             
-            // Call highlight function
             highlightBillingPage();
             
             if (sectionId === 'billing') { renderBillingTable(); updateBillingStats(); }
@@ -561,7 +708,7 @@
             if (sectionId === 'reports') { generateMonths(); setTimeout(generateReport, 300); }
         }
 
-        // ===== DASHBOARD STATS =====
+        // ===== DASHBOARD STATS (unchanged) =====
         function updateDashboardStats() {
             const totalPayroll = staffData.reduce((sum, s) => sum + s.netSalary, 0);
             const totalLoan = staffData.reduce((sum, s) => sum + s.maxLoan, 0);
@@ -579,7 +726,7 @@
             document.getElementById('payrollChange').textContent = `${changeIcon} ${Math.abs(change)}%`;
         }
 
-        // ===== STAFF TABLE =====
+        // ===== STAFF TABLE FUNCTIONS (unchanged) =====
         function renderTable() {
             const tbody = document.getElementById('staffTableBody');
             const start = (currentPage - 1) * itemsPerPage;
@@ -648,7 +795,7 @@
             document.querySelectorAll('.action-dropdown-menu').forEach(m => m.classList.remove('open'));
         }
 
-        // ===== STAFF DETAILS =====
+        // ===== STAFF DETAILS (unchanged) =====
         function showStaffDetails(id) {
             const staff = staffData.find(s => s.id === id);
             if (!staff) return;
@@ -677,7 +824,7 @@
         function closeModal() { const m = document.getElementById('staffModal'); m.classList.add('hidden'); m.classList.remove('flex'); document.body.style.overflow = ''; }
         document.getElementById('staffModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 
-        // ===== PAYSLIP =====
+        // ===== PAYSLIP FUNCTIONS (unchanged) =====
         function searchStaffById() {
             const input = document.getElementById('staffIdSearch');
             const query = input.value.trim();
@@ -755,7 +902,7 @@
 
         function getMonthName(val) { const parts = val.split('-'); const months = ['January','February','March','April','May','June','July','August','September','October','November','December']; return `${months[parseInt(parts[1])-1]} ${parts[0]}`; }
 
-        // ===== REPORTS =====
+        // ===== REPORTS FUNCTIONS (unchanged) =====
         function generateMonths() {
             const sel = document.getElementById('reportMonth');
             if (!sel) return;
@@ -843,7 +990,7 @@
             win.document.close();
         }
 
-        // ===== LOAN CALCULATOR =====
+        // ===== LOAN CALCULATOR (unchanged) =====
         function openLoanCalculator() { document.getElementById('loanModal').classList.remove('hidden'); document.getElementById('loanModal').classList.add('flex'); document.body.style.overflow = 'hidden'; calculateLoan(); }
         function closeLoanModal() { document.getElementById('loanModal').classList.add('hidden'); document.getElementById('loanModal').classList.remove('flex'); document.body.style.overflow = ''; }
         function calculateLoan() {
@@ -855,7 +1002,7 @@
         document.getElementById('loanDTI').addEventListener('input', calculateLoan);
         document.getElementById('loanModal').addEventListener('click', function(e) { if (e.target === this) closeLoanModal(); });
 
-        // ===== EXPORT / PRINT =====
+        // ===== EXPORT / PRINT (unchanged) =====
         function exportCSV() {
             const data = filteredData.length ? filteredData : staffData;
             let csv = 'Staff ID,Name,Department,Net Salary,Max Loan,Insurance,Status\n';
@@ -888,20 +1035,21 @@
             win.document.close();
         }
 
-        // ===== BILLING FUNCTIONS =====
+        // ===== BILLING FUNCTIONS (UPDATED with Mortuary) =====
         function getBillingTabData() { return billingData[billingCurrentTab] || []; }
 
         function updateBillingStats() {
             const med = billingData.medication.reduce((s, i) => s + i.total, 0);
             const inv = billingData.inventory.reduce((s, i) => s + i.total, 0);
-            const pending = [...billingData.medication, ...billingData.inventory].filter(i => i.status === 'Pending' || i.status === 'Overdue').length;
-            document.getElementById('totalRevenueDisplay').textContent = `GHS ${(med + inv).toFixed(2)}`;
+            const mor = billingData.mortuary.reduce((s, i) => s + i.total, 0);
+            const pending = [...billingData.medication, ...billingData.inventory, ...billingData.mortuary].filter(i => i.status === 'Pending' || i.status === 'Overdue').length;
+            document.getElementById('totalRevenueDisplay').textContent = `GHS ${(med + inv + mor).toFixed(2)}`;
             document.getElementById('totalMedSales').textContent = `GHS ${med.toFixed(2)}`;
             document.getElementById('totalInventoryPurchases').textContent = `GHS ${inv.toFixed(2)}`;
             document.getElementById('pendingCountDisplay').textContent = pending;
         }
 
-        // ===== VIEW TRANSACTION DETAILS =====
+        // ===== VIEW TRANSACTION DETAILS (UPDATED with Mortuary) =====
         function viewBillingTransaction(id) {
             const data = getBillingTabData();
             const item = data.find(i => i.id === id);
@@ -917,21 +1065,57 @@
                 'Overdue': 'bg-red-100 text-red-700 border-red-300'
             };
             
-            content.innerHTML = `
+            // Check if this is a mortuary transaction (has patient field)
+            const isMortuary = item.patient !== undefined;
+            
+            let detailsHtml = `
                 <div class="bg-slate-50 rounded-xl p-4 space-y-3">
                     <div class="grid grid-cols-2 gap-3">
                         <div><p class="text-xs text-slate-400">Transaction ID</p><p class="font-bold text-primary">${item.id}</p></div>
                         <div><p class="text-xs text-slate-400">Date</p><p class="font-bold">${item.date}</p></div>
+            `;
+            
+            if (isMortuary) {
+                // Mortuary specific details
+                detailsHtml += `
+                        <div class="col-span-2"><p class="text-xs text-slate-400">Patient</p><p class="font-bold text-lg">${item.patient}</p></div>
+                        <div><p class="text-xs text-slate-400">Owner</p><p class="font-bold">${item.owner}</p></div>
+                        <div><p class="text-xs text-slate-400">Species</p><p class="font-bold">${item.species}</p></div>
+                        <div class="col-span-2"><p class="text-xs text-slate-400">Disposition</p><p><span class="mortuary-badge mortuary-disposition-${item.disposition.toLowerCase().replace(/ /g, '-')}">${item.disposition}</span></p></div>
+                        <div><p class="text-xs text-slate-400">Storage Days</p><p class="font-bold">${item.storageDays || 0}</p></div>
+                        <div><p class="text-xs text-slate-400">Unit Price</p><p class="font-bold">GHS ${item.unitPrice.toFixed(2)}</p></div>
+                        <div class="col-span-2"><p class="text-xs text-slate-400">Total</p><p class="font-bold text-2xl text-primary">GHS ${item.total.toFixed(2)}</p></div>
+                        <div class="col-span-2"><p class="text-xs text-slate-400">Status</p><p><span class="inline-flex px-3 py-1 rounded-full text-sm font-semibold ${statusColors[item.status] || 'bg-slate-100 text-slate-700'}">${item.status}</span></p></div>
+                        ${item.notes ? `<div class="col-span-2"><p class="text-xs text-slate-400">Notes</p><p class="text-sm">${item.notes}</p></div>` : ''}
+                        <div class="col-span-2 border-t pt-2 mt-2">
+                            <p class="text-xs text-slate-400 font-semibold">Fee Breakdown</p>
+                            <div class="grid grid-cols-2 gap-1 text-sm mt-1">
+                                <div><span class="text-slate-500">Base Fee:</span></div><div class="text-right">GHS ${(item.baseFee || 250).toFixed(2)}</div>
+                                <div><span class="text-slate-500">Storage Fee (${item.storageDays || 0} days):</span></div><div class="text-right">GHS ${(item.storageFee || 0).toFixed(2)}</div>
+                                <div><span class="text-slate-500">Disposition Fee:</span></div><div class="text-right">GHS ${(item.dispositionFee || 0).toFixed(2)}</div>
+                                ${item.necropsyFee > 0 ? `<div><span class="text-slate-500">Necropsy Fee:</span></div><div class="text-right">GHS ${item.necropsyFee.toFixed(2)}</div>` : ''}
+                                <div class="col-span-2 border-t pt-1 mt-1"><span class="font-bold">Total:</span> <span class="float-right font-bold text-primary">GHS ${item.total.toFixed(2)}</span></div>
+                            </div>
+                        </div>
+                `;
+            } else {
+                // Regular transaction (medication/inventory)
+                detailsHtml += `
                         <div class="col-span-2"><p class="text-xs text-slate-400">Item</p><p class="font-bold text-lg">${item.item}</p></div>
                         <div><p class="text-xs text-slate-400">Quantity</p><p class="font-bold">${item.qty}</p></div>
                         <div><p class="text-xs text-slate-400">Unit Price</p><p class="font-bold">GHS ${item.unitPrice.toFixed(2)}</p></div>
                         <div class="col-span-2"><p class="text-xs text-slate-400">Total</p><p class="font-bold text-2xl text-primary">GHS ${item.total.toFixed(2)}</p></div>
                         <div class="col-span-2"><p class="text-xs text-slate-400">Status</p><p><span class="inline-flex px-3 py-1 rounded-full text-sm font-semibold ${statusColors[item.status] || 'bg-slate-100 text-slate-700'}">${item.status}</span></p></div>
                         ${item.notes ? `<div class="col-span-2"><p class="text-xs text-slate-400">Notes</p><p class="text-sm">${item.notes}</p></div>` : ''}
+                `;
+            }
+            
+            detailsHtml += `
                     </div>
                 </div>
             `;
             
+            content.innerHTML = detailsHtml;
             modal.classList.add('open');
             document.body.style.overflow = 'hidden';
             document.getElementById(`billing-dropdown-${id}`)?.classList.remove('open');
@@ -953,7 +1137,7 @@
             if (e.target === this) closeViewTransactionModal();
         });
 
-        // ===== PRINT RECEIPT =====
+        // ===== PRINT RECEIPT (UPDATED with Mortuary) =====
         function printReceipt(id) {
             const data = getBillingTabData();
             const item = data.find(i => i.id === id);
@@ -962,8 +1146,30 @@
             const win = window.open('', '_blank', 'width=650,height=750');
             if (!win) { showToast('Please allow popups', 'error'); return; }
             
+            const isMortuary = item.patient !== undefined;
+            const title = isMortuary ? 'Mortuary Service Receipt' : 'Receipt';
+            const patientInfo = isMortuary ? `
+                <div class="row"><span class="label">🐾 Patient</span><span class="value">${item.patient}</span></div>
+                <div class="row"><span class="label">👤 Owner</span><span class="value">${item.owner}</span></div>
+                <div class="row"><span class="label">🐕 Species</span><span class="value">${item.species}</span></div>
+                <div class="row"><span class="label">⚰️ Disposition</span><span class="value">${item.disposition}</span></div>
+                <div class="row"><span class="label">📅 Storage Days</span><span class="value">${item.storageDays || 0}</span></div>
+            ` : `
+                <div class="row"><span class="label">📦 Item</span><span class="value">${item.item}</span></div>
+                <div class="row"><span class="label">🔢 Quantity</span><span class="value">${item.qty}</span></div>
+            `;
+            
+            const breakdown = isMortuary ? `
+                <div class="divider"></div>
+                <div style="font-size:13px;font-weight:600;color:#555;margin:8px 0 4px 0;">Fee Breakdown</div>
+                <div class="row" style="font-size:13px;"><span class="label">Base Fee</span><span class="value">GHS ${(item.baseFee || 250).toFixed(2)}</span></div>
+                <div class="row" style="font-size:13px;"><span class="label">Storage (${item.storageDays || 0} days)</span><span class="value">GHS ${(item.storageFee || 0).toFixed(2)}</span></div>
+                <div class="row" style="font-size:13px;"><span class="label">Disposition Fee</span><span class="value">GHS ${(item.dispositionFee || 0).toFixed(2)}</span></div>
+                ${item.necropsyFee > 0 ? `<div class="row" style="font-size:13px;"><span class="label">Necropsy Fee</span><span class="value">GHS ${item.necropsyFee.toFixed(2)}</span></div>` : ''}
+            ` : '';
+            
             win.document.write(`
-                <html><head><title>Receipt - ${item.id}</title>
+                <html><head><title>${title} - ${item.id}</title>
                 <style>
                     * { margin: 0; padding: 0; box-sizing: border-box; }
                     body { font-family: 'Courier New', monospace; padding: 30px; background: #f5f5f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
@@ -994,13 +1200,13 @@
                         <div class="clinic-name">🏥 addyPets Veterinary</div>
                         <p class="clinic-detail">123 Vet Street, Accra, Ghana</p>
                         <p class="clinic-detail">📞 +233 500 000 000</p>
-                        <div class="receipt-id">Receipt #${item.id}</div>
+                        <div class="receipt-id">${title} #${item.id}</div>
                     </div>
                     
                     <div class="row"><span class="label">📅 Date</span><span class="value">${item.date}</span></div>
-                    <div class="row"><span class="label">📦 Item</span><span class="value">${item.item}</span></div>
-                    <div class="row"><span class="label">🔢 Quantity</span><span class="value">${item.qty}</span></div>
+                    ${patientInfo}
                     <div class="row"><span class="label">💰 Unit Price</span><span class="value">GHS ${item.unitPrice.toFixed(2)}</span></div>
+                    ${breakdown}
                     <div class="divider"></div>
                     <div class="row" style="font-weight:600;font-size:17px;border-bottom:2px solid #333;padding-bottom:12px;">
                         <span class="label">Subtotal</span>
@@ -1050,7 +1256,7 @@
             dropdown.classList.toggle('open');
         }
 
-        // ===== RENDER BILLING TABLE =====
+        // ===== RENDER BILLING TABLE (UPDATED with Mortuary) =====
         function renderBillingTable() {
             const data = billingFiltered.length ? billingFiltered : getBillingTabData();
             const start = (billingPage - 1) * billingPageSize;
@@ -1064,9 +1270,17 @@
                 tbody.innerHTML = pageData.map(item => {
                     const badgeClass = item.status === 'Paid' ? 'badge-emerald' : item.status === 'Pending' ? 'badge-amber' : 'badge-red';
                     const dot = item.status === 'Paid' ? 'bg-emerald-500' : item.status === 'Pending' ? 'bg-amber-500 animate-pulse' : 'bg-red-500 animate-pulse';
+                    const isMortuary = item.patient !== undefined;
+                    const displayName = isMortuary ? `${item.patient} (${item.species})` : item.item;
+                    const idPrefix = isMortuary ? '⚰️' : (billingCurrentTab === 'medication' ? '💊' : '📦');
+                    
                     return `<tr>
                         <td class="px-4 md:px-6 py-3 font-mono font-semibold text-primary text-xs">${item.id}</td>
-                        <td class="px-4 md:px-6 py-3 font-medium text-slate-800">${item.item}</td>
+                        <td class="px-4 md:px-6 py-3 font-medium text-slate-800">
+                            ${isMortuary ? `<span class="material-symbols-outlined text-sm align-middle text-purple-600">heart_broken</span>` : ''}
+                            ${displayName}
+                            ${isMortuary ? `<div class="text-xs text-slate-400">${item.disposition} • ${item.owner}</div>` : ''}
+                        </td>
                         <td class="px-4 md:px-6 py-3 text-center">${item.qty}</td>
                         <td class="px-4 md:px-6 py-3 text-right font-mono">GHS ${item.unitPrice.toFixed(2)}</td>
                         <td class="px-4 md:px-6 py-3 text-right font-mono font-bold text-slate-900">GHS ${item.total.toFixed(2)}</td>
@@ -1117,6 +1331,12 @@
             document.getElementById('billingSearch').value = '';
             document.getElementById('statusFilter').value = 'all';
             renderBillingTable();
+            const tabNames = {
+                'medication': '💊 Medication Sales',
+                'inventory': '📦 Inventory Purchases',
+                'mortuary': '⚰️ Mortuary Services'
+            };
+            showToast(`📋 Switched to ${tabNames[tab] || tab}`, 'info');
         }
 
         function applyBillingFilters() {
@@ -1124,7 +1344,8 @@
             const status = document.getElementById('statusFilter').value;
             const data = getBillingTabData();
             billingFiltered = data.filter(item => {
-                const matchItem = item.item.toLowerCase().includes(search);
+                const searchField = item.patient ? `${item.patient} ${item.owner} ${item.species} ${item.disposition}` : item.item;
+                const matchItem = searchField.toLowerCase().includes(search);
                 const matchStatus = status === 'all' || item.status === status;
                 return matchItem && matchStatus;
             });
@@ -1162,12 +1383,14 @@
             document.getElementById(`billing-dropdown-${id}`)?.classList.remove('open');
         }
 
-        // ===== TRANSACTION MODAL =====
+        // ===== TRANSACTION MODAL (UPDATED with Mortuary) =====
         function openNewTransaction() {
             document.getElementById('transactionModal').classList.add('open');
             document.body.style.overflow = 'hidden';
             document.getElementById('txnDate').value = new Date().toISOString().slice(0,10);
             document.getElementById('txnItem').focus();
+            // Set default type to current tab
+            document.getElementById('txnType').value = billingCurrentTab;
         }
 
         function closeTransactionModal() {
@@ -1186,15 +1409,60 @@
             const notes = document.getElementById('txnNotes').value.trim();
             if (!item || price <= 0 || qty < 1) { showToast('Fill all required fields', 'error'); return; }
             const total = qty * price;
-            const prefix = type === 'medication' ? 'MED' : 'INV';
-            const existing = billingData[type] || [];
-            const ids = existing.map(i => parseInt(i.id.split('-')[1]) || 0);
-            const nextId = Math.max(0, ...ids) + 1;
-            const newId = `${prefix}-${String(nextId).padStart(3, '0')}`;
-            billingData[type].push({ id: newId, item, qty, unitPrice: price, total, status, date: date || new Date().toISOString().slice(0,10), notes: notes || '' });
+            
+            if (type === 'mortuary') {
+                // For mortuary, create a detailed entry
+                const prefix = 'MOR-B';
+                const existing = billingData.mortuary || [];
+                const ids = existing.map(i => parseInt(i.id.split('-')[2]) || 0);
+                const nextId = Math.max(0, ...ids) + 1;
+                const newId = `${prefix}-${String(nextId).padStart(3, '0')}`;
+                
+                // Parse patient name and species from input (format: "Max (Dog)" or just "Max")
+                let patientName = item;
+                let species = 'Unknown';
+                const match = item.match(/^(.*?)\s*\(([^)]+)\)$/);
+                if (match) {
+                    patientName = match[1].trim();
+                    species = match[2].trim();
+                }
+                
+                // Calculate fees
+                const baseFee = 250;
+                const storageDays = Math.max(1, Math.floor((Date.now() - new Date(date + 'T00:00:00')) / (1000*60*60*24)));
+                const storageFee = storageDays * 15;
+                const dispositionFee = price - baseFee - storageFee;
+                
+                billingData.mortuary.push({
+                    id: newId,
+                    patient: patientName,
+                    owner: notes.includes('Owner:') ? notes.split('Owner:')[1].split(',')[0].trim() : 'Unknown Owner',
+                    species: species,
+                    disposition: notes.includes('Disposition:') ? notes.split('Disposition:')[1].split(',')[0].trim() : 'Private Cremation',
+                    qty: 1,
+                    unitPrice: price,
+                    total: price,
+                    status: status,
+                    date: date || new Date().toISOString().slice(0,10),
+                    notes: notes || '',
+                    storageDays: storageDays,
+                    baseFee: baseFee,
+                    storageFee: storageFee,
+                    dispositionFee: dispositionFee,
+                    necropsyFee: disposition === 'Necropsy' ? 220 : 0
+                });
+            } else {
+                const prefix = type === 'medication' ? 'MED' : 'INV';
+                const existing = billingData[type] || [];
+                const ids = existing.map(i => parseInt(i.id.split('-')[1]) || 0);
+                const nextId = Math.max(0, ...ids) + 1;
+                const newId = `${prefix}-${String(nextId).padStart(3, '0')}`;
+                billingData[type].push({ id: newId, item, qty, unitPrice: price, total, status, date: date || new Date().toISOString().slice(0,10), notes: notes || '' });
+            }
+            
             closeTransactionModal();
             renderBillingTable();
-            showToast(`✅ ${newId} added`, 'success');
+            showToast(`✅ Transaction added`, 'success');
             document.getElementById('txnItem').value = '';
             document.getElementById('txnQty').value = 1;
             document.getElementById('txnPrice').value = 10.00;
@@ -1205,8 +1473,11 @@
         function exportBillingCSV() {
             const data = billingFiltered.length ? billingFiltered : getBillingTabData();
             if (!data.length) { showToast('No data', 'warning'); return; }
-            let csv = 'ID,Item,Quantity,UnitPrice,Total,Status,Date,Notes\n';
-            data.forEach(i => csv += `${i.id},${i.item},${i.qty},${i.unitPrice.toFixed(2)},${i.total.toFixed(2)},${i.status},${i.date},${i.notes || ''}\n`);
+            let csv = 'ID,Item/Patient,Quantity,UnitPrice,Total,Status,Date,Notes\n';
+            data.forEach(i => {
+                const name = i.patient ? `${i.patient} (${i.species})` : i.item;
+                csv += `${i.id},${name},${i.qty},${i.unitPrice.toFixed(2)},${i.total.toFixed(2)},${i.status},${i.date},${i.notes || ''}\n`;
+            });
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -1222,13 +1493,17 @@
             if (!data.length) { showToast('No data to print', 'warning'); return; }
             const win = window.open('', '_blank', 'width=900,height=700');
             let rows = '';
-            data.forEach(i => rows += `<tr><td>${i.id}</td><td>${i.item}</td><td>${i.qty}</td><td>${i.unitPrice.toFixed(2)}</td><td>${i.total.toFixed(2)}</td><td>${i.status}</td><td>${i.date}</td></tr>`);
+            data.forEach(i => {
+                const name = i.patient ? `${i.patient} (${i.species})` : i.item;
+                rows += `<tr><td>${i.id}</td><td>${name}</td><td>${i.qty}</td><td>${i.unitPrice.toFixed(2)}</td><td>${i.total.toFixed(2)}</td><td>${i.status}</td><td>${i.date}</td></tr>`;
+            });
             const total = data.reduce((s, i) => s + i.total, 0);
-            win.document.write(`<html><head><title>Billing Report</title><style>body{font-family:sans-serif;padding:30px;color:#1e293b;}table{width:100%;border-collapse:collapse;margin-top:20px;}th{background:#f1f5f9;padding:8px;border:1px solid #e2e8f0;}td{padding:6px 8px;border:1px solid #e2e8f0;}h2{border-bottom:2px solid #036469;padding-bottom:8px;}.footer{margin-top:24px;font-size:11px;color:#64748b;text-align:center;}</style></head><body><h2>${billingCurrentTab.charAt(0).toUpperCase()+billingCurrentTab.slice(1)} Transactions</h2><p>Generated: ${new Date().toLocaleString()}</p><table><thead><tr><th>ID</th><th>Item</th><th>Qty</th><th>Unit Price</th><th>Total</th><th>Status</th><th>Date</th></tr></thead><tbody>${rows}</tbody></table><p style="margin-top:16px;font-weight:bold;">Total: GHS ${total.toFixed(2)}</p><div class="footer">© 2026 addyPets Veterinary Clinic</div><script>window.onload=function(){window.print();}<\\/script></body></html>`);
+            const tabName = billingCurrentTab.charAt(0).toUpperCase() + billingCurrentTab.slice(1);
+            win.document.write(`<html><head><title>Billing Report</title><style>body{font-family:sans-serif;padding:30px;color:#1e293b;}table{width:100%;border-collapse:collapse;margin-top:20px;}th{background:#f1f5f9;padding:8px;border:1px solid #e2e8f0;}td{padding:6px 8px;border:1px solid #e2e8f0;}h2{border-bottom:2px solid #036469;padding-bottom:8px;}.footer{margin-top:24px;font-size:11px;color:#64748b;text-align:center;}</style></head><body><h2>${tabName} Transactions</h2><p>Generated: ${new Date().toLocaleString()}</p><table><thead><tr><th>ID</th><th>Item/Patient</th><th>Qty</th><th>Unit Price</th><th>Total</th><th>Status</th><th>Date</th></tr></thead><tbody>${rows}</tbody></table><p style="margin-top:16px;font-weight:bold;">Total: GHS ${total.toFixed(2)}</p><div class="footer">© 2026 addyPets Veterinary Clinic</div><script>window.onload=function(){window.print();}<\\/script></body></html>`);
             win.document.close();
         }
 
-        // ===== SIDEBAR =====
+        // ===== SIDEBAR (unchanged) =====
         const mobileBurgerBtn = document.getElementById('mobileBurgerBtn');
         const mobileSidebar = document.getElementById('mobileSidebar');
         const closeMobileSidebar = document.getElementById('closeMobileSidebar');
@@ -1276,10 +1551,10 @@
             generateMonths();
             updateDashboardStats();
             renderBillingTable();
-            // Set initial page to billing
             document.body.setAttribute("data-page", "billing");
             highlightBillingPage();
             switchSection('billing');
+            showToast('📋 Billing module loaded with Mortuary integration', 'success');
         });
     </script>
 </body>
