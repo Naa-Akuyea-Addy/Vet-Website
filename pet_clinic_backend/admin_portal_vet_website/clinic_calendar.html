@@ -1,11 +1,4 @@
 <!doctype html>
-
-<html class="light" lang="en">
-  <header>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>addyPets veterinary clinic | Admin Appointment Calendar</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <!-- Material Symbols -->
     <link
@@ -516,16 +509,8 @@
 
       /* Doctor availability animations */
       @keyframes pulse-dot {
-        0%,
-        100% {
-          opacity: 1;
-          transform: scale(1);
         }
-        50% {
-          opacity: 0.6;
-          transform: scale(1.2);
-        }
-      }
+      
       .animate-pulse {
         animation: pulse-dot 2s ease-in-out infinite;
       }
@@ -538,16 +523,16 @@
         transform: translateX(4px);
       }
       a[data-nav-desktop="emergency"],
-a[data-nav-mobile="emergency"] {
-  background-color: #943031 !important;
-  color: #ffffff !important;
-}
+      a[data-nav-mobile="emergency"] {
+        background-color: #943031 !important;
+        color: #ffffff !important;
+      }
 
-a[data-nav-desktop="emergency"]:hover,
-a[data-nav-mobile="emergency"]:hover {
-  background-color: #7a2526 !important; /* Slightly darker red on hover */
-  color: #ffffff !important;
-}
+      a[data-nav-desktop="emergency"]:hover,
+      a[data-nav-mobile="emergency"]:hover {
+        background-color: #7a2526 !important; /* Slightly darker red on hover */
+        color: #ffffff !important;
+      }
     </style>
   </header>
 
@@ -629,6 +614,7 @@ a[data-nav-mobile="emergency"]:hover {
           ><span class="material-symbols-outlined">groups</span
           ><span>Staff</span></a
         >
+        <a href="./appointment.html" data-nav-mobile="appointments" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">event_note</span><span>Appointments</span></a>
         <a
           href="./billing.html"
           data-nav-mobile="billing"
@@ -637,34 +623,40 @@ a[data-nav-mobile="emergency"]:hover {
           ><span>Billing</span></a
         >
         <a
-            href="./records.html"
-            data-nav-desktop="records"
-            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >description</span
-            ><span class="sidebar-text">Patient & Owner Records</span></a
-          >
-         <a
-          href="./message.html"
-          data-nav-desktop="message"
-          data-nav-mobile="message"
-          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
-          ><span class="material-symbols-outlined">message</span
+          href="./records.html"
+          data-nav-desktop="records"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          ><span class="material-symbols-outlined sidebar-icon-only"
+            >description</span
+          ><span class="sidebar-text">Patient & Owner Records</span></a
           ><span>Messages</span></a
         >
-         <a href="./emergency_management.html" data-nav-mobile="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10">
-            <span class="material-symbols-outlined sidebar-icon-only">emergency</span><span class="sidebar-text">Emergency Cases</span>
-          </a>
         <a
-          href="#"
-          data-nav-mobile="appointments"
+          href="./emergency_management.html"
+          data-nav-mobile="emergency"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"
+        >
+          <span class="material-symbols-outlined sidebar-icon-only"
+            >emergency</span
+          ><span class="sidebar-text">Emergency Cases</span>
+        </a>
+        <a
+          href="./mortuary.html"
+          data-nav-mobile="mortuary"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
-          ><span class="material-symbols-outlined">event_note</span
-          ><span>Appointments</span></a
+          ><span class="material-symbols-outlined">heart_broken</span
+          ><span>Mortuary</span></a
+        >
+        <a
+          href="./report.html"
+          data-nav-mobile="reports"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined">assessment</span
+          ><span>Reports</span></a
         >
         <div class="h-px bg-white/10 my-4"></div>
         <a
-          href="#"
+          href="./settings.html"
           data-nav-mobile="settings"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
           ><span class="material-symbols-outlined">settings</span
@@ -679,14 +671,6 @@ a[data-nav-mobile="emergency"]:hover {
         </button>
       </nav>
       <div class="p-4 border-t border-white/10">
-        <div
-          class="bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10"
-        >
-          <p class="font-caption text-caption text-tertiary-fixed-dim mb-2">
-            Emergency Hotline
-          </p>
-          <p class="font-label-md text-label-md text-primary-fixed">
-            +233 500 000 000
           </p>
         </div>
       </div>
@@ -752,6 +736,7 @@ a[data-nav-mobile="emergency"]:hover {
               >groups</span
             ><span class="sidebar-text">Staff</span></a
           >
+          <a href="./appointment.html" data-nav-desktop="appointments" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">event_note</span><span class="sidebar-text">Appointments</span></a>
           <a
             href="./billing.html"
             data-nav-desktop="billing"
@@ -760,7 +745,7 @@ a[data-nav-mobile="emergency"]:hover {
               >payments</span
             ><span class="sidebar-text">Billing</span></a
           >
-         <a
+          <a
             href="./records.html"
             data-nav-desktop="records"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
@@ -769,15 +754,21 @@ a[data-nav-mobile="emergency"]:hover {
             ><span class="sidebar-text">Patient & Owner Records</span></a
           >
           <a
-          href="./message.html"
-          data-nav-desktop="message"
-          data-nav-mobile="message"
-          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
-          ><span class="material-symbols-outlined">message</span
-          ><span class="sidebar-text">Messages</span></a
-        >
-         <a href="./emergency_management.html" data-nav-desktop="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10">
-            <span class="material-symbols-outlined sidebar-icon-only">emergency</span><span class="sidebar-text">Emergency Cases</span>
+            href="./message.html"
+            data-nav-desktop="message"
+            data-nav-mobile="message"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+            ><span class="material-symbols-outlined">message</span
+            ><span class="sidebar-text">Messages</span></a
+          >
+          <a
+            href="./emergency_management.html"
+            data-nav-desktop="emergency"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >emergency</span
+            ><span class="sidebar-text">Emergency Cases</span>
           </a>
           <a
             href="#"
@@ -786,6 +777,30 @@ a[data-nav-mobile="emergency"]:hover {
             ><span class="material-symbols-outlined sidebar-icon-only"
               >event_note</span
             ><span class="sidebar-text">Appointments</span></a
+          >
+          <a
+            href="./mortuary.html"
+            data-nav-desktop="mortuary"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >heart_broken</span
+            ><span class="sidebar-text">Mortuary</span></a
+          >
+          <a
+            href="./report.html"
+            data-nav-desktop="reports"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >assessment</span
+            ><span class="sidebar-text">Reports</span></a
+          >
+          <a
+            href="./settings.html"
+            data-nav-desktop="settings"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >settings</span
+            ><span class="sidebar-text">Settings</span></a
           >
         </nav>
         <div class="p-4 mt-auto bottom-container">
@@ -797,14 +812,6 @@ a[data-nav-mobile="emergency"]:hover {
               >logout</span
             ><span class="sidebar-text">Logout</span>
           </button>
-          <div
-            class="emergency-section bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10 mt-4"
-          >
-            <p class="font-caption text-caption text-tertiary-fixed-dim mb-2">
-              Emergency Hotline
-            </p>
-            <p class="font-label-md text-label-md text-primary-fixed">
-              +233 500 000 000
             </p>
           </div>
         </div>
@@ -3496,8 +3503,6 @@ a[data-nav-mobile="emergency"]:hover {
       window.openEditDoctorModal = openEditDoctorModal;
       window.openManageDoctorsModal = openManageDoctorsModal;
       window.renderDoctors = renderDoctors;
-
-      
     </script>
   </body>
 </html>

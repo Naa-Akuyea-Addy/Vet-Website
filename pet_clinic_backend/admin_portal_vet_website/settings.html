@@ -5,7 +5,10 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>addyPets | Settings</title>
     <!-- Font Awesome for better icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap"
@@ -18,7 +21,11 @@
 
     <style>
       .material-symbols-outlined {
-        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
         vertical-align: middle;
       }
       .custom-scrollbar::-webkit-scrollbar,
@@ -51,7 +58,9 @@
         scrollbar-width: none;
       }
       .sidebar-transition {
-        transition: width 0.3s ease-in-out, transform 0.3s ease-in-out;
+        transition:
+          width 0.3s ease-in-out,
+          transform 0.3s ease-in-out;
       }
       .mobile-sidebar {
         position: fixed;
@@ -133,7 +142,9 @@
         font-weight: 600;
         opacity: 0;
         transform: translateY(24px);
-        transition: opacity 0.28s ease, transform 0.28s ease;
+        transition:
+          opacity 0.28s ease,
+          transform 0.28s ease;
         pointer-events: auto;
         white-space: pre-line;
       }
@@ -185,7 +196,9 @@
       }
 
       .stat-card {
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
       }
       .stat-card:hover {
         transform: translateY(-2px);
@@ -259,7 +272,9 @@
         opacity: 0;
         transform: translateY(-8px) scale(0.95);
         pointer-events: none;
-        transition: opacity 0.15s ease, transform 0.15s ease;
+        transition:
+          opacity 0.15s ease,
+          transform 0.15s ease;
         overflow: hidden;
       }
       .action-dropdown-menu.open {
@@ -523,15 +538,26 @@
       };
     </script>
   </head>
-  <body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col overflow-x-hidden" data-page="settings">
-
+  <body
+    class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col overflow-x-hidden"
+    data-page="settings"
+  >
     <!-- Mobile Top Bar -->
-    <div class="md:hidden fixed top-0 left-0 right-0 bg-deep-navy z-50 px-4 py-4 flex items-center justify-between shadow-lg">
+    <div
+      class="md:hidden fixed top-0 left-0 right-0 bg-deep-navy z-50 px-4 py-4 flex items-center justify-between shadow-lg"
+    >
       <div class="flex items-center gap-3">
-        <button id="mobileBurgerBtn" class="text-white p-2 hover:bg-white/10 rounded-lg transition-all">
+        <button
+          id="mobileBurgerBtn"
+          class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"
+        >
           <span class="material-symbols-outlined">menu</span>
         </button>
-        <img alt="Logo" class="w-8 h-8 rounded-full object-cover" src="../../public/logo.png" />
+        <img
+          alt="Logo"
+          class="w-8 h-8 rounded-full object-cover"
+          src="../../public/logo.png"
+        />
         <h1 class="font-bold text-primary-fixed text-sm">addyPets</h1>
       </div>
       <div class="flex items-center gap-3">
@@ -543,57 +569,139 @@
     <div id="mobileOverlay" class="overlay"></div>
 
     <!-- Mobile Sidebar -->
-    <div id="mobileSidebar" class="mobile-sidebar bg-deep-navy flex flex-col shadow-2xl">
-      <div class="flex items-center justify-between p-6 border-b border-white/10">
+    <div
+      id="mobileSidebar"
+      class="mobile-sidebar bg-deep-navy flex flex-col shadow-2xl"
+    >
+      <div
+        class="flex items-center justify-between p-6 border-b border-white/10"
+      >
         <div class="flex items-center gap-3">
-          <img alt="Logo" class="w-10 h-10 rounded-full object-cover" src="../../public/logo.png" />
+          <img
+            alt="Logo"
+            class="w-10 h-10 rounded-full object-cover"
+            src="../../public/logo.png"
+          />
           <div>
             <h1 class="font-bold text-primary-fixed">addyPets</h1>
             <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
           </div>
         </div>
-        <button id="closeMobileSidebar" class="text-white p-2 hover:bg-white/10 rounded-lg">
+        <button
+          id="closeMobileSidebar"
+          class="text-white p-2 hover:bg-white/10 rounded-lg"
+        >
           <span class="material-symbols-outlined">close</span>
         </button>
       </div>
       <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto hide-scrollbar">
-        <a href="./Dashboard.html" data-nav-mobile="analytics" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">analytics</span><span>Analytics</span>
+        <a
+          href="./Dashboard.html"
+          data-nav-mobile="analytics"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">analytics</span
+          ><span>Analytics</span>
         </a>
-        <a href="./clinic_calendar.html" data-nav-mobile="calendar" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">calendar_today</span><span>Calendar</span>
+        <a
+          href="./clinic_calendar.html"
+          data-nav-mobile="calendar"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">calendar_today</span
+          ><span>Calendar</span>
         </a>
-        <a href="./staff_service_settings.html" data-nav-mobile="staff" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">groups</span><span>Staff</span>
+        <a
+          href="./staff_service_settings.html"
+          data-nav-mobile="staff"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">groups</span
+          ><span>Staff</span>
         </a>
-        <a href="./appointments.html" data-nav-mobile="appointments" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">event_note</span><span>Appointments</span>
+        <a
+          href="./appointments.html"
+          data-nav-mobile="appointments"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">event_note</span
+          ><span>Appointments</span>
         </a>
-        <a href="./billing.html" data-nav-mobile="billing" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">payments</span><span>Billing</span>
+        <a
+          href="./billing.html"
+          data-nav-mobile="billing"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">payments</span
+          ><span>Billing</span>
         </a>
-        <a href="./records.html" data-nav-mobile="records" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">description</span><span>Patient & Owner Records</span>
+        <a
+          href="./records.html"
+          data-nav-mobile="records"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">description</span
+          ><span>Patient & Owner Records</span>
         </a>
-        <a href="./inventory.html" data-nav-mobile="inventory" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">inventory_2</span><span>Inventory</span>
+        <a
+          href="./inventory.html"
+          data-nav-mobile="inventory"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">inventory_2</span
+          ><span>Inventory</span>
         </a>
-        <a href="./message.html" data-nav-mobile="message" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">message</span><span>Messages</span>
+        <a
+          href="./message.html"
+          data-nav-mobile="message"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">message</span
+          ><span>Messages</span>
         </a>
-        <a href="./emergency_management.html" data-nav-mobile="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold bg-emergency-red/10">
-          <span class="material-symbols-outlined">emergency</span><span>Emergency Cases</span>
+        <a
+          href="./emergency_management.html"
+          data-nav-mobile="emergency"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold bg-emergency-red/10"
+        >
+          <span class="material-symbols-outlined">emergency</span
+          ><span>Emergency Cases</span>
         </a>
-        <a href="./settings.html" data-nav-mobile="settings" class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all">
-          <span class="material-symbols-outlined">settings</span><span>Settings</span>
+        <a
+          href="./mortuary.html"
+          data-nav-mobile="mortuary"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined">heart_broken</span
+          ><span>Mortuary</span></a
+        >
+        <a
+          href="./report.html"
+          data-nav-mobile="reports"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined">assessment</span
+          ><span>Reports</span></a
+        >
+        <a
+          href="./settings.html"
+          data-nav-mobile="settings"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all"
+        >
+          <span class="material-symbols-outlined">settings</span
+          ><span>Settings</span>
         </a>
         <div class="h-px bg-white/10 my-4"></div>
-        <button id="logoutBtnMobile" class="w-full flex items-center gap-4 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all">
-          <span class="material-symbols-outlined">logout</span><span>Logout</span>
+        <button
+          id="logoutBtnMobile"
+          class="w-full flex items-center gap-4 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all"
+        >
+          <span class="material-symbols-outlined">logout</span
+          ><span>Logout</span>
         </button>
       </nav>
       <div class="p-4 border-t border-white/10">
-        <div class="bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10">
+        <div
+          class="bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10"
+        >
           <p class="text-xs text-tertiary-fixed-dim mb-2">Emergency Hotline</p>
           <p class="text-sm text-primary-fixed font-bold">+233 500 000 000</p>
         </div>
@@ -603,156 +711,353 @@
     <!-- Desktop Layout -->
     <div class="flex min-h-screen w-full">
       <!-- Desktop Sidebar -->
-      <aside id="desktopSidebar" class="hidden md:flex flex-col bg-deep-navy h-screen sticky top-0 border-r border-outline-variant/10 text-white sidebar-transition w-64">
-        <div class="px-6 py-6 flex items-center justify-between border-b border-white/10">
+      <aside
+        id="desktopSidebar"
+        class="hidden md:flex flex-col bg-deep-navy h-screen sticky top-0 border-r border-outline-variant/10 text-white sidebar-transition w-64"
+      >
+        <div
+          class="px-6 py-6 flex items-center justify-between border-b border-white/10"
+        >
           <div class="flex items-center gap-3 sidebar-logo">
-            <img alt="Logo" class="w-10 h-10 rounded-full object-cover" src="../../public/logo.png" />
+            <img
+              alt="Logo"
+              class="w-10 h-10 rounded-full object-cover"
+              src="../../public/logo.png"
+            />
             <div class="sidebar-logo-text">
               <h1 class="font-bold text-primary-fixed text-sm">addyPets</h1>
               <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
             </div>
           </div>
-          <button id="collapseSidebarBtn" class="text-white p-2 hover:bg-white/10 rounded-lg transition-all">
+          <button
+            id="collapseSidebarBtn"
+            class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"
+          >
             <span class="material-symbols-outlined">chevron_left</span>
           </button>
         </div>
         <nav class="flex-1 px-3 py-6 space-y-1 overflow-y-auto hide-scrollbar">
-          <a href="./Dashboard.html" data-nav-desktop="analytics" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">analytics</span>
+          <a
+            href="./Dashboard.html"
+            data-nav-desktop="analytics"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >analytics</span
+            >
             <span class="sidebar-text">Analytics</span>
           </a>
-          <a href="./clinic_calendar.html" data-nav-desktop="calendar" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">calendar_today</span>
+          <a
+            href="./clinic_calendar.html"
+            data-nav-desktop="calendar"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >calendar_today</span
+            >
             <span class="sidebar-text">Calendar</span>
           </a>
-          <a href="./staff_service_settings.html" data-nav-desktop="staff" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">groups</span>
+          <a
+            href="./staff_service_settings.html"
+            data-nav-desktop="staff"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >groups</span
+            >
             <span class="sidebar-text">Staff</span>
           </a>
-          <a href="./appointments.html" data-nav-desktop="appointments" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">event_note</span>
+          <a
+            href="./appointments.html"
+            data-nav-desktop="appointments"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >event_note</span
+            >
             <span class="sidebar-text">Appointments</span>
           </a>
-          <a href="./billing.html" data-nav-desktop="billing" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">payments</span>
+          <a
+            href="./billing.html"
+            data-nav-desktop="billing"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >payments</span
+            >
             <span class="sidebar-text">Billing</span>
           </a>
-          <a href="./records.html" data-nav-desktop="records" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">description</span>
+          <a
+            href="./records.html"
+            data-nav-desktop="records"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >description</span
+            >
             <span class="sidebar-text">Patient & Owner Records</span>
           </a>
-          <a href="./inventory.html" data-nav-desktop="inventory" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">inventory_2</span>
+          <a
+            href="./inventory.html"
+            data-nav-desktop="inventory"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >inventory_2</span
+            >
             <span class="sidebar-text">Inventory</span>
           </a>
-          <a href="./message.html" data-nav-desktop="message" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">message</span>
+          <a
+            href="./message.html"
+            data-nav-desktop="message"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >message</span
+            >
             <span class="sidebar-text">Messages</span>
           </a>
-          <a href="./emergency_management.html" data-nav-desktop="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10">
-            <span class="material-symbols-outlined sidebar-icon-only">emergency</span>
+          <a
+            href="./emergency_management.html"
+            data-nav-desktop="emergency"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >emergency</span
+            >
             <span class="sidebar-text">Emergency Cases</span>
           </a>
-          <a href="./settings.html" data-nav-desktop="settings" class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">settings</span>
+          <a
+            href="./mortuary.html"
+            data-nav-desktop="mortuary"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >heart_broken</span
+            ><span class="sidebar-text">Mortuary</span></a
+          >
+          <a
+            href="./report.html"
+            data-nav-desktop="reports"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >assessment</span
+            ><span class="sidebar-text">Reports</span></a
+          >
+          <a
+            href="./settings.html"
+            data-nav-desktop="settings"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >settings</span
+            >
             <span class="sidebar-text">Settings</span>
           </a>
         </nav>
         <div class="p-4 mt-auto bottom-container">
-          <button id="logoutBtnDesktop" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">logout</span>
+          <button
+            id="logoutBtnDesktop"
+            class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >logout</span
+            >
             <span class="sidebar-text">Logout</span>
           </button>
-          <div class="emergency-section bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10 mt-4">
-            <p class="text-xs text-tertiary-fixed-dim mb-2">Emergency Hotline</p>
+          <div
+            class="emergency-section bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10 mt-4"
+          >
+            <p class="text-xs text-tertiary-fixed-dim mb-2">
+              Emergency Hotline
+            </p>
             <p class="text-sm text-primary-fixed font-bold">+233 500 000 000</p>
           </div>
         </div>
       </aside>
 
       <!-- Main Content Area -->
-      <div id="mainContentWrapper" class="flex-1 flex flex-col bg-surface pt-16 md:pt-0 transition-all duration-300">
+      <div
+        id="mainContentWrapper"
+        class="flex-1 flex flex-col bg-surface pt-16 md:pt-0 transition-all duration-300"
+      >
         <!-- Top Bar -->
-        <header class="h-20 bg-surface hidden md:flex items-center justify-between px-margin-desktop sticky top-0 z-40 border-b border-surface-container-highest">
+        <header
+          class="h-20 bg-surface hidden md:flex items-center justify-between px-margin-desktop sticky top-0 z-40 border-b border-surface-container-highest"
+        >
           <div class="flex items-center gap-4 w-1/3">
             <div class="relative w-full max-w-md">
-              <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
-              <input id="settingsSearch" class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="Search settings..." type="text" />
+              <span
+                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline"
+                >search</span
+              >
+              <input
+                id="settingsSearch"
+                class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                placeholder="Search settings..."
+                type="text"
+              />
             </div>
           </div>
           <div class="flex items-center gap-6">
-            <button class="relative p-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-full">
+            <button
+              class="relative p-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-full"
+            >
               <span class="material-symbols-outlined">notifications</span>
-              <span class="absolute top-2 right-2 w-2 h-2 bg-emergency-red rounded-full"></span>
+              <span
+                class="absolute top-2 right-2 w-2 h-2 bg-emergency-red rounded-full"
+              ></span>
             </button>
             <div class="flex items-center gap-3 cursor-pointer group">
               <div class="text-right">
-                <p class="text-sm font-bold text-on-surface">Dr. Abena Mensah</p>
-                <p class="text-xs text-on-surface-variant">Chief Veterinary Officer</p>
+                <p class="text-sm font-bold text-on-surface">
+                  Dr. Abena Mensah
+                </p>
+                <p class="text-xs text-on-surface-variant">
+                  Chief Veterinary Officer
+                </p>
               </div>
-              <img alt="Profile" class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt_l2NtwBrHDxQNGs9rPyaBDSi0T_lttSSni_UFdT12mHBHPojsxTE2haa69Vl-xUxsOfIG9hBjBfFUbTbuzqUZTrwCxsYx-WVkbqBP95JzSas9Gk-vlSi5L3t6i5wijVQgjwTRZWzXWDoOxvbiuiwTwUvQerM7vTOeUAbTgk0LzdJ6ZlyU0xeXqf__Iapv8Wpu9q6UmECwczFqWAIEuCSYFKPwinFOH3N6vq0YJKWoiJViDN71AZUcTRiwGyz_FO9sM63nmOE114" />
+              <img
+                alt="Profile"
+                class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-container"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt_l2NtwBrHDxQNGs9rPyaBDSi0T_lttSSni_UFdT12mHBHPojsxTE2haa69Vl-xUxsOfIG9hBjBfFUbTbuzqUZTrwCxsYx-WVkbqBP95JzSas9Gk-vlSi5L3t6i5wijVQgjwTRZWzXWDoOxvbiuiwTwUvQerM7vTOeUAbTgk0LzdJ6ZlyU0xeXqf__Iapv8Wpu9q6UmECwczFqWAIEuCSYFKPwinFOH3N6vq0YJKWoiJViDN71AZUcTRiwGyz_FO9sM63nmOE114"
+              />
             </div>
           </div>
         </header>
 
         <!-- SETTINGS VIEW -->
-        <main class="flex-grow max-w-container-max mx-auto w-full px-4 md:px-margin-desktop py-stack-lg">
+        <main
+          class="flex-grow max-w-container-max mx-auto w-full px-4 md:px-margin-desktop py-stack-lg"
+        >
           <!-- Header -->
-          <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-stack-md">
+          <div
+            class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-stack-md"
+          >
             <div>
-              <h1 class="font-headline-lg text-headline-lg text-primary">Settings</h1>
-              <p class="text-on-surface-variant mt-1">Manage your clinic settings and user permissions</p>
+              <h1 class="font-headline-lg text-headline-lg text-primary">
+                Settings
+              </h1>
+              <p class="text-on-surface-variant mt-1">
+                Manage your clinic settings and user permissions
+              </p>
             </div>
             <div class="flex gap-3 flex-wrap">
-              <button onclick="exportSettings()" class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">
-                <span class="material-symbols-outlined text-sm">download</span> Export Settings
+              <button
+                onclick="exportSettings()"
+                class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors"
+              >
+                <span class="material-symbols-outlined text-sm">download</span>
+                Export Settings
               </button>
-              <button onclick="saveAllSettings()" class="flex items-center gap-2 px-6 py-3 bg-primary text-on-primary rounded-xl font-label-md shadow-sm hover:opacity-90 transition-all active:scale-95">
-                <span class="material-symbols-outlined">save</span> Save All Changes
+              <button
+                onclick="saveAllSettings()"
+                class="flex items-center gap-2 px-6 py-3 bg-primary text-on-primary rounded-xl font-label-md shadow-sm hover:opacity-90 transition-all active:scale-95"
+              >
+                <span class="material-symbols-outlined">save</span> Save All
+                Changes
               </button>
             </div>
           </div>
 
           <!-- Stats Row -->
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div class="stat-card bg-white rounded-xl p-4 border border-slate-200">
-              <p class="text-xs text-slate-400 uppercase tracking-wider">Total Roles</p>
+            <div
+              class="stat-card bg-white rounded-xl p-4 border border-slate-200"
+            >
+              <p class="text-xs text-slate-400 uppercase tracking-wider">
+                Total Roles
+              </p>
               <p id="totalRoles" class="text-2xl font-bold text-slate-900">0</p>
             </div>
-            <div class="stat-card bg-white rounded-xl p-4 border border-slate-200">
-              <p class="text-xs text-slate-400 uppercase tracking-wider">Total Users</p>
+            <div
+              class="stat-card bg-white rounded-xl p-4 border border-slate-200"
+            >
+              <p class="text-xs text-slate-400 uppercase tracking-wider">
+                Total Users
+              </p>
               <p id="totalUsers" class="text-2xl font-bold text-slate-900">0</p>
             </div>
-            <div class="stat-card bg-white rounded-xl p-4 border border-slate-200">
-              <p class="text-xs text-slate-400 uppercase tracking-wider">Permissions</p>
-              <p id="totalPermissions" class="text-2xl font-bold text-slate-900">0</p>
+            <div
+              class="stat-card bg-white rounded-xl p-4 border border-slate-200"
+            >
+              <p class="text-xs text-slate-400 uppercase tracking-wider">
+                Permissions
+              </p>
+              <p
+                id="totalPermissions"
+                class="text-2xl font-bold text-slate-900"
+              >
+                0
+              </p>
             </div>
-            <div class="stat-card bg-white rounded-xl p-4 border border-slate-200">
-              <p class="text-xs text-slate-400 uppercase tracking-wider">Active Users</p>
-              <p id="activeUsers" class="text-2xl font-bold text-emerald-600">0</p>
+            <div
+              class="stat-card bg-white rounded-xl p-4 border border-slate-200"
+            >
+              <p class="text-xs text-slate-400 uppercase tracking-wider">
+                Active Users
+              </p>
+              <p id="activeUsers" class="text-2xl font-bold text-emerald-600">
+                0
+              </p>
             </div>
           </div>
 
           <!-- Settings Tabs -->
-          <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mb-6">
-            <div class="flex flex-wrap gap-1 p-2 border-b border-slate-200 bg-slate-50/50">
-              <button onclick="switchSettingsTab('roles')" class="settings-tab-btn active" data-tab="roles">
-                <span class="material-symbols-outlined text-sm">groups</span> Roles & Permissions
+          <div
+            class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mb-6"
+          >
+            <div
+              class="flex flex-wrap gap-1 p-2 border-b border-slate-200 bg-slate-50/50"
+            >
+              <button
+                onclick="switchSettingsTab('roles')"
+                class="settings-tab-btn active"
+                data-tab="roles"
+              >
+                <span class="material-symbols-outlined text-sm">groups</span>
+                Roles & Permissions
               </button>
-              <button onclick="switchSettingsTab('clinic')" class="settings-tab-btn" data-tab="clinic">
-                <span class="material-symbols-outlined text-sm">business</span> Clinic Setup
+              <button
+                onclick="switchSettingsTab('clinic')"
+                class="settings-tab-btn"
+                data-tab="clinic"
+              >
+                <span class="material-symbols-outlined text-sm">business</span>
+                Clinic Setup
               </button>
-              <button onclick="switchSettingsTab('security')" class="settings-tab-btn" data-tab="security">
-                <span class="material-symbols-outlined text-sm">security</span> Security
+              <button
+                onclick="switchSettingsTab('security')"
+                class="settings-tab-btn"
+                data-tab="security"
+              >
+                <span class="material-symbols-outlined text-sm">security</span>
+                Security
               </button>
-              <button onclick="switchSettingsTab('notifications')" class="settings-tab-btn" data-tab="notifications">
-                <span class="material-symbols-outlined text-sm">notifications</span> Notifications
+              <button
+                onclick="switchSettingsTab('notifications')"
+                class="settings-tab-btn"
+                data-tab="notifications"
+              >
+                <span class="material-symbols-outlined text-sm"
+                  >notifications</span
+                >
+                Notifications
               </button>
-              <button onclick="switchSettingsTab('integrations')" class="settings-tab-btn" data-tab="integrations">
-                <span class="material-symbols-outlined text-sm">link</span> Integrations
+              <button
+                onclick="switchSettingsTab('integrations')"
+                class="settings-tab-btn"
+                data-tab="integrations"
+              >
+                <span class="material-symbols-outlined text-sm">link</span>
+                Integrations
               </button>
-              <button onclick="switchSettingsTab('preferences')" class="settings-tab-btn" data-tab="preferences">
-                <span class="material-symbols-outlined text-sm">tune</span> System Preferences
+              <button
+                onclick="switchSettingsTab('preferences')"
+                class="settings-tab-btn"
+                data-tab="preferences"
+              >
+                <span class="material-symbols-outlined text-sm">tune</span>
+                System Preferences
               </button>
             </div>
 
@@ -760,13 +1065,23 @@
             <!-- 1. ROLES & PERMISSIONS TAB -->
             <!-- ============================================ -->
             <div id="tab-roles" class="tab-panel active p-4 md:p-6">
-              <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+              <div
+                class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6"
+              >
                 <div>
-                  <h2 class="text-lg font-bold text-slate-900">User Roles & Permissions</h2>
-                  <p class="text-sm text-slate-500">Define roles and assign permissions to control system access</p>
+                  <h2 class="text-lg font-bold text-slate-900">
+                    User Roles & Permissions
+                  </h2>
+                  <p class="text-sm text-slate-500">
+                    Define roles and assign permissions to control system access
+                  </p>
                 </div>
-                <button onclick="openAddRoleModal()" class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors">
-                  <span class="material-symbols-outlined text-sm">add</span> Add New Role
+                <button
+                  onclick="openAddRoleModal()"
+                  class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors"
+                >
+                  <span class="material-symbols-outlined text-sm">add</span> Add
+                  New Role
                 </button>
               </div>
 
@@ -775,23 +1090,50 @@
                 <table class="w-full border-collapse text-left">
                   <thead class="bg-slate-50 border-b border-slate-200">
                     <tr>
-                      <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Role</th>
-                      <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Users</th>
-                      <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Permissions</th>
-                      <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Actions</th>
+                      <th
+                        class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider"
+                      >
+                        Role
+                      </th>
+                      <th
+                        class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider"
+                      >
+                        Users
+                      </th>
+                      <th
+                        class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider"
+                      >
+                        Permissions
+                      </th>
+                      <th
+                        class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right"
+                      >
+                        Actions
+                      </th>
                     </tr>
                   </thead>
-                  <tbody id="rolesTableBody" class="divide-y divide-slate-100"></tbody>
+                  <tbody
+                    id="rolesTableBody"
+                    class="divide-y divide-slate-100"
+                  ></tbody>
                 </table>
               </div>
 
               <!-- Permission Matrix -->
               <div class="mt-6 pt-6 border-t border-slate-200">
                 <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold text-slate-900">Permission Matrix</h3>
+                  <h3 class="font-semibold text-slate-900">
+                    Permission Matrix
+                  </h3>
                   <div class="flex items-center gap-2">
-                    <span class="text-sm text-slate-500">Viewing permissions for:</span>
-                    <select id="permissionRoleSelect" class="border border-slate-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" onchange="renderPermissionMatrix()">
+                    <span class="text-sm text-slate-500"
+                      >Viewing permissions for:</span
+                    >
+                    <select
+                      id="permissionRoleSelect"
+                      class="border border-slate-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                      onchange="renderPermissionMatrix()"
+                    >
                       <!-- Populated by JS -->
                     </select>
                   </div>
@@ -800,11 +1142,31 @@
                   <table class="w-full border-collapse text-left text-sm">
                     <thead class="bg-slate-50 border-b border-slate-200">
                       <tr>
-                        <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Module</th>
-                        <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider text-center">View</th>
-                        <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider text-center">Create</th>
-                        <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider text-center">Edit</th>
-                        <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider text-center">Delete</th>
+                        <th
+                          class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider"
+                        >
+                          Module
+                        </th>
+                        <th
+                          class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider text-center"
+                        >
+                          View
+                        </th>
+                        <th
+                          class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider text-center"
+                        >
+                          Create
+                        </th>
+                        <th
+                          class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider text-center"
+                        >
+                          Edit
+                        </th>
+                        <th
+                          class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider text-center"
+                        >
+                          Delete
+                        </th>
                       </tr>
                     </thead>
                     <tbody id="permissionMatrixBody"></tbody>
@@ -817,31 +1179,65 @@
             <!-- 2. CLINIC SETUP TAB -->
             <!-- ============================================ -->
             <div id="tab-clinic" class="tab-panel p-4 md:p-6">
-              <h2 class="text-lg font-bold text-slate-900 mb-6">Clinic Setup</h2>
+              <h2 class="text-lg font-bold text-slate-900 mb-6">
+                Clinic Setup
+              </h2>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label class="input-label">Clinic Name <span class="hint">(required)</span></label>
-                  <input id="clinicName" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" value="addyPets Veterinary Clinic" />
+                  <label class="input-label"
+                    >Clinic Name <span class="hint">(required)</span></label
+                  >
+                  <input
+                    id="clinicName"
+                    type="text"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    value="addyPets Veterinary Clinic"
+                  />
                 </div>
                 <div>
-                  <label class="input-label">Email Address <span class="hint">(required)</span></label>
-                  <input id="clinicEmail" type="email" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" value="info@addypets.com" />
+                  <label class="input-label"
+                    >Email Address <span class="hint">(required)</span></label
+                  >
+                  <input
+                    id="clinicEmail"
+                    type="email"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    value="info@addypets.com"
+                  />
                 </div>
                 <div class="md:col-span-2">
                   <label class="input-label">Address</label>
-                  <input id="clinicAddress" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" value="123 Vet Street, Accra, Ghana" />
+                  <input
+                    id="clinicAddress"
+                    type="text"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    value="123 Vet Street, Accra, Ghana"
+                  />
                 </div>
                 <div>
                   <label class="input-label">Phone Number</label>
-                  <input id="clinicPhone" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" value="+233 500 000 000" />
+                  <input
+                    id="clinicPhone"
+                    type="text"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    value="+233 500 000 000"
+                  />
                 </div>
                 <div>
                   <label class="input-label">Emergency Hotline</label>
-                  <input id="clinicEmergency" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" value="+233 500 000 111" />
+                  <input
+                    id="clinicEmergency"
+                    type="text"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    value="+233 500 000 111"
+                  />
                 </div>
                 <div>
                   <label class="input-label">Default Currency</label>
-                  <select id="clinicCurrency" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+                  <select
+                    id="clinicCurrency"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  >
                     <option value="GHS">GHS - Ghana Cedis</option>
                     <option value="USD">USD - US Dollar</option>
                     <option value="EUR">EUR - Euro</option>
@@ -850,33 +1246,77 @@
                 </div>
                 <div>
                   <label class="input-label">Tax Rate (%)</label>
-                  <input id="clinicTax" type="number" step="0.1" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" value="12.5" />
+                  <input
+                    id="clinicTax"
+                    type="number"
+                    step="0.1"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    value="12.5"
+                  />
                 </div>
                 <div class="md:col-span-2">
                   <label class="input-label">Consultation Fees</label>
                   <div class="grid grid-cols-2 gap-4">
                     <div>
-                      <label class="text-xs text-slate-400">Initial Consultation (GHS)</label>
-                      <input id="feeInitial" type="number" step="0.01" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" value="50.00" />
+                      <label class="text-xs text-slate-400"
+                        >Initial Consultation (GHS)</label
+                      >
+                      <input
+                        id="feeInitial"
+                        type="number"
+                        step="0.01"
+                        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                        value="50.00"
+                      />
                     </div>
                     <div>
-                      <label class="text-xs text-slate-400">Follow-up (GHS)</label>
-                      <input id="feeFollowup" type="number" step="0.01" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" value="30.00" />
+                      <label class="text-xs text-slate-400"
+                        >Follow-up (GHS)</label
+                      >
+                      <input
+                        id="feeFollowup"
+                        type="number"
+                        step="0.01"
+                        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                        value="30.00"
+                      />
                     </div>
                     <div>
-                      <label class="text-xs text-slate-400">Emergency (GHS)</label>
-                      <input id="feeEmergency" type="number" step="0.01" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" value="80.00" />
+                      <label class="text-xs text-slate-400"
+                        >Emergency (GHS)</label
+                      >
+                      <input
+                        id="feeEmergency"
+                        type="number"
+                        step="0.01"
+                        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                        value="80.00"
+                      />
                     </div>
                     <div>
-                      <label class="text-xs text-slate-400">Home Visit (GHS)</label>
-                      <input id="feeHomeVisit" type="number" step="0.01" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" value="100.00" />
+                      <label class="text-xs text-slate-400"
+                        >Home Visit (GHS)</label
+                      >
+                      <input
+                        id="feeHomeVisit"
+                        type="number"
+                        step="0.01"
+                        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                        value="100.00"
+                      />
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200">
-                <button onclick="saveClinicSettings()" class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2">
-                  <span class="material-symbols-outlined text-sm">save</span> Save Clinic Settings
+              <div
+                class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200"
+              >
+                <button
+                  onclick="saveClinicSettings()"
+                  class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2"
+                >
+                  <span class="material-symbols-outlined text-sm">save</span>
+                  Save Clinic Settings
                 </button>
               </div>
             </div>
@@ -885,11 +1325,18 @@
             <!-- 3. SECURITY TAB -->
             <!-- ============================================ -->
             <div id="tab-security" class="tab-panel p-4 md:p-6">
-              <h2 class="text-lg font-bold text-slate-900 mb-6">Security Settings</h2>
+              <h2 class="text-lg font-bold text-slate-900 mb-6">
+                Security Settings
+              </h2>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label class="input-label">Two-Factor Authentication (2FA)</label>
-                  <select id="security2FA" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+                  <label class="input-label"
+                    >Two-Factor Authentication (2FA)</label
+                  >
+                  <select
+                    id="security2FA"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  >
                     <option value="enabled">Enabled</option>
                     <option value="disabled" selected>Disabled</option>
                     <option value="optional">Optional (User choice)</option>
@@ -897,36 +1344,71 @@
                 </div>
                 <div>
                   <label class="input-label">Session Timeout (minutes)</label>
-                  <input id="securityTimeout" type="number" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" value="30" />
+                  <input
+                    id="securityTimeout"
+                    type="number"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    value="30"
+                  />
                 </div>
                 <div>
                   <label class="input-label">Max Login Attempts</label>
-                  <input id="securityMaxAttempts" type="number" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" value="5" />
+                  <input
+                    id="securityMaxAttempts"
+                    type="number"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    value="5"
+                  />
                 </div>
                 <div>
                   <label class="input-label">Password Minimum Length</label>
-                  <input id="securityMinLength" type="number" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" value="8" />
+                  <input
+                    id="securityMinLength"
+                    type="number"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    value="8"
+                  />
                 </div>
                 <div>
                   <label class="input-label">Require Special Characters</label>
-                  <select id="securitySpecialChars" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+                  <select
+                    id="securitySpecialChars"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  >
                     <option value="yes" selected>Yes</option>
                     <option value="no">No</option>
                   </select>
                 </div>
                 <div>
                   <label class="input-label">Password Expiry (days)</label>
-                  <input id="securityExpiry" type="number" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" value="90" />
+                  <input
+                    id="securityExpiry"
+                    type="number"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    value="90"
+                  />
                 </div>
                 <div class="md:col-span-2">
                   <label class="input-label">IP Whitelist</label>
-                  <textarea id="securityIPWhitelist" rows="2" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Enter IP addresses, one per line">192.168.1.0/24
+                  <textarea
+                    id="securityIPWhitelist"
+                    rows="2"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    placeholder="Enter IP addresses, one per line"
+                  >
+192.168.1.0/24
               10.0.0.0/8</textarea>
                 </div>
               </div>
-              <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200">
-                <button onclick="saveSecuritySettings()" class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2">
-                  <span class="material-symbols-outlined text-sm">save</span> Save Security Settings
+              <div
+                class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200"
+              >
+                <button
+                  onclick="saveSecuritySettings()"
+                  class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2"
+                >
+                  <span class="material-symbols-outlined text-sm">save</span>
+                  Save Security Settings
                 </button>
               </div>
             </div>
@@ -935,56 +1417,113 @@
             <!-- 4. NOTIFICATIONS TAB -->
             <!-- ============================================ -->
             <div id="tab-notifications" class="tab-panel p-4 md:p-6">
-              <h2 class="text-lg font-bold text-slate-900 mb-6">Notification Settings</h2>
+              <h2 class="text-lg font-bold text-slate-900 mb-6">
+                Notification Settings
+              </h2>
               <div class="space-y-6">
                 <!-- Email Settings -->
                 <div>
-                  <h3 class="font-semibold text-slate-800 mb-3 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-primary text-sm">email</span> Email Settings
+                  <h3
+                    class="font-semibold text-slate-800 mb-3 flex items-center gap-2"
+                  >
+                    <span class="material-symbols-outlined text-primary text-sm"
+                      >email</span
+                    >
+                    Email Settings
                   </h3>
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label class="input-label">SMTP Server</label>
-                      <input id="smtpServer" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" value="smtp.gmail.com" />
+                      <input
+                        id="smtpServer"
+                        type="text"
+                        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                        value="smtp.gmail.com"
+                      />
                     </div>
                     <div>
                       <label class="input-label">SMTP Port</label>
-                      <input id="smtpPort" type="number" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" value="587" />
+                      <input
+                        id="smtpPort"
+                        type="number"
+                        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                        value="587"
+                      />
                     </div>
                     <div>
                       <label class="input-label">SMTP Username</label>
-                      <input id="smtpUsername" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" value="notifications@addypets.com" />
+                      <input
+                        id="smtpUsername"
+                        type="text"
+                        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                        value="notifications@addypets.com"
+                      />
                     </div>
                     <div>
                       <label class="input-label">SMTP Password</label>
-                      <input id="smtpPassword" type="password" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" value="••••••••" />
+                      <input
+                        id="smtpPassword"
+                        type="password"
+                        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                        value="••••••••"
+                      />
                     </div>
                   </div>
                 </div>
 
                 <!-- Notification Types -->
                 <div>
-                  <h3 class="font-semibold text-slate-800 mb-3 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-primary text-sm">notifications_active</span> Notification Types
+                  <h3
+                    class="font-semibold text-slate-800 mb-3 flex items-center gap-2"
+                  >
+                    <span class="material-symbols-outlined text-primary text-sm"
+                      >notifications_active</span
+                    >
+                    Notification Types
                   </h3>
                   <div class="overflow-x-auto">
                     <table class="w-full border-collapse text-sm">
                       <thead class="bg-slate-50 border-b border-slate-200">
                         <tr>
-                          <th class="px-4 py-3 text-left font-semibold text-slate-600">Notification</th>
-                          <th class="px-4 py-3 text-center font-semibold text-slate-600">Email</th>
-                          <th class="px-4 py-3 text-center font-semibold text-slate-600">SMS</th>
-                          <th class="px-4 py-3 text-center font-semibold text-slate-600">In-App</th>
+                          <th
+                            class="px-4 py-3 text-left font-semibold text-slate-600"
+                          >
+                            Notification
+                          </th>
+                          <th
+                            class="px-4 py-3 text-center font-semibold text-slate-600"
+                          >
+                            Email
+                          </th>
+                          <th
+                            class="px-4 py-3 text-center font-semibold text-slate-600"
+                          >
+                            SMS
+                          </th>
+                          <th
+                            class="px-4 py-3 text-center font-semibold text-slate-600"
+                          >
+                            In-App
+                          </th>
                         </tr>
                       </thead>
-                      <tbody id="notificationTypesBody" class="divide-y divide-slate-100"></tbody>
+                      <tbody
+                        id="notificationTypesBody"
+                        class="divide-y divide-slate-100"
+                      ></tbody>
                     </table>
                   </div>
                 </div>
               </div>
-              <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200">
-                <button onclick="saveNotificationSettings()" class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2">
-                  <span class="material-symbols-outlined text-sm">save</span> Save Notification Settings
+              <div
+                class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200"
+              >
+                <button
+                  onclick="saveNotificationSettings()"
+                  class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2"
+                >
+                  <span class="material-symbols-outlined text-sm">save</span>
+                  Save Notification Settings
                 </button>
               </div>
             </div>
@@ -993,18 +1532,28 @@
             <!-- 5. INTEGRATIONS TAB - UPDATED WITH POS -->
             <!-- ============================================ -->
             <div id="tab-integrations" class="tab-panel p-4 md:p-6">
-              <h2 class="text-lg font-bold text-slate-900 mb-6">Integrations</h2>
-              
+              <h2 class="text-lg font-bold text-slate-900 mb-6">
+                Integrations
+              </h2>
+
               <!-- POS System Integration -->
               <div class="mb-8">
-                <h3 class="font-semibold text-slate-800 mb-4 flex items-center gap-2">
-                  <i class="fas fa-cash-register text-primary text-lg"></i> POS System Integration
+                <h3
+                  class="font-semibold text-slate-800 mb-4 flex items-center gap-2"
+                >
+                  <i class="fas fa-cash-register text-primary text-lg"></i> POS
+                  System Integration
                 </h3>
-                <p class="text-sm text-slate-500 mb-4">Connect your Point of Sale system for seamless transactions</p>
-                
+                <p class="text-sm text-slate-500 mb-4">
+                  Connect your Point of Sale system for seamless transactions
+                </p>
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <!-- POS Provider 1 -->
-                  <div class="pos-provider-card bg-white rounded-xl p-4 border border-slate-200 cursor-pointer active" onclick="selectPOS('square')">
+                  <div
+                    class="pos-provider-card bg-white rounded-xl p-4 border border-slate-200 cursor-pointer active"
+                    onclick="selectPOS('square')"
+                  >
                     <div class="flex items-center gap-3 mb-3">
                       <i class="fas fa-cube text-2xl text-primary"></i>
                       <div>
@@ -1012,33 +1561,61 @@
                         <span class="text-xs text-emerald-600">Connected</span>
                       </div>
                     </div>
-                    <p class="text-sm text-slate-500">Full-featured POS with inventory management</p>
+                    <p class="text-sm text-slate-500">
+                      Full-featured POS with inventory management
+                    </p>
                     <div class="mt-3 flex items-center gap-2 text-sm">
                       <span class="text-slate-400">Status:</span>
                       <span class="text-emerald-600 font-medium">Active</span>
                     </div>
-                    <button onclick="event.stopPropagation(); showToast('Square POS settings opened', 'info')" class="mt-3 text-primary text-sm font-medium hover:underline">Configure</button>
+                    <button
+                      onclick="
+                        event.stopPropagation();
+                        showToast('Square POS settings opened', 'info');
+                      "
+                      class="mt-3 text-primary text-sm font-medium hover:underline"
+                    >
+                      Configure
+                    </button>
                   </div>
-                  
+
                   <!-- POS Provider 2 -->
-                  <div class="pos-provider-card bg-white rounded-xl p-4 border border-slate-200 cursor-pointer" onclick="selectPOS('clover')">
+                  <div
+                    class="pos-provider-card bg-white rounded-xl p-4 border border-slate-200 cursor-pointer"
+                    onclick="selectPOS('clover')"
+                  >
                     <div class="flex items-center gap-3 mb-3">
                       <i class="fas fa-leaf text-2xl text-primary"></i>
                       <div>
                         <h4 class="font-semibold text-slate-800">Clover</h4>
-                        <span class="text-xs text-amber-600">Pending Setup</span>
+                        <span class="text-xs text-amber-600"
+                          >Pending Setup</span
+                        >
                       </div>
                     </div>
-                    <p class="text-sm text-slate-500">All-in-one POS for retail and service businesses</p>
+                    <p class="text-sm text-slate-500">
+                      All-in-one POS for retail and service businesses
+                    </p>
                     <div class="mt-3 flex items-center gap-2 text-sm">
                       <span class="text-slate-400">Status:</span>
                       <span class="text-amber-600 font-medium">Pending</span>
                     </div>
-                    <button onclick="event.stopPropagation(); showToast('Clover POS setup started', 'info')" class="mt-3 text-primary text-sm font-medium hover:underline">Set up</button>
+                    <button
+                      onclick="
+                        event.stopPropagation();
+                        showToast('Clover POS setup started', 'info');
+                      "
+                      class="mt-3 text-primary text-sm font-medium hover:underline"
+                    >
+                      Set up
+                    </button>
                   </div>
-                  
+
                   <!-- POS Provider 3 -->
-                  <div class="pos-provider-card bg-white rounded-xl p-4 border border-slate-200 cursor-pointer" onclick="selectPOS('custom')">
+                  <div
+                    class="pos-provider-card bg-white rounded-xl p-4 border border-slate-200 cursor-pointer"
+                    onclick="selectPOS('custom')"
+                  >
                     <div class="flex items-center gap-3 mb-3">
                       <i class="fas fa-code text-2xl text-primary"></i>
                       <div>
@@ -1046,68 +1623,142 @@
                         <span class="text-xs text-slate-400">Configure</span>
                       </div>
                     </div>
-                    <p class="text-sm text-slate-500">Connect via REST API to any POS system</p>
+                    <p class="text-sm text-slate-500">
+                      Connect via REST API to any POS system
+                    </p>
                     <div class="mt-3 flex items-center gap-2 text-sm">
                       <span class="text-slate-400">Status:</span>
-                      <span class="text-slate-600 font-medium">Not Configured</span>
+                      <span class="text-slate-600 font-medium"
+                        >Not Configured</span
+                      >
                     </div>
-                    <button onclick="event.stopPropagation(); openCustomPOSModal()" class="mt-3 text-primary text-sm font-medium hover:underline">Configure API</button>
+                    <button
+                      onclick="
+                        event.stopPropagation();
+                        openCustomPOSModal();
+                      "
+                      class="mt-3 text-primary text-sm font-medium hover:underline"
+                    >
+                      Configure API
+                    </button>
                   </div>
                 </div>
               </div>
 
               <!-- Other Integrations -->
               <div class="border-t border-slate-200 pt-6">
-                <h3 class="font-semibold text-slate-800 mb-4 flex items-center gap-2">
-                  <i class="fas fa-plug text-primary text-lg"></i> Other Integrations
+                <h3
+                  class="font-semibold text-slate-800 mb-4 flex items-center gap-2"
+                >
+                  <i class="fas fa-plug text-primary text-lg"></i> Other
+                  Integrations
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div class="border border-slate-200 rounded-lg p-4">
                     <div class="flex items-center justify-between mb-2">
                       <div class="flex items-center gap-3">
                         <i class="fas fa-credit-card text-xl text-primary"></i>
-                        <h4 class="font-semibold text-slate-800">Payment Gateways</h4>
+                        <h4 class="font-semibold text-slate-800">
+                          Payment Gateways
+                        </h4>
                       </div>
-                      <span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full">Active</span>
+                      <span
+                        class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full"
+                        >Active</span
+                      >
                     </div>
-                    <p class="text-sm text-slate-500 mb-3">Stripe, PayPal, Mobile Money</p>
-                    <button onclick="showToast('Payment gateway settings opened', 'info')" class="text-primary text-sm font-medium hover:underline">Configure</button>
+                    <p class="text-sm text-slate-500 mb-3">
+                      Stripe, PayPal, Mobile Money
+                    </p>
+                    <button
+                      onclick="
+                        showToast('Payment gateway settings opened', 'info')
+                      "
+                      class="text-primary text-sm font-medium hover:underline"
+                    >
+                      Configure
+                    </button>
                   </div>
-                  
+
                   <div class="border border-slate-200 rounded-lg p-4">
                     <div class="flex items-center justify-between mb-2">
                       <div class="flex items-center gap-3">
                         <i class="fas fa-flask text-xl text-primary"></i>
-                        <h4 class="font-semibold text-slate-800">Lab Services</h4>
+                        <h4 class="font-semibold text-slate-800">
+                          Lab Services
+                        </h4>
                       </div>
-                      <span class="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full">Pending</span>
+                      <span
+                        class="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full"
+                        >Pending</span
+                      >
                     </div>
-                    <p class="text-sm text-slate-500 mb-3">Connect to diagnostic labs</p>
-                    <button onclick="showToast('Lab integration settings opened', 'info')" class="text-primary text-sm font-medium hover:underline">Configure</button>
+                    <p class="text-sm text-slate-500 mb-3">
+                      Connect to diagnostic labs
+                    </p>
+                    <button
+                      onclick="
+                        showToast('Lab integration settings opened', 'info')
+                      "
+                      class="text-primary text-sm font-medium hover:underline"
+                    >
+                      Configure
+                    </button>
                   </div>
-                  
+
                   <div class="border border-slate-200 rounded-lg p-4">
                     <div class="flex items-center justify-between mb-2">
                       <div class="flex items-center gap-3">
-                        <i class="fas fa-prescription-bottle text-xl text-primary"></i>
+                        <i
+                          class="fas fa-prescription-bottle text-xl text-primary"
+                        ></i>
                         <h4 class="font-semibold text-slate-800">Pharmacy</h4>
                       </div>
-                      <span class="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full">Pending</span>
+                      <span
+                        class="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full"
+                        >Pending</span
+                      >
                     </div>
-                    <p class="text-sm text-slate-500 mb-3">E-prescriptions and pharmacy integration</p>
-                    <button onclick="showToast('Pharmacy integration settings opened', 'info')" class="text-primary text-sm font-medium hover:underline">Configure</button>
+                    <p class="text-sm text-slate-500 mb-3">
+                      E-prescriptions and pharmacy integration
+                    </p>
+                    <button
+                      onclick="
+                        showToast(
+                          'Pharmacy integration settings opened',
+                          'info',
+                        )
+                      "
+                      class="text-primary text-sm font-medium hover:underline"
+                    >
+                      Configure
+                    </button>
                   </div>
-                  
+
                   <div class="border border-slate-200 rounded-lg p-4">
                     <div class="flex items-center justify-between mb-2">
                       <div class="flex items-center gap-3">
                         <i class="fas fa-envelope text-xl text-primary"></i>
-                        <h4 class="font-semibold text-slate-800">Email Provider</h4>
+                        <h4 class="font-semibold text-slate-800">
+                          Email Provider
+                        </h4>
                       </div>
-                      <span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full">Active</span>
+                      <span
+                        class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full"
+                        >Active</span
+                      >
                     </div>
-                    <p class="text-sm text-slate-500 mb-3">SendGrid, Mailgun, SES</p>
-                    <button onclick="showToast('Email provider settings opened', 'info')" class="text-primary text-sm font-medium hover:underline">Configure</button>
+                    <p class="text-sm text-slate-500 mb-3">
+                      SendGrid, Mailgun, SES
+                    </p>
+                    <button
+                      onclick="
+                        showToast('Email provider settings opened', 'info')
+                      "
+                      class="text-primary text-sm font-medium hover:underline"
+                    >
+                      Configure
+                    </button>
                   </div>
                 </div>
               </div>
@@ -1117,11 +1768,16 @@
             <!-- 6. SYSTEM PREFERENCES TAB -->
             <!-- ============================================ -->
             <div id="tab-preferences" class="tab-panel p-4 md:p-6">
-              <h2 class="text-lg font-bold text-slate-900 mb-6">System Preferences</h2>
+              <h2 class="text-lg font-bold text-slate-900 mb-6">
+                System Preferences
+              </h2>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label class="input-label">Theme</label>
-                  <select id="prefTheme" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+                  <select
+                    id="prefTheme"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  >
                     <option value="light" selected>Light</option>
                     <option value="dark">Dark</option>
                     <option value="system">System Default</option>
@@ -1130,13 +1786,23 @@
                 <div>
                   <label class="input-label">Primary Color</label>
                   <div class="flex gap-2">
-                    <input type="color" id="prefColor" value="#036469" class="w-12 h-12 rounded-lg border border-slate-200 cursor-pointer" />
-                    <span class="text-sm text-slate-500 self-center">#036469</span>
+                    <input
+                      type="color"
+                      id="prefColor"
+                      value="#036469"
+                      class="w-12 h-12 rounded-lg border border-slate-200 cursor-pointer"
+                    />
+                    <span class="text-sm text-slate-500 self-center"
+                      >#036469</span
+                    >
                   </div>
                 </div>
                 <div>
                   <label class="input-label">Language</label>
-                  <select id="prefLanguage" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+                  <select
+                    id="prefLanguage"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  >
                     <option value="en" selected>English</option>
                     <option value="fr">French</option>
                     <option value="es">Spanish</option>
@@ -1145,18 +1811,30 @@
                 </div>
                 <div>
                   <label class="input-label">Timezone</label>
-                  <select id="prefTimezone" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+                  <select
+                    id="prefTimezone"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  >
                     <option value="UTC">UTC</option>
-                    <option value="Africa/Accra" selected>Africa/Accra (GMT+0)</option>
+                    <option value="Africa/Accra" selected>
+                      Africa/Accra (GMT+0)
+                    </option>
                     <option value="Africa/Lagos">Africa/Lagos (GMT+1)</option>
-                    <option value="Africa/Nairobi">Africa/Nairobi (GMT+3)</option>
-                    <option value="America/New_York">America/New York (GMT-5)</option>
+                    <option value="Africa/Nairobi">
+                      Africa/Nairobi (GMT+3)
+                    </option>
+                    <option value="America/New_York">
+                      America/New York (GMT-5)
+                    </option>
                     <option value="Europe/London">Europe/London (GMT+0)</option>
                   </select>
                 </div>
                 <div>
                   <label class="input-label">Date Format</label>
-                  <select id="prefDateFormat" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+                  <select
+                    id="prefDateFormat"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  >
                     <option value="DD/MM/YYYY" selected>DD/MM/YYYY</option>
                     <option value="MM/DD/YYYY">MM/DD/YYYY</option>
                     <option value="YYYY-MM-DD">YYYY-MM-DD</option>
@@ -1164,14 +1842,20 @@
                 </div>
                 <div>
                   <label class="input-label">Time Format</label>
-                  <select id="prefTimeFormat" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+                  <select
+                    id="prefTimeFormat"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  >
                     <option value="12h" selected>12-Hour (AM/PM)</option>
                     <option value="24h">24-Hour</option>
                   </select>
                 </div>
                 <div class="md:col-span-2">
                   <label class="input-label">Auto-Backup Schedule</label>
-                  <select id="prefBackup" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+                  <select
+                    id="prefBackup"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  >
                     <option value="daily">Daily</option>
                     <option value="weekly" selected>Weekly</option>
                     <option value="monthly">Monthly</option>
@@ -1179,9 +1863,15 @@
                   </select>
                 </div>
               </div>
-              <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200">
-                <button onclick="savePreferences()" class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2">
-                  <span class="material-symbols-outlined text-sm">save</span> Save Preferences
+              <div
+                class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200"
+              >
+                <button
+                  onclick="savePreferences()"
+                  class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2"
+                >
+                  <span class="material-symbols-outlined text-sm">save</span>
+                  Save Preferences
                 </button>
               </div>
             </div>
@@ -1190,16 +1880,39 @@
 
         <!-- Shared Footer -->
         <footer class="w-full bg-deep-navy mt-auto">
-          <div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop py-stack-lg w-full max-w-container-max mx-auto">
-            <div class="text-primary-fixed font-headline-md text-headline-md mb-6 md:mb-0">VetCare Ghana</div>
+          <div
+            class="flex flex-col md:flex-row justify-between items-center px-margin-desktop py-stack-lg w-full max-w-container-max mx-auto"
+          >
+            <div
+              class="text-primary-fixed font-headline-md text-headline-md mb-6 md:mb-0"
+            >
+              VetCare Ghana
+            </div>
             <div class="flex flex-col md:flex-row gap-6 md:gap-12 items-center">
               <div class="flex gap-8 flex-wrap justify-center">
-                <a class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer">Privacy Policy</a>
-                <a class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer">Terms of Service</a>
-                <a class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer">Contact Us</a>
-                <a class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer">Ghana Vet Council</a>
+                <a
+                  class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer"
+                  >Privacy Policy</a
+                >
+                <a
+                  class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer"
+                  >Terms of Service</a
+                >
+                <a
+                  class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer"
+                  >Contact Us</a
+                >
+                <a
+                  class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer"
+                  >Ghana Vet Council</a
+                >
               </div>
-              <p class="text-tertiary-fixed-dim font-caption text-caption text-center md:text-right">© 2024 VetCare Ghana. Providing compassionate care for every pet.</p>
+              <p
+                class="text-tertiary-fixed-dim font-caption text-caption text-center md:text-right"
+              >
+                © 2024 VetCare Ghana. Providing compassionate care for every
+                pet.
+              </p>
             </div>
           </div>
         </footer>
@@ -1211,25 +1924,45 @@
       <div class="modal-card">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-            <span class="material-symbols-outlined text-primary">groups</span> Add New Role
+            <span class="material-symbols-outlined text-primary">groups</span>
+            Add New Role
           </h3>
-          <button onclick="closeAddRoleModal()" class="p-1 hover:bg-slate-100 rounded-lg">
+          <button
+            onclick="closeAddRoleModal()"
+            class="p-1 hover:bg-slate-100 rounded-lg"
+          >
             <span class="material-symbols-outlined">close</span>
           </button>
         </div>
         <form id="addRoleForm" onsubmit="submitNewRole(event)">
           <div class="grid grid-cols-1 gap-4">
             <div>
-              <label class="input-label">Role Name <span class="hint">(required)</span></label>
-              <input id="roleName" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="e.g. Lab Technician" required />
+              <label class="input-label"
+                >Role Name <span class="hint">(required)</span></label
+              >
+              <input
+                id="roleName"
+                type="text"
+                class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                placeholder="e.g. Lab Technician"
+                required
+              />
             </div>
             <div>
               <label class="input-label">Description</label>
-              <input id="roleDescription" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Brief description of this role" />
+              <input
+                id="roleDescription"
+                type="text"
+                class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                placeholder="Brief description of this role"
+              />
             </div>
             <div>
               <label class="input-label">Icon</label>
-              <select id="roleIcon" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+              <select
+                id="roleIcon"
+                class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+              >
                 <option value="👑">👑 Admin</option>
                 <option value="👨‍⚕️">👨‍⚕️ Doctor</option>
                 <option value="📋">📋 Reception</option>
@@ -1241,17 +1974,34 @@
               </select>
             </div>
             <div>
-              <label class="input-label">Base Role (copy permissions from)</label>
-              <select id="roleBase" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+              <label class="input-label"
+                >Base Role (copy permissions from)</label
+              >
+              <select
+                id="roleBase"
+                class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+              >
                 <option value="">None (start from scratch)</option>
                 <!-- Populated by JS -->
               </select>
             </div>
           </div>
-          <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200">
-            <button type="button" onclick="closeAddRoleModal()" class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">Cancel</button>
-            <button type="submit" class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2">
-              <span class="material-symbols-outlined text-sm">save</span> Create Role
+          <div
+            class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200"
+          >
+            <button
+              type="button"
+              onclick="closeAddRoleModal()"
+              class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2"
+            >
+              <span class="material-symbols-outlined text-sm">save</span> Create
+              Role
             </button>
           </div>
         </form>
@@ -1263,29 +2013,57 @@
       <div class="modal-card">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-            <i class="fas fa-code text-primary"></i> Custom POS API Configuration
+            <i class="fas fa-code text-primary"></i> Custom POS API
+            Configuration
           </h3>
-          <button onclick="closeCustomPOSModal()" class="p-1 hover:bg-slate-100 rounded-lg">
+          <button
+            onclick="closeCustomPOSModal()"
+            class="p-1 hover:bg-slate-100 rounded-lg"
+          >
             <span class="material-symbols-outlined">close</span>
           </button>
         </div>
         <form id="customPOSForm" onsubmit="saveCustomPOS(event)">
           <div class="grid grid-cols-1 gap-4">
             <div>
-              <label class="input-label">API Endpoint <span class="hint">(required)</span></label>
-              <input id="posApiEndpoint" type="url" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="https://api.yourpos.com/v1" required />
+              <label class="input-label"
+                >API Endpoint <span class="hint">(required)</span></label
+              >
+              <input
+                id="posApiEndpoint"
+                type="url"
+                class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                placeholder="https://api.yourpos.com/v1"
+                required
+              />
             </div>
             <div>
-              <label class="input-label">API Key <span class="hint">(required)</span></label>
-              <input id="posApiKey" type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="sk_live_..." required />
+              <label class="input-label"
+                >API Key <span class="hint">(required)</span></label
+              >
+              <input
+                id="posApiKey"
+                type="text"
+                class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                placeholder="sk_live_..."
+                required
+              />
             </div>
             <div>
               <label class="input-label">Secret Key</label>
-              <input id="posSecretKey" type="password" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="••••••••" />
+              <input
+                id="posSecretKey"
+                type="password"
+                class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                placeholder="••••••••"
+              />
             </div>
             <div>
               <label class="input-label">POS Type</label>
-              <select id="posType" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+              <select
+                id="posType"
+                class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+              >
                 <option value="square">Square</option>
                 <option value="clover">Clover</option>
                 <option value="custom">Custom REST API</option>
@@ -1293,9 +2071,20 @@
               </select>
             </div>
           </div>
-          <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200">
-            <button type="button" onclick="closeCustomPOSModal()" class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">Cancel</button>
-            <button type="submit" class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2">
+          <div
+            class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200"
+          >
+            <button
+              type="button"
+              onclick="closeCustomPOSModal()"
+              class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-[#02555a] transition-colors flex items-center gap-2"
+            >
               <i class="fas fa-save text-sm"></i> Save Configuration
             </button>
           </div>
@@ -1304,82 +2093,202 @@
     </div>
 
     <!-- Toast Container -->
-    <div id="toast-container" class="toast-container fixed top-20 right-4 z-[100]"></div>
+    <div
+      id="toast-container"
+      class="toast-container fixed top-20 right-4 z-[100]"
+    ></div>
 
     <script>
       // ==========================================
       // 1. DATA
       // ==========================================
       const modulePermissions = [
-        'Dashboard', 'Calendar', 'Staff', 'Patients', 'Billing',
-        'Inventory', 'Reports', 'Settings', 'Emergency', 'Messages', 'Suppliers'
+        "Dashboard",
+        "Calendar",
+        "Staff",
+        "Patients",
+        "Billing",
+        "Inventory",
+        "Reports",
+        "Settings",
+        "Emergency",
+        "Messages",
+        "Suppliers",
       ];
 
       const defaultRoles = [
-        { id: 'role-admin', name: 'Admin', icon: '👑', description: 'Full system access', users: 3, permissions: {} },
-        { id: 'role-vet', name: 'Veterinarian', icon: '👨‍⚕️', description: 'Medical staff', users: 12, permissions: {} },
-        { id: 'role-reception', name: 'Receptionist', icon: '📋', description: 'Front desk staff', users: 5, permissions: {} },
-        { id: 'role-tech', name: 'Technician', icon: '🔬', description: 'Lab and technical staff', users: 8, permissions: {} },
-        { id: 'role-finance', name: 'Finance Officer', icon: '💰', description: 'Billing and finance', users: 2, permissions: {} },
+        {
+          id: "role-admin",
+          name: "Admin",
+          icon: "👑",
+          description: "Full system access",
+          users: 3,
+          permissions: {},
+        },
+        {
+          id: "role-vet",
+          name: "Veterinarian",
+          icon: "👨‍⚕️",
+          description: "Medical staff",
+          users: 12,
+          permissions: {},
+        },
+        {
+          id: "role-reception",
+          name: "Receptionist",
+          icon: "📋",
+          description: "Front desk staff",
+          users: 5,
+          permissions: {},
+        },
+        {
+          id: "role-tech",
+          name: "Technician",
+          icon: "🔬",
+          description: "Lab and technical staff",
+          users: 8,
+          permissions: {},
+        },
+        {
+          id: "role-finance",
+          name: "Finance Officer",
+          icon: "💰",
+          description: "Billing and finance",
+          users: 2,
+          permissions: {},
+        },
       ];
 
       const notificationTypes = [
-        { id: 'notif-appointment', name: 'Appointment Reminder', email: true, sms: true, inApp: true },
-        { id: 'notif-invoice', name: 'Invoice Generated', email: true, sms: false, inApp: true },
-        { id: 'notif-payment', name: 'Payment Received', email: true, sms: false, inApp: true },
-        { id: 'notif-inventory', name: 'Inventory Low Stock', email: true, sms: false, inApp: true },
-        { id: 'notif-emergency', name: 'Emergency Alert', email: true, sms: true, inApp: true },
-        { id: 'notif-shift', name: 'Staff Shift Reminder', email: true, sms: true, inApp: true },
+        {
+          id: "notif-appointment",
+          name: "Appointment Reminder",
+          email: true,
+          sms: true,
+          inApp: true,
+        },
+        {
+          id: "notif-invoice",
+          name: "Invoice Generated",
+          email: true,
+          sms: false,
+          inApp: true,
+        },
+        {
+          id: "notif-payment",
+          name: "Payment Received",
+          email: true,
+          sms: false,
+          inApp: true,
+        },
+        {
+          id: "notif-inventory",
+          name: "Inventory Low Stock",
+          email: true,
+          sms: false,
+          inApp: true,
+        },
+        {
+          id: "notif-emergency",
+          name: "Emergency Alert",
+          email: true,
+          sms: true,
+          inApp: true,
+        },
+        {
+          id: "notif-shift",
+          name: "Staff Shift Reminder",
+          email: true,
+          sms: true,
+          inApp: true,
+        },
       ];
 
       // Initialize permissions for each role
-      defaultRoles.forEach(role => {
+      defaultRoles.forEach((role) => {
         role.permissions = {};
-        modulePermissions.forEach(mod => {
-          if (role.id === 'role-admin') {
-            role.permissions[mod] = { view: true, create: true, edit: true, delete: true };
-          } else if (role.id === 'role-vet') {
-            role.permissions[mod] = { view: ['Dashboard', 'Calendar', 'Staff', 'Patients', 'Billing', 'Inventory', 'Reports', 'Emergency', 'Messages'].includes(mod),
-              create: ['Calendar', 'Patients', 'Billing', 'Emergency'].includes(mod),
-              edit: ['Calendar', 'Patients', 'Emergency'].includes(mod),
-              delete: false };
-          } else if (role.id === 'role-reception') {
-            role.permissions[mod] = { view: ['Dashboard', 'Calendar', 'Patients', 'Billing', 'Messages'].includes(mod),
-              create: ['Calendar', 'Patients', 'Billing'].includes(mod),
-              edit: ['Calendar', 'Patients'].includes(mod),
-              delete: false };
-          } else if (role.id === 'role-tech') {
-            role.permissions[mod] = { view: ['Dashboard', 'Calendar', 'Patients', 'Inventory', 'Emergency'].includes(mod),
-              create: ['Inventory', 'Emergency'].includes(mod),
-              edit: ['Inventory'].includes(mod),
-              delete: false };
-          } else if (role.id === 'role-finance') {
-            role.permissions[mod] = { view: ['Dashboard', 'Billing', 'Reports'].includes(mod),
-              create: ['Billing'].includes(mod),
-              edit: ['Billing'].includes(mod),
-              delete: false };
+        modulePermissions.forEach((mod) => {
+          if (role.id === "role-admin") {
+            role.permissions[mod] = {
+              view: true,
+              create: true,
+              edit: true,
+              delete: true,
+            };
+          } else if (role.id === "role-vet") {
+            role.permissions[mod] = {
+              view: [
+                "Dashboard",
+                "Calendar",
+                "Staff",
+                "Patients",
+                "Billing",
+                "Inventory",
+                "Reports",
+                "Emergency",
+                "Messages",
+              ].includes(mod),
+              create: ["Calendar", "Patients", "Billing", "Emergency"].includes(
+                mod,
+              ),
+              edit: ["Calendar", "Patients", "Emergency"].includes(mod),
+              delete: false,
+            };
+          } else if (role.id === "role-reception") {
+            role.permissions[mod] = {
+              view: [
+                "Dashboard",
+                "Calendar",
+                "Patients",
+                "Billing",
+                "Messages",
+              ].includes(mod),
+              create: ["Calendar", "Patients", "Billing"].includes(mod),
+              edit: ["Calendar", "Patients"].includes(mod),
+              delete: false,
+            };
+          } else if (role.id === "role-tech") {
+            role.permissions[mod] = {
+              view: [
+                "Dashboard",
+                "Calendar",
+                "Patients",
+                "Inventory",
+                "Emergency",
+              ].includes(mod),
+              create: ["Inventory", "Emergency"].includes(mod),
+              edit: ["Inventory"].includes(mod),
+              delete: false,
+            };
+          } else if (role.id === "role-finance") {
+            role.permissions[mod] = {
+              view: ["Dashboard", "Billing", "Reports"].includes(mod),
+              create: ["Billing"].includes(mod),
+              edit: ["Billing"].includes(mod),
+              delete: false,
+            };
           }
         });
       });
 
       let roles = [...defaultRoles];
-      let currentSettingsTab = 'roles';
+      let currentSettingsTab = "roles";
 
       // ==========================================
       // 2. TOAST
       // ==========================================
-      function showToast(message, type = 'success') {
-        const container = document.getElementById('toast-container');
+      function showToast(message, type = "success") {
+        const container = document.getElementById("toast-container");
         if (!container) return;
-        const toast = document.createElement('div');
+        const toast = document.createElement("div");
         toast.className = `toast toast-${type}`;
         toast.textContent = message;
         container.appendChild(toast);
         requestAnimationFrame(() => {
-          requestAnimationFrame(() => toast.classList.add('show'));
+          requestAnimationFrame(() => toast.classList.add("show"));
         });
         setTimeout(() => {
-          toast.classList.remove('show');
+          toast.classList.remove("show");
           setTimeout(() => {
             if (toast.parentNode) toast.remove();
           }, 300);
@@ -1391,18 +2300,24 @@
       // ==========================================
       function switchSettingsTab(tabId) {
         currentSettingsTab = tabId;
-        document.querySelectorAll('.tab-panel').forEach(el => el.classList.remove('active'));
+        document
+          .querySelectorAll(".tab-panel")
+          .forEach((el) => el.classList.remove("active"));
         const targetPanel = document.getElementById(`tab-${tabId}`);
-        if (targetPanel) targetPanel.classList.add('active');
-        document.querySelectorAll('.settings-tab-btn').forEach(btn => btn.classList.remove('active'));
-        const activeBtn = document.querySelector(`.settings-tab-btn[data-tab="${tabId}"]`);
-        if (activeBtn) activeBtn.classList.add('active');
-        
-        if (tabId === 'roles') {
+        if (targetPanel) targetPanel.classList.add("active");
+        document
+          .querySelectorAll(".settings-tab-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        const activeBtn = document.querySelector(
+          `.settings-tab-btn[data-tab="${tabId}"]`,
+        );
+        if (activeBtn) activeBtn.classList.add("active");
+
+        if (tabId === "roles") {
           renderRolesTable();
           renderPermissionMatrix();
         }
-        if (tabId === 'notifications') {
+        if (tabId === "notifications") {
           renderNotificationTypes();
         }
       }
@@ -1411,32 +2326,43 @@
       // 4. ROLES TABLE
       // ==========================================
       function renderRolesTable() {
-        const tbody = document.getElementById('rolesTableBody');
+        const tbody = document.getElementById("rolesTableBody");
         const totalUsers = roles.reduce((sum, r) => sum + (r.users || 0), 0);
         const totalPerms = modulePermissions.length * 4;
 
-        document.getElementById('totalRoles').textContent = roles.length;
-        document.getElementById('totalUsers').textContent = totalUsers;
-        document.getElementById('totalPermissions').textContent = totalPerms;
-        document.getElementById('activeUsers').textContent = Math.floor(totalUsers * 0.7);
+        document.getElementById("totalRoles").textContent = roles.length;
+        document.getElementById("totalUsers").textContent = totalUsers;
+        document.getElementById("totalPermissions").textContent = totalPerms;
+        document.getElementById("activeUsers").textContent = Math.floor(
+          totalUsers * 0.7,
+        );
 
         if (roles.length === 0) {
           tbody.innerHTML = `<tr><td colspan="4" class="px-6 py-8 text-center text-slate-400">No roles created yet</td></tr>`;
           return;
         }
 
-        tbody.innerHTML = roles.map((role, index) => {
-          const permCount = Object.values(role.permissions).filter(p => p.view || p.create || p.edit || p.delete).length;
-          const isDefault = ['role-admin', 'role-vet', 'role-reception', 'role-tech', 'role-finance'].includes(role.id);
-          const dropdownId = `role-${role.id}`;
-          return `
+        tbody.innerHTML = roles
+          .map((role, index) => {
+            const permCount = Object.values(role.permissions).filter(
+              (p) => p.view || p.create || p.edit || p.delete,
+            ).length;
+            const isDefault = [
+              "role-admin",
+              "role-vet",
+              "role-reception",
+              "role-tech",
+              "role-finance",
+            ].includes(role.id);
+            const dropdownId = `role-${role.id}`;
+            return `
               <tr class="row-clickable">
                 <td class="px-4 py-3">
                   <div class="flex items-center gap-3">
-                    <span class="text-2xl">${role.icon || '👤'}</span>
+                    <span class="text-2xl">${role.icon || "👤"}</span>
                     <div>
                       <div class="font-semibold text-slate-900">${role.name}</div>
-                      <div class="text-xs text-slate-400">${role.description || 'No description'}</div>
+                      <div class="text-xs text-slate-400">${role.description || "No description"}</div>
                     </div>
                   </div>
                 </td>
@@ -1454,34 +2380,43 @@
                       <button onclick="event.stopPropagation(); duplicateRole('${role.id}')">
                         <span class="material-symbols-outlined text-[18px]">content_copy</span> Duplicate
                       </button>
-                      ${!isDefault ? `
+                      ${
+                        !isDefault
+                          ? `
                         <div class="menu-divider"></div>
                         <button onclick="event.stopPropagation(); deleteRole('${role.id}')" class="danger">
                           <span class="material-symbols-outlined text-[18px]">delete</span> Delete
                         </button>
-                      ` : `
+                      `
+                          : `
                         <div class="menu-divider"></div>
                         <button disabled class="text-slate-400 cursor-not-allowed">
                           <span class="material-symbols-outlined text-[18px]">lock</span> System Role (can't delete)
                         </button>
-                      `}
+                      `
+                      }
                     </div>
                   </div>
                 </td>
               </tr>
             `;
-        }).join('');
+          })
+          .join("");
       }
 
       function toggleRoleDropdown(id) {
-        document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
+        document
+          .querySelectorAll(".action-dropdown-menu")
+          .forEach((el) => el.classList.remove("open"));
         const menu = document.getElementById(`dropdown-${id}`);
-        if (menu) menu.classList.toggle('open');
+        if (menu) menu.classList.toggle("open");
       }
 
-      document.addEventListener('click', function(e) {
-        if (!e.target.closest('.action-dropdown')) {
-          document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
+      document.addEventListener("click", function (e) {
+        if (!e.target.closest(".action-dropdown")) {
+          document
+            .querySelectorAll(".action-dropdown-menu")
+            .forEach((el) => el.classList.remove("open"));
         }
       });
 
@@ -1489,102 +2424,134 @@
       // 5. PERMISSION MATRIX
       // ==========================================
       function renderPermissionMatrix() {
-        const select = document.getElementById('permissionRoleSelect');
-        const currentValue = select.value || 'role-admin';
-        select.innerHTML = roles.map(r => `<option value="${r.id}" ${r.id === currentValue ? 'selected' : ''}>${r.icon || '👤'} ${r.name}</option>`).join('');
+        const select = document.getElementById("permissionRoleSelect");
+        const currentValue = select.value || "role-admin";
+        select.innerHTML = roles
+          .map(
+            (r) =>
+              `<option value="${r.id}" ${r.id === currentValue ? "selected" : ""}>${r.icon || "👤"} ${r.name}</option>`,
+          )
+          .join("");
 
-        const role = roles.find(r => r.id === currentValue);
+        const role = roles.find((r) => r.id === currentValue);
         if (!role) return;
 
-        const tbody = document.getElementById('permissionMatrixBody');
-        tbody.innerHTML = modulePermissions.map(mod => {
-          const perms = role.permissions[mod] || { view: false, create: false, edit: false, delete: false };
-          return `
+        const tbody = document.getElementById("permissionMatrixBody");
+        tbody.innerHTML = modulePermissions
+          .map((mod) => {
+            const perms = role.permissions[mod] || {
+              view: false,
+              create: false,
+              edit: false,
+              delete: false,
+            };
+            return `
               <tr class="border-b border-slate-100 hover:bg-slate-50/50 transition-colors">
                 <td class="px-4 py-2 font-medium text-slate-700">${mod}</td>
                 <td class="px-4 py-2 text-center">
-                  <input type="checkbox" class="permission-checkbox" ${perms.view ? 'checked' : ''} 
+                  <input type="checkbox" class="permission-checkbox" ${perms.view ? "checked" : ""} 
                          onchange="updatePermission('${role.id}', '${mod}', 'view', this.checked)" />
                 </td>
                 <td class="px-4 py-2 text-center">
-                  <input type="checkbox" class="permission-checkbox" ${perms.create ? 'checked' : ''} 
+                  <input type="checkbox" class="permission-checkbox" ${perms.create ? "checked" : ""} 
                          onchange="updatePermission('${role.id}', '${mod}', 'create', this.checked)" />
                 </td>
                 <td class="px-4 py-2 text-center">
-                  <input type="checkbox" class="permission-checkbox" ${perms.edit ? 'checked' : ''} 
+                  <input type="checkbox" class="permission-checkbox" ${perms.edit ? "checked" : ""} 
                          onchange="updatePermission('${role.id}', '${mod}', 'edit', this.checked)" />
                 </td>
                 <td class="px-4 py-2 text-center">
-                  <input type="checkbox" class="permission-checkbox" ${perms.delete ? 'checked' : ''} 
+                  <input type="checkbox" class="permission-checkbox" ${perms.delete ? "checked" : ""} 
                          onchange="updatePermission('${role.id}', '${mod}', 'delete', this.checked)" />
                 </td>
               </tr>
             `;
-        }).join('');
+          })
+          .join("");
       }
 
       function updatePermission(roleId, module, action, value) {
-        const role = roles.find(r => r.id === roleId);
+        const role = roles.find((r) => r.id === roleId);
         if (!role) return;
         if (!role.permissions[module]) {
-          role.permissions[module] = { view: false, create: false, edit: false, delete: false };
+          role.permissions[module] = {
+            view: false,
+            create: false,
+            edit: false,
+            delete: false,
+          };
         }
         role.permissions[module][action] = value;
         renderRolesTable();
-        showToast(`Updated ${module} ${action} permission for ${role.name}`, 'success');
+        showToast(
+          `Updated ${module} ${action} permission for ${role.name}`,
+          "success",
+        );
       }
 
-      document.getElementById('permissionRoleSelect').addEventListener('change', renderPermissionMatrix);
+      document
+        .getElementById("permissionRoleSelect")
+        .addEventListener("change", renderPermissionMatrix);
 
       // ==========================================
       // 6. ADD ROLE MODAL
       // ==========================================
       function openAddRoleModal() {
-        document.getElementById('addRoleModal').classList.add('open');
-        document.body.style.overflow = 'hidden';
-        const baseSelect = document.getElementById('roleBase');
-        baseSelect.innerHTML = '<option value="">None (start from scratch)</option>';
-        roles.forEach(r => {
-          baseSelect.innerHTML += `<option value="${r.id}">${r.icon || '👤'} ${r.name}</option>`;
+        document.getElementById("addRoleModal").classList.add("open");
+        document.body.style.overflow = "hidden";
+        const baseSelect = document.getElementById("roleBase");
+        baseSelect.innerHTML =
+          '<option value="">None (start from scratch)</option>';
+        roles.forEach((r) => {
+          baseSelect.innerHTML += `<option value="${r.id}">${r.icon || "👤"} ${r.name}</option>`;
         });
-        document.getElementById('roleName').value = '';
-        document.getElementById('roleDescription').value = '';
+        document.getElementById("roleName").value = "";
+        document.getElementById("roleDescription").value = "";
       }
 
       function closeAddRoleModal() {
-        document.getElementById('addRoleModal').classList.remove('open');
-        document.body.style.overflow = '';
+        document.getElementById("addRoleModal").classList.remove("open");
+        document.body.style.overflow = "";
       }
 
       function submitNewRole(e) {
         e.preventDefault();
-        const name = document.getElementById('roleName').value.trim();
-        const description = document.getElementById('roleDescription').value.trim();
-        const icon = document.getElementById('roleIcon').value;
-        const baseRoleId = document.getElementById('roleBase').value;
+        const name = document.getElementById("roleName").value.trim();
+        const description = document
+          .getElementById("roleDescription")
+          .value.trim();
+        const icon = document.getElementById("roleIcon").value;
+        const baseRoleId = document.getElementById("roleBase").value;
 
         if (!name) {
-          showToast('Please enter a role name', 'error');
+          showToast("Please enter a role name", "error");
           return;
         }
 
         const newRole = {
-          id: `role-${name.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}`,
+          id: `role-${name.toLowerCase().replace(/\s+/g, "-")}-${Date.now()}`,
           name,
           icon,
           description: description || `${name} role`,
           users: 0,
-          permissions: {}
+          permissions: {},
         };
 
         if (baseRoleId) {
-          const baseRole = roles.find(r => r.id === baseRoleId);
+          const baseRole = roles.find((r) => r.id === baseRoleId);
           if (baseRole) {
-            newRole.permissions = JSON.parse(JSON.stringify(baseRole.permissions));
+            newRole.permissions = JSON.parse(
+              JSON.stringify(baseRole.permissions),
+            );
           }
         } else {
-          modulePermissions.forEach(mod => {
-            newRole.permissions[mod] = { view: false, create: false, edit: false, delete: false };
+          modulePermissions.forEach((mod) => {
+            newRole.permissions[mod] = {
+              view: false,
+              create: false,
+              edit: false,
+              delete: false,
+            };
           });
         }
 
@@ -1592,96 +2559,129 @@
         closeAddRoleModal();
         renderRolesTable();
         renderPermissionMatrix();
-        showToast(`✅ Role "${name}" created successfully`, 'success');
+        showToast(`✅ Role "${name}" created successfully`, "success");
       }
 
-      document.getElementById('addRoleModal')?.addEventListener('click', function(e) {
-        if (e.target === this) closeAddRoleModal();
-      });
+      document
+        .getElementById("addRoleModal")
+        ?.addEventListener("click", function (e) {
+          if (e.target === this) closeAddRoleModal();
+        });
 
       // ==========================================
       // 7. ROLE ACTIONS
       // ==========================================
       function editRole(roleId) {
-        const role = roles.find(r => r.id === roleId);
-        if (!role) { showToast('Role not found', 'error'); return; }
-        const newName = prompt('Enter new role name:', role.name);
+        const role = roles.find((r) => r.id === roleId);
+        if (!role) {
+          showToast("Role not found", "error");
+          return;
+        }
+        const newName = prompt("Enter new role name:", role.name);
         if (newName && newName.trim()) {
           role.name = newName.trim();
-          const newDesc = prompt('Enter new description:', role.description);
+          const newDesc = prompt("Enter new description:", role.description);
           if (newDesc !== null) role.description = newDesc.trim();
           renderRolesTable();
           renderPermissionMatrix();
-          showToast(`✅ Role updated successfully`, 'success');
+          showToast(`✅ Role updated successfully`, "success");
         }
-        document.getElementById(`dropdown-role-${roleId}`)?.classList.remove('open');
+        document
+          .getElementById(`dropdown-role-${roleId}`)
+          ?.classList.remove("open");
       }
 
       function duplicateRole(roleId) {
-        const role = roles.find(r => r.id === roleId);
-        if (!role) { showToast('Role not found', 'error'); return; }
-        const newName = prompt('Enter name for duplicated role:', `${role.name} (Copy)`);
+        const role = roles.find((r) => r.id === roleId);
+        if (!role) {
+          showToast("Role not found", "error");
+          return;
+        }
+        const newName = prompt(
+          "Enter name for duplicated role:",
+          `${role.name} (Copy)`,
+        );
         if (newName && newName.trim()) {
           const newRole = {
-            id: `role-${newName.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}`,
+            id: `role-${newName.toLowerCase().replace(/\s+/g, "-")}-${Date.now()}`,
             name: newName.trim(),
-            icon: role.icon || '👤',
+            icon: role.icon || "👤",
             description: `${newName.trim()} (duplicated from ${role.name})`,
             users: 0,
-            permissions: JSON.parse(JSON.stringify(role.permissions))
+            permissions: JSON.parse(JSON.stringify(role.permissions)),
           };
           roles.push(newRole);
           renderRolesTable();
           renderPermissionMatrix();
-          showToast(`✅ Role "${newName}" duplicated successfully`, 'success');
+          showToast(`✅ Role "${newName}" duplicated successfully`, "success");
         }
-        document.getElementById(`dropdown-role-${roleId}`)?.classList.remove('open');
+        document
+          .getElementById(`dropdown-role-${roleId}`)
+          ?.classList.remove("open");
       }
 
       function deleteRole(roleId) {
-        const role = roles.find(r => r.id === roleId);
-        if (!role) { showToast('Role not found', 'error'); return; }
-        if (['role-admin', 'role-vet', 'role-reception', 'role-tech', 'role-finance'].includes(roleId)) {
-          showToast('Cannot delete system roles', 'error');
+        const role = roles.find((r) => r.id === roleId);
+        if (!role) {
+          showToast("Role not found", "error");
           return;
         }
-        if (!confirm(`Delete role "${role.name}"? This cannot be undone.`)) return;
-        roles = roles.filter(r => r.id !== roleId);
+        if (
+          [
+            "role-admin",
+            "role-vet",
+            "role-reception",
+            "role-tech",
+            "role-finance",
+          ].includes(roleId)
+        ) {
+          showToast("Cannot delete system roles", "error");
+          return;
+        }
+        if (!confirm(`Delete role "${role.name}"? This cannot be undone.`))
+          return;
+        roles = roles.filter((r) => r.id !== roleId);
         renderRolesTable();
         renderPermissionMatrix();
-        showToast(`🗑️ Role "${role.name}" deleted`, 'info');
-        document.getElementById(`dropdown-role-${roleId}`)?.classList.remove('open');
+        showToast(`🗑️ Role "${role.name}" deleted`, "info");
+        document
+          .getElementById(`dropdown-role-${roleId}`)
+          ?.classList.remove("open");
       }
 
       // ==========================================
       // 8. NOTIFICATION TYPES
       // ==========================================
       function renderNotificationTypes() {
-        const tbody = document.getElementById('notificationTypesBody');
-        tbody.innerHTML = notificationTypes.map(n => `
+        const tbody = document.getElementById("notificationTypesBody");
+        tbody.innerHTML = notificationTypes
+          .map(
+            (n) => `
             <tr class="hover:bg-slate-50/50 transition-colors">
               <td class="px-4 py-3 font-medium text-slate-700">${n.name}</td>
               <td class="px-4 py-3 text-center">
-                <input type="checkbox" class="permission-checkbox" ${n.email ? 'checked' : ''} 
+                <input type="checkbox" class="permission-checkbox" ${n.email ? "checked" : ""} 
                        onchange="updateNotification('${n.id}', 'email', this.checked)" />
               </td>
               <td class="px-4 py-3 text-center">
-                <input type="checkbox" class="permission-checkbox" ${n.sms ? 'checked' : ''} 
+                <input type="checkbox" class="permission-checkbox" ${n.sms ? "checked" : ""} 
                        onchange="updateNotification('${n.id}', 'sms', this.checked)" />
               </td>
               <td class="px-4 py-3 text-center">
-                <input type="checkbox" class="permission-checkbox" ${n.inApp ? 'checked' : ''} 
+                <input type="checkbox" class="permission-checkbox" ${n.inApp ? "checked" : ""} 
                        onchange="updateNotification('${n.id}', 'inApp', this.checked)" />
               </td>
             </tr>
-          `).join('');
+          `,
+          )
+          .join("");
       }
 
       function updateNotification(id, channel, value) {
-        const notif = notificationTypes.find(n => n.id === id);
+        const notif = notificationTypes.find((n) => n.id === id);
         if (notif) {
           notif[channel] = value;
-          showToast(`Updated ${notif.name} - ${channel}`, 'success');
+          showToast(`Updated ${notif.name} - ${channel}`, "success");
         }
       }
 
@@ -1689,89 +2689,97 @@
       // 9. POS FUNCTIONS
       // ==========================================
       function selectPOS(provider) {
-        document.querySelectorAll('.pos-provider-card').forEach(el => el.classList.remove('active'));
-        const cards = document.querySelectorAll('.pos-provider-card');
-        cards.forEach(card => {
+        document
+          .querySelectorAll(".pos-provider-card")
+          .forEach((el) => el.classList.remove("active"));
+        const cards = document.querySelectorAll(".pos-provider-card");
+        cards.forEach((card) => {
           if (card.onclick && card.onclick.toString().includes(provider)) {
-            card.classList.add('active');
+            card.classList.add("active");
           }
         });
         // Find the clicked card by checking its content
-        const allCards = document.querySelectorAll('.pos-provider-card');
-        allCards.forEach(card => {
+        const allCards = document.querySelectorAll(".pos-provider-card");
+        allCards.forEach((card) => {
           const text = card.textContent.toLowerCase();
           if (text.includes(provider)) {
-            card.classList.add('active');
+            card.classList.add("active");
           }
         });
-        showToast(`Selected ${provider.charAt(0).toUpperCase() + provider.slice(1)} POS`, 'info');
+        showToast(
+          `Selected ${provider.charAt(0).toUpperCase() + provider.slice(1)} POS`,
+          "info",
+        );
       }
 
       function openCustomPOSModal() {
-        document.getElementById('customPOSModal').classList.add('open');
-        document.body.style.overflow = 'hidden';
+        document.getElementById("customPOSModal").classList.add("open");
+        document.body.style.overflow = "hidden";
         // Pre-fill with some example data
-        document.getElementById('posApiEndpoint').value = 'https://api.yourpos.com/v1';
-        document.getElementById('posApiKey').value = '';
-        document.getElementById('posSecretKey').value = '';
+        document.getElementById("posApiEndpoint").value =
+          "https://api.yourpos.com/v1";
+        document.getElementById("posApiKey").value = "";
+        document.getElementById("posSecretKey").value = "";
       }
 
       function closeCustomPOSModal() {
-        document.getElementById('customPOSModal').classList.remove('open');
-        document.body.style.overflow = '';
+        document.getElementById("customPOSModal").classList.remove("open");
+        document.body.style.overflow = "";
       }
 
       function saveCustomPOS(e) {
         e.preventDefault();
-        const endpoint = document.getElementById('posApiEndpoint').value.trim();
-        const apiKey = document.getElementById('posApiKey').value.trim();
-        const secretKey = document.getElementById('posSecretKey').value.trim();
-        const posType = document.getElementById('posType').value;
+        const endpoint = document.getElementById("posApiEndpoint").value.trim();
+        const apiKey = document.getElementById("posApiKey").value.trim();
+        const secretKey = document.getElementById("posSecretKey").value.trim();
+        const posType = document.getElementById("posType").value;
 
         if (!endpoint || !apiKey) {
-          showToast('Please enter both API Endpoint and API Key', 'error');
+          showToast("Please enter both API Endpoint and API Key", "error");
           return;
         }
 
         // Save configuration
         const config = { endpoint, apiKey, secretKey, posType };
-        localStorage.setItem('posConfig', JSON.stringify(config));
-        
+        localStorage.setItem("posConfig", JSON.stringify(config));
+
         closeCustomPOSModal();
-        showToast('✅ Custom POS configuration saved successfully!', 'success');
+        showToast("✅ Custom POS configuration saved successfully!", "success");
       }
 
-      document.getElementById('customPOSModal')?.addEventListener('click', function(e) {
-        if (e.target === this) closeCustomPOSModal();
-      });
+      document
+        .getElementById("customPOSModal")
+        ?.addEventListener("click", function (e) {
+          if (e.target === this) closeCustomPOSModal();
+        });
 
       // ==========================================
       // 10. SAVE FUNCTIONS
       // ==========================================
       function saveAllSettings() {
-        showToast('✅ All settings saved successfully!', 'success');
+        showToast("✅ All settings saved successfully!", "success");
       }
 
       function saveClinicSettings() {
-        showToast('✅ Clinic settings saved successfully!', 'success');
+        showToast("✅ Clinic settings saved successfully!", "success");
       }
 
       function saveSecuritySettings() {
-        showToast('✅ Security settings saved successfully!', 'success');
+        showToast("✅ Security settings saved successfully!", "success");
       }
 
       function saveNotificationSettings() {
-        showToast('✅ Notification settings saved successfully!', 'success');
+        showToast("✅ Notification settings saved successfully!", "success");
       }
 
       function savePreferences() {
-        const theme = document.getElementById('prefTheme').value;
-        if (theme === 'dark') {
-          document.documentElement.classList.add('dark');
+        const theme = document.getElementById("prefTheme").value;
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
         } else {
-          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.remove("dark");
         }
-        showToast('✅ Preferences saved successfully!', 'success');
+        showToast("✅ Preferences saved successfully!", "success");
       }
 
       function exportSettings() {
@@ -1779,122 +2787,158 @@
           roles: roles,
           notifications: notificationTypes,
           clinic: {
-            name: document.getElementById('clinicName').value,
-            email: document.getElementById('clinicEmail').value,
-            address: document.getElementById('clinicAddress').value,
-            phone: document.getElementById('clinicPhone').value,
-            emergency: document.getElementById('clinicEmergency').value,
-            currency: document.getElementById('clinicCurrency').value,
-            tax: document.getElementById('clinicTax').value,
+            name: document.getElementById("clinicName").value,
+            email: document.getElementById("clinicEmail").value,
+            address: document.getElementById("clinicAddress").value,
+            phone: document.getElementById("clinicPhone").value,
+            emergency: document.getElementById("clinicEmergency").value,
+            currency: document.getElementById("clinicCurrency").value,
+            tax: document.getElementById("clinicTax").value,
           },
           security: {
-            twoFA: document.getElementById('security2FA').value,
-            timeout: document.getElementById('securityTimeout').value,
-            maxAttempts: document.getElementById('securityMaxAttempts').value,
-            minLength: document.getElementById('securityMinLength').value,
-            specialChars: document.getElementById('securitySpecialChars').value,
-            expiry: document.getElementById('securityExpiry').value,
+            twoFA: document.getElementById("security2FA").value,
+            timeout: document.getElementById("securityTimeout").value,
+            maxAttempts: document.getElementById("securityMaxAttempts").value,
+            minLength: document.getElementById("securityMinLength").value,
+            specialChars: document.getElementById("securitySpecialChars").value,
+            expiry: document.getElementById("securityExpiry").value,
           },
           preferences: {
-            theme: document.getElementById('prefTheme').value,
-            color: document.getElementById('prefColor').value,
-            language: document.getElementById('prefLanguage').value,
-            timezone: document.getElementById('prefTimezone').value,
-            dateFormat: document.getElementById('prefDateFormat').value,
-            timeFormat: document.getElementById('prefTimeFormat').value,
-            backup: document.getElementById('prefBackup').value,
-          }
+            theme: document.getElementById("prefTheme").value,
+            color: document.getElementById("prefColor").value,
+            language: document.getElementById("prefLanguage").value,
+            timezone: document.getElementById("prefTimezone").value,
+            dateFormat: document.getElementById("prefDateFormat").value,
+            timeFormat: document.getElementById("prefTimeFormat").value,
+            backup: document.getElementById("prefBackup").value,
+          },
         };
 
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const blob = new Blob([JSON.stringify(data, null, 2)], {
+          type: "application/json",
+        });
         const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
+        const a = document.createElement("a");
         a.href = url;
-        a.download = `settings_export_${new Date().toISOString().slice(0,10)}.json`;
+        a.download = `settings_export_${new Date().toISOString().slice(0, 10)}.json`;
         a.click();
         URL.revokeObjectURL(url);
-        showToast('📊 Settings exported successfully!', 'success');
+        showToast("📊 Settings exported successfully!", "success");
       }
 
       // ==========================================
       // 11. SIDEBAR LOGIC
       // ==========================================
-      const mobileBurgerBtn = document.getElementById('mobileBurgerBtn');
-      const mobileSidebar = document.getElementById('mobileSidebar');
-      const closeMobileSidebar = document.getElementById('closeMobileSidebar');
-      const mobileOverlay = document.getElementById('mobileOverlay');
-      const desktopSidebar = document.getElementById('desktopSidebar');
-      const collapseSidebarBtn = document.getElementById('collapseSidebarBtn');
-      let isSidebarCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+      const mobileBurgerBtn = document.getElementById("mobileBurgerBtn");
+      const mobileSidebar = document.getElementById("mobileSidebar");
+      const closeMobileSidebar = document.getElementById("closeMobileSidebar");
+      const mobileOverlay = document.getElementById("mobileOverlay");
+      const desktopSidebar = document.getElementById("desktopSidebar");
+      const collapseSidebarBtn = document.getElementById("collapseSidebarBtn");
+      let isSidebarCollapsed =
+        localStorage.getItem("sidebarCollapsed") === "true";
 
       function openMobileSidebar() {
-        mobileSidebar.classList.add('open');
-        mobileOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        mobileSidebar.classList.add("open");
+        mobileOverlay.classList.add("active");
+        document.body.style.overflow = "hidden";
       }
 
       function closeMobileSidebarFunc() {
-        mobileSidebar.classList.remove('open');
-        mobileOverlay.classList.remove('active');
-        document.body.style.overflow = '';
+        mobileSidebar.classList.remove("open");
+        mobileOverlay.classList.remove("active");
+        document.body.style.overflow = "";
       }
 
       function toggleDesktopSidebar() {
         isSidebarCollapsed = !isSidebarCollapsed;
-        localStorage.setItem('sidebarCollapsed', isSidebarCollapsed);
-        const mainContentWrapper = document.getElementById('mainContentWrapper');
+        localStorage.setItem("sidebarCollapsed", isSidebarCollapsed);
+        const mainContentWrapper =
+          document.getElementById("mainContentWrapper");
         if (isSidebarCollapsed) {
-          desktopSidebar.classList.add('sidebar-collapsed');
-          collapseSidebarBtn.querySelector('.material-symbols-outlined').textContent = 'chevron_right';
-          mainContentWrapper && mainContentWrapper.classList.add('main-content-full');
+          desktopSidebar.classList.add("sidebar-collapsed");
+          collapseSidebarBtn.querySelector(
+            ".material-symbols-outlined",
+          ).textContent = "chevron_right";
+          mainContentWrapper &&
+            mainContentWrapper.classList.add("main-content-full");
         } else {
-          desktopSidebar.classList.remove('sidebar-collapsed');
-          collapseSidebarBtn.querySelector('.material-symbols-outlined').textContent = 'chevron_left';
-          mainContentWrapper && mainContentWrapper.classList.remove('main-content-full');
+          desktopSidebar.classList.remove("sidebar-collapsed");
+          collapseSidebarBtn.querySelector(
+            ".material-symbols-outlined",
+          ).textContent = "chevron_left";
+          mainContentWrapper &&
+            mainContentWrapper.classList.remove("main-content-full");
         }
       }
 
       if (isSidebarCollapsed) {
-        desktopSidebar.classList.add('sidebar-collapsed');
-        collapseSidebarBtn.querySelector('.material-symbols-outlined').textContent = 'chevron_right';
+        desktopSidebar.classList.add("sidebar-collapsed");
+        collapseSidebarBtn.querySelector(
+          ".material-symbols-outlined",
+        ).textContent = "chevron_right";
       }
 
-      mobileBurgerBtn?.addEventListener('click', openMobileSidebar);
-      closeMobileSidebar?.addEventListener('click', closeMobileSidebarFunc);
-      mobileOverlay?.addEventListener('click', closeMobileSidebarFunc);
-      collapseSidebarBtn?.addEventListener('click', toggleDesktopSidebar);
+      mobileBurgerBtn?.addEventListener("click", openMobileSidebar);
+      closeMobileSidebar?.addEventListener("click", closeMobileSidebarFunc);
+      mobileOverlay?.addEventListener("click", closeMobileSidebarFunc);
+      collapseSidebarBtn?.addEventListener("click", toggleDesktopSidebar);
 
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && mobileSidebar.classList.contains('open')) closeMobileSidebarFunc();
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && mobileSidebar.classList.contains("open"))
+          closeMobileSidebarFunc();
       });
 
-      window.addEventListener('resize', () => {
-        if (window.innerWidth >= 768 && mobileSidebar.classList.contains('open')) closeMobileSidebarFunc();
+      window.addEventListener("resize", () => {
+        if (
+          window.innerWidth >= 768 &&
+          mobileSidebar.classList.contains("open")
+        )
+          closeMobileSidebarFunc();
       });
 
       // ==========================================
       // 12. HIGHLIGHT ACTIVE PAGE
       // ==========================================
       function highlightCurrentPage() {
-        const currentPage = document.body.getAttribute('data-page') || 'settings';
+        const currentPage =
+          document.body.getAttribute("data-page") || "settings";
 
-        document.querySelectorAll('[data-nav-desktop]').forEach((link) => {
-          if (link.getAttribute('data-nav-desktop') === currentPage) {
-            link.classList.add('bg-primary-container', 'text-on-primary-container');
-            link.classList.remove('text-tertiary-fixed-dim', 'hover:bg-white/5');
+        document.querySelectorAll("[data-nav-desktop]").forEach((link) => {
+          if (link.getAttribute("data-nav-desktop") === currentPage) {
+            link.classList.add(
+              "bg-primary-container",
+              "text-on-primary-container",
+            );
+            link.classList.remove(
+              "text-tertiary-fixed-dim",
+              "hover:bg-white/5",
+            );
           } else {
-            link.classList.remove('bg-primary-container', 'text-on-primary-container');
-            link.classList.add('text-tertiary-fixed-dim', 'hover:bg-white/5');
+            link.classList.remove(
+              "bg-primary-container",
+              "text-on-primary-container",
+            );
+            link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
           }
         });
 
-        document.querySelectorAll('[data-nav-mobile]').forEach((link) => {
-          if (link.getAttribute('data-nav-mobile') === currentPage) {
-            link.classList.add('bg-primary-container', 'text-on-primary-container');
-            link.classList.remove('text-tertiary-fixed-dim', 'hover:bg-white/5');
+        document.querySelectorAll("[data-nav-mobile]").forEach((link) => {
+          if (link.getAttribute("data-nav-mobile") === currentPage) {
+            link.classList.add(
+              "bg-primary-container",
+              "text-on-primary-container",
+            );
+            link.classList.remove(
+              "text-tertiary-fixed-dim",
+              "hover:bg-white/5",
+            );
           } else {
-            link.classList.remove('bg-primary-container', 'text-on-primary-container');
-            link.classList.add('text-tertiary-fixed-dim', 'hover:bg-white/5');
+            link.classList.remove(
+              "bg-primary-container",
+              "text-on-primary-container",
+            );
+            link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
           }
         });
       }
@@ -1903,47 +2947,51 @@
       // 13. LOGOUT
       // ==========================================
       function logout() {
-        if (confirm('Are you sure you want to logout?')) {
-          localStorage.removeItem('user');
-          localStorage.removeItem('token');
-          window.location.href = 'vet_portal_login.html';
+        if (confirm("Are you sure you want to logout?")) {
+          localStorage.removeItem("user");
+          localStorage.removeItem("token");
+          window.location.href = "vet_portal_login.html";
         }
       }
 
-      document.getElementById('logoutBtnMobile')?.addEventListener('click', logout);
-      document.getElementById('logoutBtnDesktop')?.addEventListener('click', logout);
+      document
+        .getElementById("logoutBtnMobile")
+        ?.addEventListener("click", logout);
+      document
+        .getElementById("logoutBtnDesktop")
+        ?.addEventListener("click", logout);
 
       // ==========================================
       // 14. NAVIGATION
       // ==========================================
       function navigateTo(section) {
         const pageMap = {
-          analytics: 'Dashboard.html',
-          calendar: 'clinic_calendar.html',
-          staff: 'staff_service_settings.html',
-          billing: 'billing.html',
-          records: 'records.html',
-          message: 'message.html',
-          emergency: 'emergency_management.html',
-          appointments: 'appointments.html',
-          inventory: 'inventory.html',
-          settings: 'settings.html'
+          analytics: "Dashboard.html",
+          calendar: "clinic_calendar.html",
+          staff: "staff_service_settings.html",
+          billing: "billing.html",
+          records: "records.html",
+          message: "message.html",
+          emergency: "emergency_management.html",
+          appointments: "appointments.html",
+          inventory: "inventory.html",
+          settings: "settings.html",
         };
         if (pageMap[section]) window.location.href = pageMap[section];
       }
 
-      document.querySelectorAll('[data-nav-desktop]').forEach((link) => {
-        link.addEventListener('click', (e) => {
+      document.querySelectorAll("[data-nav-desktop]").forEach((link) => {
+        link.addEventListener("click", (e) => {
           e.preventDefault();
-          const section = link.getAttribute('data-nav-desktop');
+          const section = link.getAttribute("data-nav-desktop");
           navigateTo(section);
         });
       });
 
-      document.querySelectorAll('[data-nav-mobile]').forEach((link) => {
-        link.addEventListener('click', (e) => {
+      document.querySelectorAll("[data-nav-mobile]").forEach((link) => {
+        link.addEventListener("click", (e) => {
           e.preventDefault();
-          const section = link.getAttribute('data-nav-mobile');
+          const section = link.getAttribute("data-nav-mobile");
           navigateTo(section);
           closeMobileSidebarFunc();
         });
@@ -1952,18 +3000,18 @@
       // ==========================================
       // 15. INIT
       // ==========================================
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener("DOMContentLoaded", function () {
         highlightCurrentPage();
         renderRolesTable();
         renderPermissionMatrix();
         renderNotificationTypes();
         // Check for saved POS config
         try {
-          const savedPOS = localStorage.getItem('posConfig');
+          const savedPOS = localStorage.getItem("posConfig");
           if (savedPOS) {
             const config = JSON.parse(savedPOS);
             if (config.posType && config.endpoint) {
-              showToast(`POS System: ${config.posType} configured`, 'info');
+              showToast(`POS System: ${config.posType} configured`, "info");
             }
           }
         } catch (e) {}

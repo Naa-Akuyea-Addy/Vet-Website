@@ -360,16 +360,16 @@
           max-height 0.3s;
       }
       a[data-nav-desktop="emergency"],
-a[data-nav-mobile="emergency"] {
-  background-color: #943031 !important;
-  color: #ffffff !important;
-}
+      a[data-nav-mobile="emergency"] {
+        background-color: #943031 !important;
+        color: #ffffff !important;
+      }
 
-a[data-nav-desktop="emergency"]:hover,
-a[data-nav-mobile="emergency"]:hover {
-  background-color: #7a2526 !important; /* Slightly darker red on hover */
-  color: #ffffff !important;
-}
+      a[data-nav-desktop="emergency"]:hover,
+      a[data-nav-mobile="emergency"]:hover {
+        background-color: #7a2526 !important; /* Slightly darker red on hover */
+        color: #ffffff !important;
+      }
     </style>
   </head>
   <body
@@ -454,6 +454,14 @@ a[data-nav-mobile="emergency"]:hover {
           ><span>Staff</span></a
         >
         <a
+          href="./appointment.html"
+          data-nav-desktop="appointments"
+          data-nav-mobile="appointments"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined">event_available</span
+          ><span>Appointments</span></a
+        >
+        <a
           href="./billing.html"
           data-nav-desktop="billing"
           data-nav-mobile="billing"
@@ -484,12 +492,38 @@ a[data-nav-mobile="emergency"]:hover {
           ><span class="material-symbols-outlined">message</span
           ><span class="sidebar-text">Messages</span></a
         >
-         <a href="./emergency_management.html" data-nav-desktop="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10">
-            <span class="material-symbols-outlined sidebar-icon-only">emergency</span><span class="sidebar-text">Emergency Cases</span>
-          </a>
+        <a
+          href="./emergency_management.html"
+          data-nav-desktop="emergency"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"
+        >
+          <span class="material-symbols-outlined sidebar-icon-only"
+            >emergency</span
+          ><span class="sidebar-text">Emergency Cases</span>
+        </a>
+        <a
+          href="./mortuary.html"
+          data-nav-desktop="mortuary"
+          data-nav-mobile="mortuary"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          ><span class="material-symbols-outlined sidebar-icon-only"
+            >heart_broken</span
+          ><span class="sidebar-text">Mortuary</span></a
+        >
+        <a
+          href="./report.html"
+          data-nav-desktop="reports"
+          data-nav-mobile="reports"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          ><span class="material-symbols-outlined sidebar-icon-only"
+            >assessment</span
+          ><span class="sidebar-text">Reports</span></a
+        >
         <div class="h-px bg-white/10 my-4"></div>
         <a
-          href="#"
+          href="./settings.html"
+          data-nav-desktop="settings"
+          data-nav-mobile="settings"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
           ><span class="material-symbols-outlined">settings</span
           ><span>Settings</span></a
@@ -594,9 +628,39 @@ a[data-nav-mobile="emergency"]:hover {
               >message</span
             ><span class="sidebar-text">Messages</span></a
           >
-           <a href="./emergency_management.html" data-nav-mobile="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10">
-            <span class="material-symbols-outlined sidebar-icon-only">emergency</span><span class="sidebar-text">Emergency Cases</span>
+          <a
+            href="./emergency_management.html"
+            data-nav-mobile="emergency"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >emergency</span
+            ><span class="sidebar-text">Emergency Cases</span>
           </a>
+          <a
+            href="./mortuary.html"
+            data-nav-desktop="mortuary"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >heart_broken</span
+            ><span class="sidebar-text">Mortuary</span></a
+          >
+          <a
+            href="./report.html"
+            data-nav-desktop="reports"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >assessment</span
+            ><span class="sidebar-text">Reports</span></a
+          >
+          <a
+            href="./settings.html"
+            data-nav-desktop="settings"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >settings</span
+            ><span class="sidebar-text">Settings</span></a
+          >
         </nav>
         <div class="p-4 mt-auto bottom-container">
           <button
@@ -1019,43 +1083,95 @@ a[data-nav-mobile="emergency"]:hover {
       const mobileOverlay = document.getElementById("mobileOverlay");
       const desktopSidebar = document.getElementById("desktopSidebar");
       const collapseSidebarBtn = document.getElementById("collapseSidebarBtn");
-      let isSidebarCollapsed = localStorage.getItem("sidebarCollapsed") === "true";
+      let isSidebarCollapsed =
+        localStorage.getItem("sidebarCollapsed") === "true";
 
-      function openMobileSidebar() { mobileSidebar.classList.add("open"); mobileOverlay.classList.add("active"); document.body.style.overflow = "hidden"; }
-      function closeMobileSidebarFunc() { mobileSidebar.classList.remove("open"); mobileOverlay.classList.remove("active"); document.body.style.overflow = ""; }
+      function openMobileSidebar() {
+        mobileSidebar.classList.add("open");
+        mobileOverlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+      function closeMobileSidebarFunc() {
+        mobileSidebar.classList.remove("open");
+        mobileOverlay.classList.remove("active");
+        document.body.style.overflow = "";
+      }
       function toggleDesktopSidebar() {
         isSidebarCollapsed = !isSidebarCollapsed;
         localStorage.setItem("sidebarCollapsed", isSidebarCollapsed);
-        const mainContentWrapper = document.getElementById("mainContentWrapper");
+        const mainContentWrapper =
+          document.getElementById("mainContentWrapper");
         if (isSidebarCollapsed) {
           desktopSidebar.classList.add("sidebar-collapsed");
-          collapseSidebarBtn.querySelector(".material-symbols-outlined").textContent = "chevron_right";
-          mainContentWrapper && mainContentWrapper.classList.add("main-content-full");
+          collapseSidebarBtn.querySelector(
+            ".material-symbols-outlined",
+          ).textContent = "chevron_right";
+          mainContentWrapper &&
+            mainContentWrapper.classList.add("main-content-full");
         } else {
           desktopSidebar.classList.remove("sidebar-collapsed");
-          collapseSidebarBtn.querySelector(".material-symbols-outlined").textContent = "chevron_left";
-          mainContentWrapper && mainContentWrapper.classList.remove("main-content-full");
+          collapseSidebarBtn.querySelector(
+            ".material-symbols-outlined",
+          ).textContent = "chevron_left";
+          mainContentWrapper &&
+            mainContentWrapper.classList.remove("main-content-full");
         }
       }
 
-      if (isSidebarCollapsed) { desktopSidebar.classList.add("sidebar-collapsed"); if (collapseSidebarBtn) collapseSidebarBtn.querySelector(".material-symbols-outlined").textContent = "chevron_right"; }
-      if (mobileBurgerBtn) mobileBurgerBtn.addEventListener("click", openMobileSidebar);
-      if (closeMobileSidebar) closeMobileSidebar.addEventListener("click", closeMobileSidebarFunc);
-      if (mobileOverlay) mobileOverlay.addEventListener("click", closeMobileSidebarFunc);
-      if (collapseSidebarBtn) collapseSidebarBtn.addEventListener("click", toggleDesktopSidebar);
-      document.addEventListener("keydown", (e) => { if (e.key === "Escape" && mobileSidebar.classList.contains("open")) closeMobileSidebarFunc(); });
-      window.addEventListener("resize", () => { if (window.innerWidth >= 768 && mobileSidebar.classList.contains("open")) closeMobileSidebarFunc(); });
+      if (isSidebarCollapsed) {
+        desktopSidebar.classList.add("sidebar-collapsed");
+        if (collapseSidebarBtn)
+          collapseSidebarBtn.querySelector(
+            ".material-symbols-outlined",
+          ).textContent = "chevron_right";
+      }
+      if (mobileBurgerBtn)
+        mobileBurgerBtn.addEventListener("click", openMobileSidebar);
+      if (closeMobileSidebar)
+        closeMobileSidebar.addEventListener("click", closeMobileSidebarFunc);
+      if (mobileOverlay)
+        mobileOverlay.addEventListener("click", closeMobileSidebarFunc);
+      if (collapseSidebarBtn)
+        collapseSidebarBtn.addEventListener("click", toggleDesktopSidebar);
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && mobileSidebar.classList.contains("open"))
+          closeMobileSidebarFunc();
+      });
+      window.addEventListener("resize", () => {
+        if (
+          window.innerWidth >= 768 &&
+          mobileSidebar.classList.contains("open")
+        )
+          closeMobileSidebarFunc();
+      });
 
-      function logout() { if (showToast("Are you sure you want to logout?")) { localStorage.removeItem("user"); localStorage.removeItem("token"); window.location.href = "vet_portal_login.html"; } }
-      document.getElementById("logoutBtnMobile")?.addEventListener("click", logout);
-      document.getElementById("logoutBtnDesktop")?.addEventListener("click", logout);
+      function logout() {
+        if (showToast("Are you sure you want to logout?")) {
+          localStorage.removeItem("user");
+          localStorage.removeItem("token");
+          window.location.href = "vet_portal_login.html";
+        }
+      }
+      document
+        .getElementById("logoutBtnMobile")
+        ?.addEventListener("click", logout);
+      document
+        .getElementById("logoutBtnDesktop")
+        ?.addEventListener("click", logout);
 
       // Highlight the correct sidebar nav item based on current page
       function highlightActiveNav() {
         try {
-          const current = (location.pathname || "").split("/").pop().toLowerCase();
-          const currCore = (current || "").replace(/\?.*$/, "").replace(/\.html$/, "");
-          const anchors = document.querySelectorAll('#desktopSidebar nav a, #mobileSidebar nav a');
+          const current = (location.pathname || "")
+            .split("/")
+            .pop()
+            .toLowerCase();
+          const currCore = (current || "")
+            .replace(/\?.*$/, "")
+            .replace(/\.html$/, "");
+          const anchors = document.querySelectorAll(
+            "#desktopSidebar nav a, #mobileSidebar nav a",
+          );
           anchors.forEach((a) => {
             const href = a.getAttribute("href") || "";
             const hrefBase = href.split("/").pop().toLowerCase();
@@ -1063,11 +1179,11 @@ a[data-nav-mobile="emergency"]:hover {
             a.classList.remove("sidebar-item-active");
             // If this page matches the link (or shares a core name), mark active
             if (
-              hrefCore && currCore && (
-                hrefCore === currCore ||
+              hrefCore &&
+              currCore &&
+              (hrefCore === currCore ||
                 currCore.includes(hrefCore) ||
-                hrefCore.includes(currCore)
-              )
+                hrefCore.includes(currCore))
             ) {
               a.classList.add("sidebar-item-active");
             }
@@ -1088,7 +1204,9 @@ a[data-nav-mobile="emergency"]:hover {
           records: "records.html",
           message: "message.html",
           emergency: "emergency_management.html",
-          appointments: "appointments.html",
+          appointments: "appointment.html",
+          mortuary: "mortuary.html",
+          reports: "report.html",
           settings: "settings.html",
         };
 
@@ -1099,10 +1217,19 @@ a[data-nav-mobile="emergency"]:hover {
         // Update active states for desktop
         document.querySelectorAll("[data-nav-desktop]").forEach((link) => {
           if (link.getAttribute("data-nav-desktop") === section) {
-            link.classList.add("bg-primary-container", "text-on-primary-container");
-            link.classList.remove("text-tertiary-fixed-dim", "hover:bg-white/5");
+            link.classList.add(
+              "bg-primary-container",
+              "text-on-primary-container",
+            );
+            link.classList.remove(
+              "text-tertiary-fixed-dim",
+              "hover:bg-white/5",
+            );
           } else {
-            link.classList.remove("bg-primary-container", "text-on-primary-container");
+            link.classList.remove(
+              "bg-primary-container",
+              "text-on-primary-container",
+            );
             link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
           }
         });
@@ -1110,10 +1237,19 @@ a[data-nav-mobile="emergency"]:hover {
         // Update active states for mobile
         document.querySelectorAll("[data-nav-mobile]").forEach((link) => {
           if (link.getAttribute("data-nav-mobile") === section) {
-            link.classList.add("bg-primary-container", "text-on-primary-container");
-            link.classList.remove("text-tertiary-fixed-dim", "hover:bg-white/5");
+            link.classList.add(
+              "bg-primary-container",
+              "text-on-primary-container",
+            );
+            link.classList.remove(
+              "text-tertiary-fixed-dim",
+              "hover:bg-white/5",
+            );
           } else {
-            link.classList.remove("bg-primary-container", "text-on-primary-container");
+            link.classList.remove(
+              "bg-primary-container",
+              "text-on-primary-container",
+            );
             link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
           }
         });
@@ -1134,36 +1270,60 @@ a[data-nav-mobile="emergency"]:hover {
           e.preventDefault();
           const section = link.getAttribute("data-nav-mobile");
           navigateTo(section);
-          try { closeMobileSidebarFunc(); } catch (err) { /* noop */ }
+          try {
+            closeMobileSidebarFunc();
+          } catch (err) {
+            /* noop */
+          }
         });
       });
 
       // ===== AUTO-HIGHLIGHT ACTIVE PAGE =====
       function highlightCurrentPage() {
-        const currentPage = document.body.getAttribute("data-page") || "message";
+        const currentPage =
+          document.body.getAttribute("data-page") || "message";
 
-        
-      // Helper function to prevent overriding the emergency button
-      const updateLinkStyle = (link, isActive) => {
-        const isEmergency = link.getAttribute("data-nav-desktop") === "emergency" || link.getAttribute("data-nav-mobile") === "emergency";
-        if (isEmergency) return; // SKIP: Keep emergency button red
+        // Helper function to prevent overriding the emergency button
+        const updateLinkStyle = (link, isActive) => {
+          const isEmergency =
+            link.getAttribute("data-nav-desktop") === "emergency" ||
+            link.getAttribute("data-nav-mobile") === "emergency";
+          if (isEmergency) return; // SKIP: Keep emergency button red
 
-        if (isActive) {
-          link.classList.add("bg-primary-container", "text-on-primary-container");
-          link.classList.remove("text-tertiary-fixed-dim", "hover:bg-white/5");
-        } else {
-          link.classList.remove("bg-primary-container", "text-on-primary-container");
-          link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
-        }
-      };
+          if (isActive) {
+            link.classList.add(
+              "bg-primary-container",
+              "text-on-primary-container",
+            );
+            link.classList.remove(
+              "text-tertiary-fixed-dim",
+              "hover:bg-white/5",
+            );
+          } else {
+            link.classList.remove(
+              "bg-primary-container",
+              "text-on-primary-container",
+            );
+            link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
+          }
+        };
 
         // Desktop
         document.querySelectorAll("[data-nav-desktop]").forEach((link) => {
           if (link.getAttribute("data-nav-desktop") === currentPage) {
-            link.classList.add("bg-primary-container", "text-on-primary-container");
-            link.classList.remove("text-tertiary-fixed-dim", "hover:bg-white/5");
+            link.classList.add(
+              "bg-primary-container",
+              "text-on-primary-container",
+            );
+            link.classList.remove(
+              "text-tertiary-fixed-dim",
+              "hover:bg-white/5",
+            );
           } else {
-            link.classList.remove("bg-primary-container", "text-on-primary-container");
+            link.classList.remove(
+              "bg-primary-container",
+              "text-on-primary-container",
+            );
             link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
           }
         });
@@ -1171,10 +1331,19 @@ a[data-nav-mobile="emergency"]:hover {
         // Mobile
         document.querySelectorAll("[data-nav-mobile]").forEach((link) => {
           if (link.getAttribute("data-nav-mobile") === currentPage) {
-            link.classList.add("bg-primary-container", "text-on-primary-container");
-            link.classList.remove("text-tertiary-fixed-dim", "hover:bg-white/5");
+            link.classList.add(
+              "bg-primary-container",
+              "text-on-primary-container",
+            );
+            link.classList.remove(
+              "text-tertiary-fixed-dim",
+              "hover:bg-white/5",
+            );
           } else {
-            link.classList.remove("bg-primary-container", "text-on-primary-container");
+            link.classList.remove(
+              "bg-primary-container",
+              "text-on-primary-container",
+            );
             link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
           }
         });
@@ -1185,7 +1354,6 @@ a[data-nav-mobile="emergency"]:hover {
         highlightCurrentPage();
       });
 
-
       // ===== TOAST =====
       function showToast(message, type = "success") {
         const container = document.getElementById("toast-container");
@@ -1194,23 +1362,131 @@ a[data-nav-mobile="emergency"]:hover {
         toast.className = `toast toast-${type}`;
         toast.textContent = message;
         container.appendChild(toast);
-        requestAnimationFrame(() => { requestAnimationFrame(() => toast.classList.add("show")); });
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => toast.classList.add("show"));
+        });
         setTimeout(() => {
           toast.classList.remove("show");
-          setTimeout(() => { if (toast.parentNode) toast.remove(); }, 300);
+          setTimeout(() => {
+            if (toast.parentNode) toast.remove();
+          }, 300);
         }, 4000);
       }
 
       // ===== ENQUIRIES DATA =====
       let enquiries = [
-        { id: 1, name: "Jessica Martinez", initials: "JM", email: "jessica.martinez@email.com", pet: "Golden Retriever", petType: "Dog", question: "Hi, do you offer grooming services for Golden Retrievers? If so, what is the estimated cost and duration?", time: "10 min ago", timestamp: Date.now() - 600000, status: "new", colorClass: "bg-primary-container text-on-primary-container" },
-        { id: 2, name: "David Thompson", initials: "DT", email: "d.thompson87@email.com", pet: "French Bulldog", petType: "Dog", question: "I'd like to enquire about your puppy training classes. My Frenchie is 4 months old. Do you have availability next week?", time: "42 min ago", timestamp: Date.now() - 2520000, status: "pending", colorClass: "bg-secondary-container text-on-secondary-container" },
-        { id: 3, name: "Amanda Lee", initials: "AL", email: "amanda.lee.k@email.com", pet: "Siamese Cat", petType: "Cat", question: "What are your vaccination prices for a Siamese Cat? Specifically for FVRCP and Rabies.", time: "2 hrs ago", timestamp: Date.now() - 7200000, status: "resolved", colorClass: "bg-tertiary/10 text-tertiary" },
-        { id: 4, name: "Robert King", initials: "RK", email: "r.king.vet@email.com", pet: "German Shepherd", petType: "Dog", question: "Do you have availability for an emergency check-up for a German Shepherd today? He has been vomiting since morning.", time: "3 hrs ago", timestamp: Date.now() - 10800000, status: "new", colorClass: "bg-primary-container text-on-primary-container" },
-        { id: 5, name: "Sophia Patel", initials: "SP", email: "sophia.patel@email.com", pet: "Labrador", petType: "Dog", question: "Could you please share your pricing for full grooming packages? My lab needs a bath, nail trim and ear cleaning.", time: "5 hrs ago", timestamp: Date.now() - 18000000, status: "pending", colorClass: "bg-secondary-container text-on-secondary-container" },
-        { id: 6, name: "Michael Chen", initials: "MC", email: "m.chen.work@email.com", pet: "Persian Cat", petType: "Cat", question: "Is microchipping available for Persian Cats, and how much does the procedure cost?", time: "Yesterday", timestamp: Date.now() - 86400000, status: "resolved", colorClass: "bg-tertiary/10 text-tertiary" },
-        { id: 7, name: "Emma Wilson", initials: "EW", email: "emma.wilson92@email.com", pet: "Beagle", petType: "Dog", question: "Do you provide home visit services for elderly pets? My beagle is 14 and struggles with car rides.", time: "Yesterday", timestamp: Date.now() - 90000000, status: "resolved", colorClass: "bg-primary-container text-on-primary-container" },
-        { id: 8, name: "James Brown", initials: "JB", email: "j.brown.family@email.com", pet: "Cocker Spaniel", petType: "Dog", question: "Hello! Do you offer weekend appointments for routine check-ups? We are only free on Saturdays.", time: "2 days ago", timestamp: Date.now() - 172800000, status: "new", colorClass: "bg-secondary-container text-on-secondary-container" }
+        {
+          id: 1,
+          name: "Jessica Martinez",
+          initials: "JM",
+          email: "jessica.martinez@email.com",
+          pet: "Golden Retriever",
+          petType: "Dog",
+          question:
+            "Hi, do you offer grooming services for Golden Retrievers? If so, what is the estimated cost and duration?",
+          time: "10 min ago",
+          timestamp: Date.now() - 600000,
+          status: "new",
+          colorClass: "bg-primary-container text-on-primary-container",
+        },
+        {
+          id: 2,
+          name: "David Thompson",
+          initials: "DT",
+          email: "d.thompson87@email.com",
+          pet: "French Bulldog",
+          petType: "Dog",
+          question:
+            "I'd like to enquire about your puppy training classes. My Frenchie is 4 months old. Do you have availability next week?",
+          time: "42 min ago",
+          timestamp: Date.now() - 2520000,
+          status: "pending",
+          colorClass: "bg-secondary-container text-on-secondary-container",
+        },
+        {
+          id: 3,
+          name: "Amanda Lee",
+          initials: "AL",
+          email: "amanda.lee.k@email.com",
+          pet: "Siamese Cat",
+          petType: "Cat",
+          question:
+            "What are your vaccination prices for a Siamese Cat? Specifically for FVRCP and Rabies.",
+          time: "2 hrs ago",
+          timestamp: Date.now() - 7200000,
+          status: "resolved",
+          colorClass: "bg-tertiary/10 text-tertiary",
+        },
+        {
+          id: 4,
+          name: "Robert King",
+          initials: "RK",
+          email: "r.king.vet@email.com",
+          pet: "German Shepherd",
+          petType: "Dog",
+          question:
+            "Do you have availability for an emergency check-up for a German Shepherd today? He has been vomiting since morning.",
+          time: "3 hrs ago",
+          timestamp: Date.now() - 10800000,
+          status: "new",
+          colorClass: "bg-primary-container text-on-primary-container",
+        },
+        {
+          id: 5,
+          name: "Sophia Patel",
+          initials: "SP",
+          email: "sophia.patel@email.com",
+          pet: "Labrador",
+          petType: "Dog",
+          question:
+            "Could you please share your pricing for full grooming packages? My lab needs a bath, nail trim and ear cleaning.",
+          time: "5 hrs ago",
+          timestamp: Date.now() - 18000000,
+          status: "pending",
+          colorClass: "bg-secondary-container text-on-secondary-container",
+        },
+        {
+          id: 6,
+          name: "Michael Chen",
+          initials: "MC",
+          email: "m.chen.work@email.com",
+          pet: "Persian Cat",
+          petType: "Cat",
+          question:
+            "Is microchipping available for Persian Cats, and how much does the procedure cost?",
+          time: "Yesterday",
+          timestamp: Date.now() - 86400000,
+          status: "resolved",
+          colorClass: "bg-tertiary/10 text-tertiary",
+        },
+        {
+          id: 7,
+          name: "Emma Wilson",
+          initials: "EW",
+          email: "emma.wilson92@email.com",
+          pet: "Beagle",
+          petType: "Dog",
+          question:
+            "Do you provide home visit services for elderly pets? My beagle is 14 and struggles with car rides.",
+          time: "Yesterday",
+          timestamp: Date.now() - 90000000,
+          status: "resolved",
+          colorClass: "bg-primary-container text-on-primary-container",
+        },
+        {
+          id: 8,
+          name: "James Brown",
+          initials: "JB",
+          email: "j.brown.family@email.com",
+          pet: "Cocker Spaniel",
+          petType: "Dog",
+          question:
+            "Hello! Do you offer weekend appointments for routine check-ups? We are only free on Saturdays.",
+          time: "2 days ago",
+          timestamp: Date.now() - 172800000,
+          status: "new",
+          colorClass: "bg-secondary-container text-on-secondary-container",
+        },
       ];
 
       // ===== STATE =====
@@ -1221,19 +1497,25 @@ a[data-nav-mobile="emergency"]:hover {
 
       // ===== RENDER MESSAGES =====
       function renderMessages() {
-        const container = document.getElementById('messagesContainer');
-        const emptyState = document.getElementById('emptyState');
+        const container = document.getElementById("messagesContainer");
+        const emptyState = document.getElementById("emptyState");
 
-        let filtered = enquiries.filter(e => {
-          if (currentFilter !== "all" && e.status !== currentFilter) return false;
-          if (activeFilters.petType !== "all" && e.petType !== activeFilters.petType) return false;
+        let filtered = enquiries.filter((e) => {
+          if (currentFilter !== "all" && e.status !== currentFilter)
+            return false;
+          if (
+            activeFilters.petType !== "all" &&
+            e.petType !== activeFilters.petType
+          )
+            return false;
 
           if (activeFilters.time !== "all") {
             const now = Date.now();
             const diff = now - e.timestamp;
             if (activeFilters.time === "today" && diff > 86400000) return false;
             if (activeFilters.time === "week" && diff > 604800000) return false;
-            if (activeFilters.time === "month" && diff > 2592000000) return false;
+            if (activeFilters.time === "month" && diff > 2592000000)
+              return false;
           }
 
           return true;
@@ -1246,17 +1528,18 @@ a[data-nav-mobile="emergency"]:hover {
         }
 
         if (filtered.length === 0) {
-          container.classList.add('hidden');
-          emptyState.classList.remove('hidden');
+          container.classList.add("hidden");
+          emptyState.classList.remove("hidden");
         } else {
-          container.classList.remove('hidden');
-          emptyState.classList.add('hidden');
+          container.classList.remove("hidden");
+          emptyState.classList.add("hidden");
         }
 
-        container.innerHTML = filtered.map(e => {
-          const statusClass = `status-${e.status}`;
+        container.innerHTML = filtered
+          .map((e) => {
+            const statusClass = `status-${e.status}`;
 
-          return `
+            return `
             <div class="message-row grid grid-cols-[auto_1fr_auto] gap-4 px-6 py-5 border-b border-outline-variant/10 cursor-pointer hover:bg-surface-muted transition-colors items-center" data-id="${e.id}" onclick="openReplyDrawerById(${e.id})">
               <div class="w-12 h-12 rounded-full ${e.colorClass} flex items-center justify-center font-bold text-sm flex-shrink-0">${e.initials}</div>
               <div class="min-w-0">
@@ -1277,114 +1560,134 @@ a[data-nav-mobile="emergency"]:hover {
               </div>
               <div class="text-right flex flex-col items-end gap-2 flex-shrink-0">
                 <span class="text-xs text-on-surface-variant">${e.time}</span>
-                ${e.status === "new" ? '<div class="w-2.5 h-2.5 bg-primary rounded-full"></div>' : ''}
+                ${e.status === "new" ? '<div class="w-2.5 h-2.5 bg-primary rounded-full"></div>' : ""}
               </div>
             </div>
           `;
-        }).join('');
+          })
+          .join("");
 
         updateCounts();
       }
 
       function updateCounts() {
-        document.getElementById('count-all').textContent = enquiries.length;
-        document.getElementById('count-new').textContent = enquiries.filter(e => e.status === "new").length;
-        document.getElementById('count-pending').textContent = enquiries.filter(e => e.status === "pending" || e.status === "replied").length;
-        document.getElementById('count-resolved').textContent = enquiries.filter(e => e.status === "resolved").length;
+        document.getElementById("count-all").textContent = enquiries.length;
+        document.getElementById("count-new").textContent = enquiries.filter(
+          (e) => e.status === "new",
+        ).length;
+        document.getElementById("count-pending").textContent = enquiries.filter(
+          (e) => e.status === "pending" || e.status === "replied",
+        ).length;
+        document.getElementById("count-resolved").textContent =
+          enquiries.filter((e) => e.status === "resolved").length;
 
-        document.getElementById('stat-unread').textContent = enquiries.filter(e => e.status === "new").length;
-        document.getElementById('stat-pending').textContent = enquiries.filter(e => e.status === "pending" || e.status === "replied").length;
-        document.getElementById('stat-resolved').textContent = enquiries.filter(e => e.status === "resolved").length;
-        document.getElementById('stat-total').textContent = enquiries.length;
+        document.getElementById("stat-unread").textContent = enquiries.filter(
+          (e) => e.status === "new",
+        ).length;
+        document.getElementById("stat-pending").textContent = enquiries.filter(
+          (e) => e.status === "pending" || e.status === "replied",
+        ).length;
+        document.getElementById("stat-resolved").textContent = enquiries.filter(
+          (e) => e.status === "resolved",
+        ).length;
+        document.getElementById("stat-total").textContent = enquiries.length;
       }
 
       function changeStatus(id, newStatus) {
-        const enquiry = enquiries.find(e => e.id === id);
+        const enquiry = enquiries.find((e) => e.id === id);
         if (enquiry) {
           enquiry.status = newStatus;
-          showToast(`Status changed to "${newStatus}" for ${enquiry.name}`, 'success');
+          showToast(
+            `Status changed to "${newStatus}" for ${enquiry.name}`,
+            "success",
+          );
           renderMessages();
         }
       }
 
-      document.querySelectorAll('.filter-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-          document.querySelectorAll('.filter-tab').forEach(t => {
-            t.classList.remove('bg-primary', 'text-on-primary');
-            t.classList.add('bg-transparent', 'text-on-surface-variant');
+      document.querySelectorAll(".filter-tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll(".filter-tab").forEach((t) => {
+            t.classList.remove("bg-primary", "text-on-primary");
+            t.classList.add("bg-transparent", "text-on-surface-variant");
           });
-          tab.classList.add('bg-primary', 'text-on-primary');
-          tab.classList.remove('bg-transparent', 'text-on-surface-variant');
+          tab.classList.add("bg-primary", "text-on-primary");
+          tab.classList.remove("bg-transparent", "text-on-surface-variant");
 
-          currentFilter = tab.getAttribute('data-filter');
+          currentFilter = tab.getAttribute("data-filter");
           renderMessages();
         });
       });
 
-      document.getElementById('sortBtn').addEventListener('click', () => {
+      document.getElementById("sortBtn").addEventListener("click", () => {
         if (currentSort === "newest") {
           currentSort = "oldest";
-          document.getElementById('sortLabel').textContent = "Oldest";
-          document.getElementById('sortIcon').textContent = "arrow_upward";
+          document.getElementById("sortLabel").textContent = "Oldest";
+          document.getElementById("sortIcon").textContent = "arrow_upward";
         } else {
           currentSort = "newest";
-          document.getElementById('sortLabel').textContent = "Newest";
-          document.getElementById('sortIcon').textContent = "arrow_downward";
+          document.getElementById("sortLabel").textContent = "Newest";
+          document.getElementById("sortIcon").textContent = "arrow_downward";
         }
         renderMessages();
-        showToast(`Sorted by ${currentSort} first`, 'info');
+        showToast(`Sorted by ${currentSort} first`, "info");
       });
 
       // ===== FILTER PANEL =====
-      const filterBtn = document.getElementById('filterBtn');
-      const filterPanel = document.getElementById('filterPanel');
+      const filterBtn = document.getElementById("filterBtn");
+      const filterPanel = document.getElementById("filterPanel");
 
-      filterBtn.addEventListener('click', (e) => {
+      filterBtn.addEventListener("click", (e) => {
         e.stopPropagation();
-        filterPanel.classList.toggle('open');
+        filterPanel.classList.toggle("open");
       });
 
-      document.addEventListener('click', (e) => {
+      document.addEventListener("click", (e) => {
         if (!filterPanel.contains(e.target) && !filterBtn.contains(e.target)) {
-          filterPanel.classList.remove('open');
+          filterPanel.classList.remove("open");
         }
       });
 
       function applyFilters() {
-        activeFilters.petType = document.getElementById('filterPetType').value;
-        activeFilters.time = document.getElementById('filterTime').value;
+        activeFilters.petType = document.getElementById("filterPetType").value;
+        activeFilters.time = document.getElementById("filterTime").value;
 
-        filterPanel.classList.remove('open');
+        filterPanel.classList.remove("open");
         renderMessages();
-        showToast('Filters applied', 'success');
+        showToast("Filters applied", "success");
       }
 
       function resetFilters() {
-        document.getElementById('filterPetType').value = 'all';
-        document.getElementById('filterTime').value = 'all';
+        document.getElementById("filterPetType").value = "all";
+        document.getElementById("filterTime").value = "all";
         activeFilters = { petType: "all", time: "all" };
         currentFilter = "all";
 
-        document.querySelectorAll('.filter-tab').forEach(t => {
-          t.classList.remove('bg-primary', 'text-on-primary');
-          t.classList.add('bg-transparent', 'text-on-surface-variant');
+        document.querySelectorAll(".filter-tab").forEach((t) => {
+          t.classList.remove("bg-primary", "text-on-primary");
+          t.classList.add("bg-transparent", "text-on-surface-variant");
         });
-        document.querySelector('[data-filter="all"]').classList.add('bg-primary', 'text-on-primary');
-        document.querySelector('[data-filter="all"]').classList.remove('bg-transparent', 'text-on-surface-variant');
+        document
+          .querySelector('[data-filter="all"]')
+          .classList.add("bg-primary", "text-on-primary");
+        document
+          .querySelector('[data-filter="all"]')
+          .classList.remove("bg-transparent", "text-on-surface-variant");
 
-        filterPanel.classList.remove('open');
+        filterPanel.classList.remove("open");
         renderMessages();
-        showToast('Filters reset', 'info');
+        showToast("Filters reset", "info");
       }
 
       // ===== REPLY DRAWER =====
       function openReplyDrawerById(id) {
-        const enquiry = enquiries.find(e => e.id === id);
+        const enquiry = enquiries.find((e) => e.id === id);
         if (!enquiry) return;
 
         currentReplyMessage = enquiry;
-        document.getElementById('replyCustomerName').textContent = `To: ${enquiry.name} <${enquiry.email}>`;
-        document.getElementById('replyThread').innerHTML = `
+        document.getElementById("replyCustomerName").textContent =
+          `To: ${enquiry.name} <${enquiry.email}>`;
+        document.getElementById("replyThread").innerHTML = `
           <div class="bg-white rounded-xl p-4 border border-outline-variant/20 shadow-sm">
             <div class="flex items-center gap-3 mb-3">
               <div class="w-10 h-10 rounded-full ${enquiry.colorClass} flex items-center justify-center font-bold text-sm">${enquiry.initials}</div>
@@ -1396,37 +1699,45 @@ a[data-nav-mobile="emergency"]:hover {
             <p class="text-sm text-on-surface leading-relaxed">${enquiry.question}</p>
           </div>
         `;
-        document.getElementById('replyText').value = '';
-        document.getElementById('replyDrawer').classList.add('open');
-        document.getElementById('replyOverlay').classList.add('open');
-        setTimeout(() => document.getElementById('replyText').focus(), 350);
+        document.getElementById("replyText").value = "";
+        document.getElementById("replyDrawer").classList.add("open");
+        document.getElementById("replyOverlay").classList.add("open");
+        setTimeout(() => document.getElementById("replyText").focus(), 350);
       }
 
       function closeReplyDrawer() {
-        document.getElementById('replyDrawer').classList.remove('open');
-        document.getElementById('replyOverlay').classList.remove('open');
+        document.getElementById("replyDrawer").classList.remove("open");
+        document.getElementById("replyOverlay").classList.remove("open");
         currentReplyMessage = null;
       }
 
       const templates = {
-        greeting: "Hi there! Thank you for reaching out to addyPets Veterinary Clinic. We'd be happy to help you with that.",
-        appointment: "We'd love to schedule an appointment for your pet. We have availability this week on:\n\n• Wednesday at 2:00 PM\n• Thursday at 10:00 AM\n• Saturday at 11:00 AM\n\nPlease let us know which time works best for you.",
-        pricing: "Here are our current prices:\n\n• General Consultation: GHS 150\n• Vaccination: GHS 200\n• Grooming (Small): GHS 180\n• Grooming (Large): GHS 280\n• Dental Cleaning: GHS 600\n\nWould you like to book an appointment?",
-        thanks: "Thank you for choosing addyPets! If you have any other questions, don't hesitate to reach out. We look forward to seeing you and your pet soon!"
+        greeting:
+          "Hi there! Thank you for reaching out to addyPets Veterinary Clinic. We'd be happy to help you with that.",
+        appointment:
+          "We'd love to schedule an appointment for your pet. We have availability this week on:\n\n• Wednesday at 2:00 PM\n• Thursday at 10:00 AM\n• Saturday at 11:00 AM\n\nPlease let us know which time works best for you.",
+        pricing:
+          "Here are our current prices:\n\n• General Consultation: GHS 150\n• Vaccination: GHS 200\n• Grooming (Small): GHS 180\n• Grooming (Large): GHS 280\n• Dental Cleaning: GHS 600\n\nWould you like to book an appointment?",
+        thanks:
+          "Thank you for choosing addyPets! If you have any other questions, don't hesitate to reach out. We look forward to seeing you and your pet soon!",
       };
 
       function insertTemplate(type) {
-        const textarea = document.getElementById('replyText');
-        if (textarea.value && !textarea.value.endsWith('\n\n')) textarea.value += '\n\n';
+        const textarea = document.getElementById("replyText");
+        if (textarea.value && !textarea.value.endsWith("\n\n"))
+          textarea.value += "\n\n";
         textarea.value += templates[type];
         textarea.focus();
       }
 
       function sendQuickReply() {
-        const replyText = document.getElementById('replyText').value.trim();
-        if (!replyText) { showToast('Please type a reply before sending.', 'error'); return; }
+        const replyText = document.getElementById("replyText").value.trim();
+        if (!replyText) {
+          showToast("Please type a reply before sending.", "error");
+          return;
+        }
 
-        showToast('Reply sent successfully! 📧', 'success');
+        showToast("Reply sent successfully! 📧", "success");
         if (currentReplyMessage) {
           currentReplyMessage.status = "replied";
           renderMessages();
@@ -1436,14 +1747,22 @@ a[data-nav-mobile="emergency"]:hover {
 
       function openInEmailClient() {
         if (!currentReplyMessage) return;
-        const subject = encodeURIComponent(`Re: Your enquiry at addyPets Veterinary Clinic`);
-        const body = encodeURIComponent(`Dear ${currentReplyMessage.name},\n\n${document.getElementById('replyText').value.trim()}\n\nBest regards,\nDr. Abena Mensah\naddyPets Veterinary Clinic\n+233 500 000 000`);
+        const subject = encodeURIComponent(
+          `Re: Your enquiry at addyPets Veterinary Clinic`,
+        );
+        const body = encodeURIComponent(
+          `Dear ${currentReplyMessage.name},\n\n${document.getElementById("replyText").value.trim()}\n\nBest regards,\nDr. Abena Mensah\naddyPets Veterinary Clinic\n+233 500 000 000`,
+        );
         window.location.href = `mailto:${currentReplyMessage.email}?subject=${subject}&body=${body}`;
-        showToast('Opening your email client...', 'info');
+        showToast("Opening your email client...", "info");
       }
 
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && document.getElementById('replyDrawer').classList.contains('open')) closeReplyDrawer();
+      document.addEventListener("keydown", (e) => {
+        if (
+          e.key === "Escape" &&
+          document.getElementById("replyDrawer").classList.contains("open")
+        )
+          closeReplyDrawer();
       });
 
       renderMessages();

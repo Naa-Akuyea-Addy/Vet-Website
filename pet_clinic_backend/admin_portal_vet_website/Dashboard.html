@@ -13,8 +13,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
       rel="stylesheet"
     />
-    <!--<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>-->
-    <script src="../node_modules/chart.js/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -311,16 +310,16 @@
         }
       }
       a[data-nav-desktop="emergency"],
-a[data-nav-mobile="emergency"] {
-  background-color: #943031 !important;
-  color: #ffffff !important;
-}
+      a[data-nav-mobile="emergency"] {
+        background-color: #943031 !important;
+        color: #ffffff !important;
+      }
 
-a[data-nav-desktop="emergency"]:hover,
-a[data-nav-mobile="emergency"]:hover {
-  background-color: #7a2526 !important; /* Slightly darker red on hover */
-  color: #ffffff !important;
-}
+      a[data-nav-desktop="emergency"]:hover,
+      a[data-nav-mobile="emergency"]:hover {
+        background-color: #7a2526 !important;
+        color: #ffffff !important;
+      }
     </style>
   </head>
 
@@ -385,7 +384,7 @@ a[data-nav-mobile="emergency"]:hover {
         <a
           href="./Dashboard.html"
           data-nav-mobile="analytics"
-          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all"
         >
           <span class="material-symbols-outlined">analytics</span>
           <span>Analytics</span>
@@ -407,6 +406,14 @@ a[data-nav-mobile="emergency"]:hover {
           <span>Staff</span>
         </a>
         <a
+          href="./appointment.html"
+          data-nav-mobile="appointment"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">event_note</span>
+          <span>Appointments</span>
+        </a>
+        <a
           href="./billing.html"
           data-nav-mobile="billing"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
@@ -414,36 +421,57 @@ a[data-nav-mobile="emergency"]:hover {
           <span class="material-symbols-outlined">payments</span>
           <span>Billing</span>
         </a>
-       <a
-            href="./records.html"
-            data-nav-desktop="records"
-            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >description</span
-            ><span class="sidebar-text">Patient & Owner Records</span></a
-          >
+        <a
+          href="./records.html"
+          data-nav-mobile="records"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">description</span>
+          <span>Patient & Owner Records</span>
+        </a>
+        <a
+          href="./inventory.html"
+          data-nav-mobile="inventory"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">inventory_2</span>
+          <span>Inventory</span>
+        </a>
         <a
           href="./message.html"
-          data-nav-desktop="message"
           data-nav-mobile="message"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
-          ><span class="material-symbols-outlined">message</span
-          ><span class="sidebar-text">Messages</span></a
         >
-         <a href="./emergency_management.html" data-nav-mobile="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10">
-            <span class="material-symbols-outlined sidebar-icon-only">emergency</span><span class="sidebar-text">Emergency Cases</span>
-          </a>
+          <span class="material-symbols-outlined">message</span>
+          <span>Messages</span>
+        </a>
         <a
-          href="#"
-          data-nav-mobile="appointments"
+          href="./emergency_management.html"
+          data-nav-mobile="emergency"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold bg-emergency-red/10"
+        >
+          <span class="material-symbols-outlined">emergency</span>
+          <span>Emergency Cases</span>
+        </a>
+        <a
+          href="./mortuary.html"
+          data-nav-mobile="mortuary"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
         >
-          <span class="material-symbols-outlined">event_note</span>
-          <span>Appointments</span>
+          <span class="material-symbols-outlined">heart_broken</span>
+          <span>Mortuary</span>
+        </a>
+        <a
+          href="./report.html"
+          data-nav-mobile="reports"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">assessment</span>
+          <span>Reports</span>
         </a>
         <div class="h-px bg-white/10 my-4"></div>
         <a
-          href="#"
+          href="./settings.html"
           data-nav-mobile="settings"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
         >
@@ -460,25 +488,19 @@ a[data-nav-mobile="emergency"]:hover {
       </nav>
 
       <div class="p-4 border-t border-white/10">
-        <div
-          class="bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10"
-        >
-          <p class="font-caption text-caption text-tertiary-fixed-dim mb-2">
-            Emergency Hotline
-          </p>
-          <p class="font-label-md text-label-md text-primary-fixed">
-            +233 500 000 000
-          </p>
+        <div class="bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10">
+          <p class="text-xs text-tertiary-fixed-dim mb-2">Emergency Hotline</p>
+          <p class="text-sm text-primary-fixed font-bold">+233 500 000 000</p>
         </div>
       </div>
     </div>
 
-    <!-- Desktop Layout with Collapsible Sidebar -->
+    <!-- Desktop Layout -->
     <div class="flex min-h-screen w-full">
-      <!-- Desktop Sidebar (collapsible) -->
+      <!-- Desktop Sidebar -->
       <aside
         id="desktopSidebar"
-        class="hidden md:flex flex-col w-72 bg-deep-navy h-screen sticky top-0 border-r border-outline-variant/10 text-white sidebar-transition"
+        class="hidden md:flex flex-col bg-deep-navy h-screen sticky top-0 border-r border-outline-variant/10 text-white sidebar-transition w-64"
       >
         <div
           class="px-6 py-6 flex items-center justify-between border-b border-white/10"
@@ -490,11 +512,7 @@ a[data-nav-mobile="emergency"]:hover {
               src="../../public/logo.png"
             />
             <div class="sidebar-logo-text">
-              <h1
-                class="font-headline-md text-headline-md font-bold text-primary-fixed text-sm"
-              >
-                addyPets
-              </h1>
+              <h1 class="font-bold text-primary-fixed text-sm">addyPets</h1>
               <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
             </div>
           </div>
@@ -512,11 +530,7 @@ a[data-nav-mobile="emergency"]:hover {
             data-nav-desktop="analytics"
             class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all sidebar-button"
           >
-            <span
-              class="material-symbols-outlined sidebar-icon-only"
-              style="font-variation-settings: &quot;FILL&quot; 1"
-              >analytics</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">analytics</span>
             <span class="sidebar-text">Analytics</span>
           </a>
           <a
@@ -524,9 +538,7 @@ a[data-nav-mobile="emergency"]:hover {
             data-nav-desktop="calendar"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >calendar_today</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">calendar_today</span>
             <span class="sidebar-text">Calendar</span>
           </a>
           <a
@@ -534,49 +546,80 @@ a[data-nav-mobile="emergency"]:hover {
             data-nav-desktop="staff"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >groups</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">groups</span>
             <span class="sidebar-text">Staff</span>
+          </a>
+          <a
+            href="./appointment.html"
+            data-nav-desktop="appointment"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only">event_note</span>
+            <span class="sidebar-text">Appointments</span>
           </a>
           <a
             href="./billing.html"
             data-nav-desktop="billing"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >payments</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">payments</span>
             <span class="sidebar-text">Billing</span>
           </a>
-         <a
+          <a
             href="./records.html"
             data-nav-desktop="records"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >description</span
-            ><span class="sidebar-text">Patient & Owner Records</span></a
           >
-          <a
-          href="./message.html"
-          data-nav-desktop="message"
-          data-nav-mobile="message"
-          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
-          ><span class="material-symbols-outlined">message</span
-          ><span class="sidebar-text">Messages</span></a
-        >
-         <a href="./emergency_management.html" data-nav-desktop="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10">
-            <span class="material-symbols-outlined sidebar-icon-only">emergency</span><span class="sidebar-text">Emergency Cases</span>
+            <span class="material-symbols-outlined sidebar-icon-only">description</span>
+            <span class="sidebar-text">Patient & Owner Records</span>
           </a>
           <a
-            href="#"
-            data-nav-desktop="appointments"
+            href="./inventory.html"
+            data-nav-desktop="inventory"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >event_note</span
-            >
-            <span class="sidebar-text">Appointments</span>
+            <span class="material-symbols-outlined sidebar-icon-only">inventory_2</span>
+            <span class="sidebar-text">Inventory</span>
+          </a>
+          <a
+            href="./message.html"
+            data-nav-desktop="message"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only">message</span>
+            <span class="sidebar-text">Messages</span>
+          </a>
+          <a
+            href="./emergency_management.html"
+            data-nav-desktop="emergency"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only">emergency</span>
+            <span class="sidebar-text">Emergency Cases</span>
+          </a>
+          <a
+            href="./mortuary.html"
+            data-nav-desktop="mortuary"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only">heart_broken</span>
+            <span class="sidebar-text">Mortuary</span>
+          </a>
+          <a
+            href="./report.html"
+            data-nav-desktop="reports"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only">assessment</span>
+            <span class="sidebar-text">Reports</span>
+          </a>
+          <a
+            href="./settings.html"
+            data-nav-desktop="settings"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only">settings</span>
+            <span class="sidebar-text">Settings</span>
           </a>
         </nav>
 
@@ -585,23 +628,16 @@ a[data-nav-mobile="emergency"]:hover {
             id="logoutBtnDesktop"
             class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >logout</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">logout</span>
             <span class="sidebar-text">Logout</span>
           </button>
-          <div
-            class="emergency-section bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10 mt-4"
-          >
-            <p class="font-caption text-caption text-tertiary-fixed-dim mb-2">
-              Emergency Hotline
-            </p>
-            <p class="font-label-md text-label-md text-primary-fixed">
-              +233 500 000 000
-            </p>
+          <div class="emergency-section bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10 mt-4">
+            <p class="text-xs text-tertiary-fixed-dim mb-2">Emergency Hotline</p>
+            <p class="text-sm text-primary-fixed font-bold">+233 500 000 000</p>
           </div>
         </div>
       </aside>
+
       <!-- Main Content Area -->
       <div
         id="mainContentWrapper"
@@ -658,8 +694,6 @@ a[data-nav-mobile="emergency"]:hover {
         >
           <!-- Dynamic content loads here -->
         </div>
-
-        <!-- Footer -->
       </div>
     </div>
 
@@ -672,7 +706,6 @@ a[data-nav-mobile="emergency"]:hover {
 
       // Desktop Sidebar Elements
       const desktopSidebar = document.getElementById("desktopSidebar");
-      const desktopBurgerBtn = document.getElementById("desktopBurgerBtn");
       const collapseSidebarBtn = document.getElementById("collapseSidebarBtn");
 
       let isSidebarCollapsed =
@@ -743,8 +776,6 @@ a[data-nav-mobile="emergency"]:hover {
         mobileOverlay.addEventListener("click", closeMobileSidebarFunc);
 
       // Event Listeners for Desktop
-      if (desktopBurgerBtn)
-        desktopBurgerBtn.addEventListener("click", toggleDesktopSidebar);
       if (collapseSidebarBtn)
         collapseSidebarBtn.addEventListener("click", toggleDesktopSidebar);
 
@@ -764,388 +795,376 @@ a[data-nav-mobile="emergency"]:hover {
           closeMobileSidebarFunc();
         }
       });
+
       // Content mapping for each page
       const pages = {
         analytics: `
-              <!-- Summary Bento Grid -->
-              <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
-                  <div class="bg-white p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
-                      <div class="flex items-center justify-between mb-4">
-                          <div class="p-2 bg-primary-container/10 rounded-lg text-primary">
-                              <span class="material-symbols-outlined">today</span>
-                          </div>
-                          <span class="text-secondary font-label-md text-label-md">+12% vs last week</span>
+          <!-- Summary Bento Grid -->
+          <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+              <div class="bg-white p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+                  <div class="flex items-center justify-between mb-4">
+                      <div class="p-2 bg-primary-container/10 rounded-lg text-primary">
+                          <span class="material-symbols-outlined">today</span>
                       </div>
-                      <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Today's Appts</h3>
-                      <p class="font-display-lg text-display-lg text-on-surface mt-1">24</p>
+                      <span class="text-secondary font-label-md text-label-md">+12% vs last week</span>
                   </div>
-                  <div class="bg-white p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
-                      <div class="flex items-center justify-between mb-4">
-                          <div class="p-2 bg-secondary-container/20 rounded-lg text-secondary">
-                              <span class="material-symbols-outlined">upcoming</span>
-                          </div>
-                          <span class="text-primary font-label-md text-label-md">Next 7 days</span>
+                  <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Today's Appts</h3>
+                  <p class="font-display-lg text-display-lg text-on-surface mt-1">24</p>
+              </div>
+              <div class="bg-white p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+                  <div class="flex items-center justify-between mb-4">
+                      <div class="p-2 bg-secondary-container/20 rounded-lg text-secondary">
+                          <span class="material-symbols-outlined">upcoming</span>
                       </div>
-                      <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Upcoming</h3>
-                      <p class="font-display-lg text-display-lg text-on-surface mt-1">158</p>
+                      <span class="text-primary font-label-md text-label-md">Next 7 days</span>
                   </div>
-                  <div class="bg-white p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
-                      <div class="flex items-center justify-between mb-4">
-                          <div class="p-2 bg-tertiary-fixed/30 rounded-lg text-tertiary">
-                              <span class="material-symbols-outlined">pets</span>
-                          </div>
-                          <span class="text-on-surface-variant font-label-md text-label-md">Total active</span>
+                  <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Upcoming</h3>
+                  <p class="font-display-lg text-display-lg text-on-surface mt-1">158</p>
+              </div>
+              <div class="bg-white p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+                  <div class="flex items-center justify-between mb-4">
+                      <div class="p-2 bg-tertiary-fixed/30 rounded-lg text-tertiary">
+                          <span class="material-symbols-outlined">pets</span>
                       </div>
-                      <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Total Patients</h3>
-                      <p class="font-display-lg text-display-lg text-on-surface mt-1">1,240</p>
+                      <span class="text-on-surface-variant font-label-md text-label-md">Total active</span>
                   </div>
-                  <div class="bg-white p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
-                      <div class="flex items-center justify-between mb-4">
-                          <div class="p-2 bg-primary-container text-white rounded-lg">
-                              <span class="material-symbols-outlined">payments</span>
-                          </div>
-                          <span class="text-primary font-label-md text-label-md">This Month</span>
+                  <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Total Patients</h3>
+                  <p class="font-display-lg text-display-lg text-on-surface mt-1">1,240</p>
+              </div>
+              <div class="bg-white p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+                  <div class="flex items-center justify-between mb-4">
+                      <div class="p-2 bg-primary-container text-white rounded-lg">
+                          <span class="material-symbols-outlined">payments</span>
                       </div>
-                      <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Revenue</h3>
-                      <p class="font-display-lg text-display-lg text-on-surface mt-1">₵42.5k</p>
+                      <span class="text-primary font-label-md text-label-md">This Month</span>
                   </div>
-              </section>
+                  <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Revenue</h3>
+                  <p class="font-display-lg text-display-lg text-on-surface mt-1">₵42.5k</p>
+              </div>
+          </section>
 
-              <!-- Responsive Charts Grid -->
-              <section class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
-                  <!-- Chart 1 - Appointment Volume -->
-                  <div class="bg-white p-4 md:p-6 rounded-xl border border-outline-variant">
-                      <h2 class="font-headline-md text-headline-md text-on-surface text-lg md:text-xl mb-2">Appointment Volume</h2>
-                      <p class="font-body-md text-on-surface-variant text-sm md:text-base mb-4">Weekly performance</p>
-                      <div class="w-full h-[250px] md:h-[300px]">
-                          <canvas id="appointmentsChart" class="w-full h-full"></canvas>
-                      </div>
+          <!-- Responsive Charts Grid -->
+          <section class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+              <div class="bg-white p-4 md:p-6 rounded-xl border border-outline-variant">
+                  <h2 class="font-headline-md text-headline-md text-on-surface text-lg md:text-xl mb-2">Appointment Volume</h2>
+                  <p class="font-body-md text-on-surface-variant text-sm md:text-base mb-4">Weekly performance</p>
+                  <div class="w-full h-[250px] md:h-[300px]">
+                      <canvas id="appointmentsChart" class="w-full h-full"></canvas>
                   </div>
-
-                  <!-- Chart 2 - Revenue -->
-                  <div class="bg-white p-4 md:p-6 rounded-xl border border-outline-variant">
-                      <h2 class="font-headline-md text-headline-md text-on-surface text-lg md:text-xl mb-2">Revenue</h2>
-                      <p class="font-body-md text-on-surface-variant text-sm md:text-base mb-4">Monthly income (GH₵)</p>
-                      <div class="w-full h-[250px] md:h-[300px]">
-                          <canvas id="revenueChart" class="w-full h-full"></canvas>
-                      </div>
+              </div>
+              <div class="bg-white p-4 md:p-6 rounded-xl border border-outline-variant">
+                  <h2 class="font-headline-md text-headline-md text-on-surface text-lg md:text-xl mb-2">Revenue</h2>
+                  <p class="font-body-md text-on-surface-variant text-sm md:text-base mb-4">Monthly income (GH₵)</p>
+                  <div class="w-full h-[250px] md:h-[300px]">
+                      <canvas id="revenueChart" class="w-full h-full"></canvas>
                   </div>
-
-                  <!-- Chart 3 - Popular Services -->
-                  <div class="bg-white p-4 md:p-6 rounded-xl border border-outline-variant">
-                      <h2 class="font-headline-md text-headline-md text-on-surface text-lg md:text-xl mb-4">Popular Services</h2>
-                      <div class="flex flex-col md:flex-row items-center gap-4 md:gap-6">
-                          <div class="w-[200px] h-[200px] md:w-[250px] md:h-[250px]">
-                              <canvas id="servicesChart" class="w-full h-full"></canvas>
+              </div>
+              <div class="bg-white p-4 md:p-6 rounded-xl border border-outline-variant">
+                  <h2 class="font-headline-md text-headline-md text-on-surface text-lg md:text-xl mb-4">Popular Services</h2>
+                  <div class="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+                      <div class="w-[200px] h-[200px] md:w-[250px] md:h-[250px]">
+                          <canvas id="servicesChart" class="w-full h-full"></canvas>
+                      </div>
+                      <div class="flex-1 space-y-2">
+                          <div class="flex items-center gap-2 text-sm md:text-base">
+                              <span class="inline-block w-3 h-3 rounded-full bg-[#036469]"></span>
+                              Vaccinations 45%
                           </div>
-                          <div class="flex-1 space-y-2">
-                              <div class="flex items-center gap-2 text-sm md:text-base">
-                                  <span class="inline-block w-3 h-3 rounded-full bg-[#036469]"></span>
-                                  Vaccinations 45%
-                              </div>
-                              <div class="flex items-center gap-2 text-sm md:text-base">
-                                  <span class="inline-block w-3 h-3 rounded-full bg-[#00696d]"></span>
-                                  Dental Care 28%
-                              </div>
-                              <div class="flex items-center gap-2 text-sm md:text-base">
-                                  <span class="inline-block w-3 h-3 rounded-full bg-[#2e7d82]"></span>
-                                  Surgery 15%
-                              </div>
-                              <div class="flex items-center gap-2 text-sm md:text-base">
-                                  <span class="inline-block w-3 h-3 rounded-full bg-[#943031]"></span>
-                                  Emergency 12%
-                              </div>
+                          <div class="flex items-center gap-2 text-sm md:text-base">
+                              <span class="inline-block w-3 h-3 rounded-full bg-[#00696d]"></span>
+                              Dental Care 28%
+                          </div>
+                          <div class="flex items-center gap-2 text-sm md:text-base">
+                              <span class="inline-block w-3 h-3 rounded-full bg-[#2e7d82]"></span>
+                              Surgery 15%
+                          </div>
+                          <div class="flex items-center gap-2 text-sm md:text-base">
+                              <span class="inline-block w-3 h-3 rounded-full bg-[#943031]"></span>
+                              Emergency 12%
                           </div>
                       </div>
                   </div>
-
-                  <!-- Chart 4 - Patient Growth -->
-                  <div class="bg-white p-4 md:p-6 rounded-xl border border-outline-variant">
-                      <h2 class="font-headline-md text-headline-md text-on-surface text-lg md:text-xl mb-2">Patient Growth</h2>
-                      <p class="font-body-md text-on-surface-variant text-sm md:text-base mb-4">New vs Returning</p>
-                      <div class="w-full h-[250px] md:h-[300px]">
-                          <canvas id="patientsChart" class="w-full h-full"></canvas>
-                      </div>
+              </div>
+              <div class="bg-white p-4 md:p-6 rounded-xl border border-outline-variant">
+                  <h2 class="font-headline-md text-headline-md text-on-surface text-lg md:text-xl mb-2">Patient Growth</h2>
+                  <p class="font-body-md text-on-surface-variant text-sm md:text-base mb-4">New vs Returning</p>
+                  <div class="w-full h-[250px] md:h-[300px]">
+                      <canvas id="patientsChart" class="w-full h-full"></canvas>
                   </div>
-              </section>
-              <!-- Recent Activity Table -->
-      <section class="bg-white rounded-xl border border-outline-variant shadow-sm overflow-hidden">
-          <div class="px-8 py-6 border-b border-outline-variant flex justify-between items-center">
-              <h2 class="font-headline-md text-headline-md text-on-surface">Today's Schedule</h2>
-              <button id="newAppointmentBtn" class="bg-primary text-white px-6 py-2 rounded-lg font-label-md text-label-md flex items-center gap-2 hover:bg-primary/90 transition-all">
-                  <span class="material-symbols-outlined text-[20px]">add</span>
-                  New Appointment
-              </button>
-          </div>
+              </div>
+          </section>
+          
+          <!-- Recent Activity Table -->
+          <section class="bg-white rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+              <div class="px-8 py-6 border-b border-outline-variant flex justify-between items-center">
+                  <h2 class="font-headline-md text-headline-md text-on-surface">Today's Schedule</h2>
+                  <button id="newAppointmentBtn" class="bg-primary text-white px-6 py-2 rounded-lg font-label-md text-label-md flex items-center gap-2 hover:bg-primary/90 transition-all">
+                      <span class="material-symbols-outlined text-[20px]">add</span>
+                      New Appointment
+                  </button>
+              </div>
 
-          <!-- Scrollable table container - hidden until button click -->
-          <div id="scheduleScrollContainer" class="schedule-scroll-container hidden overflow-x-auto overflow-y-auto max-h-96">
-              <table class="w-full text-left">
-                  <thead class="sticky top-0 z-10">
-                      <tr class="bg-surface-muted text-on-surface-variant font-label-md text-label-md border-b border-outline-variant">
-                          <th class="px-8 py-4">Patient &amp; Owner</th>
-                          <th class="px-4 py-4">Service</th>
-                          <th class="px-4 py-4">Vet</th>
-                          <th class="px-4 py-4">Time</th>
-                          <th class="px-4 py-4">Status</th>
-                          <th class="px-8 py-4 text-right">Action</th>
-                      </tr>
-                  </thead>
-                  <tbody class="divide-y divide-outline-variant/30">
-                      <!-- Row 1 -->
-                      <tr class="hover:bg-surface-container-low transition-colors">
-                          <td class="px-8 py-5">
-                              <div class="flex items-center gap-4">
-                                  <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
-                                      <span class="material-symbols-outlined">pets</span>
+              <!-- Scrollable table container - hidden until button click -->
+              <div id="scheduleScrollContainer" class="schedule-scroll-container hidden overflow-x-auto overflow-y-auto max-h-96">
+                  <table class="w-full text-left">
+                      <thead class="sticky top-0 z-10">
+                          <tr class="bg-surface-muted text-on-surface-variant font-label-md text-label-md border-b border-outline-variant">
+                              <th class="px-8 py-4">Patient &amp; Owner</th>
+                              <th class="px-4 py-4">Service</th>
+                              <th class="px-4 py-4">Vet</th>
+                              <th class="px-4 py-4">Time</th>
+                              <th class="px-4 py-4">Status</th>
+                              <th class="px-8 py-4 text-right">Action</th>
+                          </tr>
+                      </thead>
+                      <tbody class="divide-y divide-outline-variant/30">
+                          <tr class="hover:bg-surface-container-low transition-colors">
+                              <td class="px-8 py-5">
+                                  <div class="flex items-center gap-4">
+                                      <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+                                          <span class="material-symbols-outlined">pets</span>
+                                      </div>
+                                      <div>
+                                          <p class="font-label-md text-label-md text-on-surface">Buddy (Golden Retriever)</p>
+                                          <p class="font-caption text-caption text-on-surface-variant">Owner: Ama Serwaa</p>
+                                      </div>
                                   </div>
-                                  <div>
-                                      <p class="font-label-md text-label-md text-on-surface">Buddy (Golden Retriever)</p>
-                                      <p class="font-caption text-caption text-on-surface-variant">Owner: Ama Serwaa</p>
+                              </td>
+                              <td class="px-4 py-5 text-on-surface font-body-md">Annual Vaccination</td>
+                              <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Mensah</td>
+                              <td class="px-4 py-5 text-on-surface font-body-md">09:30 AM</td>
+                              <td class="px-4 py-5">
+                                  <span class="px-3 py-1 bg-primary-container/20 text-primary rounded-full font-label-md text-caption">Confirmed</span>
+                              </td>
+                              <td class="px-8 py-5 text-right">
+                                  <button class="p-2 text-outline hover:text-primary transition-colors">
+                                      <span class="material-symbols-outlined">more_vert</span>
+                                  </button>
+                              </td>
+                          </tr>
+                          <tr class="hover:bg-surface-container-low transition-colors">
+                              <td class="px-8 py-5">
+                                  <div class="flex items-center gap-4">
+                                      <div class="w-10 h-10 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary">
+                                          <span class="material-symbols-outlined">pets</span>
+                                      </div>
+                                      <div>
+                                          <p class="font-label-md text-label-md text-on-surface">Luna (Siamese Cat)</p>
+                                          <p class="font-caption text-caption text-on-surface-variant">Owner: Kofi Appiah</p>
+                                      </div>
                                   </div>
-                              </div>
-                          </td>
-                          <td class="px-4 py-5 text-on-surface font-body-md">Annual Vaccination</td>
-                          <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Mensah</td>
-                          <td class="px-4 py-5 text-on-surface font-body-md">09:30 AM</td>
-                          <td class="px-4 py-5">
-                              <span class="px-3 py-1 bg-primary-container/20 text-primary rounded-full font-label-md text-caption">Confirmed</span>
-                          </td>
-                          <td class="px-8 py-5 text-right">
-                              <button class="p-2 text-outline hover:text-primary transition-colors">
-                                  <span class="material-symbols-outlined">more_vert</span>
-                              </button>
-                          </td>
-                      </tr>
-                      <!-- Row 2 -->
-                      <tr class="hover:bg-surface-container-low transition-colors">
-                          <td class="px-8 py-5">
-                              <div class="flex items-center gap-4">
-                                  <div class="w-10 h-10 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary">
-                                      <span class="material-symbols-outlined">pets</span>
+                              </td>
+                              <td class="px-4 py-5 text-on-surface font-body-md">Dental Cleaning</td>
+                              <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Boateng</td>
+                              <td class="px-4 py-5 text-on-surface font-body-md">11:00 AM</td>
+                              <td class="px-4 py-5">
+                                  <span class="px-3 py-1 bg-secondary-container/20 text-secondary rounded-full font-label-md text-caption">In Progress</span>
+                              </td>
+                              <td class="px-8 py-5 text-right">
+                                  <button class="p-2 text-outline hover:text-primary transition-colors">
+                                      <span class="material-symbols-outlined">more_vert</span>
+                                  </button>
+                              </td>
+                          </tr>
+                          <tr class="hover:bg-surface-container-low transition-colors">
+                              <td class="px-8 py-5">
+                                  <div class="flex items-center gap-4">
+                                      <div class="w-10 h-10 rounded-full bg-error-container/20 flex items-center justify-center text-emergency-red">
+                                          <span class="material-symbols-outlined">emergency_home</span>
+                                      </div>
+                                      <div>
+                                          <p class="font-label-md text-label-md text-on-surface">Max (German Shepherd)</p>
+                                          <p class="font-caption text-caption text-on-surface-variant">Owner: Emelia Tetteh</p>
+                                      </div>
                                   </div>
-                                  <div>
-                                      <p class="font-label-md text-label-md text-on-surface">Luna (Siamese Cat)</p>
-                                      <p class="font-caption text-caption text-on-surface-variant">Owner: Kofi Appiah</p>
+                              </td>
+                              <td class="px-4 py-5 text-on-surface font-body-md">Urgent X-Ray</td>
+                              <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Mensah</td>
+                              <td class="px-4 py-5 text-on-surface font-body-md">01:45 PM</td>
+                              <td class="px-4 py-5">
+                                  <span class="px-3 py-1 bg-error-container text-emergency-red rounded-full font-label-md text-caption">Urgent</span>
+                              </td>
+                              <td class="px-8 py-5 text-right">
+                                  <button class="p-2 text-outline hover:text-primary transition-colors">
+                                      <span class="material-symbols-outlined">more_vert</span>
+                                  </button>
+                              </td>
+                          </tr>
+                          <tr class="hover:bg-surface-container-low transition-colors">
+                              <td class="px-8 py-5">
+                                  <div class="flex items-center gap-4">
+                                      <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+                                          <span class="material-symbols-outlined">pets</span>
+                                      </div>
+                                      <div>
+                                          <p class="font-label-md text-label-md text-on-surface">Rocky (Beagle)</p>
+                                          <p class="font-caption text-caption text-on-surface-variant">Owner: John Doe</p>
+                                      </div>
                                   </div>
-                              </div>
-                          </td>
-                          <td class="px-4 py-5 text-on-surface font-body-md">Dental Cleaning</td>
-                          <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Boateng</td>
-                          <td class="px-4 py-5 text-on-surface font-body-md">11:00 AM</td>
-                          <td class="px-4 py-5">
-                              <span class="px-3 py-1 bg-secondary-container/20 text-secondary rounded-full font-label-md text-caption">In Progress</span>
-                          </td>
-                          <td class="px-8 py-5 text-right">
-                              <button class="p-2 text-outline hover:text-primary transition-colors">
-                                  <span class="material-symbols-outlined">more_vert</span>
-                              </button>
-                          </td>
-                      </tr>
-                      <!-- Row 3 -->
-                      <tr class="hover:bg-surface-container-low transition-colors">
-                          <td class="px-8 py-5">
-                              <div class="flex items-center gap-4">
-                                  <div class="w-10 h-10 rounded-full bg-error-container/20 flex items-center justify-center text-emergency-red">
-                                      <span class="material-symbols-outlined">emergency_home</span>
+                              </td>
+                              <td class="px-4 py-5 text-on-surface font-body-md">General Checkup</td>
+                              <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Smith</td>
+                              <td class="px-4 py-5 text-on-surface font-body-md">02:00 PM</td>
+                              <td class="px-4 py-5">
+                                  <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full font-label-md text-caption">Waiting</span>
+                              </td>
+                              <td class="px-8 py-5 text-right">
+                                  <button class="p-2 text-outline hover:text-primary transition-colors">
+                                      <span class="material-symbols-outlined">more_vert</span>
+                                  </button>
+                              </td>
+                          </tr>
+                          <tr class="hover:bg-surface-container-low transition-colors">
+                              <td class="px-8 py-5">
+                                  <div class="flex items-center gap-4">
+                                      <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+                                          <span class="material-symbols-outlined">pets</span>
+                                      </div>
+                                      <div>
+                                          <p class="font-label-md text-label-md text-on-surface">Bella (Poodle)</p>
+                                          <p class="font-caption text-caption text-on-surface-variant">Owner: Mary Johnson</p>
+                                      </div>
                                   </div>
-                                  <div>
-                                      <p class="font-label-md text-label-md text-on-surface">Max (German Shepherd)</p>
-                                      <p class="font-caption text-caption text-on-surface-variant">Owner: Emelia Tetteh</p>
+                              </td>
+                              <td class="px-4 py-5 text-on-surface font-body-md">Grooming</td>
+                              <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Brown</td>
+                              <td class="px-4 py-5 text-on-surface font-body-md">03:30 PM</td>
+                              <td class="px-4 py-5">
+                                  <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full font-label-md text-caption">Scheduled</span>
+                              </td>
+                              <td class="px-8 py-5 text-right">
+                                  <button class="p-2 text-outline hover:text-primary transition-colors">
+                                      <span class="material-symbols-outlined">more_vert</span>
+                                  </button>
+                              </td>
+                          </tr>
+                          <tr class="hover:bg-surface-container-low transition-colors">
+                              <td class="px-8 py-5">
+                                  <div class="flex items-center gap-4">
+                                      <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+                                          <span class="material-symbols-outlined">pets</span>
+                                      </div>
+                                      <div>
+                                          <p class="font-label-md text-label-md text-on-surface">Charlie (Labrador)</p>
+                                          <p class="font-caption text-caption text-on-surface-variant">Owner: Sarah Williams</p>
+                                      </div>
                                   </div>
-                              </div>
-                          </td>
-                          <td class="px-4 py-5 text-on-surface font-body-md">Urgent X-Ray</td>
-                          <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Mensah</td>
-                          <td class="px-4 py-5 text-on-surface font-body-md">01:45 PM</td>
-                          <td class="px-4 py-5">
-                              <span class="px-3 py-1 bg-error-container text-emergency-red rounded-full font-label-md text-caption">Urgent</span>
-                          </td>
-                          <td class="px-8 py-5 text-right">
-                              <button class="p-2 text-outline hover:text-primary transition-colors">
-                                  <span class="material-symbols-outlined">more_vert</span>
-                              </button>
-                          </td>
-                      </tr>
-                      <!-- Additional rows to demonstrate scrolling -->
-                      <tr class="hover:bg-surface-container-low transition-colors">
-                          <td class="px-8 py-5">
-                              <div class="flex items-center gap-4">
-                                  <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
-                                      <span class="material-symbols-outlined">pets</span>
-                                  </div>
-                                  <div>
-                                      <p class="font-label-md text-label-md text-on-surface">Rocky (Beagle)</p>
-                                      <p class="font-caption text-caption text-on-surface-variant">Owner: John Doe</p>
-                                  </div>
-                              </div>
-                          </td>
-                          <td class="px-4 py-5 text-on-surface font-body-md">General Checkup</td>
-                          <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Smith</td>
-                          <td class="px-4 py-5 text-on-surface font-body-md">02:00 PM</td>
-                          <td class="px-4 py-5">
-                              <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full font-label-md text-caption">Waiting</span>
-                          </td>
-                          <td class="px-8 py-5 text-right">
-                              <button class="p-2 text-outline hover:text-primary transition-colors">
-                                  <span class="material-symbols-outlined">more_vert</span>
-                              </button>
-                          </td>
-                      </tr>
-                      <tr class="hover:bg-surface-container-low transition-colors">
-                          <td class="px-8 py-5">
-                              <div class="flex items-center gap-4">
-                                  <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
-                                      <span class="material-symbols-outlined">pets</span>
-                                  </div>
-                                  <div>
-                                      <p class="font-label-md text-label-md text-on-surface">Bella (Poodle)</p>
-                                      <p class="font-caption text-caption text-on-surface-variant">Owner: Mary Johnson</p>
-                                  </div>
-                              </div>
-                          </td>
-                          <td class="px-4 py-5 text-on-surface font-body-md">Grooming</td>
-                          <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Brown</td>
-                          <td class="px-4 py-5 text-on-surface font-body-md">03:30 PM</td>
-                          <td class="px-4 py-5">
-                              <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full font-label-md text-caption">Scheduled</span>
-                          </td>
-                          <td class="px-8 py-5 text-right">
-                              <button class="p-2 text-outline hover:text-primary transition-colors">
-                                  <span class="material-symbols-outlined">more_vert</span>
-                              </button>
-                          </td>
-                      </tr>
-                      <tr class="hover:bg-surface-container-low transition-colors">
-                          <td class="px-8 py-5">
-                              <div class="flex items-center gap-4">
-                                  <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
-                                      <span class="material-symbols-outlined">pets</span>
-                                  </div>
-                                  <div>
-                                      <p class="font-label-md text-label-md text-on-surface">Charlie (Labrador)</p>
-                                      <p class="font-caption text-caption text-on-surface-variant">Owner: Sarah Williams</p>
-                                  </div>
-                              </div>
-                          </td>
-                          <td class="px-4 py-5 text-on-surface font-body-md">Vaccination</td>
-                          <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Mensah</td>
-                          <td class="px-4 py-5 text-on-surface font-body-md">04:00 PM</td>
-                          <td class="px-4 py-5">
-                              <span class="px-3 py-1 bg-primary-container/20 text-primary rounded-full font-label-md text-caption">Confirmed</span>
-                          </td>
-                          <td class="px-8 py-5 text-right">
-                              <button class="p-2 text-outline hover:text-primary transition-colors">
-                                  <span class="material-symbols-outlined">more_vert</span>
-                              </button>
-                          </td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
+                              </td>
+                              <td class="px-4 py-5 text-on-surface font-body-md">Vaccination</td>
+                              <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Mensah</td>
+                              <td class="px-4 py-5 text-on-surface font-body-md">04:00 PM</td>
+                              <td class="px-4 py-5">
+                                  <span class="px-3 py-1 bg-primary-container/20 text-primary rounded-full font-label-md text-caption">Confirmed</span>
+                              </td>
+                              <td class="px-8 py-5 text-right">
+                                  <button class="p-2 text-outline hover:text-primary transition-colors">
+                                      <span class="material-symbols-outlined">more_vert</span>
+                                  </button>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
 
-          <!-- Limited view table (initially visible) -->
-          <div id="limitedScheduleView" class="overflow-x-auto">
-              <table class="w-full text-left">
-                  <thead>
-                      <tr class="bg-surface-muted text-on-surface-variant font-label-md text-label-md border-b border-outline-variant">
-                          <th class="px-8 py-4">Patient &amp; Owner</th>
-                          <th class="px-4 py-4">Service</th>
-                          <th class="px-4 py-4">Vet</th>
-                          <th class="px-4 py-4">Time</th>
-                          <th class="px-4 py-4">Status</th>
-                          <th class="px-8 py-4 text-right">Action</th>
-                      </tr>
-                  </thead>
-                  <tbody class="divide-y divide-outline-variant/30">
-                      <!-- Only first 3 rows visible initially -->
-                      <tr class="hover:bg-surface-container-low transition-colors">
-                          <td class="px-8 py-5">
-                              <div class="flex items-center gap-4">
-                                  <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
-                                      <span class="material-symbols-outlined">pets</span>
+              <!-- Limited view table (initially visible) -->
+              <div id="limitedScheduleView" class="overflow-x-auto">
+                  <table class="w-full text-left">
+                      <thead>
+                          <tr class="bg-surface-muted text-on-surface-variant font-label-md text-label-md border-b border-outline-variant">
+                              <th class="px-8 py-4">Patient &amp; Owner</th>
+                              <th class="px-4 py-4">Service</th>
+                              <th class="px-4 py-4">Vet</th>
+                              <th class="px-4 py-4">Time</th>
+                              <th class="px-4 py-4">Status</th>
+                              <th class="px-8 py-4 text-right">Action</th>
+                          </tr>
+                      </thead>
+                      <tbody class="divide-y divide-outline-variant/30">
+                          <tr class="hover:bg-surface-container-low transition-colors">
+                              <td class="px-8 py-5">
+                                  <div class="flex items-center gap-4">
+                                      <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+                                          <span class="material-symbols-outlined">pets</span>
+                                      </div>
+                                      <div>
+                                          <p class="font-label-md text-label-md text-on-surface">Buddy (Golden Retriever)</p>
+                                          <p class="font-caption text-caption text-on-surface-variant">Owner: Ama Serwaa</p>
+                                      </div>
                                   </div>
-                                  <div>
-                                      <p class="font-label-md text-label-md text-on-surface">Buddy (Golden Retriever)</p>
-                                      <p class="font-caption text-caption text-on-surface-variant">Owner: Ama Serwaa</p>
+                              </td>
+                              <td class="px-4 py-5 text-on-surface font-body-md">Annual Vaccination</td>
+                              <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Mensah</td>
+                              <td class="px-4 py-5 text-on-surface font-body-md">09:30 AM</td>
+                              <td class="px-4 py-5">
+                                  <span class="px-3 py-1 bg-primary-container/20 text-primary rounded-full font-label-md text-caption">Confirmed</span>
+                              </td>
+                              <td class="px-8 py-5 text-right">
+                                  <button class="p-2 text-outline hover:text-primary transition-colors">
+                                      <span class="material-symbols-outlined">more_vert</span>
+                                  </button>
+                              </td>
+                          </tr>
+                          <tr class="hover:bg-surface-container-low transition-colors">
+                              <td class="px-8 py-5">
+                                  <div class="flex items-center gap-4">
+                                      <div class="w-10 h-10 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary">
+                                          <span class="material-symbols-outlined">pets</span>
+                                      </div>
+                                      <div>
+                                          <p class="font-label-md text-label-md text-on-surface">Luna (Siamese Cat)</p>
+                                          <p class="font-caption text-caption text-on-surface-variant">Owner: Kofi Appiah</p>
+                                      </div>
                                   </div>
-                              </div>
-                          </td>
-                          <td class="px-4 py-5 text-on-surface font-body-md">Annual Vaccination</td>
-                          <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Mensah</td>
-                          <td class="px-4 py-5 text-on-surface font-body-md">09:30 AM</td>
-                          <td class="px-4 py-5">
-                              <span class="px-3 py-1 bg-primary-container/20 text-primary rounded-full font-label-md text-caption">Confirmed</span>
-                          </td>
-                          <td class="px-8 py-5 text-right">
-                              <button class="p-2 text-outline hover:text-primary transition-colors">
-                                  <span class="material-symbols-outlined">more_vert</span>
-                              </button>
-                          </td>
-                      </tr>
-                      <tr class="hover:bg-surface-container-low transition-colors">
-                          <td class="px-8 py-5">
-                              <div class="flex items-center gap-4">
-                                  <div class="w-10 h-10 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary">
-                                      <span class="material-symbols-outlined">pets</span>
+                              </td>
+                              <td class="px-4 py-5 text-on-surface font-body-md">Dental Cleaning</td>
+                              <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Boateng</td>
+                              <td class="px-4 py-5 text-on-surface font-body-md">11:00 AM</td>
+                              <td class="px-4 py-5">
+                                  <span class="px-3 py-1 bg-secondary-container/20 text-secondary rounded-full font-label-md text-caption">In Progress</span>
+                              </td>
+                              <td class="px-8 py-5 text-right">
+                                  <button class="p-2 text-outline hover:text-primary transition-colors">
+                                      <span class="material-symbols-outlined">more_vert</span>
+                                  </button>
+                              </td>
+                          </tr>
+                          <tr class="hover:bg-surface-container-low transition-colors">
+                              <td class="px-8 py-5">
+                                  <div class="flex items-center gap-4">
+                                      <div class="w-10 h-10 rounded-full bg-error-container/20 flex items-center justify-center text-emergency-red">
+                                          <span class="material-symbols-outlined">emergency_home</span>
+                                      </div>
+                                      <div>
+                                          <p class="font-label-md text-label-md text-on-surface">Max (German Shepherd)</p>
+                                          <p class="font-caption text-caption text-on-surface-variant">Owner: Emelia Tetteh</p>
+                                      </div>
                                   </div>
-                                  <div>
-                                      <p class="font-label-md text-label-md text-on-surface">Luna (Siamese Cat)</p>
-                                      <p class="font-caption text-caption text-on-surface-variant">Owner: Kofi Appiah</p>
-                                  </div>
-                              </div>
-                          </td>
-                          <td class="px-4 py-5 text-on-surface font-body-md">Dental Cleaning</td>
-                          <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Boateng</td>
-                          <td class="px-4 py-5 text-on-surface font-body-md">11:00 AM</td>
-                          <td class="px-4 py-5">
-                              <span class="px-3 py-1 bg-secondary-container/20 text-secondary rounded-full font-label-md text-caption">In Progress</span>
-                          </td>
-                          <td class="px-8 py-5 text-right">
-                              <button class="p-2 text-outline hover:text-primary transition-colors">
-                                  <span class="material-symbols-outlined">more_vert</span>
-                              </button>
-                          </td>
-                      </tr>
-                      <tr class="hover:bg-surface-container-low transition-colors">
-                          <td class="px-8 py-5">
-                              <div class="flex items-center gap-4">
-                                  <div class="w-10 h-10 rounded-full bg-error-container/20 flex items-center justify-center text-emergency-red">
-                                      <span class="material-symbols-outlined">emergency_home</span>
-                                  </div>
-                                  <div>
-                                      <p class="font-label-md text-label-md text-on-surface">Max (German Shepherd)</p>
-                                      <p class="font-caption text-caption text-on-surface-variant">Owner: Emelia Tetteh</p>
-                                  </div>
-                              </div>
-                          </td>
-                          <td class="px-4 py-5 text-on-surface font-body-md">Urgent X-Ray</td>
-                          <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Mensah</td>
-                          <td class="px-4 py-5 text-on-surface font-body-md">01:45 PM</td>
-                          <td class="px-4 py-5">
-                              <span class="px-3 py-1 bg-error-container text-emergency-red rounded-full font-label-md text-caption">Urgent</span>
-                          </td>
-                          <td class="px-8 py-5 text-right">
-                              <button class="p-2 text-outline hover:text-primary transition-colors">
-                                  <span class="material-symbols-outlined">more_vert</span>
-                              </button>
-                          </td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
+                              </td>
+                              <td class="px-4 py-5 text-on-surface font-body-md">Urgent X-Ray</td>
+                              <td class="px-4 py-5 text-on-surface-variant font-body-md">Dr. Mensah</td>
+                              <td class="px-4 py-5 text-on-surface font-body-md">01:45 PM</td>
+                              <td class="px-4 py-5">
+                                  <span class="px-3 py-1 bg-error-container text-emergency-red rounded-full font-label-md text-caption">Urgent</span>
+                              </td>
+                              <td class="px-8 py-5 text-right">
+                                  <button class="p-2 text-outline hover:text-primary transition-colors">
+                                      <span class="material-symbols-outlined">more_vert</span>
+                                  </button>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
 
-          <!-- View All Button -->
-          <div id="viewAllButton" class="px-8 py-4 bg-surface-muted border-t border-outline-variant text-center">
-              <button id="viewAllScheduleBtn" class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors">
-                  View All Schedule (18 more)
-              </button>
-          </div>
-      </section>
-              `,
+              <!-- View All Button -->
+              <div id="viewAllButton" class="px-8 py-4 bg-surface-muted border-t border-outline-variant text-center">
+                  <button id="viewAllScheduleBtn" class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors">
+                      View All Schedule (18 more)
+                  </button>
+              </div>
+          </section>
+        `,
       };
-
-
 
       // Navigation function
       function navigateTo(section) {
@@ -1200,7 +1219,28 @@ a[data-nav-mobile="emergency"]:hover {
         link.addEventListener("click", (e) => {
           e.preventDefault();
           const section = link.getAttribute("data-nav-desktop");
-          navigateTo(section);
+          if (section === "analytics") {
+            navigateTo(section);
+            setTimeout(initCharts, 200);
+          } else {
+            // For other pages, navigate to the actual HTML file
+            const pageMap = {
+              calendar: "clinic_calendar.html",
+              staff: "staff_service_settings.html",
+              appointment: "appointment.html",
+              billing: "billing.html",
+              records: "records.html",
+              inventory: "inventory.html",
+              message: "message.html",
+              emergency: "emergency_management.html",
+              mortuary: "mortuary.html",
+              reports: "report.html",
+              settings: "settings.html",
+            };
+            if (pageMap[section]) {
+              window.location.href = pageMap[section];
+            }
+          }
         });
       });
 
@@ -1209,8 +1249,28 @@ a[data-nav-mobile="emergency"]:hover {
         link.addEventListener("click", (e) => {
           e.preventDefault();
           const section = link.getAttribute("data-nav-mobile");
-          navigateTo(section);
-          closeMobileSidebarFunc();
+          if (section === "analytics") {
+            navigateTo(section);
+            setTimeout(initCharts, 200);
+            closeMobileSidebarFunc();
+          } else {
+            const pageMap = {
+              calendar: "clinic_calendar.html",
+              staff: "staff_service_settings.html",
+              appointment: "appointment.html",
+              billing: "billing.html",
+              records: "records.html",
+              inventory: "inventory.html",
+              message: "message.html",
+              emergency: "emergency_management.html",
+              mortuary: "mortuary.html",
+              reports: "report.html",
+              settings: "settings.html",
+            };
+            if (pageMap[section]) {
+              window.location.href = pageMap[section];
+            }
+          }
         });
       });
 
@@ -1383,39 +1443,6 @@ a[data-nav-mobile="emergency"]:hover {
         console.log("Charts initialized successfully");
       }
 
-      // Call this after navigation to ensure charts are initialized
-      const originalNavigateTo = navigateTo;
-      window.navigateTo = function (section) {
-        if (section === "calendar") {
-          window.location.href = "clinic_calendar.html";
-          return;
-        }
-        if(section === "emergency") {
-          window.location.href = "emergency_management.html";
-          return;
-        }
-        if (section === "message") {
-          window.location.href = "message.html";
-          return;
-        }
-        if (section === "billing") {
-          window.location.href = "billing.html";
-          return;
-        }
-        if (section === "staff") {
-          window.location.href = "staff_service_settings.html";
-          return;
-        }
-        if(section === "records"){
-          window.location.href = "records.html";
-          return;
-        }
-        originalNavigateTo(section);
-        if (section === "analytics") {
-          setTimeout(initCharts, 200);
-        }
-      };
-
       // Handle window resize
       let resizeTimeout;
       window.addEventListener("resize", function () {
@@ -1462,7 +1489,7 @@ a[data-nav-mobile="emergency"]:hover {
       const newAppointmentBtn = document.getElementById("newAppointmentBtn");
       if (newAppointmentBtn) {
         newAppointmentBtn.addEventListener("click", function () {
-          window.location.href = "appointments.html";
+          window.location.href = "appointment.html";
         });
       }
     </script>

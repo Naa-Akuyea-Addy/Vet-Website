@@ -111,7 +111,11 @@
 
     <style>
       .material-symbols-outlined {
-        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
         display: inline-block;
         line-height: 1;
         text-transform: none;
@@ -129,9 +133,15 @@
         animation: pulse-red 2s infinite;
       }
       @keyframes pulse-red {
-        0% { box-shadow: 0 0 0 0 rgba(148, 48, 49, 0.4); }
-        70% { box-shadow: 0 0 0 10px rgba(148, 48, 49, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(148, 48, 49, 0); }
+        0% {
+          box-shadow: 0 0 0 0 rgba(148, 48, 49, 0.4);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(148, 48, 49, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(148, 48, 49, 0);
+        }
       }
       .cage-grid {
         display: grid;
@@ -155,19 +165,32 @@
         cursor: pointer;
         transition: background-color 0.15s;
       }
-      .flowsheet-cell:hover { background-color: #f5f3f3; }
+      .flowsheet-cell:hover {
+        background-color: #f5f3f3;
+      }
       .flowsheet-header {
         background-color: #f5f3f3;
         font-weight: 600;
         color: #3f4949;
         cursor: default;
       }
-      .flowsheet-cell.checked { background-color: #d1fae5; }
+      .flowsheet-cell.checked {
+        background-color: #d1fae5;
+      }
 
       /* Sidebar Styles */
-      .hide-scrollbar::-webkit-scrollbar { display: none; }
-      .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-      .sidebar-transition { transition: width 0.3s ease-in-out, transform 0.3s ease-in-out; }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .sidebar-transition {
+        transition:
+          width 0.3s ease-in-out,
+          transform 0.3s ease-in-out;
+      }
       .mobile-sidebar {
         position: fixed;
         top: 0;
@@ -177,7 +200,9 @@
         transition: left 0.3s ease-in-out;
         z-index: 1000;
       }
-      .mobile-sidebar.open { left: 0; }
+      .mobile-sidebar.open {
+        left: 0;
+      }
       .overlay {
         position: fixed;
         top: 0;
@@ -188,19 +213,41 @@
         z-index: 999;
         display: none;
       }
-      .overlay.active { display: block; }
-      .sidebar-collapsed .sidebar-text { display: none; }
-      .sidebar-collapsed .sidebar-icon-only { margin: 0 auto; }
-      .sidebar-collapsed { width: 80px !important; }
+      .overlay.active {
+        display: block;
+      }
+      .sidebar-collapsed .sidebar-text {
+        display: none;
+      }
+      .sidebar-collapsed .sidebar-icon-only {
+        margin: 0 auto;
+      }
+      .sidebar-collapsed {
+        width: 80px !important;
+      }
       .sidebar-collapsed .sidebar-logo-text,
-      .sidebar-collapsed .emergency-section { display: none; }
+      .sidebar-collapsed .emergency-section {
+        display: none;
+      }
       .sidebar-collapsed .sidebar-logo,
       .sidebar-collapsed #logoutBtnDesktop,
-      .sidebar-collapsed .sidebar-button { margin: 0 auto; justify-content: center; }
-      .sidebar-collapsed #logoutBtnDesktop { padding: 12px !important; }
-      .sidebar-collapsed .bottom-container { padding: 16px 8px !important; }
-      .main-content-full { width: 100% !important; margin-left: 0 !important; }
-      #mainContentWrapper { transition: all 0.3s ease-in-out; }
+      .sidebar-collapsed .sidebar-button {
+        margin: 0 auto;
+        justify-content: center;
+      }
+      .sidebar-collapsed #logoutBtnDesktop {
+        padding: 12px !important;
+      }
+      .sidebar-collapsed .bottom-container {
+        padding: 16px 8px !important;
+      }
+      .main-content-full {
+        width: 100% !important;
+        margin-left: 0 !important;
+      }
+      #mainContentWrapper {
+        transition: all 0.3s ease-in-out;
+      }
 
       /* Modal & Form Styles */
       .modal-backdrop {
@@ -215,7 +262,10 @@
         pointer-events: none;
         transition: opacity 0.25s;
       }
-      .modal-backdrop.open { opacity: 1; pointer-events: auto; }
+      .modal-backdrop.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
       .modal-content {
         background: white;
         border-radius: 16px;
@@ -226,7 +276,9 @@
         transform: translateY(20px);
         transition: transform 0.25s;
       }
-      .modal-backdrop.open .modal-content { transform: translateY(0); }
+      .modal-backdrop.open .modal-content {
+        transform: translateY(0);
+      }
       .form-input {
         width: 100%;
         padding: 10px 14px;
@@ -241,7 +293,7 @@
         box-shadow: 0 0 0 3px rgba(3, 100, 105, 0.1);
       }
       .form-input:read-only {
-        background-color: #F4F7F7;
+        background-color: #f4f7f7;
         color: #3f4949;
         cursor: not-allowed;
         border-color: #e4e2e1;
@@ -259,10 +311,26 @@
         font-size: 12px;
         font-weight: 600;
       }
-      .tag-toggle.active-aggressive { background-color: #ffdad6; border-color: #ba1a1a; color: #93000a; }
-      .tag-toggle.active-contagious { background-color: #fef3c7; border-color: #f59e0b; color: #92400e; }
-      .tag-toggle.active-bite { background-color: #fce7f3; border-color: #db2777; color: #9d174d; }
-      .tag-toggle.active-iv { background-color: #dbeafe; border-color: #2563eb; color: #1e40af; }
+      .tag-toggle.active-aggressive {
+        background-color: #ffdad6;
+        border-color: #ba1a1a;
+        color: #93000a;
+      }
+      .tag-toggle.active-contagious {
+        background-color: #fef3c7;
+        border-color: #f59e0b;
+        color: #92400e;
+      }
+      .tag-toggle.active-bite {
+        background-color: #fce7f3;
+        border-color: #db2777;
+        color: #9d174d;
+      }
+      .tag-toggle.active-iv {
+        background-color: #dbeafe;
+        border-color: #2563eb;
+        color: #1e40af;
+      }
 
       /* Toast Styles */
       .toast-container {
@@ -289,28 +357,48 @@
         transition: all 0.3s ease;
         pointer-events: auto;
       }
-      .toast.show { opacity: 1; transform: translateX(0); }
-      .toast-success { background: linear-gradient(135deg, #047857, #059669); }
-      .toast-info { background: linear-gradient(135deg, #0d6efd, #2563eb); }
-      .toast-error { background: linear-gradient(135deg, #b91c1c, #ef4444); }
-      .toast-warning { background: linear-gradient(135deg, #d97706, #f59e0b); }
+      .toast.show {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .toast-success {
+        background: linear-gradient(135deg, #047857, #059669);
+      }
+      .toast-info {
+        background: linear-gradient(135deg, #0d6efd, #2563eb);
+      }
+      .toast-error {
+        background: linear-gradient(135deg, #b91c1c, #ef4444);
+      }
+      .toast-warning {
+        background: linear-gradient(135deg, #d97706, #f59e0b);
+      }
 
       /* Emergency Admin Styles */
       .emergency-banner {
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        background: linear-gradient(
+          135deg,
+          #1a1a2e 0%,
+          #16213e 50%,
+          #0f3460 100%
+        );
         border-radius: 1rem;
         padding: 2rem;
         position: relative;
         overflow: hidden;
       }
       .emergency-banner::before {
-        content: '';
+        content: "";
         position: absolute;
         top: -50%;
         right: -10%;
         width: 400px;
         height: 400px;
-        background: radial-gradient(circle, rgba(148, 48, 49, 0.15) 0%, transparent 70%);
+        background: radial-gradient(
+          circle,
+          rgba(148, 48, 49, 0.15) 0%,
+          transparent 70%
+        );
         border-radius: 50%;
       }
       .stat-card {
@@ -320,7 +408,10 @@
         border: 1px solid #e4e2e1;
         transition: all 0.2s;
       }
-      .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06); }
+      .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      }
       .status-dot {
         width: 8px;
         height: 8px;
@@ -328,13 +419,30 @@
         display: inline-block;
         margin-right: 6px;
       }
-      .status-dot.critical { background: #ba1a1a; animation: pulse-dot 1.5s infinite; }
-      .status-dot.urgent { background: #f59e0b; animation: pulse-dot 2s infinite; }
-      .status-dot.stable { background: #036469; }
+      .status-dot.critical {
+        background: #ba1a1a;
+        animation: pulse-dot 1.5s infinite;
+      }
+      .status-dot.urgent {
+        background: #f59e0b;
+        animation: pulse-dot 2s infinite;
+      }
+      .status-dot.stable {
+        background: #036469;
+      }
       @keyframes pulse-dot {
-        0% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.5; transform: scale(0.8); }
-        100% { opacity: 1; transform: scale(1); }
+        0% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.5;
+          transform: scale(0.8);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
       }
       .cage-card {
         border-radius: 10px;
@@ -343,13 +451,36 @@
         border: 2px solid transparent;
         cursor: pointer;
       }
-      .cage-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
-      .cage-card.occupied-critical { background: #ffdad6; border-color: #ba1a1a; }
-      .cage-card.occupied-urgent { background: #fef3c7; border-color: #f59e0b; }
-      .cage-card.occupied-standard { background: #e0f2f1; border-color: #036469; }
-      .cage-card.isolation { background: #fef3c7; border-color: #f59e0b; border-style: dashed; }
-      .cage-card.empty { background: #f5f3f3; border-color: #e4e2e1; border-style: dashed; }
-      .cage-card.empty:hover { border-color: #036469; background: #f0eded; }
+      .cage-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+      .cage-card.occupied-critical {
+        background: #ffdad6;
+        border-color: #ba1a1a;
+      }
+      .cage-card.occupied-urgent {
+        background: #fef3c7;
+        border-color: #f59e0b;
+      }
+      .cage-card.occupied-standard {
+        background: #e0f2f1;
+        border-color: #036469;
+      }
+      .cage-card.isolation {
+        background: #fef3c7;
+        border-color: #f59e0b;
+        border-style: dashed;
+      }
+      .cage-card.empty {
+        background: #f5f3f3;
+        border-color: #e4e2e1;
+        border-style: dashed;
+      }
+      .cage-card.empty:hover {
+        border-color: #036469;
+        background: #f0eded;
+      }
       .stat-order-item {
         padding: 10px 14px;
         background: white;
@@ -357,7 +488,9 @@
         border: 1px solid #e4e2e1;
         transition: all 0.15s;
       }
-      .stat-order-item:hover { border-color: #bec8c9; }
+      .stat-order-item:hover {
+        border-color: #bec8c9;
+      }
       .doctor-card {
         padding: 12px 16px;
         border-radius: 10px;
@@ -365,10 +498,20 @@
         transition: all 0.2s;
         cursor: pointer;
       }
-      .doctor-card:hover { border-color: #036469; background: #f5f3f3; }
-      .doctor-card.available { border-left: 4px solid #059669; }
-      .doctor-card.busy { border-left: 4px solid #f59e0b; }
-      .doctor-card.off-duty { border-left: 4px solid #6f797a; opacity: 0.6; }
+      .doctor-card:hover {
+        border-color: #036469;
+        background: #f5f3f3;
+      }
+      .doctor-card.available {
+        border-left: 4px solid #059669;
+      }
+      .doctor-card.busy {
+        border-left: 4px solid #f59e0b;
+      }
+      .doctor-card.off-duty {
+        border-left: 4px solid #6f797a;
+        opacity: 0.6;
+      }
       .sync-badge {
         display: inline-flex;
         align-items: center;
@@ -380,9 +523,12 @@
         text-transform: uppercase;
         letter-spacing: 0.5px;
       }
-      .sync-badge.live { background: #d1fae5; color: #065f46; }
+      .sync-badge.live {
+        background: #d1fae5;
+        color: #065f46;
+      }
       .sync-badge.live::before {
-        content: '';
+        content: "";
         width: 6px;
         height: 6px;
         background: #059669;
@@ -414,14 +560,26 @@
     </style>
   </head>
 
-  <body class="bg-background text-on-background font-body-md min-h-screen flex flex-col md:flex-row" data-page="emergency">
+  <body
+    class="bg-background text-on-background font-body-md min-h-screen flex flex-col md:flex-row"
+    data-page="emergency"
+  >
     <!-- Mobile Top Bar -->
-    <div class="md:hidden fixed top-0 left-0 right-0 bg-deep-navy z-50 px-4 py-4 flex items-center justify-between shadow-lg">
+    <div
+      class="md:hidden fixed top-0 left-0 right-0 bg-deep-navy z-50 px-4 py-4 flex items-center justify-between shadow-lg"
+    >
       <div class="flex items-center gap-3">
-        <button id="mobileBurgerBtn" class="text-white p-2 hover:bg-white/10 rounded-lg transition-all">
+        <button
+          id="mobileBurgerBtn"
+          class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"
+        >
           <span class="material-symbols-outlined">menu</span>
         </button>
-        <img alt="Logo" class="w-8 h-8 rounded-full object-cover" src="../../public/logo.png" />
+        <img
+          alt="Logo"
+          class="w-8 h-8 rounded-full object-cover"
+          src="../../public/logo.png"
+        />
         <h1 class="font-bold text-primary-fixed text-sm">VetCare Ghana</h1>
       </div>
       <div class="flex items-center gap-3">
@@ -433,51 +591,134 @@
     <div id="mobileOverlay" class="overlay"></div>
 
     <!-- Mobile Sidebar -->
-    <div id="mobileSidebar" class="mobile-sidebar bg-deep-navy flex flex-col shadow-2xl">
-      <div class="flex items-center justify-between p-6 border-b border-white/10">
+    <div
+      id="mobileSidebar"
+      class="mobile-sidebar bg-deep-navy flex flex-col shadow-2xl"
+    >
+      <div
+        class="flex items-center justify-between p-6 border-b border-white/10"
+      >
         <div class="flex items-center gap-3">
-          <img alt="Logo" class="w-10 h-10 rounded-full object-cover" src="../../public/logo.png" />
+          <img
+            alt="Logo"
+            class="w-10 h-10 rounded-full object-cover"
+            src="../../public/logo.png"
+          />
           <div>
             <h1 class="font-bold text-primary-fixed">VetCare Ghana</h1>
-            <p class="text-xs text-tertiary-fixed-dim">Emergency & ICU Portal</p>
+            <p class="text-xs text-tertiary-fixed-dim">
+              Emergency & ICU Portal
+            </p>
           </div>
         </div>
-        <button id="closeMobileSidebar" class="text-white p-2 hover:bg-white/10 rounded-lg">
+        <button
+          id="closeMobileSidebar"
+          class="text-white p-2 hover:bg-white/10 rounded-lg"
+        >
           <span class="material-symbols-outlined">close</span>
         </button>
       </div>
       <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto hide-scrollbar">
-        <a href="./Dashboard.html" data-nav-mobile="analytics" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">analytics</span><span>Analytics</span>
+        <a
+          href="./Dashboard.html"
+          data-nav-mobile="analytics"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">analytics</span
+          ><span>Analytics</span>
         </a>
-        <a href="./clinic_calendar.html" data-nav-mobile="calendar" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">calendar_today</span><span>Calendar</span>
+        <a
+          href="./clinic_calendar.html"
+          data-nav-mobile="calendar"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">calendar_today</span
+          ><span>Calendar</span>
         </a>
-        <a href="./staff_service_settings.html" data-nav-mobile="staff" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">groups</span><span>Staff</span>
+        <a
+          href="./staff_service_settings.html"
+          data-nav-mobile="staff"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">groups</span
+          ><span>Staff</span>
         </a>
-        <a href="./billing.html" data-nav-mobile="billing" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">payments</span><span>Billing</span>
+        <a
+          href="./appointment.html"
+          data-nav-mobile="appointments"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">event_note</span
+          ><span>Appointments</span>
         </a>
-        <a href="./records.html" data-nav-mobile="records" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
-          <span class="material-symbols-outlined sidebar-icon-only">description</span><span class="sidebar-text">Patient & Owner Records</span>
+        <a
+          href="./billing.html"
+          data-nav-mobile="billing"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">payments</span
+          ><span>Billing</span>
         </a>
-        <a href="./message.html" data-nav-mobile="message" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">message</span><span>Messages</span>
+        <a
+          href="./records.html"
+          data-nav-mobile="records"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+        >
+          <span class="material-symbols-outlined sidebar-icon-only"
+            >description</span
+          ><span class="sidebar-text">Patient & Owner Records</span>
         </a>
-        <a href="./emergency_management.html" data-nav-mobile="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold hover:bg-primary-container bg-emergency-red/10">
-          <span class="material-symbols-outlined">emergency</span><span>Emergency Cases</span>
+        <a
+          href="./message.html"
+          data-nav-mobile="message"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">message</span
+          ><span>Messages</span>
         </a>
+        <a
+          href="./emergency_management.html"
+          data-nav-mobile="emergency"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold hover:bg-primary-container bg-emergency-red/10"
+        >
+          <span class="material-symbols-outlined">emergency</span
+          ><span>Emergency Cases</span>
+        </a>
+        <a
+          href="./mortuary.html"
+          data-nav-mobile="mortuary"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined">heart_broken</span
+          ><span>Mortuary</span></a
+        >
+        <a
+          href="./report.html"
+          data-nav-mobile="reports"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined">assessment</span
+          ><span>Reports</span></a
+        >
         <div class="h-px bg-white/10 my-4"></div>
-        <a href="#" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">settings</span><span>Settings</span>
+        <a
+          href="./settings.html"
+          data-nav-mobile="settings"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">settings</span
+          ><span>Settings</span>
         </a>
-        <button id="logoutBtnMobile" class="w-full flex items-center gap-4 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all">
-          <span class="material-symbols-outlined">logout</span><span>Logout</span>
+        <button
+          id="logoutBtnMobile"
+          class="w-full flex items-center gap-4 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all"
+        >
+          <span class="material-symbols-outlined">logout</span
+          ><span>Logout</span>
         </button>
       </nav>
       <div class="p-4 border-t border-white/10">
-        <div class="bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10">
+        <div
+          class="bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10"
+        >
           <p class="text-xs text-tertiary-fixed-dim mb-2">Emergency Hotline</p>
           <p class="text-sm text-primary-fixed font-bold">+233 500 000 000</p>
         </div>
@@ -486,73 +727,197 @@
 
     <!-- Desktop Layout -->
     <div class="flex min-h-screen w-full">
-      <aside id="desktopSidebar" class="hidden md:flex flex-col bg-deep-navy h-screen sticky top-0 border-r border-outline-variant/10 text-white sidebar-transition w-64">
-        <div class="px-6 py-6 flex items-center justify-between border-b border-white/10">
+      <aside
+        id="desktopSidebar"
+        class="hidden md:flex flex-col bg-deep-navy h-screen sticky top-0 border-r border-outline-variant/10 text-white sidebar-transition w-64"
+      >
+        <div
+          class="px-6 py-6 flex items-center justify-between border-b border-white/10"
+        >
           <div class="flex items-center gap-3 sidebar-logo">
-            <img alt="Logo" class="w-10 h-10 rounded-full object-cover" src="../../public/logo.png" />
+            <img
+              alt="Logo"
+              class="w-10 h-10 rounded-full object-cover"
+              src="../../public/logo.png"
+            />
             <div class="sidebar-logo-text">
-              <h1 class="font-bold text-primary-fixed text-sm">VetCare Ghana</h1>
-              <p class="text-xs text-tertiary-fixed-dim">Emergency & ICU Portal</p>
+              <h1 class="font-bold text-primary-fixed text-sm">
+                VetCare Ghana
+              </h1>
+              <p class="text-xs text-tertiary-fixed-dim">
+                Emergency & ICU Portal
+              </p>
             </div>
           </div>
-          <button id="collapseSidebarBtn" class="text-white p-2 hover:bg-white/10 rounded-lg transition-all">
+          <button
+            id="collapseSidebarBtn"
+            class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"
+          >
             <span class="material-symbols-outlined">chevron_left</span>
           </button>
         </div>
         <nav class="flex-1 px-3 py-6 space-y-1 overflow-y-auto hide-scrollbar">
-          <a href="./Dashboard.html" data-nav-desktop="analytics" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">analytics</span><span class="sidebar-text">Analytics</span>
+          <a
+            href="./Dashboard.html"
+            data-nav-desktop="analytics"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >analytics</span
+            ><span class="sidebar-text">Analytics</span>
           </a>
-          <a href="./clinic_calendar.html" data-nav-desktop="calendar" class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-all text-tertiary-fixed-dim sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">calendar_today</span><span class="sidebar-text">Calendar</span>
+          <a
+            href="./clinic_calendar.html"
+            data-nav-desktop="calendar"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-all text-tertiary-fixed-dim sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >calendar_today</span
+            ><span class="sidebar-text">Calendar</span>
           </a>
-          <a href="./staff_service_settings.html" data-nav-desktop="staff" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">groups</span><span class="sidebar-text">Staff</span>
+          <a
+            href="./staff_service_settings.html"
+            data-nav-desktop="staff"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >groups</span
+            ><span class="sidebar-text">Staff</span>
           </a>
-          <a href="./billing.html" data-nav-desktop="billing" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">payments</span><span class="sidebar-text">Billing</span>
+          <a
+            href="./appointment.html"
+            data-nav-desktop="appointments"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >event_note</span
+            ><span class="sidebar-text">Appointments</span>
           </a>
-          <a href="./records.html" data-nav-desktop="records" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">description</span><span class="sidebar-text">Patient & Owner Records</span>
+          <a
+            href="./billing.html"
+            data-nav-desktop="billing"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >payments</span
+            ><span class="sidebar-text">Billing</span>
           </a>
-          <a href="./message.html" data-nav-desktop="message" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">message</span><span class="sidebar-text">Messages</span>
+          <a
+            href="./records.html"
+            data-nav-desktop="records"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >description</span
+            ><span class="sidebar-text">Patient & Owner Records</span>
           </a>
-          <a href="./emergency_management.html" data-nav-desktop="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10">
-            <span class="material-symbols-outlined sidebar-icon-only">emergency</span><span class="sidebar-text">Emergency Cases</span>
+          <a
+            href="./message.html"
+            data-nav-desktop="message"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >message</span
+            ><span class="sidebar-text">Messages</span>
           </a>
+          <a
+            href="./emergency_management.html"
+            data-nav-desktop="emergency"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >emergency</span
+            ><span class="sidebar-text">Emergency Cases</span>
+          </a>
+          <a
+            href="./mortuary.html"
+            data-nav-desktop="mortuary"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >heart_broken</span
+            ><span class="sidebar-text">Mortuary</span></a
+          >
+          <a
+            href="./report.html"
+            data-nav-desktop="reports"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >assessment</span
+            ><span class="sidebar-text">Reports</span></a
+          >
+          <a
+            href="./settings.html"
+            data-nav-desktop="settings"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >settings</span
+            ><span class="sidebar-text">Settings</span></a
+          >
         </nav>
         <div class="p-4 mt-auto bottom-container">
-          <button id="logoutBtnDesktop" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">logout</span><span class="sidebar-text">Logout</span>
+          <button
+            id="logoutBtnDesktop"
+            class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >logout</span
+            ><span class="sidebar-text">Logout</span>
           </button>
-          <div class="emergency-section bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10 mt-4">
-            <p class="text-xs text-tertiary-fixed-dim mb-2">Emergency Hotline</p>
+          <div
+            class="emergency-section bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10 mt-4"
+          >
+            <p class="text-xs text-tertiary-fixed-dim mb-2">
+              Emergency Hotline
+            </p>
             <p class="text-sm text-primary-fixed font-bold">+233 500 000 000</p>
           </div>
         </div>
       </aside>
 
-      <div id="mainContentWrapper" class="flex-1 flex flex-col bg-surface pt-16 md:pt-0 transition-all duration-300">
+      <div
+        id="mainContentWrapper"
+        class="flex-1 flex flex-col bg-surface pt-16 md:pt-0 transition-all duration-300"
+      >
         <!-- Top Bar (Desktop) -->
-        <header class="h-20 bg-surface hidden md:flex items-center justify-between px-margin-desktop sticky top-0 z-40 border-b border-surface-container-highest">
+        <header
+          class="h-20 bg-surface hidden md:flex items-center justify-between px-margin-desktop sticky top-0 z-40 border-b border-surface-container-highest"
+        >
           <div class="flex items-center gap-4 w-1/3">
             <div class="relative w-full max-w-md">
-              <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
-              <input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="Search patients, vets, or files..." type="text" />
+              <span
+                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline"
+                >search</span
+              >
+              <input
+                class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                placeholder="Search patients, vets, or files..."
+                type="text"
+              />
             </div>
           </div>
           <div class="flex items-center gap-6">
-            <button class="relative p-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-full">
+            <button
+              class="relative p-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-full"
+            >
               <span class="material-symbols-outlined">notifications</span>
-              <span class="absolute top-2 right-2 w-2 h-2 bg-emergency-red rounded-full"></span>
+              <span
+                class="absolute top-2 right-2 w-2 h-2 bg-emergency-red rounded-full"
+              ></span>
             </button>
             <div class="flex items-center gap-3 cursor-pointer group">
               <div class="text-right">
-                <p class="text-sm font-bold text-on-surface">Dr. Abena Mensah</p>
-                <p class="text-xs text-on-surface-variant">Chief Veterinary Officer</p>
+                <p class="text-sm font-bold text-on-surface">
+                  Dr. Abena Mensah
+                </p>
+                <p class="text-xs text-on-surface-variant">
+                  Chief Veterinary Officer
+                </p>
               </div>
-              <img alt="Profile" class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt_l2NtwBrHDxQNGs9rPyaBDSi0T_lttSSni_UFdT12mHBHPojsxTE2haa69Vl-xUxsOfIG9hBjBfFUbTbuzqUZTrwCxsYx-WVkbqBP95JzSas9Gk-vlSi5L3t6i5wijVQgjwTRZWzXWDoOxvbiuiwTwUvQerM7vTOeUAbTgk0LzdJ6ZlyU0xeXqf__Iapv8Wpu9q6UmECwczFqWAIEuCSYFKPwinFOH3N6vq0YJKWoiJViDN71AZUcTRiwGyz_FO9sM63nmOE114" />
+              <img
+                alt="Profile"
+                class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-container"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt_l2NtwBrHDxQNGs9rPyaBDSi0T_lttSSni_UFdT12mHBHPojsxTE2haa69Vl-xUxsOfIG9hBjBfFUbTbuzqUZTrwCxsYx-WVkbqBP95JzSas9Gk-vlSi5L3t6i5wijVQgjwTRZWzXWDoOxvbiuiwTwUvQerM7vTOeUAbTgk0LzdJ6ZlyU0xeXqf__Iapv8Wpu9q6UmECwczFqWAIEuCSYFKPwinFOH3N6vq0YJKWoiJViDN71AZUcTRiwGyz_FO9sM63nmOE114"
+              />
             </div>
           </div>
         </header>
@@ -561,26 +926,42 @@
         <main class="w-full p-gutter max-w-7xl mx-auto flex-1 flex flex-col">
           <!-- Emergency Banner with Data Sync Status -->
           <div class="emergency-banner mb-6">
-            <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between">
+            <div
+              class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between"
+            >
               <div>
                 <div class="flex items-center gap-3 mb-3">
-                  <span class="material-symbols-outlined text-[#ff6b6b] text-3xl animate-pulse">emergency</span>
-                  <h1 class="text-2xl md:text-3xl font-bold text-white">Emergency & ICU Admin</h1>
+                  <span
+                    class="material-symbols-outlined text-[#ff6b6b] text-3xl animate-pulse"
+                    >emergency</span
+                  >
+                  <h1 class="text-2xl md:text-3xl font-bold text-white">
+                    Emergency & ICU Admin
+                  </h1>
                 </div>
                 <p class="text-white/70 text-sm max-w-2xl">
-                  Real-time triage, ICU bed management, and critical care monitoring for emergency patients.
+                  Real-time triage, ICU bed management, and critical care
+                  monitoring for emergency patients.
                   <span class="block mt-1 text-white/50 text-xs">
                     <span class="sync-badge live">Live Data from Website</span>
-                    🟢 <span id="availableDoctorsCount">2</span> on-duty emergency vets • <span id="bannerBedCount">6</span> ICU beds available
+                    🟢 <span id="availableDoctorsCount">2</span> on-duty
+                    emergency vets • <span id="bannerBedCount">6</span> ICU beds
+                    available
                   </span>
                 </p>
               </div>
               <div class="flex flex-col sm:flex-row gap-2 mt-3 md:mt-0">
-                <button onclick="openIntakeModal()" class="bg-[#dc2626] hover:bg-[#b91c1c] text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg hover:shadow-xl">
+                <button
+                  onclick="openIntakeModal()"
+                  class="bg-[#dc2626] hover:bg-[#b91c1c] text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg hover:shadow-xl"
+                >
                   <span class="material-symbols-outlined">add_circle</span>
                   Admit to ER
                 </button>
-                <button onclick="syncFromWebsite()" class="bg-white/10 hover:bg-white/20 text-white px-4 py-3 rounded-xl font-bold flex items-center gap-2 transition-all border border-white/20">
+                <button
+                  onclick="syncFromWebsite()"
+                  class="bg-white/10 hover:bg-white/20 text-white px-4 py-3 rounded-xl font-bold flex items-center gap-2 transition-all border border-white/20"
+                >
                   <span class="material-symbols-outlined">sync</span>
                   Sync Now
                 </button>
@@ -593,31 +974,51 @@
             <div class="stat-card bg-[#fef2f2] border-[#fca5a5]">
               <div class="flex items-center gap-2 mb-1">
                 <span class="status-dot critical"></span>
-                <span class="text-xs font-bold text-[#991b1b] uppercase">Critical P1</span>
+                <span class="text-xs font-bold text-[#991b1b] uppercase"
+                  >Critical P1</span
+                >
               </div>
-              <p class="text-2xl font-bold text-[#991b1b]" id="criticalCount">00</p>
-              <p class="text-xs text-[#991b1b]/60">Requires immediate intervention</p>
+              <p class="text-2xl font-bold text-[#991b1b]" id="criticalCount">
+                00
+              </p>
+              <p class="text-xs text-[#991b1b]/60">
+                Requires immediate intervention
+              </p>
             </div>
             <div class="stat-card bg-[#fffbeb] border-[#fcd34d]">
               <div class="flex items-center gap-2 mb-1">
                 <span class="status-dot urgent"></span>
-                <span class="text-xs font-bold text-[#92400e] uppercase">Urgent P2</span>
+                <span class="text-xs font-bold text-[#92400e] uppercase"
+                  >Urgent P2</span
+                >
               </div>
-              <p class="text-2xl font-bold text-[#92400e]" id="urgentCount">00</p>
-              <p class="text-xs text-[#92400e]/60">Stabilize within 15-30 min</p>
+              <p class="text-2xl font-bold text-[#92400e]" id="urgentCount">
+                00
+              </p>
+              <p class="text-xs text-[#92400e]/60">
+                Stabilize within 15-30 min
+              </p>
             </div>
             <div class="stat-card bg-[#f0fdf4] border-[#86efac]">
               <div class="flex items-center gap-2 mb-1">
                 <span class="status-dot stable"></span>
-                <span class="text-xs font-bold text-[#065f46] uppercase">Standard P3</span>
+                <span class="text-xs font-bold text-[#065f46] uppercase"
+                  >Standard P3</span
+                >
               </div>
-              <p class="text-2xl font-bold text-[#065f46]" id="standardCount">00</p>
+              <p class="text-2xl font-bold text-[#065f46]" id="standardCount">
+                00
+              </p>
               <p class="text-xs text-[#065f46]/60">Non-life threatening</p>
             </div>
             <div class="stat-card bg-[#eff6ff] border-[#93c5fd]">
               <div class="flex items-center gap-2 mb-1">
-                <span class="material-symbols-outlined text-[#1e40af] text-sm">bed</span>
-                <span class="text-xs font-bold text-[#1e40af] uppercase">ICU Beds</span>
+                <span class="material-symbols-outlined text-[#1e40af] text-sm"
+                  >bed</span
+                >
+                <span class="text-xs font-bold text-[#1e40af] uppercase"
+                  >ICU Beds</span
+                >
               </div>
               <p class="text-2xl font-bold text-[#1e40af]" id="bedCount">6</p>
               <p class="text-xs text-[#1e40af]/60">Available of 8 total</p>
@@ -629,27 +1030,58 @@
             <!-- Active Triage Tracker -->
             <div class="xl:col-span-6 space-y-stack-sm">
               <div class="flex items-center justify-between">
-                <h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
-                  <span class="material-symbols-outlined text-emergency-red">emergency_share</span>
+                <h3
+                  class="font-headline-md text-headline-md text-on-surface flex items-center gap-2"
+                >
+                  <span class="material-symbols-outlined text-emergency-red"
+                    >emergency_share</span
+                  >
                   Active Triage Tracker
-                  <span class="text-xs font-normal text-on-surface-variant ml-2">(from website)</span>
+                  <span class="text-xs font-normal text-on-surface-variant ml-2"
+                    >(from website)</span
+                  >
                 </h3>
-                <span id="totalPatients" class="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-bold">0 patients</span>
+                <span
+                  id="totalPatients"
+                  class="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-bold"
+                  >0 patients</span
+                >
               </div>
-              <div id="triageTableWrapper" class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden border border-surface-container">
+              <div
+                id="triageTableWrapper"
+                class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden border border-surface-container"
+              >
                 <div id="emptyTriageState" class="p-12 text-center">
-                  <span class="material-symbols-outlined text-6xl text-outline-variant mb-4">emergency_share</span>
-                  <h3 class="text-lg font-bold text-on-surface mb-2">No active emergencies</h3>
-                  <p class="text-sm text-on-surface-variant mb-4">Click the button below to admit a new emergency arrival.</p>
-                  <button onclick="openIntakeModal()" class="bg-emergency-red text-white px-5 py-2.5 rounded-lg font-label-md text-label-md hover:bg-emergency-red/90 transition-colors inline-flex items-center gap-2">
-                    <span class="material-symbols-outlined">add</span> Admit First Emergency
+                  <span
+                    class="material-symbols-outlined text-6xl text-outline-variant mb-4"
+                    >emergency_share</span
+                  >
+                  <h3 class="text-lg font-bold text-on-surface mb-2">
+                    No active emergencies
+                  </h3>
+                  <p class="text-sm text-on-surface-variant mb-4">
+                    Click the button below to admit a new emergency arrival.
+                  </p>
+                  <button
+                    onclick="openIntakeModal()"
+                    class="bg-emergency-red text-white px-5 py-2.5 rounded-lg font-label-md text-label-md hover:bg-emergency-red/90 transition-colors inline-flex items-center gap-2"
+                  >
+                    <span class="material-symbols-outlined">add</span> Admit
+                    First Emergency
                   </button>
                 </div>
                 <div class="max-h-[500px] overflow-y-auto">
-                  <table id="triageTable" class="w-full text-left border-collapse hidden">
+                  <table
+                    id="triageTable"
+                    class="w-full text-left border-collapse hidden"
+                  >
                     <thead class="sticky top-0 z-10">
-                      <tr class="bg-surface-container-low text-on-surface-variant font-label-md text-label-md">
-                        <th class="px-6 py-4">Patient (Species / Age / Weight)</th>
+                      <tr
+                        class="bg-surface-container-low text-on-surface-variant font-label-md text-label-md"
+                      >
+                        <th class="px-6 py-4">
+                          Patient (Species / Age / Weight)
+                        </th>
                         <th class="px-6 py-4">Triage</th>
                         <th class="px-6 py-4">Arrival</th>
                         <th class="px-6 py-4">Assigned Vet</th>
@@ -657,7 +1089,10 @@
                         <th class="px-6 py-4"></th>
                       </tr>
                     </thead>
-                    <tbody id="triageTableBody" class="font-body-md text-body-md divide-y divide-surface-container"></tbody>
+                    <tbody
+                      id="triageTableBody"
+                      class="font-body-md text-body-md divide-y divide-surface-container"
+                    ></tbody>
                   </table>
                 </div>
               </div>
@@ -666,32 +1101,66 @@
             <!-- Right Column: Doctors & ICU Matrix -->
             <div class="xl:col-span-6 space-y-gutter">
               <!-- On-Site Doctors -->
-              <div class="glass-card p-6 rounded-xl border border-surface-container shadow-sm">
+              <div
+                class="glass-card p-6 rounded-xl border border-surface-container shadow-sm"
+              >
                 <div class="flex items-center justify-between mb-4">
-                  <h4 class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant flex items-center gap-2">
-                    <span class="material-symbols-outlined text-primary text-sm">groups</span>
+                  <h4
+                    class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant flex items-center gap-2"
+                  >
+                    <span class="material-symbols-outlined text-primary text-sm"
+                      >groups</span
+                    >
                     On-Site Doctors
-                    <span class="text-xs font-normal text-on-surface-variant ml-2">(available for assignment)</span>
+                    <span
+                      class="text-xs font-normal text-on-surface-variant ml-2"
+                      >(available for assignment)</span
+                    >
                   </h4>
-                  <span id="availableDoctorsBadge" class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full font-bold">2 available</span>
+                  <span
+                    id="availableDoctorsBadge"
+                    class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full font-bold"
+                    >2 available</span
+                  >
                 </div>
-                <div id="doctorsList" class="space-y-2 max-h-[250px] overflow-y-auto pr-2"></div>
+                <div
+                  id="doctorsList"
+                  class="space-y-2 max-h-[250px] overflow-y-auto pr-2"
+                ></div>
               </div>
 
               <!-- ICU Cage Matrix -->
-              <div class="glass-card p-6 rounded-xl border border-surface-container shadow-sm">
+              <div
+                class="glass-card p-6 rounded-xl border border-surface-container shadow-sm"
+              >
                 <div class="flex items-center justify-between mb-4">
-                  <h4 class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant flex items-center gap-2">
-                    <span class="material-symbols-outlined text-primary text-sm">bed</span>
+                  <h4
+                    class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant flex items-center gap-2"
+                  >
+                    <span class="material-symbols-outlined text-primary text-sm"
+                      >bed</span
+                    >
                     ICU & Cage Matrix
                   </h4>
                   <div class="flex gap-2 text-[10px] font-bold uppercase">
-                    <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-error"></span> Critical</span>
-                    <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400"></span> Isolation</span>
-                    <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary"></span> Empty</span>
+                    <span class="flex items-center gap-1"
+                      ><span class="w-2 h-2 rounded-full bg-error"></span>
+                      Critical</span
+                    >
+                    <span class="flex items-center gap-1"
+                      ><span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                      Isolation</span
+                    >
+                    <span class="flex items-center gap-1"
+                      ><span class="w-2 h-2 rounded-full bg-primary"></span>
+                      Empty</span
+                    >
                   </div>
                 </div>
-                <div id="cageGrid" class="cage-grid max-h-[300px] overflow-y-auto pr-2"></div>
+                <div
+                  id="cageGrid"
+                  class="cage-grid max-h-[300px] overflow-y-auto pr-2"
+                ></div>
               </div>
             </div>
           </div>
@@ -700,45 +1169,106 @@
           <div class="grid grid-cols-1 xl:grid-cols-12 gap-gutter">
             <!-- Treatment Flowsheet -->
             <div class="xl:col-span-7 space-y-stack-sm">
-              <div id="flowsheetEmpty" class="bg-surface-container-lowest rounded-xl shadow-sm border border-surface-container p-12 text-center">
-                <span class="material-symbols-outlined text-6xl text-outline-variant mb-4">clinical_notes</span>
-                <h3 class="text-lg font-bold text-on-surface mb-2">No active patient selected</h3>
-                <p class="text-sm text-on-surface-variant">Select a patient from the triage tracker to view their treatment flowsheet.</p>
+              <div
+                id="flowsheetEmpty"
+                class="bg-surface-container-lowest rounded-xl shadow-sm border border-surface-container p-12 text-center"
+              >
+                <span
+                  class="material-symbols-outlined text-6xl text-outline-variant mb-4"
+                  >clinical_notes</span
+                >
+                <h3 class="text-lg font-bold text-on-surface mb-2">
+                  No active patient selected
+                </h3>
+                <p class="text-sm text-on-surface-variant">
+                  Select a patient from the triage tracker to view their
+                  treatment flowsheet.
+                </p>
               </div>
 
               <div id="flowsheetPanel" class="hidden space-y-stack-sm">
                 <div class="flex items-center justify-between flex-wrap gap-3">
                   <div class="flex items-center gap-3">
                     <div>
-                      <h3 id="flowsheetPatientName" class="font-headline-md text-headline-md text-on-surface">Patient Name</h3>
-                      <p id="flowsheetCaseInfo" class="text-caption text-on-surface-variant">Case #--- • Dr. --- • IV: ---</p>
+                      <h3
+                        id="flowsheetPatientName"
+                        class="font-headline-md text-headline-md text-on-surface"
+                      >
+                        Patient Name
+                      </h3>
+                      <p
+                        id="flowsheetCaseInfo"
+                        class="text-caption text-on-surface-variant"
+                      >
+                        Case #--- • Dr. --- • IV: ---
+                      </p>
                     </div>
                   </div>
-                  <button onclick="openStatOrderModal()" class="bg-emergency-red text-white px-4 py-2 rounded-lg font-label-md text-label-md flex items-center gap-2 hover:bg-emergency-red/90 transition-colors">
-                    <span class="material-symbols-outlined text-sm" style="font-variation-settings: &quot;FILL&quot; 1">priority_high</span>
+                  <button
+                    onclick="openStatOrderModal()"
+                    class="bg-emergency-red text-white px-4 py-2 rounded-lg font-label-md text-label-md flex items-center gap-2 hover:bg-emergency-red/90 transition-colors"
+                  >
+                    <span
+                      class="material-symbols-outlined text-sm"
+                      style="font-variation-settings: &quot;FILL&quot; 1"
+                      >priority_high</span
+                    >
                     Stat Order
                   </button>
                 </div>
 
-                <div class="bg-surface-container-lowest rounded-xl shadow-sm border border-surface-container overflow-hidden">
+                <div
+                  class="bg-surface-container-lowest rounded-xl shadow-sm border border-surface-container overflow-hidden"
+                >
                   <div class="p-4 border-b border-surface-container">
-                    <h4 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-3">Hourly Monitoring Checklist</h4>
-                    <div id="flowsheetGrid" class="flowsheet-grid rounded-lg overflow-hidden"></div>
+                    <h4
+                      class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-3"
+                    >
+                      Hourly Monitoring Checklist
+                    </h4>
+                    <div
+                      id="flowsheetGrid"
+                      class="flowsheet-grid rounded-lg overflow-hidden"
+                    ></div>
                   </div>
                   <div class="p-4 bg-surface-muted/50">
-                    <h4 class="font-label-md text-label-md text-emergency-red uppercase tracking-wider mb-3 flex items-center gap-2">
-                      <span class="material-symbols-outlined text-sm" style="font-variation-settings: &quot;FILL&quot; 1">priority_high</span>
+                    <h4
+                      class="font-label-md text-label-md text-emergency-red uppercase tracking-wider mb-3 flex items-center gap-2"
+                    >
+                      <span
+                        class="material-symbols-outlined text-sm"
+                        style="font-variation-settings: &quot;FILL&quot; 1"
+                        >priority_high</span
+                      >
                       Active Stat Orders
                     </h4>
                     <div class="relative">
-                      <button onclick="scrollStatOrders(-1)" class="absolute -top-3 right-0 bg-white border border-outline-variant rounded-full p-1 shadow-sm z-10 hover:bg-surface-muted transition-colors">
-                        <span class="material-symbols-outlined text-sm">keyboard_arrow_up</span>
+                      <button
+                        onclick="scrollStatOrders(-1)"
+                        class="absolute -top-3 right-0 bg-white border border-outline-variant rounded-full p-1 shadow-sm z-10 hover:bg-surface-muted transition-colors"
+                      >
+                        <span class="material-symbols-outlined text-sm"
+                          >keyboard_arrow_up</span
+                        >
                       </button>
-                      <div id="statOrdersList" class="space-y-2 max-h-[200px] overflow-y-auto pr-2">
-                        <p id="noStatOrders" class="text-sm text-on-surface-variant italic py-2">No active stat orders. Click "Stat Order" to add one.</p>
+                      <div
+                        id="statOrdersList"
+                        class="space-y-2 max-h-[200px] overflow-y-auto pr-2"
+                      >
+                        <p
+                          id="noStatOrders"
+                          class="text-sm text-on-surface-variant italic py-2"
+                        >
+                          No active stat orders. Click "Stat Order" to add one.
+                        </p>
                       </div>
-                      <button onclick="scrollStatOrders(1)" class="absolute -bottom-3 right-0 bg-white border border-outline-variant rounded-full p-1 shadow-sm z-10 hover:bg-surface-muted transition-colors">
-                        <span class="material-symbols-outlined text-sm">keyboard_arrow_down</span>
+                      <button
+                        onclick="scrollStatOrders(1)"
+                        class="absolute -bottom-3 right-0 bg-white border border-outline-variant rounded-full p-1 shadow-sm z-10 hover:bg-surface-muted transition-colors"
+                      >
+                        <span class="material-symbols-outlined text-sm"
+                          >keyboard_arrow_down</span
+                        >
                       </button>
                     </div>
                   </div>
@@ -748,62 +1278,137 @@
 
             <!-- Consent & Deposit Tracker -->
             <div class="xl:col-span-5 space-y-gutter">
-              <div id="consentEmpty" class="glass-card p-6 rounded-xl border border-surface-container shadow-sm text-center py-10">
-                <span class="material-symbols-outlined text-5xl text-outline-variant mb-3">gavel</span>
-                <p class="text-sm text-on-surface-variant">Select a patient to manage consent & deposit status.</p>
+              <div
+                id="consentEmpty"
+                class="glass-card p-6 rounded-xl border border-surface-container shadow-sm text-center py-10"
+              >
+                <span
+                  class="material-symbols-outlined text-5xl text-outline-variant mb-3"
+                  >gavel</span
+                >
+                <p class="text-sm text-on-surface-variant">
+                  Select a patient to manage consent & deposit status.
+                </p>
               </div>
 
-              <div id="consentPanel" class="hidden glass-card p-6 rounded-xl border border-surface-container shadow-sm space-y-5">
-                <h4 class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/30 pb-2 flex items-center gap-2">
+              <div
+                id="consentPanel"
+                class="hidden glass-card p-6 rounded-xl border border-surface-container shadow-sm space-y-5"
+              >
+                <h4
+                  class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/30 pb-2 flex items-center gap-2"
+                >
                   <span class="material-symbols-outlined text-sm">gavel</span>
                   Consent & Financial Tracker
                 </h4>
 
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                      <span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1">favorite</span>
+                    <div
+                      class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary"
+                    >
+                      <span
+                        class="material-symbols-outlined"
+                        style="font-variation-settings: &quot;FILL&quot; 1"
+                        >favorite</span
+                      >
                     </div>
                     <div>
-                      <p class="font-bold text-sm text-on-surface">CPR Status</p>
-                      <p class="text-caption text-on-surface-variant">Resuscitation preference</p>
+                      <p class="font-bold text-sm text-on-surface">
+                        CPR Status
+                      </p>
+                      <p class="text-caption text-on-surface-variant">
+                        Resuscitation preference
+                      </p>
                     </div>
                   </div>
-                  <button id="cprToggle" onclick="toggleConsent('cpr')" class="flex items-center gap-2 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20 hover:bg-primary/20 transition-colors">
-                    <span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: &quot;FILL&quot; 1">check_circle</span>
-                    <span class="text-xs font-bold text-primary uppercase">CPR Approved</span>
+                  <button
+                    id="cprToggle"
+                    onclick="toggleConsent('cpr')"
+                    class="flex items-center gap-2 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20 hover:bg-primary/20 transition-colors"
+                  >
+                    <span
+                      class="material-symbols-outlined text-primary text-sm"
+                      style="font-variation-settings: &quot;FILL&quot; 1"
+                      >check_circle</span
+                    >
+                    <span class="text-xs font-bold text-primary uppercase"
+                      >CPR Approved</span
+                    >
                   </button>
                 </div>
 
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
-                      <span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1">description</span>
+                    <div
+                      class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container"
+                    >
+                      <span
+                        class="material-symbols-outlined"
+                        style="font-variation-settings: &quot;FILL&quot; 1"
+                        >description</span
+                      >
                     </div>
                     <div>
-                      <p class="font-bold text-sm text-on-surface">Estimate Signed</p>
-                      <p class="text-caption text-on-surface-variant">Emergency treatment cost approval</p>
+                      <p class="font-bold text-sm text-on-surface">
+                        Estimate Signed
+                      </p>
+                      <p class="text-caption text-on-surface-variant">
+                        Emergency treatment cost approval
+                      </p>
                     </div>
                   </div>
-                  <button id="estimateToggle" onclick="toggleConsent('estimate')" class="flex items-center gap-2 bg-green-100 px-3 py-1.5 rounded-full border border-green-200 hover:bg-green-200 transition-colors">
-                    <span class="material-symbols-outlined text-green-700 text-sm" style="font-variation-settings: &quot;FILL&quot; 1">check_circle</span>
-                    <span class="text-xs font-bold text-green-700 uppercase">Signed</span>
+                  <button
+                    id="estimateToggle"
+                    onclick="toggleConsent('estimate')"
+                    class="flex items-center gap-2 bg-green-100 px-3 py-1.5 rounded-full border border-green-200 hover:bg-green-200 transition-colors"
+                  >
+                    <span
+                      class="material-symbols-outlined text-green-700 text-sm"
+                      style="font-variation-settings: &quot;FILL&quot; 1"
+                      >check_circle</span
+                    >
+                    <span class="text-xs font-bold text-green-700 uppercase"
+                      >Signed</span
+                    >
                   </button>
                 </div>
 
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-700">
-                      <span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1">payments</span>
+                    <div
+                      class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-700"
+                    >
+                      <span
+                        class="material-symbols-outlined"
+                        style="font-variation-settings: &quot;FILL&quot; 1"
+                        >payments</span
+                      >
                     </div>
                     <div>
-                      <p class="font-bold text-sm text-on-surface">Emergency Deposit</p>
-                      <p id="depositAmount" class="text-caption text-on-surface-variant">Required before surgery (GHS 1,500)</p>
+                      <p class="font-bold text-sm text-on-surface">
+                        Emergency Deposit
+                      </p>
+                      <p
+                        id="depositAmount"
+                        class="text-caption text-on-surface-variant"
+                      >
+                        Required before surgery (GHS 1,500)
+                      </p>
                     </div>
                   </div>
-                  <button id="depositToggle" onclick="toggleConsent('deposit')" class="flex items-center gap-2 bg-amber-100 px-3 py-1.5 rounded-full border border-amber-200 hover:bg-amber-200 transition-colors">
-                    <span class="material-symbols-outlined text-amber-700 text-sm">pending</span>
-                    <span class="text-xs font-bold text-amber-700 uppercase">Pending</span>
+                  <button
+                    id="depositToggle"
+                    onclick="toggleConsent('deposit')"
+                    class="flex items-center gap-2 bg-amber-100 px-3 py-1.5 rounded-full border border-amber-200 hover:bg-amber-200 transition-colors"
+                  >
+                    <span
+                      class="material-symbols-outlined text-amber-700 text-sm"
+                      >pending</span
+                    >
+                    <span class="text-xs font-bold text-amber-700 uppercase"
+                      >Pending</span
+                    >
                   </button>
                 </div>
               </div>
@@ -812,7 +1417,9 @@
         </main>
 
         <footer class="w-full mt-auto bg-deep-navy py-4">
-          <div class="px-margin-desktop text-center text-tertiary-fixed-dim text-xs">
+          <div
+            class="px-margin-desktop text-center text-tertiary-fixed-dim text-xs"
+          >
             © 2024 VetCare Ghana veterinary clinic. All rights reserved.
           </div>
         </footer>
@@ -824,18 +1431,28 @@
       <div class="modal-content p-6">
         <div class="flex justify-between items-center mb-5">
           <div>
-            <h3 class="font-headline-md text-headline-md text-deep-navy">Admit to ER</h3>
-            <p class="text-caption text-on-surface-variant">Select patient from website/database to admit</p>
+            <h3 class="font-headline-md text-headline-md text-deep-navy">
+              Admit to ER
+            </h3>
+            <p class="text-caption text-on-surface-variant">
+              Select patient from website/database to admit
+            </p>
           </div>
-          <button onclick="closeIntakeModal()" class="text-on-surface-variant hover:text-on-surface p-2 hover:bg-surface-muted rounded-lg transition-colors">
+          <button
+            onclick="closeIntakeModal()"
+            class="text-on-surface-variant hover:text-on-surface p-2 hover:bg-surface-muted rounded-lg transition-colors"
+          >
             <span class="material-symbols-outlined">close</span>
           </button>
         </div>
-        
+
         <form id="intakeForm" class="space-y-5">
           <!-- Patient Lookup -->
           <div>
-            <label class="block font-label-md text-label-md text-on-surface mb-1">Select Patient (from Website/Database) *</label>
+            <label
+              class="block font-label-md text-label-md text-on-surface mb-1"
+              >Select Patient (from Website/Database) *</label
+            >
             <select id="patientLookup" class="form-input" required>
               <option value="">-- Select a patient --</option>
             </select>
@@ -844,31 +1461,74 @@
           <!-- Greyed out / Readonly Fields (Auto-populated from website) -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div>
-              <label class="block font-label-md text-label-md text-on-surface-variant mb-1">Patient Name</label>
-              <input type="text" id="patientNameDisplay" class="form-input" readonly />
+              <label
+                class="block font-label-md text-label-md text-on-surface-variant mb-1"
+                >Patient Name</label
+              >
+              <input
+                type="text"
+                id="patientNameDisplay"
+                class="form-input"
+                readonly
+              />
             </div>
             <div>
-              <label class="block font-label-md text-label-md text-on-surface-variant mb-1">Species</label>
-              <input type="text" id="speciesDisplay" class="form-input" readonly />
+              <label
+                class="block font-label-md text-label-md text-on-surface-variant mb-1"
+                >Species</label
+              >
+              <input
+                type="text"
+                id="speciesDisplay"
+                class="form-input"
+                readonly
+              />
             </div>
             <div>
-              <label class="block font-label-md text-label-md text-on-surface-variant mb-1">Breed</label>
-              <input type="text" id="breedDisplay" class="form-input" readonly />
+              <label
+                class="block font-label-md text-label-md text-on-surface-variant mb-1"
+                >Breed</label
+              >
+              <input
+                type="text"
+                id="breedDisplay"
+                class="form-input"
+                readonly
+              />
             </div>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div>
-              <label class="block font-label-md text-label-md text-on-surface-variant mb-1">Age</label>
+              <label
+                class="block font-label-md text-label-md text-on-surface-variant mb-1"
+                >Age</label
+              >
               <input type="text" id="ageDisplay" class="form-input" readonly />
             </div>
             <div>
-              <label class="block font-label-md text-label-md text-on-surface-variant mb-1">Weight (kg)</label>
-              <input type="text" id="weightDisplay" class="form-input" readonly />
+              <label
+                class="block font-label-md text-label-md text-on-surface-variant mb-1"
+                >Weight (kg)</label
+              >
+              <input
+                type="text"
+                id="weightDisplay"
+                class="form-input"
+                readonly
+              />
             </div>
             <div>
-              <label class="block font-label-md text-label-md text-on-surface-variant mb-1">AI Triage Level</label>
-              <input type="text" id="triageDisplay" class="form-input font-bold" readonly />
+              <label
+                class="block font-label-md text-label-md text-on-surface-variant mb-1"
+                >AI Triage Level</label
+              >
+              <input
+                type="text"
+                id="triageDisplay"
+                class="form-input font-bold"
+                readonly
+              />
               <input type="hidden" id="selectedTriage" />
               <input type="hidden" id="selectedPatientId" />
             </div>
@@ -876,60 +1536,148 @@
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
-              <label class="block font-label-md text-label-md text-on-surface-variant mb-1">Owner Name</label>
-              <input type="text" id="ownerNameDisplay" class="form-input" readonly />
+              <label
+                class="block font-label-md text-label-md text-on-surface-variant mb-1"
+                >Owner Name</label
+              >
+              <input
+                type="text"
+                id="ownerNameDisplay"
+                class="form-input"
+                readonly
+              />
             </div>
             <div>
-              <label class="block font-label-md text-label-md text-on-surface-variant mb-1">Owner Phone</label>
-              <input type="text" id="ownerPhoneDisplay" class="form-input" readonly />
+              <label
+                class="block font-label-md text-label-md text-on-surface-variant mb-1"
+                >Owner Phone</label
+              >
+              <input
+                type="text"
+                id="ownerPhoneDisplay"
+                class="form-input"
+                readonly
+              />
             </div>
           </div>
 
           <!-- Editable Fields for Doctor -->
           <div>
-            <label class="block font-label-md text-label-md text-on-surface mb-1">Doctor's Clinical Notes / Complaint *</label>
-            <textarea id="complaint" rows="3" class="form-input resize-none" placeholder="Enter clinical observations, updates, or specific complaints..." required></textarea>
+            <label
+              class="block font-label-md text-label-md text-on-surface mb-1"
+              >Doctor's Clinical Notes / Complaint *</label
+            >
+            <textarea
+              id="complaint"
+              rows="3"
+              class="form-input resize-none"
+              placeholder="Enter clinical observations, updates, or specific complaints..."
+              required
+            ></textarea>
           </div>
 
           <div>
-            <label class="block font-label-md text-label-md text-on-surface mb-1">Assigned On-Site Vet *</label>
+            <label
+              class="block font-label-md text-label-md text-on-surface mb-1"
+              >Assigned On-Site Vet *</label
+            >
             <select id="assignedVet" class="form-input" required>
               <option value="">Select on-site doctor...</option>
             </select>
           </div>
 
           <div>
-            <label class="block font-label-md text-label-md text-on-surface mb-2">Warning Tags (Update if needed)</label>
+            <label
+              class="block font-label-md text-label-md text-on-surface mb-2"
+              >Warning Tags (Update if needed)</label
+            >
             <div class="flex flex-wrap gap-2">
-              <button type="button" class="tag-toggle" data-tag="aggressive" onclick="toggleTag(this)">⚠️ Aggressive</button>
-              <button type="button" class="tag-toggle" data-tag="contagious" onclick="toggleTag(this)">🦠 Contagious</button>
-              <button type="button" class="tag-toggle" data-tag="bite" onclick="toggleTag(this)">🦷 Will Bite</button>
-              <button type="button" class="tag-toggle" data-tag="iv" onclick="toggleTag(this)">💧 IV Required</button>
+              <button
+                type="button"
+                class="tag-toggle"
+                data-tag="aggressive"
+                onclick="toggleTag(this)"
+              >
+                ⚠️ Aggressive
+              </button>
+              <button
+                type="button"
+                class="tag-toggle"
+                data-tag="contagious"
+                onclick="toggleTag(this)"
+              >
+                🦠 Contagious
+              </button>
+              <button
+                type="button"
+                class="tag-toggle"
+                data-tag="bite"
+                onclick="toggleTag(this)"
+              >
+                🦷 Will Bite
+              </button>
+              <button
+                type="button"
+                class="tag-toggle"
+                data-tag="iv"
+                onclick="toggleTag(this)"
+              >
+                💧 IV Required
+              </button>
             </div>
           </div>
 
           <div class="bg-surface-muted rounded-lg p-4 space-y-3">
-            <p class="font-label-md text-label-md text-on-surface mb-2">Consent Status (Update as needed)</p>
+            <p class="font-label-md text-label-md text-on-surface mb-2">
+              Consent Status (Update as needed)
+            </p>
             <label class="flex items-center gap-3 cursor-pointer">
-              <input type="checkbox" id="cprApproved" class="w-4 h-4 rounded text-primary" />
+              <input
+                type="checkbox"
+                id="cprApproved"
+                class="w-4 h-4 rounded text-primary"
+              />
               <span class="text-sm text-on-surface">CPR Approved</span>
             </label>
             <label class="flex items-center gap-3 cursor-pointer">
-              <input type="checkbox" id="estimateSigned" class="w-4 h-4 rounded text-primary" />
-              <span class="text-sm text-on-surface">Emergency Estimate Signed</span>
+              <input
+                type="checkbox"
+                id="estimateSigned"
+                class="w-4 h-4 rounded text-primary"
+              />
+              <span class="text-sm text-on-surface"
+                >Emergency Estimate Signed</span
+              >
             </label>
             <label class="flex items-center gap-3 cursor-pointer">
-              <input type="checkbox" id="depositPaid" class="w-4 h-4 rounded text-primary" />
-              <span class="text-sm text-on-surface">Emergency Deposit Paid</span>
+              <input
+                type="checkbox"
+                id="depositPaid"
+                class="w-4 h-4 rounded text-primary"
+              />
+              <span class="text-sm text-on-surface"
+                >Emergency Deposit Paid</span
+              >
             </label>
           </div>
 
           <div class="flex gap-3 pt-2">
-            <button type="submit" class="flex-1 bg-emergency-red text-white py-3 rounded-lg font-label-md text-label-md hover:bg-emergency-red/90 transition-all flex items-center justify-center gap-2">
-              <span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1">emergency</span>
+            <button
+              type="submit"
+              class="flex-1 bg-emergency-red text-white py-3 rounded-lg font-label-md text-label-md hover:bg-emergency-red/90 transition-all flex items-center justify-center gap-2"
+            >
+              <span
+                class="material-symbols-outlined"
+                style="font-variation-settings: &quot;FILL&quot; 1"
+                >emergency</span
+              >
               Admit to ER
             </button>
-            <button type="button" onclick="closeIntakeModal()" class="px-6 bg-surface-container text-on-surface-variant py-3 rounded-lg font-label-md text-label-md hover:bg-surface-container-high transition-all">
+            <button
+              type="button"
+              onclick="closeIntakeModal()"
+              class="px-6 bg-surface-container text-on-surface-variant py-3 rounded-lg font-label-md text-label-md hover:bg-surface-container-high transition-all"
+            >
               Cancel
             </button>
           </div>
@@ -942,16 +1690,26 @@
       <div class="modal-content p-6 max-w-md">
         <div class="flex justify-between items-center mb-5">
           <div>
-            <h3 class="font-headline-md text-headline-md text-deep-navy">Add Stat Order</h3>
-            <p class="text-caption text-on-surface-variant">Immediate, non-scheduled order</p>
+            <h3 class="font-headline-md text-headline-md text-deep-navy">
+              Add Stat Order
+            </h3>
+            <p class="text-caption text-on-surface-variant">
+              Immediate, non-scheduled order
+            </p>
           </div>
-          <button onclick="closeStatOrderModal()" class="text-on-surface-variant hover:text-on-surface p-2 hover:bg-surface-muted rounded-lg transition-colors">
+          <button
+            onclick="closeStatOrderModal()"
+            class="text-on-surface-variant hover:text-on-surface p-2 hover:bg-surface-muted rounded-lg transition-colors"
+          >
             <span class="material-symbols-outlined">close</span>
           </button>
         </div>
         <form id="statOrderForm" class="space-y-4">
           <div>
-            <label class="block font-label-md text-label-md text-on-surface mb-1">Order Type *</label>
+            <label
+              class="block font-label-md text-label-md text-on-surface mb-1"
+              >Order Type *</label
+            >
             <select id="orderType" class="form-input" required>
               <option value="">Select type</option>
               <option value="medication">💊 Medication</option>
@@ -962,15 +1720,35 @@
             </select>
           </div>
           <div>
-            <label class="block font-label-md text-label-md text-on-surface mb-1">Order Description *</label>
-            <input type="text" id="orderDescription" class="form-input" placeholder="e.g., Buprenorphine 0.02mg/kg IV" required />
+            <label
+              class="block font-label-md text-label-md text-on-surface mb-1"
+              >Order Description *</label
+            >
+            <input
+              type="text"
+              id="orderDescription"
+              class="form-input"
+              placeholder="e.g., Buprenorphine 0.02mg/kg IV"
+              required
+            />
           </div>
           <div class="flex gap-3 pt-2">
-            <button type="submit" class="flex-1 bg-emergency-red text-white py-3 rounded-lg font-label-md text-label-md hover:bg-emergency-red/90 transition-all flex items-center justify-center gap-2">
-              <span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1">add_circle</span>
+            <button
+              type="submit"
+              class="flex-1 bg-emergency-red text-white py-3 rounded-lg font-label-md text-label-md hover:bg-emergency-red/90 transition-all flex items-center justify-center gap-2"
+            >
+              <span
+                class="material-symbols-outlined"
+                style="font-variation-settings: &quot;FILL&quot; 1"
+                >add_circle</span
+              >
               Add Order
             </button>
-            <button type="button" onclick="closeStatOrderModal()" class="px-6 bg-surface-container text-on-surface-variant py-3 rounded-lg font-label-md text-label-md hover:bg-surface-container-high transition-all">
+            <button
+              type="button"
+              onclick="closeStatOrderModal()"
+              class="px-6 bg-surface-container text-on-surface-variant py-3 rounded-lg font-label-md text-label-md hover:bg-surface-container-high transition-all"
+            >
               Cancel
             </button>
           </div>
@@ -981,13 +1759,21 @@
     <!-- ============ DISCHARGE CONFIRMATION MODAL ============ -->
     <div id="dischargeModal" class="modal-backdrop">
       <div class="modal-content p-6 max-w-sm text-center">
-        <h3 class="font-headline-md text-headline-md text-deep-navy mb-2">Discharge Patient?</h3>
+        <h3 class="font-headline-md text-headline-md text-deep-navy mb-2">
+          Discharge Patient?
+        </h3>
         <p id="dischargeModalText" class="text-on-surface-variant mb-6"></p>
         <div class="flex gap-3 justify-center">
-          <button id="confirmDischargeBtn" class="bg-emergency-red text-white px-6 py-2 rounded-lg font-label-md hover:bg-emergency-red/90 transition-all">
+          <button
+            id="confirmDischargeBtn"
+            class="bg-emergency-red text-white px-6 py-2 rounded-lg font-label-md hover:bg-emergency-red/90 transition-all"
+          >
             Yes, Discharge
           </button>
-          <button onclick="closeDischargeModal()" class="bg-surface-container text-on-surface-variant px-6 py-2 rounded-lg font-label-md hover:bg-surface-container-high transition-all">
+          <button
+            onclick="closeDischargeModal()"
+            class="bg-surface-container text-on-surface-variant px-6 py-2 rounded-lg font-label-md hover:bg-surface-container-high transition-all"
+          >
             Cancel
           </button>
         </div>
@@ -1005,7 +1791,8 @@
       const mobileOverlay = document.getElementById("mobileOverlay");
       const desktopSidebar = document.getElementById("desktopSidebar");
       const collapseSidebarBtn = document.getElementById("collapseSidebarBtn");
-      let isSidebarCollapsed = localStorage.getItem("sidebarCollapsed") === "true";
+      let isSidebarCollapsed =
+        localStorage.getItem("sidebarCollapsed") === "true";
 
       function openMobileSidebar() {
         mobileSidebar.classList.add("open");
@@ -1020,28 +1807,51 @@
       function toggleDesktopSidebar() {
         isSidebarCollapsed = !isSidebarCollapsed;
         localStorage.setItem("sidebarCollapsed", isSidebarCollapsed);
-        const mainContentWrapper = document.getElementById("mainContentWrapper");
+        const mainContentWrapper =
+          document.getElementById("mainContentWrapper");
         if (isSidebarCollapsed) {
           desktopSidebar.classList.add("sidebar-collapsed");
-          collapseSidebarBtn.querySelector(".material-symbols-outlined").textContent = "chevron_right";
-          mainContentWrapper && mainContentWrapper.classList.add("main-content-full");
+          collapseSidebarBtn.querySelector(
+            ".material-symbols-outlined",
+          ).textContent = "chevron_right";
+          mainContentWrapper &&
+            mainContentWrapper.classList.add("main-content-full");
         } else {
           desktopSidebar.classList.remove("sidebar-collapsed");
-          collapseSidebarBtn.querySelector(".material-symbols-outlined").textContent = "chevron_left";
-          mainContentWrapper && mainContentWrapper.classList.remove("main-content-full");
+          collapseSidebarBtn.querySelector(
+            ".material-symbols-outlined",
+          ).textContent = "chevron_left";
+          mainContentWrapper &&
+            mainContentWrapper.classList.remove("main-content-full");
         }
       }
 
       if (isSidebarCollapsed) {
         desktopSidebar.classList.add("sidebar-collapsed");
-        if (collapseSidebarBtn) collapseSidebarBtn.querySelector(".material-symbols-outlined").textContent = "chevron_right";
+        if (collapseSidebarBtn)
+          collapseSidebarBtn.querySelector(
+            ".material-symbols-outlined",
+          ).textContent = "chevron_right";
       }
-      if (mobileBurgerBtn) mobileBurgerBtn.addEventListener("click", openMobileSidebar);
-      if (closeMobileSidebar) closeMobileSidebar.addEventListener("click", closeMobileSidebarFunc);
-      if (mobileOverlay) mobileOverlay.addEventListener("click", closeMobileSidebarFunc);
-      if (collapseSidebarBtn) collapseSidebarBtn.addEventListener("click", toggleDesktopSidebar);
-      document.addEventListener("keydown", (e) => { if (e.key === "Escape" && mobileSidebar.classList.contains("open")) closeMobileSidebarFunc(); });
-      window.addEventListener("resize", () => { if (window.innerWidth >= 768 && mobileSidebar.classList.contains("open")) closeMobileSidebarFunc(); });
+      if (mobileBurgerBtn)
+        mobileBurgerBtn.addEventListener("click", openMobileSidebar);
+      if (closeMobileSidebar)
+        closeMobileSidebar.addEventListener("click", closeMobileSidebarFunc);
+      if (mobileOverlay)
+        mobileOverlay.addEventListener("click", closeMobileSidebarFunc);
+      if (collapseSidebarBtn)
+        collapseSidebarBtn.addEventListener("click", toggleDesktopSidebar);
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && mobileSidebar.classList.contains("open"))
+          closeMobileSidebarFunc();
+      });
+      window.addEventListener("resize", () => {
+        if (
+          window.innerWidth >= 768 &&
+          mobileSidebar.classList.contains("open")
+        )
+          closeMobileSidebarFunc();
+      });
 
       function logout() {
         if (confirm("Are you sure you want to logout?")) {
@@ -1050,23 +1860,42 @@
           window.location.href = "vet_portal_login.html";
         }
       }
-      document.getElementById("logoutBtnMobile")?.addEventListener("click", logout);
-      document.getElementById("logoutBtnDesktop")?.addEventListener("click", logout);
+      document
+        .getElementById("logoutBtnMobile")
+        ?.addEventListener("click", logout);
+      document
+        .getElementById("logoutBtnDesktop")
+        ?.addEventListener("click", logout);
 
       // ===== NAVIGATION & HIGHLIGHTING =====
       function highlightCurrentPage() {
-        const currentPage = document.body.getAttribute("data-page") || "emergency";
+        const currentPage =
+          document.body.getAttribute("data-page") || "emergency";
         document.querySelectorAll("[data-nav-desktop]").forEach((link) => {
           if (link.getAttribute("data-nav-desktop") === currentPage) {
             if (currentPage === "emergency") {
               link.classList.add("bg-emergency-red/10", "text-emergency-red");
-              link.classList.remove("text-tertiary-fixed-dim", "hover:bg-white/5");
+              link.classList.remove(
+                "text-tertiary-fixed-dim",
+                "hover:bg-white/5",
+              );
             } else {
-              link.classList.add("bg-primary-container", "text-on-primary-container");
-              link.classList.remove("text-tertiary-fixed-dim", "hover:bg-white/5");
+              link.classList.add(
+                "bg-primary-container",
+                "text-on-primary-container",
+              );
+              link.classList.remove(
+                "text-tertiary-fixed-dim",
+                "hover:bg-white/5",
+              );
             }
           } else {
-            link.classList.remove("bg-primary-container", "text-on-primary-container", "bg-emergency-red/10", "text-emergency-red");
+            link.classList.remove(
+              "bg-primary-container",
+              "text-on-primary-container",
+              "bg-emergency-red/10",
+              "text-emergency-red",
+            );
             link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
           }
         });
@@ -1074,18 +1903,34 @@
           if (link.getAttribute("data-nav-mobile") === currentPage) {
             if (currentPage === "emergency") {
               link.classList.add("bg-emergency-red/10", "text-emergency-red");
-              link.classList.remove("text-tertiary-fixed-dim", "hover:bg-white/5");
+              link.classList.remove(
+                "text-tertiary-fixed-dim",
+                "hover:bg-white/5",
+              );
             } else {
-              link.classList.add("bg-primary-container", "text-on-primary-container");
-              link.classList.remove("text-tertiary-fixed-dim", "hover:bg-white/5");
+              link.classList.add(
+                "bg-primary-container",
+                "text-on-primary-container",
+              );
+              link.classList.remove(
+                "text-tertiary-fixed-dim",
+                "hover:bg-white/5",
+              );
             }
           } else {
-            link.classList.remove("bg-primary-container", "text-on-primary-container", "bg-emergency-red/10", "text-emergency-red");
+            link.classList.remove(
+              "bg-primary-container",
+              "text-on-primary-container",
+              "bg-emergency-red/10",
+              "text-emergency-red",
+            );
             link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
           }
         });
       }
-      document.addEventListener("DOMContentLoaded", function () { highlightCurrentPage(); });
+      document.addEventListener("DOMContentLoaded", function () {
+        highlightCurrentPage();
+      });
 
       // ===== TOAST =====
       function showToast(message, type = "success") {
@@ -1095,10 +1940,14 @@
         toast.className = `toast toast-${type}`;
         toast.textContent = message;
         container.appendChild(toast);
-        requestAnimationFrame(() => { requestAnimationFrame(() => toast.classList.add("show")); });
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => toast.classList.add("show"));
+        });
         setTimeout(() => {
           toast.classList.remove("show");
-          setTimeout(() => { if (toast.parentNode) toast.remove(); }, 300);
+          setTimeout(() => {
+            if (toast.parentNode) toast.remove();
+          }, 300);
         }, 4000);
       }
 
@@ -1106,15 +1955,49 @@
       // ===== DOCTORS DATA =====
       // ============================================================
       const doctors = [
-        { id: 'doc-1', name: 'Dr. Abena Mensah', specialty: 'Cardiology Surgeon', status: 'available', cases: 1 },
-        { id: 'doc-2', name: 'Dr. Kofi Anim', specialty: 'Trauma Specialist', status: 'available', cases: 0 },
-        { id: 'doc-3', name: 'Dr. Ama Serwaa', specialty: 'Internal Medicine', status: 'busy', cases: 2 },
-        { id: 'doc-4', name: 'Dr. Yaw Boateng', specialty: 'Surgery', status: 'off-duty', cases: 0 },
-        { id: 'doc-5', name: 'Dr. Esi Quaye', specialty: 'Emergency Medicine', status: 'available', cases: 0 },
+        {
+          id: "doc-1",
+          name: "Dr. Abena Mensah",
+          specialty: "Cardiology Surgeon",
+          status: "available",
+          cases: 1,
+        },
+        {
+          id: "doc-2",
+          name: "Dr. Kofi Anim",
+          specialty: "Trauma Specialist",
+          status: "available",
+          cases: 0,
+        },
+        {
+          id: "doc-3",
+          name: "Dr. Ama Serwaa",
+          specialty: "Internal Medicine",
+          status: "busy",
+          cases: 2,
+        },
+        {
+          id: "doc-4",
+          name: "Dr. Yaw Boateng",
+          specialty: "Surgery",
+          status: "off-duty",
+          cases: 0,
+        },
+        {
+          id: "doc-5",
+          name: "Dr. Esi Quaye",
+          specialty: "Emergency Medicine",
+          status: "available",
+          cases: 0,
+        },
       ];
 
-      function getAvailableDoctors() { return doctors.filter(d => d.status === 'available'); }
-      function getDoctorById(id) { return doctors.find(d => d.id === id); }
+      function getAvailableDoctors() {
+        return doctors.filter((d) => d.status === "available");
+      }
+      function getDoctorById(id) {
+        return doctors.find((d) => d.id === id);
+      }
 
       // ============================================================
       // ===== DATA SOURCE: Syncs with Website Emergency Page ========
@@ -1122,37 +2005,67 @@
       const WEBSITE_EMERGENCY_DATA = {
         patients: [
           {
-            id: 1, name: "Max", species: "Dog", breed: "Golden Retriever", age: "3 years", weight: 32.5,
-            triage: "critical", tags: ["iv"], ownerName: "Kofi Ansah", ownerPhone: "+233 24 123 4567",
+            id: 1,
+            name: "Max",
+            species: "Dog",
+            breed: "Golden Retriever",
+            age: "3 years",
+            weight: 32.5,
+            triage: "critical",
+            tags: ["iv"],
+            ownerName: "Kofi Ansah",
+            ownerPhone: "+233 24 123 4567",
             complaint: "Hit by car, severe bleeding, unconscious",
-            arrivalTime: new Date(Date.now() - 25 * 60000), cageId: "ICU-01",
-            consent: { cpr: true, estimate: true, deposit: false }, source: "website"
+            arrivalTime: new Date(Date.now() - 25 * 60000),
+            cageId: "ICU-01",
+            consent: { cpr: true, estimate: true, deposit: false },
+            source: "website",
           },
           {
-            id: 2, name: "Whiskers", species: "Cat", breed: "Persian", age: "2 years", weight: 4.2,
-            triage: "urgent", tags: ["contagious"], ownerName: "Efua Mensah", ownerPhone: "+233 20 987 6543",
+            id: 2,
+            name: "Whiskers",
+            species: "Cat",
+            breed: "Persian",
+            age: "2 years",
+            weight: 4.2,
+            triage: "urgent",
+            tags: ["contagious"],
+            ownerName: "Efua Mensah",
+            ownerPhone: "+233 20 987 6543",
             complaint: "Difficulty breathing, nasal discharge, fever",
-            arrivalTime: new Date(Date.now() - 45 * 60000), cageId: "ISO-01",
-            consent: { cpr: false, estimate: true, deposit: true }, source: "website"
+            arrivalTime: new Date(Date.now() - 45 * 60000),
+            cageId: "ISO-01",
+            consent: { cpr: false, estimate: true, deposit: true },
+            source: "website",
           },
           {
-            id: 3, name: "Rocky", species: "Dog", breed: "German Shepherd", age: "5 years", weight: 35.0,
-            triage: "standard", tags: ["aggressive", "bite"], ownerName: "John Boateng", ownerPhone: "+233 24 555 0102",
+            id: 3,
+            name: "Rocky",
+            species: "Dog",
+            breed: "German Shepherd",
+            age: "5 years",
+            weight: 35.0,
+            triage: "standard",
+            tags: ["aggressive", "bite"],
+            ownerName: "John Boateng",
+            ownerPhone: "+233 24 555 0102",
             complaint: "Lethargy, loss of appetite, vomiting for 2 days",
-            arrivalTime: new Date(Date.now() - 90 * 60000), cageId: "GEN-01",
-            consent: { cpr: true, estimate: false, deposit: false }, source: "website"
-          }
+            arrivalTime: new Date(Date.now() - 90 * 60000),
+            cageId: "GEN-01",
+            consent: { cpr: true, estimate: false, deposit: false },
+            source: "website",
+          },
         ],
         cages: [
-          { id: 'ICU-01', type: 'icu', status: 'occupied', patient: 1 },
-          { id: 'ICU-02', type: 'icu', status: 'empty', patient: null },
-          { id: 'ICU-03', type: 'icu', status: 'empty', patient: null },
-          { id: 'ISO-01', type: 'isolation', status: 'occupied', patient: 2 },
-          { id: 'ISO-02', type: 'isolation', status: 'empty', patient: null },
-          { id: 'GEN-01', type: 'general', status: 'occupied', patient: 3 },
-          { id: 'GEN-02', type: 'general', status: 'empty', patient: null },
-          { id: 'GEN-03', type: 'general', status: 'empty', patient: null },
-        ]
+          { id: "ICU-01", type: "icu", status: "occupied", patient: 1 },
+          { id: "ICU-02", type: "icu", status: "empty", patient: null },
+          { id: "ICU-03", type: "icu", status: "empty", patient: null },
+          { id: "ISO-01", type: "isolation", status: "occupied", patient: 2 },
+          { id: "ISO-02", type: "isolation", status: "empty", patient: null },
+          { id: "GEN-01", type: "general", status: "occupied", patient: 3 },
+          { id: "GEN-02", type: "general", status: "empty", patient: null },
+          { id: "GEN-03", type: "general", status: "empty", patient: null },
+        ],
       };
 
       let patients = [];
@@ -1163,9 +2076,16 @@
       function assignDoctorToPatient(patient) {
         const available = getAvailableDoctors();
         if (available.length === 0) {
-          const busy = doctors.find(d => d.status === 'busy');
-          if (busy) { patient.vet = busy.name; busy.cases += 1; return busy; }
-          const first = doctors[0]; patient.vet = first.name; first.cases += 1; return first;
+          const busy = doctors.find((d) => d.status === "busy");
+          if (busy) {
+            patient.vet = busy.name;
+            busy.cases += 1;
+            return busy;
+          }
+          const first = doctors[0];
+          patient.vet = first.name;
+          first.cases += 1;
+          return first;
         }
         const selected = available.sort((a, b) => a.cases - b.cases)[0];
         patient.vet = selected.name;
@@ -1174,51 +2094,100 @@
       }
 
       function syncFromWebsite() {
-        showToast('🔄 Syncing data from website...', 'info');
+        showToast("🔄 Syncing data from website...", "info");
         setTimeout(() => {
           try {
-            doctors.forEach(d => d.cases = 0);
-            patients = WEBSITE_EMERGENCY_DATA.patients.map(p => {
+            doctors.forEach((d) => (d.cases = 0));
+            patients = WEBSITE_EMERGENCY_DATA.patients.map((p) => {
               const patient = {
-                ...p, arrivalTime: new Date(p.arrivalTime),
+                ...p,
+                arrivalTime: new Date(p.arrivalTime),
                 flowsheet: [
-                  { time: "Now", vitals: true, fluids: false, meds: false, notes: "Initial assessment" },
-                  { time: "+15m", vitals: false, fluids: false, meds: false, notes: "" },
-                  { time: "+30m", vitals: false, fluids: false, meds: false, notes: "" },
-                  { time: "+45m", vitals: false, fluids: false, meds: false, notes: "" }
+                  {
+                    time: "Now",
+                    vitals: true,
+                    fluids: false,
+                    meds: false,
+                    notes: "Initial assessment",
+                  },
+                  {
+                    time: "+15m",
+                    vitals: false,
+                    fluids: false,
+                    meds: false,
+                    notes: "",
+                  },
+                  {
+                    time: "+30m",
+                    vitals: false,
+                    fluids: false,
+                    meds: false,
+                    notes: "",
+                  },
+                  {
+                    time: "+45m",
+                    vitals: false,
+                    fluids: false,
+                    meds: false,
+                    notes: "",
+                  },
                 ],
-                statOrders: p.id === 1 ? [
-                  { type: "medication", description: "Buprenorphine 0.02mg/kg IV", time: "14:30", done: false },
-                  { type: "fluid", description: "IV Fluids 500ml Lactated Ringer's", time: "14:25", done: true }
-                ] : []
+                statOrders:
+                  p.id === 1
+                    ? [
+                        {
+                          type: "medication",
+                          description: "Buprenorphine 0.02mg/kg IV",
+                          time: "14:30",
+                          done: false,
+                        },
+                        {
+                          type: "fluid",
+                          description: "IV Fluids 500ml Lactated Ringer's",
+                          time: "14:25",
+                          done: true,
+                        },
+                      ]
+                    : [],
               };
               assignDoctorToPatient(patient);
               return patient;
             });
-            cages = WEBSITE_EMERGENCY_DATA.cages.map(c => {
-              const patient = patients.find(p => p.id === c.patient);
-              return { ...c, patient: patient || null, status: c.patient ? 'occupied' : 'empty' };
+            cages = WEBSITE_EMERGENCY_DATA.cages.map((c) => {
+              const patient = patients.find((p) => p.id === c.patient);
+              return {
+                ...c,
+                patient: patient || null,
+                status: c.patient ? "occupied" : "empty",
+              };
             });
             if (patients.length > 0) selectedPatientId = patients[0].id;
             renderAll();
-            showToast(`✅ Synced ${patients.length} patients from website.`, 'success');
+            showToast(
+              `✅ Synced ${patients.length} patients from website.`,
+              "success",
+            );
           } catch (error) {
-            console.error('Sync error:', error);
-            showToast('❌ Failed to sync from website', 'error');
+            console.error("Sync error:", error);
+            showToast("❌ Failed to sync from website", "error");
           }
         }, 800);
       }
 
       function assignCage(triage, isContagious) {
         if (isContagious) {
-          const isoCage = cages.find(c => c.type === 'isolation' && c.status === 'empty');
+          const isoCage = cages.find(
+            (c) => c.type === "isolation" && c.status === "empty",
+          );
           if (isoCage) return isoCage;
         }
-        if (triage === 'critical') {
-          const icu = cages.find(c => c.type === 'icu' && c.status === 'empty');
+        if (triage === "critical") {
+          const icu = cages.find(
+            (c) => c.type === "icu" && c.status === "empty",
+          );
           if (icu) return icu;
         }
-        return cages.find(c => c.status === 'empty');
+        return cages.find((c) => c.status === "empty");
       }
 
       // ============================================================
@@ -1235,91 +2204,146 @@
       }
 
       function renderTriageSummary() {
-        const critical = patients.filter(p => p.triage === 'critical').length;
-        const urgent = patients.filter(p => p.triage === 'urgent').length;
-        const standard = patients.filter(p => p.triage === 'standard').length;
-        const availableBeds = cages.filter(c => c.status === 'empty').length;
+        const critical = patients.filter((p) => p.triage === "critical").length;
+        const urgent = patients.filter((p) => p.triage === "urgent").length;
+        const standard = patients.filter((p) => p.triage === "standard").length;
+        const availableBeds = cages.filter((c) => c.status === "empty").length;
         const availableDocs = getAvailableDoctors().length;
-        
-        document.getElementById('criticalCount').textContent = String(critical).padStart(2, '0');
-        document.getElementById('urgentCount').textContent = String(urgent).padStart(2, '0');
-        document.getElementById('standardCount').textContent = String(standard).padStart(2, '0');
-        document.getElementById('bedCount').textContent = availableBeds;
-        document.getElementById('bannerBedCount').textContent = availableBeds;
-        document.getElementById('availableDoctorsCount').textContent = availableDocs;
-        document.getElementById('availableDoctorsBadge').textContent = `${availableDocs} available`;
-        document.getElementById('totalPatients').textContent = `${patients.length} patient${patients.length !== 1 ? 's' : ''}`;
+
+        document.getElementById("criticalCount").textContent = String(
+          critical,
+        ).padStart(2, "0");
+        document.getElementById("urgentCount").textContent = String(
+          urgent,
+        ).padStart(2, "0");
+        document.getElementById("standardCount").textContent = String(
+          standard,
+        ).padStart(2, "0");
+        document.getElementById("bedCount").textContent = availableBeds;
+        document.getElementById("bannerBedCount").textContent = availableBeds;
+        document.getElementById("availableDoctorsCount").textContent =
+          availableDocs;
+        document.getElementById("availableDoctorsBadge").textContent =
+          `${availableDocs} available`;
+        document.getElementById("totalPatients").textContent =
+          `${patients.length} patient${patients.length !== 1 ? "s" : ""}`;
       }
 
       function renderDoctors() {
-        const container = document.getElementById('doctorsList');
-        container.innerHTML = doctors.map(doc => {
-          const statusClass = doc.status === 'available' ? 'available' : doc.status === 'busy' ? 'busy' : 'off-duty';
-          const statusLabel = doc.status === 'available' ? '✅ Available' : doc.status === 'busy' ? '⏳ Busy' : '⛔ Off-Duty';
-          const casesText = doc.cases > 0 ? `${doc.cases} case${doc.cases > 1 ? 's' : ''}` : 'No cases';
-          return `
+        const container = document.getElementById("doctorsList");
+        container.innerHTML = doctors
+          .map((doc) => {
+            const statusClass =
+              doc.status === "available"
+                ? "available"
+                : doc.status === "busy"
+                  ? "busy"
+                  : "off-duty";
+            const statusLabel =
+              doc.status === "available"
+                ? "✅ Available"
+                : doc.status === "busy"
+                  ? "⏳ Busy"
+                  : "⛔ Off-Duty";
+            const casesText =
+              doc.cases > 0
+                ? `${doc.cases} case${doc.cases > 1 ? "s" : ""}`
+                : "No cases";
+            return `
             <div class="doctor-card ${statusClass} flex items-center justify-between">
               <div>
                 <p class="font-bold text-sm text-on-surface">${doc.name}</p>
                 <p class="text-caption text-on-surface-variant">${doc.specialty} • ${casesText}</p>
               </div>
               <div class="flex items-center gap-2">
-                <span class="text-xs font-bold ${doc.status === 'available' ? 'text-green-600' : doc.status === 'busy' ? 'text-amber-600' : 'text-gray-400'}">${statusLabel}</span>
-                ${doc.status === 'available' ? `<span class="w-2 h-2 rounded-full bg-green-500"></span>` : ''}
-                ${doc.status === 'busy' ? `<span class="w-2 h-2 rounded-full bg-amber-500"></span>` : ''}
+                <span class="text-xs font-bold ${doc.status === "available" ? "text-green-600" : doc.status === "busy" ? "text-amber-600" : "text-gray-400"}">${statusLabel}</span>
+                ${doc.status === "available" ? `<span class="w-2 h-2 rounded-full bg-green-500"></span>` : ""}
+                ${doc.status === "busy" ? `<span class="w-2 h-2 rounded-full bg-amber-500"></span>` : ""}
               </div>
             </div>
           `;
-        }).join('');
+          })
+          .join("");
       }
 
       function updateAssignedVetSelect() {
-        const select = document.getElementById('assignedVet');
+        const select = document.getElementById("assignedVet");
         if (!select) return;
         while (select.options.length > 1) select.remove(1);
         const available = getAvailableDoctors();
         if (available.length === 0) {
-          const opt = document.createElement('option');
-          opt.value = 'none'; opt.textContent = '⚠️ No doctors available'; opt.disabled = true;
+          const opt = document.createElement("option");
+          opt.value = "none";
+          opt.textContent = "⚠️ No doctors available";
+          opt.disabled = true;
           select.appendChild(opt);
         } else {
-          available.forEach(doc => {
-            const opt = document.createElement('option');
-            opt.value = doc.name; opt.textContent = `${doc.name} (${doc.specialty})`;
+          available.forEach((doc) => {
+            const opt = document.createElement("option");
+            opt.value = doc.name;
+            opt.textContent = `${doc.name} (${doc.specialty})`;
             select.appendChild(opt);
           });
         }
       }
 
       function renderTriageTable() {
-        const tbody = document.getElementById('triageTableBody');
-        const table = document.getElementById('triageTable');
-        const empty = document.getElementById('emptyTriageState');
-        if (patients.length === 0) { table.classList.add('hidden'); empty.classList.remove('hidden'); return; }
-        table.classList.remove('hidden'); empty.classList.add('hidden');
+        const tbody = document.getElementById("triageTableBody");
+        const table = document.getElementById("triageTable");
+        const empty = document.getElementById("emptyTriageState");
+        if (patients.length === 0) {
+          table.classList.add("hidden");
+          empty.classList.remove("hidden");
+          return;
+        }
+        table.classList.remove("hidden");
+        empty.classList.add("hidden");
 
         const priority = { critical: 0, urgent: 1, standard: 2 };
         const sorted = [...patients].sort((a, b) => {
-          if (priority[a.triage] !== priority[b.triage]) return priority[a.triage] - priority[b.triage];
+          if (priority[a.triage] !== priority[b.triage])
+            return priority[a.triage] - priority[b.triage];
           return b.arrivalTime - a.arrivalTime;
         });
 
-        tbody.innerHTML = sorted.map(p => {
-          const mins = Math.floor((Date.now() - p.arrivalTime) / 60000);
-          const timeStr = p.arrivalTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-          const triageConfig = {
-            critical: { bg: 'bg-error-container', text: 'text-error', label: 'Critical P1', timeColor: 'text-error' },
-            urgent: { bg: 'bg-amber-100', text: 'text-amber-800', label: 'Urgent P2', timeColor: 'text-amber-600' },
-            standard: { bg: 'bg-surface-container-high', text: 'text-on-surface-variant', label: 'Standard P3', timeColor: 'text-on-surface-variant' },
-          };
-          const tc = triageConfig[p.triage];
-          const isSelected = p.id === selectedPatientId;
-          const selectedClass = isSelected ? 'bg-primary/5 ring-2 ring-primary' : '';
-          const sourceBadge = p.source === 'website' 
-            ? '<span class="website-submission-badge">🌐 Website</span>'
-            : '<span class="text-[8px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-bold">📋 Admin</span>';
+        tbody.innerHTML = sorted
+          .map((p) => {
+            const mins = Math.floor((Date.now() - p.arrivalTime) / 60000);
+            const timeStr = p.arrivalTime.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+            const triageConfig = {
+              critical: {
+                bg: "bg-error-container",
+                text: "text-error",
+                label: "Critical P1",
+                timeColor: "text-error",
+              },
+              urgent: {
+                bg: "bg-amber-100",
+                text: "text-amber-800",
+                label: "Urgent P2",
+                timeColor: "text-amber-600",
+              },
+              standard: {
+                bg: "bg-surface-container-high",
+                text: "text-on-surface-variant",
+                label: "Standard P3",
+                timeColor: "text-on-surface-variant",
+              },
+            };
+            const tc = triageConfig[p.triage];
+            const isSelected = p.id === selectedPatientId;
+            const selectedClass = isSelected
+              ? "bg-primary/5 ring-2 ring-primary"
+              : "";
+            const sourceBadge =
+              p.source === "website"
+                ? '<span class="website-submission-badge">🌐 Website</span>'
+                : '<span class="text-[8px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-bold">📋 Admin</span>';
 
-          return `
+            return `
             <tr class="hover:bg-surface-muted transition-colors cursor-pointer ${selectedClass}" onclick="selectPatient(${p.id})">
               <td class="px-6 py-4">
                 <div class="flex items-center gap-3">
@@ -1327,11 +2351,23 @@
                     <p class="font-bold text-on-surface">${p.name}</p>
                     <p class="text-caption text-on-surface-variant">${p.breed} • ${p.age} • ${p.weight}kg</p>
                     <div class="flex gap-1 mt-1 flex-wrap">
-                      ${p.tags.map(tag => {
-                        const tagStyles = { aggressive: 'bg-red-100 text-red-700', contagious: 'bg-amber-100 text-amber-700', bite: 'bg-pink-100 text-pink-700', iv: 'bg-blue-100 text-blue-700' };
-                        const tagLabels = { aggressive: '⚠️ Aggressive', contagious: '🦠 Contagious', bite: '🦷 Will Bite', iv: '💧 IV' };
-                        return `<span class="text-[9px] font-bold px-1.5 py-0.5 rounded ${tagStyles[tag]}">${tagLabels[tag]}</span>`;
-                      }).join('')}
+                      ${p.tags
+                        .map((tag) => {
+                          const tagStyles = {
+                            aggressive: "bg-red-100 text-red-700",
+                            contagious: "bg-amber-100 text-amber-700",
+                            bite: "bg-pink-100 text-pink-700",
+                            iv: "bg-blue-100 text-blue-700",
+                          };
+                          const tagLabels = {
+                            aggressive: "⚠️ Aggressive",
+                            contagious: "🦠 Contagious",
+                            bite: "🦷 Will Bite",
+                            iv: "💧 IV",
+                          };
+                          return `<span class="text-[9px] font-bold px-1.5 py-0.5 rounded ${tagStyles[tag]}">${tagLabels[tag]}</span>`;
+                        })
+                        .join("")}
                     </div>
                   </div>
                 </div>
@@ -1343,8 +2379,16 @@
               </td>
               <td class="px-6 py-4">
                 <div class="flex items-center gap-2">
-                  <div class="w-6 h-6 rounded-full bg-surface-dim flex items-center justify-center text-[10px] font-bold text-on-surface-variant">${p.vet ? p.vet.split(' ').map(n => n[0]).slice(0, 2).join('') : '--'}</div>
-                  <span class="text-sm">${p.vet || 'Unassigned'}</span>
+                  <div class="w-6 h-6 rounded-full bg-surface-dim flex items-center justify-center text-[10px] font-bold text-on-surface-variant">${
+                    p.vet
+                      ? p.vet
+                          .split(" ")
+                          .map((n) => n[0])
+                          .slice(0, 2)
+                          .join("")
+                      : "--"
+                  }</div>
+                  <span class="text-sm">${p.vet || "Unassigned"}</span>
                 </div>
               </td>
               <td class="px-6 py-4">${sourceBadge}</td>
@@ -1355,176 +2399,243 @@
               </td>
             </tr>
           `;
-        }).join('');
+          })
+          .join("");
       }
 
       function renderCageMatrix() {
-        const grid = document.getElementById('cageGrid');
-        grid.innerHTML = cages.map(cage => {
-          if (cage.status === 'empty') {
-            return `<div class="cage-card empty flex flex-col items-center justify-center text-center">
+        const grid = document.getElementById("cageGrid");
+        grid.innerHTML = cages
+          .map((cage) => {
+            if (cage.status === "empty") {
+              return `<div class="cage-card empty flex flex-col items-center justify-center text-center">
               <span class="material-symbols-outlined text-primary text-2xl mb-1">add_box</span>
               <span class="font-bold text-sm text-primary">${cage.id}</span>
               <span class="text-caption text-on-surface-variant">Available</span>
             </div>`;
-          }
-          const p = cage.patient;
-          const isCritical = p.triage === 'critical';
-          const isContagious = p.tags.includes('contagious');
-          const cageClass = isContagious ? 'isolation' : isCritical ? 'occupied-critical' : p.triage === 'urgent' ? 'occupied-urgent' : 'occupied-standard';
+            }
+            const p = cage.patient;
+            const isCritical = p.triage === "critical";
+            const isContagious = p.tags.includes("contagious");
+            const cageClass = isContagious
+              ? "isolation"
+              : isCritical
+                ? "occupied-critical"
+                : p.triage === "urgent"
+                  ? "occupied-urgent"
+                  : "occupied-standard";
 
-          return `
+            return `
             <div class="cage-card ${cageClass} flex flex-col" onclick="selectPatient(${p.id})">
               <div class="flex justify-between items-start mb-1">
                 <span class="font-bold text-sm">${cage.id}</span>
-                ${isContagious ? `<span class="material-symbols-outlined text-amber-700 text-sm">coronavirus</span>` : ''}
-                ${isCritical ? `<span class="material-symbols-outlined text-error text-sm">warning</span>` : ''}
+                ${isContagious ? `<span class="material-symbols-outlined text-amber-700 text-sm">coronavirus</span>` : ""}
+                ${isCritical ? `<span class="material-symbols-outlined text-error text-sm">warning</span>` : ""}
               </div>
               <p class="font-bold text-sm text-on-surface">${p.name}</p>
               <p class="text-caption text-on-surface-variant mb-2">${p.species} • ${p.weight}kg</p>
               <div class="flex flex-wrap gap-1 mb-2">
-                ${p.tags.map(tag => {
-                  const tagStyles = { aggressive: 'bg-error text-white', contagious: 'bg-amber-200 text-amber-800', bite: 'bg-pink-200 text-pink-800', iv: 'bg-blue-200 text-blue-800' };
-                  const tagLabels = { aggressive: '⚠️ Aggressive', contagious: '🦠 Contagious', bite: '🦷 Will Bite', iv: '💧 IV' };
-                  return `<span class="${tagStyles[tag]} text-[8px] px-1 py-0.5 rounded font-bold uppercase">${tagLabels[tag]}</span>`;
-                }).join('')}
+                ${p.tags
+                  .map((tag) => {
+                    const tagStyles = {
+                      aggressive: "bg-error text-white",
+                      contagious: "bg-amber-200 text-amber-800",
+                      bite: "bg-pink-200 text-pink-800",
+                      iv: "bg-blue-200 text-blue-800",
+                    };
+                    const tagLabels = {
+                      aggressive: "⚠️ Aggressive",
+                      contagious: "🦠 Contagious",
+                      bite: "🦷 Will Bite",
+                      iv: "💧 IV",
+                    };
+                    return `<span class="${tagStyles[tag]} text-[8px] px-1 py-0.5 rounded font-bold uppercase">${tagLabels[tag]}</span>`;
+                  })
+                  .join("")}
               </div>
               <a href="tel:${p.ownerPhone}" onclick="event.stopPropagation()" class="flex items-center justify-center gap-1 w-full bg-white/80 text-on-surface text-xs font-bold py-1.5 rounded border border-outline-variant hover:bg-white transition-colors">
-                <span class="material-symbols-outlined text-sm">call</span> ${p.ownerName.split(' ')[0]}
+                <span class="material-symbols-outlined text-sm">call</span> ${p.ownerName.split(" ")[0]}
               </a>
             </div>
           `;
-        }).join('');
+          })
+          .join("");
       }
 
       function renderFlowsheet() {
-        const empty = document.getElementById('flowsheetEmpty');
-        const panel = document.getElementById('flowsheetPanel');
-        if (!selectedPatientId) { empty.classList.remove('hidden'); panel.classList.add('hidden'); return; }
-        const p = patients.find(pt => pt.id === selectedPatientId);
-        if (!p) { empty.classList.remove('hidden'); panel.classList.add('hidden'); return; }
+        const empty = document.getElementById("flowsheetEmpty");
+        const panel = document.getElementById("flowsheetPanel");
+        if (!selectedPatientId) {
+          empty.classList.remove("hidden");
+          panel.classList.add("hidden");
+          return;
+        }
+        const p = patients.find((pt) => pt.id === selectedPatientId);
+        if (!p) {
+          empty.classList.remove("hidden");
+          panel.classList.add("hidden");
+          return;
+        }
 
-        empty.classList.add('hidden'); panel.classList.remove('hidden');
-        document.getElementById('flowsheetPatientName').textContent = p.name + (p.source === 'website' ? ' 🌐' : '');
-        document.getElementById('flowsheetCaseInfo').textContent = `Case #VET-${String(p.id).padStart(4, '0')} • ${p.vet || 'Unassigned'} • ${p.breed} • ${p.weight}kg`;
+        empty.classList.add("hidden");
+        panel.classList.remove("hidden");
+        document.getElementById("flowsheetPatientName").textContent =
+          p.name + (p.source === "website" ? " 🌐" : "");
+        document.getElementById("flowsheetCaseInfo").textContent =
+          `Case #VET-${String(p.id).padStart(4, "0")} • ${p.vet || "Unassigned"} • ${p.breed} • ${p.weight}kg`;
 
-        const grid = document.getElementById('flowsheetGrid');
+        const grid = document.getElementById("flowsheetGrid");
         let html = `<div class="flowsheet-cell flowsheet-header">Time</div><div class="flowsheet-cell flowsheet-header">Vitals</div><div class="flowsheet-cell flowsheet-header">Fluids</div><div class="flowsheet-cell flowsheet-header">Meds</div><div class="flowsheet-cell flowsheet-header">Notes</div>`;
         p.flowsheet.forEach((row, idx) => {
           html += `
             <div class="flowsheet-cell flowsheet-header font-bold text-on-surface">${row.time}</div>
-            <div class="flowsheet-cell ${row.vitals ? 'checked' : ''}" onclick="toggleFlowsheet(${p.id}, ${idx}, 'vitals')">
-              <span class="material-symbols-outlined ${row.vitals ? 'text-primary' : 'text-outline'} text-lg" style="font-variation-settings: 'FILL' ${row.vitals ? 1 : 0}">check_circle</span>
+            <div class="flowsheet-cell ${row.vitals ? "checked" : ""}" onclick="toggleFlowsheet(${p.id}, ${idx}, 'vitals')">
+              <span class="material-symbols-outlined ${row.vitals ? "text-primary" : "text-outline"} text-lg" style="font-variation-settings: 'FILL' ${row.vitals ? 1 : 0}">check_circle</span>
             </div>
-            <div class="flowsheet-cell ${row.fluids ? 'checked' : ''}" onclick="toggleFlowsheet(${p.id}, ${idx}, 'fluids')">
-              <span class="material-symbols-outlined ${row.fluids ? 'text-primary' : 'text-outline'} text-lg" style="font-variation-settings: 'FILL' ${row.fluids ? 1 : 0}">check_circle</span>
+            <div class="flowsheet-cell ${row.fluids ? "checked" : ""}" onclick="toggleFlowsheet(${p.id}, ${idx}, 'fluids')">
+              <span class="material-symbols-outlined ${row.fluids ? "text-primary" : "text-outline"} text-lg" style="font-variation-settings: 'FILL' ${row.fluids ? 1 : 0}">check_circle</span>
             </div>
-            <div class="flowsheet-cell ${row.meds ? 'checked' : ''}" onclick="toggleFlowsheet(${p.id}, ${idx}, 'meds')">
-              <span class="material-symbols-outlined ${row.meds ? 'text-primary' : 'text-outline'} text-lg" style="font-variation-settings: 'FILL' ${row.meds ? 1 : 0}">check_circle</span>
+            <div class="flowsheet-cell ${row.meds ? "checked" : ""}" onclick="toggleFlowsheet(${p.id}, ${idx}, 'meds')">
+              <span class="material-symbols-outlined ${row.meds ? "text-primary" : "text-outline"} text-lg" style="font-variation-settings: 'FILL' ${row.meds ? 1 : 0}">check_circle</span>
             </div>
             <div class="flowsheet-cell p-1">
-              <textarea class="w-full h-full bg-transparent resize-none outline-none text-xs text-on-surface font-body-md p-1" oninput="updateNote(${p.id}, ${idx}, this.value)">${row.notes || ''}</textarea>
+              <textarea class="w-full h-full bg-transparent resize-none outline-none text-xs text-on-surface font-body-md p-1" oninput="updateNote(${p.id}, ${idx}, this.value)">${row.notes || ""}</textarea>
             </div>
           `;
         });
         grid.innerHTML = html;
 
-        const ordersList = document.getElementById('statOrdersList');
+        const ordersList = document.getElementById("statOrdersList");
         if (!p.statOrders || p.statOrders.length === 0) {
-          ordersList.innerHTML = '<p class="text-sm text-on-surface-variant italic py-2">No active stat orders. Click "Stat Order" to add one.</p>';
+          ordersList.innerHTML =
+            '<p class="text-sm text-on-surface-variant italic py-2">No active stat orders. Click "Stat Order" to add one.</p>';
         } else {
-          ordersList.innerHTML = p.statOrders.map((order, idx) => {
-            const typeIcons = { medication: 'medication', imaging: 'image', lab: 'science', procedure: 'medical_services', fluid: 'water_drop' };
-            const icon = typeIcons[order.type] || 'medical_services';
-            return `
+          ordersList.innerHTML = p.statOrders
+            .map((order, idx) => {
+              const typeIcons = {
+                medication: "medication",
+                imaging: "image",
+                lab: "science",
+                procedure: "medical_services",
+                fluid: "water_drop",
+              };
+              const icon = typeIcons[order.type] || "medical_services";
+              return `
               <div class="stat-order-item flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                  <span class="material-symbols-outlined ${order.done ? 'text-outline' : 'text-emergency-red'}" style="font-variation-settings: 'FILL' 1">${icon}</span>
+                  <span class="material-symbols-outlined ${order.done ? "text-outline" : "text-emergency-red"}" style="font-variation-settings: 'FILL' 1">${icon}</span>
                   <div>
-                    <p class="font-bold text-sm text-on-surface ${order.done ? 'line-through opacity-60' : ''}">${order.description}</p>
+                    <p class="font-bold text-sm text-on-surface ${order.done ? "line-through opacity-60" : ""}">${order.description}</p>
                     <p class="text-caption text-on-surface-variant">Ordered ${order.time} • ${order.type}</p>
                   </div>
                 </div>
                 ${order.done ? `<span class="text-xs font-bold text-primary uppercase">Done ✓</span>` : `<button onclick="completeOrder(${p.id}, ${idx})" class="bg-emergency-red text-white px-3 py-1.5 rounded text-xs font-bold hover:bg-emergency-red/90 transition-colors flex items-center gap-1"><span class="material-symbols-outlined text-sm">check</span> Mark Done</button>`}
               </div>
             `;
-          }).join('');
+            })
+            .join("");
         }
       }
 
       function renderConsentPanel() {
-        const empty = document.getElementById('consentEmpty');
-        const panel = document.getElementById('consentPanel');
-        if (!selectedPatientId) { empty.classList.remove('hidden'); panel.classList.add('hidden'); return; }
-        const p = patients.find(pt => pt.id === selectedPatientId);
-        if (!p) { empty.classList.remove('hidden'); panel.classList.add('hidden'); return; }
-        empty.classList.add('hidden'); panel.classList.remove('hidden');
-        updateConsentButton('cpr', p.consent.cpr);
-        updateConsentButton('estimate', p.consent.estimate);
-        updateConsentButton('deposit', p.consent.deposit);
+        const empty = document.getElementById("consentEmpty");
+        const panel = document.getElementById("consentPanel");
+        if (!selectedPatientId) {
+          empty.classList.remove("hidden");
+          panel.classList.add("hidden");
+          return;
+        }
+        const p = patients.find((pt) => pt.id === selectedPatientId);
+        if (!p) {
+          empty.classList.remove("hidden");
+          panel.classList.add("hidden");
+          return;
+        }
+        empty.classList.add("hidden");
+        panel.classList.remove("hidden");
+        updateConsentButton("cpr", p.consent.cpr);
+        updateConsentButton("estimate", p.consent.estimate);
+        updateConsentButton("deposit", p.consent.deposit);
       }
 
       function updateConsentButton(type, isApproved) {
         const btn = document.getElementById(`${type}Toggle`);
         if (!btn) return;
-        if (type === 'cpr') {
+        if (type === "cpr") {
           if (isApproved) {
-            btn.className = 'flex items-center gap-2 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20 hover:bg-primary/20 transition-colors';
-            btn.innerHTML = '<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: \'FILL\' 1">check_circle</span><span class="text-xs font-bold text-primary uppercase">CPR Approved</span>';
+            btn.className =
+              "flex items-center gap-2 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20 hover:bg-primary/20 transition-colors";
+            btn.innerHTML =
+              '<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: \'FILL\' 1">check_circle</span><span class="text-xs font-bold text-primary uppercase">CPR Approved</span>';
           } else {
-            btn.className = 'flex items-center gap-2 bg-error/10 px-3 py-1.5 rounded-full border border-error/20 hover:bg-error/20 transition-colors';
-            btn.innerHTML = '<span class="material-symbols-outlined text-error text-sm" style="font-variation-settings: \'FILL\' 1">cancel</span><span class="text-xs font-bold text-error uppercase">DNR</span>';
+            btn.className =
+              "flex items-center gap-2 bg-error/10 px-3 py-1.5 rounded-full border border-error/20 hover:bg-error/20 transition-colors";
+            btn.innerHTML =
+              '<span class="material-symbols-outlined text-error text-sm" style="font-variation-settings: \'FILL\' 1">cancel</span><span class="text-xs font-bold text-error uppercase">DNR</span>';
           }
-        } else if (type === 'estimate') {
+        } else if (type === "estimate") {
           if (isApproved) {
-            btn.className = 'flex items-center gap-2 bg-green-100 px-3 py-1.5 rounded-full border border-green-200 hover:bg-green-200 transition-colors';
-            btn.innerHTML = '<span class="material-symbols-outlined text-green-700 text-sm" style="font-variation-settings: \'FILL\' 1">check_circle</span><span class="text-xs font-bold text-green-700 uppercase">Signed</span>';
+            btn.className =
+              "flex items-center gap-2 bg-green-100 px-3 py-1.5 rounded-full border border-green-200 hover:bg-green-200 transition-colors";
+            btn.innerHTML =
+              '<span class="material-symbols-outlined text-green-700 text-sm" style="font-variation-settings: \'FILL\' 1">check_circle</span><span class="text-xs font-bold text-green-700 uppercase">Signed</span>';
           } else {
-            btn.className = 'flex items-center gap-2 bg-error/10 px-3 py-1.5 rounded-full border border-error/20 hover:bg-error/20 transition-colors';
-            btn.innerHTML = '<span class="material-symbols-outlined text-error text-sm">pending</span><span class="text-xs font-bold text-error uppercase">Not Signed</span>';
+            btn.className =
+              "flex items-center gap-2 bg-error/10 px-3 py-1.5 rounded-full border border-error/20 hover:bg-error/20 transition-colors";
+            btn.innerHTML =
+              '<span class="material-symbols-outlined text-error text-sm">pending</span><span class="text-xs font-bold text-error uppercase">Not Signed</span>';
           }
-        } else if (type === 'deposit') {
+        } else if (type === "deposit") {
           if (isApproved) {
-            btn.className = 'flex items-center gap-2 bg-green-100 px-3 py-1.5 rounded-full border border-green-200 hover:bg-green-200 transition-colors';
-            btn.innerHTML = '<span class="material-symbols-outlined text-green-700 text-sm" style="font-variation-settings: \'FILL\' 1">check_circle</span><span class="text-xs font-bold text-green-700 uppercase">Paid</span>';
+            btn.className =
+              "flex items-center gap-2 bg-green-100 px-3 py-1.5 rounded-full border border-green-200 hover:bg-green-200 transition-colors";
+            btn.innerHTML =
+              '<span class="material-symbols-outlined text-green-700 text-sm" style="font-variation-settings: \'FILL\' 1">check_circle</span><span class="text-xs font-bold text-green-700 uppercase">Paid</span>';
           } else {
-            btn.className = 'flex items-center gap-2 bg-amber-100 px-3 py-1.5 rounded-full border border-amber-200 hover:bg-amber-200 transition-colors';
-            btn.innerHTML = '<span class="material-symbols-outlined text-amber-700 text-sm">pending</span><span class="text-xs font-bold text-amber-700 uppercase">Pending</span>';
+            btn.className =
+              "flex items-center gap-2 bg-amber-100 px-3 py-1.5 rounded-full border border-amber-200 hover:bg-amber-200 transition-colors";
+            btn.innerHTML =
+              '<span class="material-symbols-outlined text-amber-700 text-sm">pending</span><span class="text-xs font-bold text-amber-700 uppercase">Pending</span>';
           }
         }
       }
 
       function selectPatient(id) {
         selectedPatientId = id;
-        renderTriageTable(); renderFlowsheet(); renderConsentPanel();
+        renderTriageTable();
+        renderFlowsheet();
+        renderConsentPanel();
       }
 
       function toggleFlowsheet(patientId, rowIdx, field) {
-        const p = patients.find(pt => pt.id === patientId);
+        const p = patients.find((pt) => pt.id === patientId);
         if (!p) return;
         p.flowsheet[rowIdx][field] = !p.flowsheet[rowIdx][field];
         renderFlowsheet();
       }
 
       function updateNote(patientId, rowIdx, value) {
-        const p = patients.find(pt => pt.id === patientId);
+        const p = patients.find((pt) => pt.id === patientId);
         if (p) p.flowsheet[rowIdx].notes = value;
       }
 
       function toggleConsent(type) {
-        const p = patients.find(pt => pt.id === selectedPatientId);
+        const p = patients.find((pt) => pt.id === selectedPatientId);
         if (!p) return;
         p.consent[type] = !p.consent[type];
         renderConsentPanel();
-        showToast(`${type.toUpperCase()} status updated for ${p.name}`, 'success');
+        showToast(
+          `${type.toUpperCase()} status updated for ${p.name}`,
+          "success",
+        );
       }
 
       function completeOrder(patientId, orderIdx) {
-        const p = patients.find(pt => pt.id === patientId);
+        const p = patients.find((pt) => pt.id === patientId);
         if (!p) return;
         p.statOrders[orderIdx].done = true;
         renderFlowsheet();
-        showToast(`Order marked as done for ${p.name}`, 'success');
+        showToast(`Order marked as done for ${p.name}`, "success");
       }
 
       // ============================================================
@@ -1532,77 +2643,105 @@
       // ============================================================
       function openIntakeModal() {
         updateAssignedVetSelect();
-        const lookup = document.getElementById('patientLookup');
+        const lookup = document.getElementById("patientLookup");
         lookup.innerHTML = '<option value="">-- Select a patient --</option>';
-        
+
         // Populate with patients from website/database
-        patients.forEach(p => {
-          const opt = document.createElement('option');
+        patients.forEach((p) => {
+          const opt = document.createElement("option");
           opt.value = p.id;
           opt.textContent = `${p.name} (${p.species}) - ${p.triage.toUpperCase()} Triage`;
           lookup.appendChild(opt);
         });
 
-        document.getElementById('intakeModal').classList.add('open');
-        document.body.style.overflow = 'hidden';
+        document.getElementById("intakeModal").classList.add("open");
+        document.body.style.overflow = "hidden";
       }
 
       function closeIntakeModal() {
-        document.getElementById('intakeModal').classList.remove('open');
-        document.body.style.overflow = '';
-        document.getElementById('intakeForm').reset();
-        document.querySelectorAll('.tag-toggle').forEach(el => {
-          el.classList.remove('active-aggressive', 'active-contagious', 'active-bite', 'active-iv');
+        document.getElementById("intakeModal").classList.remove("open");
+        document.body.style.overflow = "";
+        document.getElementById("intakeForm").reset();
+        document.querySelectorAll(".tag-toggle").forEach((el) => {
+          el.classList.remove(
+            "active-aggressive",
+            "active-contagious",
+            "active-bite",
+            "active-iv",
+          );
         });
       }
 
       // Populate form when a patient is selected from the database/website
-      document.getElementById('patientLookup').addEventListener('change', function() {
-        const patientId = parseInt(this.value);
-        if (!patientId) {
-          // Clear fields if none selected
-          ['patientNameDisplay', 'speciesDisplay', 'breedDisplay', 'ageDisplay', 'weightDisplay', 'triageDisplay', 'ownerNameDisplay', 'ownerPhoneDisplay', 'complaint'].forEach(id => {
-            document.getElementById(id).value = '';
-          });
-          document.getElementById('selectedPatientId').value = '';
-          document.getElementById('selectedTriage').value = '';
-          return;
-        }
+      document
+        .getElementById("patientLookup")
+        .addEventListener("change", function () {
+          const patientId = parseInt(this.value);
+          if (!patientId) {
+            // Clear fields if none selected
+            [
+              "patientNameDisplay",
+              "speciesDisplay",
+              "breedDisplay",
+              "ageDisplay",
+              "weightDisplay",
+              "triageDisplay",
+              "ownerNameDisplay",
+              "ownerPhoneDisplay",
+              "complaint",
+            ].forEach((id) => {
+              document.getElementById(id).value = "";
+            });
+            document.getElementById("selectedPatientId").value = "";
+            document.getElementById("selectedTriage").value = "";
+            return;
+          }
 
-        const p = patients.find(pt => pt.id === patientId);
-        if (p) {
-          document.getElementById('selectedPatientId').value = p.id;
-          document.getElementById('selectedTriage').value = p.triage;
-          
-          document.getElementById('patientNameDisplay').value = p.name;
-          document.getElementById('speciesDisplay').value = p.species;
-          document.getElementById('breedDisplay').value = p.breed;
-          document.getElementById('ageDisplay').value = p.age;
-          document.getElementById('weightDisplay').value = p.weight;
-          
-          const triageLabels = { critical: '🔴 CRITICAL P1', urgent: '🟡 URGENT P2', standard: '🟢 STANDARD P3' };
-          document.getElementById('triageDisplay').value = triageLabels[p.triage] || p.triage.toUpperCase();
-          
-          document.getElementById('ownerNameDisplay').value = p.ownerName;
-          document.getElementById('ownerPhoneDisplay').value = p.ownerPhone;
-          
-          // Pre-fill complaint with existing data but leave it editable for doctor's notes
-          document.getElementById('complaint').value = p.complaint || '';
-          
-          // Pre-fill consent checkboxes
-          document.getElementById('cprApproved').checked = p.consent.cpr;
-          document.getElementById('estimateSigned').checked = p.consent.estimate;
-          document.getElementById('depositPaid').checked = p.consent.deposit;
+          const p = patients.find((pt) => pt.id === patientId);
+          if (p) {
+            document.getElementById("selectedPatientId").value = p.id;
+            document.getElementById("selectedTriage").value = p.triage;
 
-          // Pre-fill tags
-          document.querySelectorAll('.tag-toggle').forEach(el => {
-            el.classList.remove('active-aggressive', 'active-contagious', 'active-bite', 'active-iv');
-            if (p.tags.includes(el.dataset.tag)) {
-              el.classList.add(`active-${el.dataset.tag}`);
-            }
-          });
-        }
-      });
+            document.getElementById("patientNameDisplay").value = p.name;
+            document.getElementById("speciesDisplay").value = p.species;
+            document.getElementById("breedDisplay").value = p.breed;
+            document.getElementById("ageDisplay").value = p.age;
+            document.getElementById("weightDisplay").value = p.weight;
+
+            const triageLabels = {
+              critical: "🔴 CRITICAL P1",
+              urgent: "🟡 URGENT P2",
+              standard: "🟢 STANDARD P3",
+            };
+            document.getElementById("triageDisplay").value =
+              triageLabels[p.triage] || p.triage.toUpperCase();
+
+            document.getElementById("ownerNameDisplay").value = p.ownerName;
+            document.getElementById("ownerPhoneDisplay").value = p.ownerPhone;
+
+            // Pre-fill complaint with existing data but leave it editable for doctor's notes
+            document.getElementById("complaint").value = p.complaint || "";
+
+            // Pre-fill consent checkboxes
+            document.getElementById("cprApproved").checked = p.consent.cpr;
+            document.getElementById("estimateSigned").checked =
+              p.consent.estimate;
+            document.getElementById("depositPaid").checked = p.consent.deposit;
+
+            // Pre-fill tags
+            document.querySelectorAll(".tag-toggle").forEach((el) => {
+              el.classList.remove(
+                "active-aggressive",
+                "active-contagious",
+                "active-bite",
+                "active-iv",
+              );
+              if (p.tags.includes(el.dataset.tag)) {
+                el.classList.add(`active-${el.dataset.tag}`);
+              }
+            });
+          }
+        });
 
       function toggleTag(el) {
         const tag = el.dataset.tag;
@@ -1610,144 +2749,203 @@
       }
 
       function openStatOrderModal() {
-        if (!selectedPatientId) { showToast('Select a patient first', 'error'); return; }
-        document.getElementById('statOrderModal').classList.add('open');
-        document.body.style.overflow = 'hidden';
+        if (!selectedPatientId) {
+          showToast("Select a patient first", "error");
+          return;
+        }
+        document.getElementById("statOrderModal").classList.add("open");
+        document.body.style.overflow = "hidden";
       }
       function closeStatOrderModal() {
-        document.getElementById('statOrderModal').classList.remove('open');
-        document.body.style.overflow = '';
-        document.getElementById('statOrderForm').reset();
+        document.getElementById("statOrderModal").classList.remove("open");
+        document.body.style.overflow = "";
+        document.getElementById("statOrderForm").reset();
       }
 
       function scrollStatOrders(direction) {
-        const list = document.getElementById('statOrdersList');
-        list.scrollBy({ top: direction * 100, behavior: 'smooth' });
+        const list = document.getElementById("statOrdersList");
+        list.scrollBy({ top: direction * 100, behavior: "smooth" });
       }
 
       function requestDischarge(id) {
         dischargePatientId = id;
-        const p = patients.find(pt => pt.id === id);
-        document.getElementById('dischargeModalText').textContent = `Are you sure you want to discharge ${p.name}? This will free up cage ${p.cageId} and doctor ${p.vet}.`;
-        document.getElementById('dischargeModal').classList.add('open');
+        const p = patients.find((pt) => pt.id === id);
+        document.getElementById("dischargeModalText").textContent =
+          `Are you sure you want to discharge ${p.name}? This will free up cage ${p.cageId} and doctor ${p.vet}.`;
+        document.getElementById("dischargeModal").classList.add("open");
       }
 
       function closeDischargeModal() {
-        document.getElementById('dischargeModal').classList.remove('open');
+        document.getElementById("dischargeModal").classList.remove("open");
         dischargePatientId = null;
       }
 
       function dischargePatient(id) {
-        const p = patients.find(pt => pt.id === id);
+        const p = patients.find((pt) => pt.id === id);
         if (!p) return;
-        const doctor = doctors.find(d => d.name === p.vet);
+        const doctor = doctors.find((d) => d.name === p.vet);
         if (doctor && doctor.cases > 0) doctor.cases -= 1;
-        const cage = cages.find(c => c.id === p.cageId);
-        if (cage) { cage.status = 'empty'; cage.patient = null; }
-        patients = patients.filter(pt => pt.id !== id);
-        if (selectedPatientId === id) selectedPatientId = patients.length > 0 ? patients[0].id : null;
+        const cage = cages.find((c) => c.id === p.cageId);
+        if (cage) {
+          cage.status = "empty";
+          cage.patient = null;
+        }
+        patients = patients.filter((pt) => pt.id !== id);
+        if (selectedPatientId === id)
+          selectedPatientId = patients.length > 0 ? patients[0].id : null;
         renderAll();
-        showToast(`${p.name} discharged. Cage ${p.cageId} is now available.`, 'info');
+        showToast(
+          `${p.name} discharged. Cage ${p.cageId} is now available.`,
+          "info",
+        );
       }
 
       // ============================================================
       // ===== FORM SUBMISSIONS =====
       // ============================================================
-      document.getElementById('confirmDischargeBtn').addEventListener('click', function() {
-        if (dischargePatientId) { dischargePatient(dischargePatientId); closeDischargeModal(); }
-      });
-
-      document.getElementById('statOrderForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const p = patients.find(pt => pt.id === selectedPatientId);
-        if (!p) return;
-        const now = new Date();
-        if (!p.statOrders) p.statOrders = [];
-        p.statOrders.unshift({
-          type: document.getElementById('orderType').value,
-          description: document.getElementById('orderDescription').value.trim(),
-          time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          done: false,
-        });
-        closeStatOrderModal();
-        renderFlowsheet();
-        showToast(`Stat order added for ${p.name}`, 'success');
-      });
-
-      document.getElementById('intakeForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const patientId = parseInt(document.getElementById('selectedPatientId').value);
-        const p = patients.find(pt => pt.id === patientId);
-        
-        if (!p) {
-          showToast('Please select a valid patient from the database.', 'error');
-          return;
-        }
-
-        const vetSelect = document.getElementById('assignedVet');
-        if (!vetSelect.value || vetSelect.value === 'none') {
-          showToast('Please assign an on-site doctor.', 'error');
-          return;
-        }
-
-        const complaintText = document.getElementById('complaint').value.trim();
-        if (!complaintText) {
-          showToast('Please enter clinical notes or complaints.', 'error');
-          return;
-        }
-
-        // Update patient record with doctor's input
-        p.complaint = complaintText;
-        p.vet = vetSelect.value;
-        p.consent = {
-          cpr: document.getElementById('cprApproved').checked,
-          estimate: document.getElementById('estimateSigned').checked,
-          deposit: document.getElementById('depositPaid').checked,
-        };
-
-        // Update tags
-        const newTags = [];
-        document.querySelectorAll('.tag-toggle').forEach(el => {
-          if (el.classList.contains(`active-${el.dataset.tag}`)) {
-            newTags.push(el.dataset.tag);
+      document
+        .getElementById("confirmDischargeBtn")
+        .addEventListener("click", function () {
+          if (dischargePatientId) {
+            dischargePatient(dischargePatientId);
+            closeDischargeModal();
           }
         });
-        p.tags = newTags;
 
-        // Assign cage if not already assigned
-        if (!p.cageId) {
-          const cageAssignment = assignCage(p.triage, p.tags.includes('contagious'));
-          if (cageAssignment) {
-            p.cageId = cageAssignment.id;
-            cageAssignment.status = 'occupied';
-            cageAssignment.patient = p;
+      document
+        .getElementById("statOrderForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const p = patients.find((pt) => pt.id === selectedPatientId);
+          if (!p) return;
+          const now = new Date();
+          if (!p.statOrders) p.statOrders = [];
+          p.statOrders.unshift({
+            type: document.getElementById("orderType").value,
+            description: document
+              .getElementById("orderDescription")
+              .value.trim(),
+            time: now.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
+            done: false,
+          });
+          closeStatOrderModal();
+          renderFlowsheet();
+          showToast(`Stat order added for ${p.name}`, "success");
+        });
+
+      document
+        .getElementById("intakeForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const patientId = parseInt(
+            document.getElementById("selectedPatientId").value,
+          );
+          const p = patients.find((pt) => pt.id === patientId);
+
+          if (!p) {
+            showToast(
+              "Please select a valid patient from the database.",
+              "error",
+            );
+            return;
           }
-        }
 
-        // Update doctor's case count
-        const doctor = doctors.find(d => d.name === p.vet);
-        if (doctor) doctor.cases += 1;
+          const vetSelect = document.getElementById("assignedVet");
+          if (!vetSelect.value || vetSelect.value === "none") {
+            showToast("Please assign an on-site doctor.", "error");
+            return;
+          }
 
-        closeIntakeModal();
-        renderAll();
-        showToast(`✅ ${p.name} successfully admitted to ER under ${p.vet}`, 'success');
-      });
+          const complaintText = document
+            .getElementById("complaint")
+            .value.trim();
+          if (!complaintText) {
+            showToast("Please enter clinical notes or complaints.", "error");
+            return;
+          }
+
+          // Update patient record with doctor's input
+          p.complaint = complaintText;
+          p.vet = vetSelect.value;
+          p.consent = {
+            cpr: document.getElementById("cprApproved").checked,
+            estimate: document.getElementById("estimateSigned").checked,
+            deposit: document.getElementById("depositPaid").checked,
+          };
+
+          // Update tags
+          const newTags = [];
+          document.querySelectorAll(".tag-toggle").forEach((el) => {
+            if (el.classList.contains(`active-${el.dataset.tag}`)) {
+              newTags.push(el.dataset.tag);
+            }
+          });
+          p.tags = newTags;
+
+          // Assign cage if not already assigned
+          if (!p.cageId) {
+            const cageAssignment = assignCage(
+              p.triage,
+              p.tags.includes("contagious"),
+            );
+            if (cageAssignment) {
+              p.cageId = cageAssignment.id;
+              cageAssignment.status = "occupied";
+              cageAssignment.patient = p;
+            }
+          }
+
+          // Update doctor's case count
+          const doctor = doctors.find((d) => d.name === p.vet);
+          if (doctor) doctor.cases += 1;
+
+          closeIntakeModal();
+          renderAll();
+          showToast(
+            `✅ ${p.name} successfully admitted to ER under ${p.vet}`,
+            "success",
+          );
+        });
 
       // Modal click outside to close
-      document.getElementById('intakeModal').addEventListener('click', function(e) { if (e.target === this) closeIntakeModal(); });
-      document.getElementById('statOrderModal').addEventListener('click', function(e) { if (e.target === this) closeStatOrderModal(); });
-      document.getElementById('dischargeModal').addEventListener('click', function(e) { if (e.target === this) closeDischargeModal(); });
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          if (document.getElementById('intakeModal').classList.contains('open')) closeIntakeModal();
-          if (document.getElementById('statOrderModal').classList.contains('open')) closeStatOrderModal();
-          if (document.getElementById('dischargeModal').classList.contains('open')) closeDischargeModal();
+      document
+        .getElementById("intakeModal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) closeIntakeModal();
+        });
+      document
+        .getElementById("statOrderModal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) closeStatOrderModal();
+        });
+      document
+        .getElementById("dischargeModal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) closeDischargeModal();
+        });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          if (document.getElementById("intakeModal").classList.contains("open"))
+            closeIntakeModal();
+          if (
+            document.getElementById("statOrderModal").classList.contains("open")
+          )
+            closeStatOrderModal();
+          if (
+            document.getElementById("dischargeModal").classList.contains("open")
+          )
+            closeDischargeModal();
         }
       });
 
       // Init
-      document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(() => { syncFromWebsite(); }, 500);
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(() => {
+          syncFromWebsite();
+        }, 500);
       });
     </script>
   </body>

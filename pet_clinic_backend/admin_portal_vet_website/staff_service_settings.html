@@ -708,16 +708,16 @@
         border-radius: 10px;
       }
       a[data-nav-desktop="emergency"],
-a[data-nav-mobile="emergency"] {
-  background-color: #943031 !important;
-  color: #ffffff !important;
-}
+      a[data-nav-mobile="emergency"] {
+        background-color: #943031 !important;
+        color: #ffffff !important;
+      }
 
-a[data-nav-desktop="emergency"]:hover,
-a[data-nav-mobile="emergency"]:hover {
-  background-color: #7a2526 !important; /* Slightly darker red on hover */
-  color: #ffffff !important;
-}
+      a[data-nav-desktop="emergency"]:hover,
+      a[data-nav-mobile="emergency"]:hover {
+        background-color: #7a2526 !important; /* Slightly darker red on hover */
+        color: #ffffff !important;
+      }
     </style>
   </head>
 
@@ -801,20 +801,27 @@ a[data-nav-mobile="emergency"]:hover {
           ><span>Staff</span></a
         >
         <a
+          href="./appointment.html"
+          data-nav-mobile="appointments"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined">event_note</span
+          ><span>Appointments</span></a
+        >
+        <a
           href="./billing.html"
           data-nav-mobile="billing"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
           ><span class="material-symbols-outlined">payments</span
           ><span>Billing</span></a
         >
-       <a
-            href="./records.html"
-            data-nav-desktop="records"
-            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >description</span
-            ><span class="sidebar-text">Patient & Owner Records</span></a
-          >
+        <a
+          href="./records.html"
+          data-nav-desktop="records"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          ><span class="material-symbols-outlined sidebar-icon-only"
+            >description</span
+          ><span class="sidebar-text">Patient & Owner Records</span></a
+        >
         <a
           href="./message.html"
           data-nav-desktop="message"
@@ -823,19 +830,35 @@ a[data-nav-mobile="emergency"]:hover {
           ><span class="material-symbols-outlined">message</span
           ><span class="sidebar-text">Messages</span></a
         >
-         <a href="./emergency_management.html" data-nav-desktop="emergency" data-nav-mobile="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10">
-            <span class="material-symbols-outlined sidebar-icon-only">emergency</span><span class="sidebar-text">Emergency Cases</span>
-          </a>
         <a
-          href="#"
-          data-nav-mobile="appointments"
+          href="./emergency_management.html"
+          data-nav-desktop="emergency"
+          data-nav-mobile="emergency"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"
+        >
+          <span class="material-symbols-outlined sidebar-icon-only"
+            >emergency</span
+          ><span class="sidebar-text">Emergency Cases</span>
+        </a>
+        <!-- MORTUARY -->
+        <a
+          href="./mortuary.html"
+          data-nav-mobile="mortuary"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
-          ><span class="material-symbols-outlined">event_note</span
-          ><span>Appointments</span></a
+          ><span class="material-symbols-outlined">heart_broken</span
+          ><span>Mortuary</span></a
+        >
+        <!-- REPORTS -->
+        <a
+          href="./report.html"
+          data-nav-mobile="reports"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined">assessment</span
+          ><span>Reports</span></a
         >
         <div class="h-px bg-white/10 my-4"></div>
         <a
-          href="#"
+          href="./settings.html"
           data-nav-mobile="settings"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
           ><span class="material-symbols-outlined">settings</span
@@ -924,6 +947,14 @@ a[data-nav-mobile="emergency"]:hover {
             ><span class="sidebar-text">Staff</span></a
           >
           <a
+            href="./appointment.html"
+            data-nav-desktop="appointments"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >event_note</span
+            ><span class="sidebar-text">Appointments</span></a
+          >
+          <a
             href="./billing.html"
             data-nav-desktop="billing"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
@@ -940,23 +971,49 @@ a[data-nav-mobile="emergency"]:hover {
             ><span class="sidebar-text">Patient & Owner Records</span></a
           >
           <a
-          href="./message.html"
-          data-nav-desktop="message"
-          data-nav-mobile="message"
-          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
-          ><span class="material-symbols-outlined">message</span
-          ><span class="sidebar-text">Messages</span></a
-        >
-         <a href="./emergency_management.html" data-nav-desktop="emergency" data-nav-mobile="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10">
-            <span class="material-symbols-outlined sidebar-icon-only">emergency</span><span class="sidebar-text">Emergency Cases</span>
-          </a>
+            href="./message.html"
+            data-nav-desktop="message"
+            data-nav-mobile="message"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+            ><span class="material-symbols-outlined">message</span
+            ><span class="sidebar-text">Messages</span></a
+          >
           <a
-            href="#"
-            data-nav-desktop="appointments"
+            href="./emergency_management.html"
+            data-nav-desktop="emergency"
+            data-nav-mobile="emergency"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >emergency</span
+            ><span class="sidebar-text">Emergency Cases</span>
+          </a>
+          <!-- MORTUARY -->
+          <a
+            href="./mortuary.html"
+            data-nav-desktop="mortuary"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
             ><span class="material-symbols-outlined sidebar-icon-only"
-              >event_note</span
-            ><span class="sidebar-text">Appointments</span></a
+              >heart_broken</span
+            ><span class="sidebar-text">Mortuary</span></a
+          >
+          <!-- REPORTS -->
+          <a
+            href="./report.html"
+            data-nav-desktop="reports"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >assessment</span
+            ><span class="sidebar-text">Reports</span></a
+          >
+          <!-- SETTINGS -->
+          <a
+            href="./settings.html"
+            data-nav-desktop="settings"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >settings</span
+            ><span class="sidebar-text">Settings</span></a
           >
         </nav>
         <div class="p-4 mt-auto bottom-container">
@@ -1760,26 +1817,36 @@ a[data-nav-mobile="emergency"]:hover {
         records: "records.html",
         message: "message.html",
         emergency: "emergency_management.html",
-        appointments: "appointments.html",
+        appointments: "appointment.html",
+        mortuary: "mortuary.html",
+        reports: "report.html",
         settings: "settings.html",
       };
 
       if (pageMap[section]) {
         window.location.href = pageMap[section];
       }
-       // Helper function to prevent overriding the emergency button
-  const updateLinkStyle = (link, isActive) => {
-    const isEmergency = link.getAttribute("data-nav-desktop") === "emergency" || link.getAttribute("data-nav-mobile") === "emergency";
-    if (isEmergency) return; // 🛡️ SKIP: Keep emergency button red
+      // Helper function to prevent overriding the emergency button
+      const updateLinkStyle = (link, isActive) => {
+        const isEmergency =
+          link.getAttribute("data-nav-desktop") === "emergency" ||
+          link.getAttribute("data-nav-mobile") === "emergency";
+        if (isEmergency) return; // 🛡️ SKIP: Keep emergency button red
 
-    if (isActive) {
-      link.classList.add("bg-primary-container", "text-on-primary-container");
-      link.classList.remove("text-tertiary-fixed-dim", "hover:bg-white/5");
-    } else {
-      link.classList.remove("bg-primary-container", "text-on-primary-container");
-      link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
-    }
-  };
+        if (isActive) {
+          link.classList.add(
+            "bg-primary-container",
+            "text-on-primary-container",
+          );
+          link.classList.remove("text-tertiary-fixed-dim", "hover:bg-white/5");
+        } else {
+          link.classList.remove(
+            "bg-primary-container",
+            "text-on-primary-container",
+          );
+          link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
+        }
+      };
 
       // Update active states for desktop
       document.querySelectorAll("[data-nav-desktop]").forEach((link) => {

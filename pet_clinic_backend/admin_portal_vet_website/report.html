@@ -5,7 +5,10 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>addyPets | Reports</title>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <!-- html2canvas + jsPDF for PDF export -->
@@ -23,7 +26,11 @@
 
     <style>
       .material-symbols-outlined {
-        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
         vertical-align: middle;
       }
       .custom-scrollbar::-webkit-scrollbar,
@@ -56,7 +63,9 @@
         scrollbar-width: none;
       }
       .sidebar-transition {
-        transition: width 0.3s ease-in-out, transform 0.3s ease-in-out;
+        transition:
+          width 0.3s ease-in-out,
+          transform 0.3s ease-in-out;
       }
       .mobile-sidebar {
         position: fixed;
@@ -138,7 +147,9 @@
         font-weight: 600;
         opacity: 0;
         transform: translateY(24px);
-        transition: opacity 0.28s ease, transform 0.28s ease;
+        transition:
+          opacity 0.28s ease,
+          transform 0.28s ease;
         pointer-events: auto;
         white-space: pre-line;
       }
@@ -189,7 +200,9 @@
 
       /* Report Card Styles */
       .report-stat-card {
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
         background: white;
         border-radius: 0.75rem;
         padding: 1.25rem 1.5rem;
@@ -402,7 +415,9 @@
         opacity: 0;
         transform: translateY(-8px) scale(0.95);
         pointer-events: none;
-        transition: opacity 0.15s ease, transform 0.15s ease;
+        transition:
+          opacity 0.15s ease,
+          transform 0.15s ease;
         overflow: hidden;
       }
       .action-dropdown-menu.open {
@@ -496,7 +511,9 @@
         background: white;
         color: #1a1a2e;
         outline: none;
-        transition: border 0.2s, box-shadow 0.2s;
+        transition:
+          border 0.2s,
+          box-shadow 0.2s;
       }
       .filter-select:focus,
       .filter-input:focus {
@@ -757,16 +774,16 @@
         }
         .report-table-card table thead th,
         .report-table-card table tbody td {
-            padding: 0.5rem 0.75rem;
+          padding: 0.5rem 0.75rem;
         }
         .hide-mobile {
-            display: none;
+          display: none;
         }
         .filter-group {
-            flex-wrap: wrap;
+          flex-wrap: wrap;
         }
         .filter-input {
-            min-width: 120px;
+          min-width: 120px;
         }
         .report-print-container .report-stats {
           grid-template-columns: repeat(2, 1fr);
@@ -783,17 +800,17 @@
       }
       @media (max-width: 480px) {
         .report-stat-card {
-            padding: 1rem;
+          padding: 1rem;
         }
         .report-stat-card .stat-value {
-            font-size: 20px;
+          font-size: 20px;
         }
         .chart-card {
-            padding: 1rem;
+          padding: 1rem;
         }
         .report-table-card .table-header {
-            flex-direction: column;
-            align-items: stretch;
+          flex-direction: column;
+          align-items: stretch;
         }
         .report-print-container .report-stats {
           grid-template-columns: 1fr 1fr;
@@ -969,15 +986,26 @@
       };
     </script>
   </head>
-  <body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col overflow-x-hidden" data-page="reports">
-
+  <body
+    class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col overflow-x-hidden"
+    data-page="reports"
+  >
     <!-- Mobile Top Bar -->
-    <div class="md:hidden fixed top-0 left-0 right-0 bg-deep-navy z-50 px-4 py-4 flex items-center justify-between shadow-lg">
+    <div
+      class="md:hidden fixed top-0 left-0 right-0 bg-deep-navy z-50 px-4 py-4 flex items-center justify-between shadow-lg"
+    >
       <div class="flex items-center gap-3">
-        <button id="mobileBurgerBtn" class="text-white p-2 hover:bg-white/10 rounded-lg transition-all">
+        <button
+          id="mobileBurgerBtn"
+          class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"
+        >
           <span class="material-symbols-outlined">menu</span>
         </button>
-        <img alt="Logo" class="w-8 h-8 rounded-full object-cover" src="../../public/logo.png" />
+        <img
+          alt="Logo"
+          class="w-8 h-8 rounded-full object-cover"
+          src="../../public/logo.png"
+        />
         <h1 class="font-bold text-primary-fixed text-sm">addyPets</h1>
       </div>
       <div class="flex items-center gap-3">
@@ -989,60 +1017,140 @@
     <div id="mobileOverlay" class="overlay"></div>
 
     <!-- Mobile Sidebar -->
-    <div id="mobileSidebar" class="mobile-sidebar bg-deep-navy flex flex-col shadow-2xl">
-      <div class="flex items-center justify-between p-6 border-b border-white/10">
+    <div
+      id="mobileSidebar"
+      class="mobile-sidebar bg-deep-navy flex flex-col shadow-2xl"
+    >
+      <div
+        class="flex items-center justify-between p-6 border-b border-white/10"
+      >
         <div class="flex items-center gap-3">
-          <img alt="Logo" class="w-10 h-10 rounded-full object-cover" src="../../public/logo.png" />
+          <img
+            alt="Logo"
+            class="w-10 h-10 rounded-full object-cover"
+            src="../../public/logo.png"
+          />
           <div>
             <h1 class="font-bold text-primary-fixed">addyPets</h1>
             <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
           </div>
         </div>
-        <button id="closeMobileSidebar" class="text-white p-2 hover:bg-white/10 rounded-lg">
+        <button
+          id="closeMobileSidebar"
+          class="text-white p-2 hover:bg-white/10 rounded-lg"
+        >
           <span class="material-symbols-outlined">close</span>
         </button>
       </div>
       <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto hide-scrollbar">
-        <a href="#" data-nav-mobile="analytics" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">analytics</span><span>Analytics</span>
+        <a
+          href="#"
+          data-nav-mobile="analytics"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">analytics</span
+          ><span>Analytics</span>
         </a>
-        <a href="#" data-nav-mobile="calendar" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">calendar_today</span><span>Calendar</span>
+        <a
+          href="#"
+          data-nav-mobile="calendar"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">calendar_today</span
+          ><span>Calendar</span>
         </a>
-        <a href="#" data-nav-mobile="staff" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">groups</span><span>Staff</span>
+        <a
+          href="#"
+          data-nav-mobile="staff"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">groups</span
+          ><span>Staff</span>
         </a>
-        <a href="#" data-nav-mobile="appointments" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">event_note</span><span>Appointments</span>
+        <a
+          href="#"
+          data-nav-mobile="appointments"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">event_note</span
+          ><span>Appointments</span>
         </a>
-        <a href="#" data-nav-mobile="billing" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">payments</span><span>Billing</span>
+        <a
+          href="#"
+          data-nav-mobile="billing"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">payments</span
+          ><span>Billing</span>
         </a>
-        <a href="#" data-nav-mobile="records" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">description</span><span>Patient & Owner Records</span>
+        <a
+          href="#"
+          data-nav-mobile="records"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">description</span
+          ><span>Patient & Owner Records</span>
         </a>
-        <a href="#" data-nav-mobile="inventory" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">inventory_2</span><span>Inventory</span>
+        <a
+          href="#"
+          data-nav-mobile="inventory"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">inventory_2</span
+          ><span>Inventory</span>
         </a>
-        <a href="#" data-nav-mobile="message" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">message</span><span>Messages</span>
+        <a
+          href="#"
+          data-nav-mobile="message"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">message</span
+          ><span>Messages</span>
         </a>
-        <a href="#" data-nav-mobile="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold bg-emergency-red/10">
-          <span class="material-symbols-outlined">emergency</span><span>Emergency Cases</span>
+        <a
+          href="#"
+          data-nav-mobile="emergency"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold bg-emergency-red/10"
+        >
+          <span class="material-symbols-outlined">emergency</span
+          ><span>Emergency Cases</span>
         </a>
-        <a href="#" data-nav-mobile="reports" class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all">
-          <span class="material-symbols-outlined">assessment</span><span>Reports</span>
+        <a
+          href="./mortuary.html"
+          data-nav-mobile="mortuary"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined">heart_broken</span
+          ><span>Mortuary</span></a
+        >
+        <a
+          href="#"
+          data-nav-mobile="reports"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all"
+        >
+          <span class="material-symbols-outlined">assessment</span
+          ><span>Reports</span>
         </a>
-        <a href="#" data-nav-mobile="settings" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all">
-          <span class="material-symbols-outlined">settings</span><span>Settings</span>
+        <a
+          href="#"
+          data-nav-mobile="settings"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">settings</span
+          ><span>Settings</span>
         </a>
         <div class="h-px bg-white/10 my-4"></div>
-        <button id="logoutBtnMobile" class="w-full flex items-center gap-4 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all">
-          <span class="material-symbols-outlined">logout</span><span>Logout</span>
+        <button
+          id="logoutBtnMobile"
+          class="w-full flex items-center gap-4 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all"
+        >
+          <span class="material-symbols-outlined">logout</span
+          ><span>Logout</span>
         </button>
       </nav>
       <div class="p-4 border-t border-white/10">
-        <div class="bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10">
+        <div
+          class="bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10"
+        >
           <p class="text-xs text-tertiary-fixed-dim mb-2">Emergency Hotline</p>
           <p class="text-sm text-primary-fixed font-bold">+233 500 000 000</p>
         </div>
@@ -1052,126 +1160,271 @@
     <!-- Desktop Layout -->
     <div class="flex min-h-screen w-full">
       <!-- Desktop Sidebar -->
-      <aside id="desktopSidebar" class="hidden md:flex flex-col bg-deep-navy h-screen sticky top-0 border-r border-outline-variant/10 text-white sidebar-transition w-64">
-        <div class="px-6 py-6 flex items-center justify-between border-b border-white/10">
+      <aside
+        id="desktopSidebar"
+        class="hidden md:flex flex-col bg-deep-navy h-screen sticky top-0 border-r border-outline-variant/10 text-white sidebar-transition w-64"
+      >
+        <div
+          class="px-6 py-6 flex items-center justify-between border-b border-white/10"
+        >
           <div class="flex items-center gap-3 sidebar-logo">
-            <img alt="Logo" class="w-10 h-10 rounded-full object-cover" src="../../public/logo.png" />
+            <img
+              alt="Logo"
+              class="w-10 h-10 rounded-full object-cover"
+              src="../../public/logo.png"
+            />
             <div class="sidebar-logo-text">
               <h1 class="font-bold text-primary-fixed text-sm">addyPets</h1>
               <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
             </div>
           </div>
-          <button id="collapseSidebarBtn" class="text-white p-2 hover:bg-white/10 rounded-lg transition-all">
+          <button
+            id="collapseSidebarBtn"
+            class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"
+          >
             <span class="material-symbols-outlined">chevron_left</span>
           </button>
         </div>
         <nav class="flex-1 px-3 py-6 space-y-1 overflow-y-auto hide-scrollbar">
-          <a href="#" data-nav-desktop="analytics" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5">
-            <span class="material-symbols-outlined sidebar-icon-only">analytics</span>
+          <a
+            href="#"
+            data-nav-desktop="analytics"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >analytics</span
+            >
             <span class="sidebar-text">Analytics</span>
           </a>
-          <a href="#" data-nav-desktop="calendar" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5">
-            <span class="material-symbols-outlined sidebar-icon-only">calendar_today</span>
+          <a
+            href="#"
+            data-nav-desktop="calendar"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >calendar_today</span
+            >
             <span class="sidebar-text">Calendar</span>
           </a>
-          <a href="#" data-nav-desktop="staff" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5">
-            <span class="material-symbols-outlined sidebar-icon-only">groups</span>
+          <a
+            href="#"
+            data-nav-desktop="staff"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >groups</span
+            >
             <span class="sidebar-text">Staff</span>
           </a>
-          <a href="#" data-nav-desktop="appointments" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5">
-            <span class="material-symbols-outlined sidebar-icon-only">event_note</span>
+          <a
+            href="#"
+            data-nav-desktop="appointments"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >event_note</span
+            >
             <span class="sidebar-text">Appointments</span>
           </a>
-          <a href="#" data-nav-desktop="billing" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5">
-            <span class="material-symbols-outlined sidebar-icon-only">payments</span>
+          <a
+            href="#"
+            data-nav-desktop="billing"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >payments</span
+            >
             <span class="sidebar-text">Billing</span>
           </a>
-          <a href="#" data-nav-desktop="records" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5">
-            <span class="material-symbols-outlined sidebar-icon-only">description</span>
+          <a
+            href="#"
+            data-nav-desktop="records"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >description</span
+            >
             <span class="sidebar-text">Patient & Owner Records</span>
           </a>
-          <a href="#" data-nav-desktop="inventory" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5">
-            <span class="material-symbols-outlined sidebar-icon-only">inventory_2</span>
+          <a
+            href="#"
+            data-nav-desktop="inventory"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >inventory_2</span
+            >
             <span class="sidebar-text">Inventory</span>
           </a>
-          <a href="#" data-nav-desktop="message" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5">
-            <span class="material-symbols-outlined sidebar-icon-only">message</span>
+          <a
+            href="#"
+            data-nav-desktop="message"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >message</span
+            >
             <span class="sidebar-text">Messages</span>
           </a>
-          <a href="#" data-nav-desktop="emergency" class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10 hover:bg-emergency-red/20">
-            <span class="material-symbols-outlined sidebar-icon-only">emergency</span>
+          <a
+            href="#"
+            data-nav-desktop="emergency"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10 hover:bg-emergency-red/20"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >emergency</span
+            >
             <span class="sidebar-text">Emergency Cases</span>
           </a>
-          <a href="#" data-nav-desktop="reports" class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">assessment</span>
+          <a
+            href="./mortuary.html"
+            data-nav-desktop="mortuary"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5"
+            ><span class="material-symbols-outlined sidebar-icon-only"
+              >heart_broken</span
+            ><span class="sidebar-text">Mortuary</span></a
+          >
+          <a
+            href="#"
+            data-nav-desktop="reports"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >assessment</span
+            >
             <span class="sidebar-text">Reports</span>
           </a>
-          <a href="#" data-nav-desktop="settings" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5">
-            <span class="material-symbols-outlined sidebar-icon-only">settings</span>
+          <a
+            href="#"
+            data-nav-desktop="settings"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button hover:bg-white/5"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >settings</span
+            >
             <span class="sidebar-text">Settings</span>
           </a>
         </nav>
         <div class="p-4 mt-auto bottom-container">
-          <button id="logoutBtnDesktop" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all sidebar-button">
-            <span class="material-symbols-outlined sidebar-icon-only">logout</span>
+          <button
+            id="logoutBtnDesktop"
+            class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >logout</span
+            >
             <span class="sidebar-text">Logout</span>
           </button>
-          <div class="emergency-section bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10 mt-4">
-            <p class="text-xs text-tertiary-fixed-dim mb-2">Emergency Hotline</p>
+          <div
+            class="emergency-section bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10 mt-4"
+          >
+            <p class="text-xs text-tertiary-fixed-dim mb-2">
+              Emergency Hotline
+            </p>
             <p class="text-sm text-primary-fixed font-bold">+233 500 000 000</p>
           </div>
         </div>
       </aside>
 
       <!-- Main Content Area -->
-      <div id="mainContentWrapper" class="flex-1 flex flex-col bg-surface pt-16 md:pt-0 transition-all duration-300">
+      <div
+        id="mainContentWrapper"
+        class="flex-1 flex flex-col bg-surface pt-16 md:pt-0 transition-all duration-300"
+      >
         <!-- Top Bar -->
-        <header class="h-20 bg-surface hidden md:flex items-center justify-between px-margin-desktop sticky top-0 z-40 border-b border-surface-container-highest">
+        <header
+          class="h-20 bg-surface hidden md:flex items-center justify-between px-margin-desktop sticky top-0 z-40 border-b border-surface-container-highest"
+        >
           <div class="flex items-center gap-4 w-1/3">
             <div class="relative w-full max-w-md">
-              <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
-              <input id="reportSearch" class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="Search transactions..." type="text" />
+              <span
+                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline"
+                >search</span
+              >
+              <input
+                id="reportSearch"
+                class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                placeholder="Search transactions..."
+                type="text"
+              />
             </div>
           </div>
           <div class="flex items-center gap-6">
-            <button class="relative p-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-full" onclick="showToast('📬 No new notifications', 'info')">
+            <button
+              class="relative p-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-full"
+              onclick="showToast('📬 No new notifications', 'info')"
+            >
               <span class="material-symbols-outlined">notifications</span>
-              <span class="absolute top-2 right-2 w-2 h-2 bg-emergency-red rounded-full"></span>
+              <span
+                class="absolute top-2 right-2 w-2 h-2 bg-emergency-red rounded-full"
+              ></span>
             </button>
             <div class="flex items-center gap-3 cursor-pointer group">
               <div class="text-right">
-                <p class="text-sm font-bold text-on-surface">Dr. Abena Mensah</p>
-                <p class="text-xs text-on-surface-variant">Chief Veterinary Officer</p>
+                <p class="text-sm font-bold text-on-surface">
+                  Dr. Abena Mensah
+                </p>
+                <p class="text-xs text-on-surface-variant">
+                  Chief Veterinary Officer
+                </p>
               </div>
-              <img alt="Profile" class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt_l2NtwBrHDxQNGs9rPyaBDSi0T_lttSSni_UFdT12mHBHPojsxTE2haa69Vl-xUxsOfIG9hBjBfFUbTbuzqUZTrwCxsYx-WVkbqBP95JzSas9Gk-vlSi5L3t6i5wijVQgjwTRZWzXWDoOxvbiuiwTwUvQerM7vTOeUAbTgk0LzdJ6ZlyU0xeXqf__Iapv8Wpu9q6UmECwczFqWAIEuCSYFKPwinFOH3N6vq0YJKWoiJViDN71AZUcTRiwGyz_FO9sM63nmOE114" />
+              <img
+                alt="Profile"
+                class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-container"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt_l2NtwBrHDxQNGs9rPyaBDSi0T_lttSSni_UFdT12mHBHPojsxTE2haa69Vl-xUxsOfIG9hBjBfFUbTbuzqUZTrwCxsYx-WVkbqBP95JzSas9Gk-vlSi5L3t6i5wijVQgjwTRZWzXWDoOxvbiuiwTwUvQerM7vTOeUAbTgk0LzdJ6ZlyU0xeXqf__Iapv8Wpu9q6UmECwczFqWAIEuCSYFKPwinFOH3N6vq0YJKWoiJViDN71AZUcTRiwGyz_FO9sM63nmOE114"
+              />
             </div>
           </div>
         </header>
 
         <!-- REPORTS VIEW -->
-        <main class="flex-grow max-w-container-max mx-auto w-full px-4 md:px-margin-desktop py-stack-lg">
+        <main
+          class="flex-grow max-w-container-max mx-auto w-full px-4 md:px-margin-desktop py-stack-lg"
+        >
           <!-- Header -->
-          <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-stack-md">
+          <div
+            class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-stack-md"
+          >
             <div>
-              <h1 class="font-headline-lg text-headline-lg text-primary">Reports & Analytics</h1>
-              <p class="text-on-surface-variant mt-1">Comprehensive insights into your veterinary practice performance</p>
+              <h1 class="font-headline-lg text-headline-lg text-primary">
+                Reports & Analytics
+              </h1>
+              <p class="text-on-surface-variant mt-1">
+                Comprehensive insights into your veterinary practice performance
+              </p>
             </div>
             <div class="flex gap-3 flex-wrap">
-              <button onclick="exportReportData()" class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">
-                <span class="material-symbols-outlined text-sm">download</span> Export CSV
+              <button
+                onclick="exportReportData()"
+                class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors"
+              >
+                <span class="material-symbols-outlined text-sm">download</span>
+                Export CSV
               </button>
-              <button onclick="refreshReports()" class="flex items-center gap-2 px-6 py-3 bg-primary text-on-primary rounded-xl font-label-md shadow-sm hover:opacity-90 transition-all active:scale-95">
-                <span class="material-symbols-outlined">refresh</span> Refresh Data
+              <button
+                onclick="refreshReports()"
+                class="flex items-center gap-2 px-6 py-3 bg-primary text-on-primary rounded-xl font-label-md shadow-sm hover:opacity-90 transition-all active:scale-95"
+              >
+                <span class="material-symbols-outlined">refresh</span> Refresh
+                Data
               </button>
             </div>
           </div>
 
           <!-- Report Controls -->
-          <div class="bg-white rounded-xl border border-slate-200 p-4 md:p-5 mb-6 shadow-sm">
+          <div
+            class="bg-white rounded-xl border border-slate-200 p-4 md:p-5 mb-6 shadow-sm"
+          >
             <div class="flex flex-wrap items-center gap-3 filter-group">
               <div class="flex items-center gap-2">
-                <span class="material-symbols-outlined text-slate-400 text-sm">calendar_today</span>
-                <select id="reportDateRange" class="filter-select" onchange="applyReportFilters()">
+                <span class="material-symbols-outlined text-slate-400 text-sm"
+                  >calendar_today</span
+                >
+                <select
+                  id="reportDateRange"
+                  class="filter-select"
+                  onchange="applyReportFilters()"
+                >
                   <option value="today">Today</option>
                   <option value="week" selected>Last 7 Days</option>
                   <option value="month">Last 30 Days</option>
@@ -1181,16 +1434,28 @@
                 </select>
               </div>
               <div class="flex items-center gap-2">
-                <span class="material-symbols-outlined text-slate-400 text-sm">compare_arrows</span>
-                <select id="reportCompare" class="filter-select" onchange="applyReportFilters()">
+                <span class="material-symbols-outlined text-slate-400 text-sm"
+                  >compare_arrows</span
+                >
+                <select
+                  id="reportCompare"
+                  class="filter-select"
+                  onchange="applyReportFilters()"
+                >
                   <option value="previous">Previous Period</option>
                   <option value="year">Previous Year</option>
                   <option value="none">No Comparison</option>
                 </select>
               </div>
               <div class="flex items-center gap-2">
-                <span class="material-symbols-outlined text-slate-400 text-sm">pets</span>
-                <select id="reportSpecies" class="filter-select" onchange="applyReportFilters()">
+                <span class="material-symbols-outlined text-slate-400 text-sm"
+                  >pets</span
+                >
+                <select
+                  id="reportSpecies"
+                  class="filter-select"
+                  onchange="applyReportFilters()"
+                >
                   <option value="all">All Species</option>
                   <option value="dog">Dogs</option>
                   <option value="cat">Cats</option>
@@ -1200,47 +1465,111 @@
                 </select>
               </div>
               <div class="flex items-center gap-2">
-                <span class="material-symbols-outlined text-slate-400 text-sm">search</span>
-                <input id="staffSearch" class="filter-input" placeholder="Search vet..." value="" oninput="filterStaffSuggestions(this.value)" />
-                <div id="staffSuggestions" class="absolute mt-1 bg-white border border-slate-200 rounded-lg shadow-lg max-h-40 overflow-y-auto hidden z-50" style="margin-top: 32px; min-width: 180px;"></div>
+                <span class="material-symbols-outlined text-slate-400 text-sm"
+                  >search</span
+                >
+                <input
+                  id="staffSearch"
+                  class="filter-input"
+                  placeholder="Search vet..."
+                  value=""
+                  oninput="filterStaffSuggestions(this.value)"
+                />
+                <div
+                  id="staffSuggestions"
+                  class="absolute mt-1 bg-white border border-slate-200 rounded-lg shadow-lg max-h-40 overflow-y-auto hidden z-50"
+                  style="margin-top: 32px; min-width: 180px"
+                ></div>
                 <input type="hidden" id="selectedStaff" value="all" />
               </div>
-              <button onclick="applyReportFilters()" class="btn-primary ml-auto">
-                <span class="material-symbols-outlined text-sm">filter_alt</span> Apply Filters
+              <button
+                onclick="applyReportFilters()"
+                class="btn-primary ml-auto"
+              >
+                <span class="material-symbols-outlined text-sm"
+                  >filter_alt</span
+                >
+                Apply Filters
               </button>
             </div>
           </div>
 
           <!-- Anomaly Alert -->
-          <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-lg mb-6 flex items-start gap-3">
-            <span class="material-symbols-outlined text-amber-500">warning</span>
+          <div
+            class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-lg mb-6 flex items-start gap-3"
+          >
+            <span class="material-symbols-outlined text-amber-500"
+              >warning</span
+            >
             <div>
-              <p class="text-sm font-medium text-amber-800">⚠️ Anomaly Detected</p>
-              <p class="text-sm text-amber-700">Emergency cases increased by 22% this week. <a href="#" onclick="showToast('📊 Loading emergency report...', 'info')" class="font-semibold underline hover:text-amber-900">View Emergency Report →</a></p>
+              <p class="text-sm font-medium text-amber-800">
+                ⚠️ Anomaly Detected
+              </p>
+              <p class="text-sm text-amber-700">
+                Emergency cases increased by 22% this week.
+                <a
+                  href="#"
+                  onclick="showToast('📊 Loading emergency report...', 'info')"
+                  class="font-semibold underline hover:text-amber-900"
+                  >View Emergency Report →</a
+                >
+              </p>
             </div>
           </div>
 
           <!-- KPI Cards -->
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div class="report-stat-card" onclick="showToast('📊 Loading revenue details...', 'info')">
+            <div
+              class="report-stat-card"
+              onclick="showToast('📊 Loading revenue details...', 'info')"
+            >
               <p class="stat-label">Total Revenue</p>
               <p class="stat-value" id="totalRevenue">GH₵48,294</p>
-              <span class="stat-change positive"><span class="material-symbols-outlined text-sm">arrow_upward</span> +12.5%</span>
+              <span class="stat-change positive"
+                ><span class="material-symbols-outlined text-sm"
+                  >arrow_upward</span
+                >
+                +12.5%</span
+              >
             </div>
-            <div class="report-stat-card" onclick="showToast('📊 Loading appointment details...', 'info')">
+            <div
+              class="report-stat-card"
+              onclick="showToast('📊 Loading appointment details...', 'info')"
+            >
               <p class="stat-label">Appointments</p>
               <p class="stat-value" id="totalAppointments">1,842</p>
-              <span class="stat-change positive"><span class="material-symbols-outlined text-sm">arrow_upward</span> +8.3%</span>
+              <span class="stat-change positive"
+                ><span class="material-symbols-outlined text-sm"
+                  >arrow_upward</span
+                >
+                +8.3%</span
+              >
             </div>
-            <div class="report-stat-card" onclick="showToast('📊 Loading patient details...', 'info')">
+            <div
+              class="report-stat-card"
+              onclick="showToast('📊 Loading patient details...', 'info')"
+            >
               <p class="stat-label">Active Patients</p>
               <p class="stat-value" id="activePatients">4,721</p>
-              <span class="stat-change negative"><span class="material-symbols-outlined text-sm">arrow_downward</span> -2.1%</span>
+              <span class="stat-change negative"
+                ><span class="material-symbols-outlined text-sm"
+                  >arrow_downward</span
+                >
+                -2.1%</span
+              >
             </div>
-            <div class="report-stat-card" onclick="showToast('📊 Loading visit value details...', 'info')">
+            <div
+              class="report-stat-card"
+              onclick="showToast('📊 Loading visit value details...', 'info')"
+            >
               <p class="stat-label">Avg. Visit Value</p>
               <p class="stat-value" id="avgVisitValue">GH₵26.22</p>
-              <span class="stat-change positive"><span class="material-symbols-outlined text-sm">arrow_upward</span> +4.7%</span>
+              <span class="stat-change positive"
+                ><span class="material-symbols-outlined text-sm"
+                  >arrow_upward</span
+                >
+                +4.7%</span
+              >
             </div>
           </div>
 
@@ -1248,8 +1577,23 @@
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             <div class="chart-card md:col-span-2">
               <div class="chart-header">
-                <h3><span class="material-symbols-outlined text-primary text-sm align-middle">show_chart</span> Revenue Trend</h3>
-                <a onclick="openChartReport('revenue', 'Revenue Trend', 'revenueTrendChart')">View Full Report →</a>
+                <h3>
+                  <span
+                    class="material-symbols-outlined text-primary text-sm align-middle"
+                    >show_chart</span
+                  >
+                  Revenue Trend
+                </h3>
+                <a
+                  onclick="
+                    openChartReport(
+                      'revenue',
+                      'Revenue Trend',
+                      'revenueTrendChart',
+                    )
+                  "
+                  >View Full Report →</a
+                >
               </div>
               <div class="chart-container">
                 <canvas id="revenueTrendChart"></canvas>
@@ -1257,8 +1601,23 @@
             </div>
             <div class="chart-card">
               <div class="chart-header">
-                <h3><span class="material-symbols-outlined text-primary text-sm align-middle">pie_chart</span> Service Distribution</h3>
-                <a onclick="openChartReport('service', 'Service Distribution', 'serviceChart')">View Full Report →</a>
+                <h3>
+                  <span
+                    class="material-symbols-outlined text-primary text-sm align-middle"
+                    >pie_chart</span
+                  >
+                  Service Distribution
+                </h3>
+                <a
+                  onclick="
+                    openChartReport(
+                      'service',
+                      'Service Distribution',
+                      'serviceChart',
+                    )
+                  "
+                  >View Full Report →</a
+                >
               </div>
               <div class="chart-container pie-chart">
                 <canvas id="serviceChart"></canvas>
@@ -1270,8 +1629,23 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div class="chart-card">
               <div class="chart-header">
-                <h3><span class="material-symbols-outlined text-primary text-sm align-middle">calendar_month</span> Appointments by Day</h3>
-                <a onclick="openChartReport('appointments', 'Appointments by Day', 'appointmentsChart')">View Full Report →</a>
+                <h3>
+                  <span
+                    class="material-symbols-outlined text-primary text-sm align-middle"
+                    >calendar_month</span
+                  >
+                  Appointments by Day
+                </h3>
+                <a
+                  onclick="
+                    openChartReport(
+                      'appointments',
+                      'Appointments by Day',
+                      'appointmentsChart',
+                    )
+                  "
+                  >View Full Report →</a
+                >
               </div>
               <div class="chart-container">
                 <canvas id="appointmentsChart"></canvas>
@@ -1279,8 +1653,23 @@
             </div>
             <div class="chart-card">
               <div class="chart-header">
-                <h3><span class="material-symbols-outlined text-primary text-sm align-middle">pets</span> Top Procedures</h3>
-                <a onclick="openChartReport('procedures', 'Top Procedures', 'proceduresChart')">View Full Report →</a>
+                <h3>
+                  <span
+                    class="material-symbols-outlined text-primary text-sm align-middle"
+                    >pets</span
+                  >
+                  Top Procedures
+                </h3>
+                <a
+                  onclick="
+                    openChartReport(
+                      'procedures',
+                      'Top Procedures',
+                      'proceduresChart',
+                    )
+                  "
+                  >View Full Report →</a
+                >
               </div>
               <div class="chart-container">
                 <canvas id="proceduresChart"></canvas>
@@ -1291,10 +1680,32 @@
           <!-- Recent Transactions Table -->
           <div class="report-table-card mb-6">
             <div class="table-header">
-              <h3><span class="material-symbols-outlined text-primary text-sm align-middle">receipt_long</span> Recent Transactions</h3>
+              <h3>
+                <span
+                  class="material-symbols-outlined text-primary text-sm align-middle"
+                  >receipt_long</span
+                >
+                Recent Transactions
+              </h3>
               <div class="flex gap-2">
-                <button class="btn-outline text-sm py-1.5" onclick="exportReportData()"><span class="material-symbols-outlined text-sm">file_download</span> Export</button>
-                <button class="btn-outline text-sm py-1.5" onclick="showToast('🔍 Filter options opened', 'info')"><span class="material-symbols-outlined text-sm">filter_list</span> Filter</button>
+                <button
+                  class="btn-outline text-sm py-1.5"
+                  onclick="exportReportData()"
+                >
+                  <span class="material-symbols-outlined text-sm"
+                    >file_download</span
+                  >
+                  Export
+                </button>
+                <button
+                  class="btn-outline text-sm py-1.5"
+                  onclick="showToast('🔍 Filter options opened', 'info')"
+                >
+                  <span class="material-symbols-outlined text-sm"
+                    >filter_list</span
+                  >
+                  Filter
+                </button>
               </div>
             </div>
             <div class="overflow-x-auto">
@@ -1308,7 +1719,7 @@
                     <th>Amount</th>
                     <th class="hide-mobile">Date</th>
                     <th>Status</th>
-                    <th style="text-align:center; width:60px;">Actions</th>
+                    <th style="text-align: center; width: 60px">Actions</th>
                   </tr>
                 </thead>
                 <tbody id="transactionsTableBody">
@@ -1317,10 +1728,16 @@
               </table>
             </div>
             <!-- Table Footer -->
-            <div class="px-6 py-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-sm text-slate-500">
+            <div
+              class="px-6 py-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-sm text-slate-500"
+            >
               <div class="flex items-center gap-3">
                 <span>Rows per page:</span>
-                <select id="rowsPerPage" class="border border-slate-200 rounded-lg px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" onchange="changeRowsPerPage()">
+                <select
+                  id="rowsPerPage"
+                  class="border border-slate-200 rounded-lg px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  onchange="changeRowsPerPage()"
+                >
                   <option value="5">5</option>
                   <option value="10" selected>10</option>
                   <option value="25">25</option>
@@ -1329,13 +1746,60 @@
                 <span id="paginationInfo">1–5 of 24</span>
               </div>
               <div class="flex gap-1" id="paginationControls">
-                <button class="pagination-btn" id="prevPage" disabled onclick="changePage(-1)"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
-                <button class="pagination-btn active" data-page="1" onclick="goToPage(1)">1</button>
-                <button class="pagination-btn" data-page="2" onclick="goToPage(2)">2</button>
-                <button class="pagination-btn" data-page="3" onclick="goToPage(3)">3</button>
-                <button class="pagination-btn" data-page="4" onclick="goToPage(4)">4</button>
-                <button class="pagination-btn" data-page="5" onclick="goToPage(5)">5</button>
-                <button class="pagination-btn" id="nextPage" onclick="changePage(1)"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+                <button
+                  class="pagination-btn"
+                  id="prevPage"
+                  disabled
+                  onclick="changePage(-1)"
+                >
+                  <span class="material-symbols-outlined text-sm"
+                    >chevron_left</span
+                  >
+                </button>
+                <button
+                  class="pagination-btn active"
+                  data-page="1"
+                  onclick="goToPage(1)"
+                >
+                  1
+                </button>
+                <button
+                  class="pagination-btn"
+                  data-page="2"
+                  onclick="goToPage(2)"
+                >
+                  2
+                </button>
+                <button
+                  class="pagination-btn"
+                  data-page="3"
+                  onclick="goToPage(3)"
+                >
+                  3
+                </button>
+                <button
+                  class="pagination-btn"
+                  data-page="4"
+                  onclick="goToPage(4)"
+                >
+                  4
+                </button>
+                <button
+                  class="pagination-btn"
+                  data-page="5"
+                  onclick="goToPage(5)"
+                >
+                  5
+                </button>
+                <button
+                  class="pagination-btn"
+                  id="nextPage"
+                  onclick="changePage(1)"
+                >
+                  <span class="material-symbols-outlined text-sm"
+                    >chevron_right</span
+                  >
+                </button>
               </div>
             </div>
           </div>
@@ -1343,32 +1807,69 @@
           <!-- Insight Box -->
           <div class="insight-box">
             <div class="flex items-start gap-3">
-              <span class="material-symbols-outlined insight-icon">lightbulb</span>
+              <span class="material-symbols-outlined insight-icon"
+                >lightbulb</span
+              >
               <div>
                 <p class="font-semibold text-sm text-slate-900">Key Insight</p>
                 <p class="text-sm text-slate-600">
-                  The revenue spike on August 3rd correlates with the "Summer Health Check" campaign sent to 2,500 pet owners.
-                  Conversion rate was 4.2% vs. the 2.8% average. Consider running similar campaigns quarterly.
+                  The revenue spike on August 3rd correlates with the "Summer
+                  Health Check" campaign sent to 2,500 pet owners. Conversion
+                  rate was 4.2% vs. the 2.8% average. Consider running similar
+                  campaigns quarterly.
                 </p>
-                <p class="text-xs text-slate-400 mt-1"><span class="material-symbols-outlined text-xs align-middle">schedule</span> Generated by AI • 2 hours ago</p>
+                <p class="text-xs text-slate-400 mt-1">
+                  <span class="material-symbols-outlined text-xs align-middle"
+                    >schedule</span
+                  >
+                  Generated by AI • 2 hours ago
+                </p>
               </div>
             </div>
           </div>
-
         </main>
 
         <!-- Footer -->
         <footer class="w-full bg-deep-navy mt-auto">
-          <div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop py-stack-lg w-full max-w-container-max mx-auto">
-            <div class="text-primary-fixed font-headline-md text-headline-md mb-6 md:mb-0">VetCare Ghana</div>
+          <div
+            class="flex flex-col md:flex-row justify-between items-center px-margin-desktop py-stack-lg w-full max-w-container-max mx-auto"
+          >
+            <div
+              class="text-primary-fixed font-headline-md text-headline-md mb-6 md:mb-0"
+            >
+              VetCare Ghana
+            </div>
             <div class="flex flex-col md:flex-row gap-6 md:gap-12 items-center">
               <div class="flex gap-8 flex-wrap justify-center">
-                <a class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer" onclick="showToast('📄 Privacy Policy', 'info')">Privacy Policy</a>
-                <a class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer" onclick="showToast('📄 Terms of Service', 'info')">Terms of Service</a>
-                <a class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer" onclick="showToast('📧 Contact us at info@addypets.com', 'info')">Contact Us</a>
-                <a class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer" onclick="showToast('🏛️ Ghana Vet Council', 'info')">Ghana Vet Council</a>
+                <a
+                  class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer"
+                  onclick="showToast('📄 Privacy Policy', 'info')"
+                  >Privacy Policy</a
+                >
+                <a
+                  class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer"
+                  onclick="showToast('📄 Terms of Service', 'info')"
+                  >Terms of Service</a
+                >
+                <a
+                  class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer"
+                  onclick="
+                    showToast('📧 Contact us at info@addypets.com', 'info')
+                  "
+                  >Contact Us</a
+                >
+                <a
+                  class="text-tertiary-fixed-dim hover:text-on-primary-fixed transition-colors font-caption text-caption cursor-pointer"
+                  onclick="showToast('🏛️ Ghana Vet Council', 'info')"
+                  >Ghana Vet Council</a
+                >
               </div>
-              <p class="text-tertiary-fixed-dim font-caption text-caption text-center md:text-right">© 2024 VetCare Ghana. Providing compassionate care for every pet.</p>
+              <p
+                class="text-tertiary-fixed-dim font-caption text-caption text-center md:text-right"
+              >
+                © 2024 VetCare Ghana. Providing compassionate care for every
+                pet.
+              </p>
             </div>
           </div>
         </footer>
@@ -1388,8 +1889,13 @@
           <!-- Populated by JS -->
         </div>
         <div class="modal-footer">
-          <button class="btn-secondary" onclick="closeViewModal()">Close</button>
-          <button class="btn-primary-modal" onclick="printTransactionFromModal()">
+          <button class="btn-secondary" onclick="closeViewModal()">
+            Close
+          </button>
+          <button
+            class="btn-primary-modal"
+            onclick="printTransactionFromModal()"
+          >
             <span class="material-symbols-outlined text-sm">print</span> Print
           </button>
         </div>
@@ -1409,9 +1915,12 @@
           <!-- Populated by JS -->
         </div>
         <div class="modal-footer">
-          <button class="btn-secondary" onclick="closeEditModal()">Cancel</button>
+          <button class="btn-secondary" onclick="closeEditModal()">
+            Cancel
+          </button>
           <button class="btn-primary-modal" onclick="saveEditTransaction()">
-            <span class="material-symbols-outlined text-sm">save</span> Save Changes
+            <span class="material-symbols-outlined text-sm">save</span> Save
+            Changes
           </button>
         </div>
       </div>
@@ -1429,7 +1938,9 @@
         <div class="modal-body">
           <div id="reportPrintContainer" class="report-print-container">
             <div class="report-title">addyPets Veterinary Clinic</div>
-            <div class="report-subtitle" id="reportSubtitle">Revenue Trend Report • Generated on August 5, 2026</div>
+            <div class="report-subtitle" id="reportSubtitle">
+              Revenue Trend Report • Generated on August 5, 2026
+            </div>
             <div id="modalChartWrapper" class="report-chart-wrapper">
               <canvas id="modalChartCanvas"></canvas>
             </div>
@@ -1454,97 +1965,117 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn-close-modal" onclick="closeChartReport()">Close</button>
+          <button class="btn-close-modal" onclick="closeChartReport()">
+            Close
+          </button>
           <button class="btn-print" onclick="printChartReport()">
             <span class="material-symbols-outlined text-sm">print</span> Print
           </button>
           <button class="btn-pdf" onclick="exportChartPDF()">
-            <span class="material-symbols-outlined text-sm">picture_as_pdf</span> Export PDF
+            <span class="material-symbols-outlined text-sm"
+              >picture_as_pdf</span
+            >
+            Export PDF
           </button>
         </div>
       </div>
     </div>
 
     <!-- Toast Container -->
-    <div id="toast-container" class="toast-container fixed top-20 right-4 z-[100]"></div>
+    <div
+      id="toast-container"
+      class="toast-container fixed top-20 right-4 z-[100]"
+    ></div>
 
     <script>
       // ==========================================
       // STAFF LIST FOR SEARCH
       // ==========================================
       const staffList = [
-        { id: 'all', name: 'All Staff' },
-        { id: 'dr_abena', name: 'Dr. Abena Mensah' },
-        { id: 'dr_kojo', name: 'Dr. Kojo Asare' },
-        { id: 'dr_ama', name: 'Dr. Ama Serwaa' },
-        { id: 'dr_kofi', name: 'Dr. Kofi Annan' },
-        { id: 'dr_efua', name: 'Dr. Efua Sutherland' },
-        { id: 'dr_yaw', name: 'Dr. Yaw Boateng' },
+        { id: "all", name: "All Staff" },
+        { id: "dr_abena", name: "Dr. Abena Mensah" },
+        { id: "dr_kojo", name: "Dr. Kojo Asare" },
+        { id: "dr_ama", name: "Dr. Ama Serwaa" },
+        { id: "dr_kofi", name: "Dr. Kofi Annan" },
+        { id: "dr_efua", name: "Dr. Efua Sutherland" },
+        { id: "dr_yaw", name: "Dr. Yaw Boateng" },
       ];
 
-      let selectedStaffId = 'all';
+      let selectedStaffId = "all";
       let currentViewTransaction = null;
       let currentEditTransaction = null;
 
       function filterStaffSuggestions(query) {
-        const container = document.getElementById('staffSuggestions');
-        const input = document.getElementById('staffSearch');
-        
+        const container = document.getElementById("staffSuggestions");
+        const input = document.getElementById("staffSearch");
+
         if (!query || query.length < 1) {
-          container.classList.add('hidden');
+          container.classList.add("hidden");
           return;
         }
 
-        const filtered = staffList.filter(s => 
-          s.name.toLowerCase().includes(query.toLowerCase()) && s.id !== 'all'
+        const filtered = staffList.filter(
+          (s) =>
+            s.name.toLowerCase().includes(query.toLowerCase()) &&
+            s.id !== "all",
         );
 
         if (filtered.length === 0) {
-          container.innerHTML = '<div class="px-4 py-2 text-sm text-slate-500">No staff found</div>';
-          container.classList.remove('hidden');
+          container.innerHTML =
+            '<div class="px-4 py-2 text-sm text-slate-500">No staff found</div>';
+          container.classList.remove("hidden");
           return;
         }
 
-        container.innerHTML = filtered.map(s => `
+        container.innerHTML = filtered
+          .map(
+            (s) => `
           <div class="px-4 py-2 text-sm hover:bg-slate-100 cursor-pointer" onclick="selectStaff('${s.id}', '${s.name}')">
             ${s.name}
           </div>
-        `).join('');
-        container.classList.remove('hidden');
+        `,
+          )
+          .join("");
+        container.classList.remove("hidden");
       }
 
       function selectStaff(id, name) {
         selectedStaffId = id;
-        document.getElementById('staffSearch').value = name;
-        document.getElementById('staffSuggestions').classList.add('hidden');
-        document.getElementById('selectedStaff').value = id;
+        document.getElementById("staffSearch").value = name;
+        document.getElementById("staffSuggestions").classList.add("hidden");
+        document.getElementById("selectedStaff").value = id;
         applyReportFilters();
-        showToast(`👨‍⚕️ Filtering by: ${name}`, 'info');
+        showToast(`👨‍⚕️ Filtering by: ${name}`, "info");
       }
 
-      document.addEventListener('click', function(e) {
-        const container = document.getElementById('staffSuggestions');
-        const input = document.getElementById('staffSearch');
-        if (container && input && !container.contains(e.target) && e.target !== input) {
-          container.classList.add('hidden');
+      document.addEventListener("click", function (e) {
+        const container = document.getElementById("staffSuggestions");
+        const input = document.getElementById("staffSearch");
+        if (
+          container &&
+          input &&
+          !container.contains(e.target) &&
+          e.target !== input
+        ) {
+          container.classList.add("hidden");
         }
       });
 
       // ==========================================
       // 1. TOAST SYSTEM
       // ==========================================
-      function showToast(message, type = 'success') {
-        const container = document.getElementById('toast-container');
+      function showToast(message, type = "success") {
+        const container = document.getElementById("toast-container");
         if (!container) return;
-        const toast = document.createElement('div');
+        const toast = document.createElement("div");
         toast.className = `toast toast-${type}`;
         toast.textContent = message;
         container.appendChild(toast);
         requestAnimationFrame(() => {
-          requestAnimationFrame(() => toast.classList.add('show'));
+          requestAnimationFrame(() => toast.classList.add("show"));
         });
         setTimeout(() => {
-          toast.classList.remove('show');
+          toast.classList.remove("show");
           setTimeout(() => {
             if (toast.parentNode) toast.remove();
           }, 300);
@@ -1554,105 +2085,122 @@
       // ==========================================
       // 2. SIDEBAR LOGIC
       // ==========================================
-      const mobileBurgerBtn = document.getElementById('mobileBurgerBtn');
-      const mobileSidebar = document.getElementById('mobileSidebar');
-      const closeMobileSidebar = document.getElementById('closeMobileSidebar');
-      const mobileOverlay = document.getElementById('mobileOverlay');
-      const desktopSidebar = document.getElementById('desktopSidebar');
-      const collapseSidebarBtn = document.getElementById('collapseSidebarBtn');
-      let isSidebarCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+      const mobileBurgerBtn = document.getElementById("mobileBurgerBtn");
+      const mobileSidebar = document.getElementById("mobileSidebar");
+      const closeMobileSidebar = document.getElementById("closeMobileSidebar");
+      const mobileOverlay = document.getElementById("mobileOverlay");
+      const desktopSidebar = document.getElementById("desktopSidebar");
+      const collapseSidebarBtn = document.getElementById("collapseSidebarBtn");
+      let isSidebarCollapsed =
+        localStorage.getItem("sidebarCollapsed") === "true";
 
       function openMobileSidebar() {
-        mobileSidebar.classList.add('open');
-        mobileOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        mobileSidebar.classList.add("open");
+        mobileOverlay.classList.add("active");
+        document.body.style.overflow = "hidden";
       }
 
       function closeMobileSidebarFunc() {
-        mobileSidebar.classList.remove('open');
-        mobileOverlay.classList.remove('active');
-        document.body.style.overflow = '';
+        mobileSidebar.classList.remove("open");
+        mobileOverlay.classList.remove("active");
+        document.body.style.overflow = "";
       }
 
       function toggleDesktopSidebar() {
         isSidebarCollapsed = !isSidebarCollapsed;
-        localStorage.setItem('sidebarCollapsed', isSidebarCollapsed);
-        const mainContentWrapper = document.getElementById('mainContentWrapper');
+        localStorage.setItem("sidebarCollapsed", isSidebarCollapsed);
+        const mainContentWrapper =
+          document.getElementById("mainContentWrapper");
         if (isSidebarCollapsed) {
-          desktopSidebar.classList.add('sidebar-collapsed');
-          collapseSidebarBtn.querySelector('.material-symbols-outlined').textContent = 'chevron_right';
-          mainContentWrapper && mainContentWrapper.classList.add('main-content-full');
+          desktopSidebar.classList.add("sidebar-collapsed");
+          collapseSidebarBtn.querySelector(
+            ".material-symbols-outlined",
+          ).textContent = "chevron_right";
+          mainContentWrapper &&
+            mainContentWrapper.classList.add("main-content-full");
         } else {
-          desktopSidebar.classList.remove('sidebar-collapsed');
-          collapseSidebarBtn.querySelector('.material-symbols-outlined').textContent = 'chevron_left';
-          mainContentWrapper && mainContentWrapper.classList.remove('main-content-full');
+          desktopSidebar.classList.remove("sidebar-collapsed");
+          collapseSidebarBtn.querySelector(
+            ".material-symbols-outlined",
+          ).textContent = "chevron_left";
+          mainContentWrapper &&
+            mainContentWrapper.classList.remove("main-content-full");
         }
       }
 
       if (isSidebarCollapsed) {
-        desktopSidebar.classList.add('sidebar-collapsed');
-        collapseSidebarBtn.querySelector('.material-symbols-outlined').textContent = 'chevron_right';
+        desktopSidebar.classList.add("sidebar-collapsed");
+        collapseSidebarBtn.querySelector(
+          ".material-symbols-outlined",
+        ).textContent = "chevron_right";
       }
 
-      mobileBurgerBtn?.addEventListener('click', openMobileSidebar);
-      closeMobileSidebar?.addEventListener('click', closeMobileSidebarFunc);
-      mobileOverlay?.addEventListener('click', closeMobileSidebarFunc);
-      collapseSidebarBtn?.addEventListener('click', toggleDesktopSidebar);
+      mobileBurgerBtn?.addEventListener("click", openMobileSidebar);
+      closeMobileSidebar?.addEventListener("click", closeMobileSidebarFunc);
+      mobileOverlay?.addEventListener("click", closeMobileSidebarFunc);
+      collapseSidebarBtn?.addEventListener("click", toggleDesktopSidebar);
 
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && mobileSidebar.classList.contains('open')) closeMobileSidebarFunc();
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && mobileSidebar.classList.contains("open"))
+          closeMobileSidebarFunc();
       });
 
-      window.addEventListener('resize', () => {
-        if (window.innerWidth >= 768 && mobileSidebar.classList.contains('open')) closeMobileSidebarFunc();
+      window.addEventListener("resize", () => {
+        if (
+          window.innerWidth >= 768 &&
+          mobileSidebar.classList.contains("open")
+        )
+          closeMobileSidebarFunc();
       });
 
       // ==========================================
       // 3. NAVIGATION
       // ==========================================
       const pageMap = {
-        analytics: 'Dashboard.html',
-        calendar: 'clinic_calendar.html',
-        staff: 'staff_service_settings.html',
-        billing: 'billing.html',
-        records: 'records.html',
-        message: 'message.html',
-        emergency: 'emergency_management.html',
-        appointments: 'appointments.html',
-        inventory: 'inventory.html',
-        reports: 'reports.html',
-        settings: 'settings.html'
+        analytics: "Dashboard.html",
+        calendar: "clinic_calendar.html",
+        staff: "staff_service_settings.html",
+        billing: "billing.html",
+        records: "records.html",
+        message: "message.html",
+        emergency: "emergency_management.html",
+        appointments: "appointments.html",
+        inventory: "inventory.html",
+        mortuary: "mortuary.html",
+        reports: "report.html",
+        settings: "settings.html",
       };
 
       function navigateTo(section) {
-        const currentPage = document.body.getAttribute('data-page') || 'reports';
+        const currentPage =
+          document.body.getAttribute("data-page") || "reports";
         if (section === currentPage) {
-          showToast(`📍 Already on ${section} page`, 'info');
+          showToast(`📍 Already on ${section} page`, "info");
           return;
         }
-        
+
         if (pageMap[section]) {
-          showToast(`🔄 Navigating to ${section}...`, 'info');
+          showToast(`🔄 Navigating to ${section}...`, "info");
           setTimeout(() => {
             window.location.href = pageMap[section];
           }, 300);
         } else {
-          showToast(`📄 ${section} page coming soon!`, 'warning');
+          showToast(`📄 ${section} page coming soon!`, "warning");
         }
       }
 
-      document.querySelectorAll('[data-nav-desktop]').forEach((link) => {
-        link.addEventListener('click', (e) => {
+      document.querySelectorAll("[data-nav-desktop]").forEach((link) => {
+        link.addEventListener("click", (e) => {
           e.preventDefault();
-          const section = link.getAttribute('data-nav-desktop');
+          const section = link.getAttribute("data-nav-desktop");
           navigateTo(section);
         });
       });
 
-      document.querySelectorAll('[data-nav-mobile]').forEach((link) => {
-        link.addEventListener('click', (e) => {
+      document.querySelectorAll("[data-nav-mobile]").forEach((link) => {
+        link.addEventListener("click", (e) => {
           e.preventDefault();
-          const section = link.getAttribute('data-nav-mobile');
+          const section = link.getAttribute("data-nav-mobile");
           closeMobileSidebarFunc();
           navigateTo(section);
         });
@@ -1662,19 +2210,28 @@
       // 4. HIGHLIGHT ACTIVE PAGE
       // ==========================================
       function highlightCurrentPage() {
-        const currentPage = document.body.getAttribute('data-page') || 'reports';
+        const currentPage =
+          document.body.getAttribute("data-page") || "reports";
 
-        document.querySelectorAll('[data-nav-desktop]').forEach((link) => {
-          link.classList.remove('active-link', 'bg-primary-container', 'text-on-primary-container');
-          if (link.getAttribute('data-nav-desktop') === currentPage) {
-            link.classList.add('active-link');
+        document.querySelectorAll("[data-nav-desktop]").forEach((link) => {
+          link.classList.remove(
+            "active-link",
+            "bg-primary-container",
+            "text-on-primary-container",
+          );
+          if (link.getAttribute("data-nav-desktop") === currentPage) {
+            link.classList.add("active-link");
           }
         });
 
-        document.querySelectorAll('[data-nav-mobile]').forEach((link) => {
-          link.classList.remove('active-link', 'bg-primary-container', 'text-on-primary-container');
-          if (link.getAttribute('data-nav-mobile') === currentPage) {
-            link.classList.add('active-link');
+        document.querySelectorAll("[data-nav-mobile]").forEach((link) => {
+          link.classList.remove(
+            "active-link",
+            "bg-primary-container",
+            "text-on-primary-container",
+          );
+          if (link.getAttribute("data-nav-mobile") === currentPage) {
+            link.classList.add("active-link");
           }
         });
       }
@@ -1683,42 +2240,172 @@
       // 5. LOGOUT
       // ==========================================
       function logout() {
-        if (confirm('Are you sure you want to logout?')) {
-          localStorage.removeItem('user');
-          localStorage.removeItem('token');
-          showToast('👋 Logging out...', 'info');
+        if (confirm("Are you sure you want to logout?")) {
+          localStorage.removeItem("user");
+          localStorage.removeItem("token");
+          showToast("👋 Logging out...", "info");
           setTimeout(() => {
-            window.location.href = 'vet_portal_login.html';
+            window.location.href = "vet_portal_login.html";
           }, 500);
         }
       }
 
-      document.getElementById('logoutBtnMobile')?.addEventListener('click', logout);
-      document.getElementById('logoutBtnDesktop')?.addEventListener('click', logout);
+      document
+        .getElementById("logoutBtnMobile")
+        ?.addEventListener("click", logout);
+      document
+        .getElementById("logoutBtnDesktop")
+        ?.addEventListener("click", logout);
 
       // ==========================================
       // 6. FORMAT CURRENCY - GHANA CEDI
       // ==========================================
       const formatCurrency = (amount) => {
-        return 'GH₵' + amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        return (
+          "GH₵" +
+          amount.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        );
       };
 
       const transactions = [
-        { id: 'INV-1024', patient: 'Max', owner: 'Sarah Mitchell', service: 'Annual Checkup', amount: 299.00, date: '2026-08-05', status: 'paid' },
-        { id: 'INV-1023', patient: 'Bella', owner: 'Michael Chen', service: 'Vaccination', amount: 49.50, date: '2026-08-05', status: 'pending' },
-        { id: 'INV-1022', patient: 'Charlie', owner: 'Jessica Park', service: 'Surgery', amount: 1249.00, date: '2026-08-04', status: 'paid' },
-        { id: 'INV-1021', patient: 'Luna', owner: 'Robert Johnson', service: 'Emergency Care', amount: 19.99, date: '2026-08-04', status: 'failed' },
-        { id: 'INV-1020', patient: 'Rocky', owner: 'Emily Davis', service: 'Dental Cleaning', amount: 49.00, date: '2026-08-03', status: 'refunded' },
-        { id: 'INV-1019', patient: 'Milo', owner: 'David Wilson', service: 'Checkup', amount: 85.00, date: '2026-08-03', status: 'paid' },
-        { id: 'INV-1018', patient: 'Coco', owner: 'Lisa Brown', service: 'Grooming', amount: 35.00, date: '2026-08-02', status: 'paid' },
-        { id: 'INV-1017', patient: 'Daisy', owner: 'James Taylor', service: 'X-Ray', amount: 150.00, date: '2026-08-02', status: 'pending' },
-        { id: 'INV-1016', patient: 'Simba', owner: 'Patricia Moore', service: 'Vaccination', amount: 49.50, date: '2026-08-01', status: 'paid' },
-        { id: 'INV-1015', patient: 'Oliver', owner: 'Thomas Anderson', service: 'Checkup', amount: 85.00, date: '2026-08-01', status: 'paid' },
-        { id: 'INV-1014', patient: 'Molly', owner: 'Jennifer Lee', service: 'Emergency Care', amount: 19.99, date: '2026-07-31', status: 'paid' },
-        { id: 'INV-1013', patient: 'Bailey', owner: 'Richard White', service: 'Dental Cleaning', amount: 49.00, date: '2026-07-31', status: 'refunded' },
-        { id: 'INV-1012', patient: 'Lucy', owner: 'Nancy Green', service: 'Surgery', amount: 1249.00, date: '2026-07-30', status: 'paid' },
-        { id: 'INV-1011', patient: 'Bear', owner: 'Mark Black', service: 'Checkup', amount: 85.00, date: '2026-07-30', status: 'pending' },
-        { id: 'INV-1010', patient: 'Zoe', owner: 'Stephanie Clark', service: 'Vaccination', amount: 49.50, date: '2026-07-29', status: 'paid' },
+        {
+          id: "INV-1024",
+          patient: "Max",
+          owner: "Sarah Mitchell",
+          service: "Annual Checkup",
+          amount: 299.0,
+          date: "2026-08-05",
+          status: "paid",
+        },
+        {
+          id: "INV-1023",
+          patient: "Bella",
+          owner: "Michael Chen",
+          service: "Vaccination",
+          amount: 49.5,
+          date: "2026-08-05",
+          status: "pending",
+        },
+        {
+          id: "INV-1022",
+          patient: "Charlie",
+          owner: "Jessica Park",
+          service: "Surgery",
+          amount: 1249.0,
+          date: "2026-08-04",
+          status: "paid",
+        },
+        {
+          id: "INV-1021",
+          patient: "Luna",
+          owner: "Robert Johnson",
+          service: "Emergency Care",
+          amount: 19.99,
+          date: "2026-08-04",
+          status: "failed",
+        },
+        {
+          id: "INV-1020",
+          patient: "Rocky",
+          owner: "Emily Davis",
+          service: "Dental Cleaning",
+          amount: 49.0,
+          date: "2026-08-03",
+          status: "refunded",
+        },
+        {
+          id: "INV-1019",
+          patient: "Milo",
+          owner: "David Wilson",
+          service: "Checkup",
+          amount: 85.0,
+          date: "2026-08-03",
+          status: "paid",
+        },
+        {
+          id: "INV-1018",
+          patient: "Coco",
+          owner: "Lisa Brown",
+          service: "Grooming",
+          amount: 35.0,
+          date: "2026-08-02",
+          status: "paid",
+        },
+        {
+          id: "INV-1017",
+          patient: "Daisy",
+          owner: "James Taylor",
+          service: "X-Ray",
+          amount: 150.0,
+          date: "2026-08-02",
+          status: "pending",
+        },
+        {
+          id: "INV-1016",
+          patient: "Simba",
+          owner: "Patricia Moore",
+          service: "Vaccination",
+          amount: 49.5,
+          date: "2026-08-01",
+          status: "paid",
+        },
+        {
+          id: "INV-1015",
+          patient: "Oliver",
+          owner: "Thomas Anderson",
+          service: "Checkup",
+          amount: 85.0,
+          date: "2026-08-01",
+          status: "paid",
+        },
+        {
+          id: "INV-1014",
+          patient: "Molly",
+          owner: "Jennifer Lee",
+          service: "Emergency Care",
+          amount: 19.99,
+          date: "2026-07-31",
+          status: "paid",
+        },
+        {
+          id: "INV-1013",
+          patient: "Bailey",
+          owner: "Richard White",
+          service: "Dental Cleaning",
+          amount: 49.0,
+          date: "2026-07-31",
+          status: "refunded",
+        },
+        {
+          id: "INV-1012",
+          patient: "Lucy",
+          owner: "Nancy Green",
+          service: "Surgery",
+          amount: 1249.0,
+          date: "2026-07-30",
+          status: "paid",
+        },
+        {
+          id: "INV-1011",
+          patient: "Bear",
+          owner: "Mark Black",
+          service: "Checkup",
+          amount: 85.0,
+          date: "2026-07-30",
+          status: "pending",
+        },
+        {
+          id: "INV-1010",
+          patient: "Zoe",
+          owner: "Stephanie Clark",
+          service: "Vaccination",
+          amount: 49.5,
+          date: "2026-07-29",
+          status: "paid",
+        },
       ];
 
       let currentPage = 1;
@@ -1728,7 +2415,7 @@
       // 7. RENDER TRANSACTIONS TABLE
       // ==========================================
       function renderTransactionsTable() {
-        const tbody = document.getElementById('transactionsTableBody');
+        const tbody = document.getElementById("transactionsTableBody");
         const start = (currentPage - 1) * rowsPerPage;
         const end = Math.min(start + rowsPerPage, transactions.length);
         const pageData = transactions.slice(start, end);
@@ -1737,16 +2424,17 @@
         if (pageData.length === 0) {
           tbody.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-slate-400">No transactions found</td></tr>`;
         } else {
-          tbody.innerHTML = pageData.map((t, index) => {
-            const statusMap = {
-              paid: { class: 'success', label: 'Paid' },
-              pending: { class: 'warning', label: 'Pending' },
-              failed: { class: 'danger', label: 'Failed' },
-              refunded: { class: 'info', label: 'Refunded' }
-            };
-            const status = statusMap[t.status] || statusMap.paid;
-            const dropdownId = `action-${t.id}-${index}`;
-            return `
+          tbody.innerHTML = pageData
+            .map((t, index) => {
+              const statusMap = {
+                paid: { class: "success", label: "Paid" },
+                pending: { class: "warning", label: "Pending" },
+                failed: { class: "danger", label: "Failed" },
+                refunded: { class: "info", label: "Refunded" },
+              };
+              const status = statusMap[t.status] || statusMap.paid;
+              const dropdownId = `action-${t.id}-${index}`;
+              return `
               <tr>
                 <td><strong>${t.id}</strong></td>
                 <td><span class="font-medium">${t.patient}</span></td>
@@ -1782,36 +2470,45 @@
                 </td>
               </tr>
             `;
-          }).join('');
+            })
+            .join("");
         }
 
-        document.getElementById('paginationInfo').textContent = 
+        document.getElementById("paginationInfo").textContent =
           `${start + 1}–${Math.min(end, transactions.length)} of ${transactions.length}`;
 
-        const paginationContainer = document.getElementById('paginationControls');
-        const pageButtons = paginationContainer.querySelectorAll('.pagination-btn[data-page]');
-        pageButtons.forEach(btn => {
+        const paginationContainer =
+          document.getElementById("paginationControls");
+        const pageButtons = paginationContainer.querySelectorAll(
+          ".pagination-btn[data-page]",
+        );
+        pageButtons.forEach((btn) => {
           const page = parseInt(btn.dataset.page);
-          btn.classList.toggle('active', page === currentPage);
-          btn.style.display = page <= totalPages ? 'inline-flex' : 'none';
+          btn.classList.toggle("active", page === currentPage);
+          btn.style.display = page <= totalPages ? "inline-flex" : "none";
         });
 
-        document.getElementById('prevPage').disabled = currentPage === 1;
-        document.getElementById('nextPage').disabled = currentPage === totalPages || totalPages === 0;
+        document.getElementById("prevPage").disabled = currentPage === 1;
+        document.getElementById("nextPage").disabled =
+          currentPage === totalPages || totalPages === 0;
       }
 
       // ==========================================
       // 8. ACTION DROPDOWN FUNCTIONS
       // ==========================================
       function toggleActionDropdown(id) {
-        document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
+        document
+          .querySelectorAll(".action-dropdown-menu")
+          .forEach((el) => el.classList.remove("open"));
         const menu = document.getElementById(`dropdown-${id}`);
-        if (menu) menu.classList.toggle('open');
+        if (menu) menu.classList.toggle("open");
       }
 
-      document.addEventListener('click', function(e) {
-        if (!e.target.closest('.action-dropdown')) {
-          document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
+      document.addEventListener("click", function (e) {
+        if (!e.target.closest(".action-dropdown")) {
+          document
+            .querySelectorAll(".action-dropdown-menu")
+            .forEach((el) => el.classList.remove("open"));
         }
       });
 
@@ -1819,23 +2516,24 @@
       // 9. VIEW TRANSACTION
       // ==========================================
       function viewTransaction(id) {
-        const transaction = transactions.find(t => t.id === id);
+        const transaction = transactions.find((t) => t.id === id);
         if (!transaction) {
-          showToast('❌ Transaction not found', 'error');
+          showToast("❌ Transaction not found", "error");
           return;
         }
-        
+
         currentViewTransaction = transaction;
-        document.getElementById('viewModalTitle').textContent = `Transaction ${transaction.id}`;
-        
+        document.getElementById("viewModalTitle").textContent =
+          `Transaction ${transaction.id}`;
+
         const statusMap = {
-          paid: '✅ Paid',
-          pending: '⏳ Pending',
-          failed: '❌ Failed',
-          refunded: '🔄 Refunded'
+          paid: "✅ Paid",
+          pending: "⏳ Pending",
+          failed: "❌ Failed",
+          refunded: "🔄 Refunded",
         };
-        
-        document.getElementById('viewModalBody').innerHTML = `
+
+        document.getElementById("viewModalBody").innerHTML = `
           <div class="detail-row">
             <span class="label">Invoice #</span>
             <span class="value font-semibold">${transaction.id}</span>
@@ -1865,16 +2563,20 @@
             <span class="value">${statusMap[transaction.status] || transaction.status}</span>
           </div>
         `;
-        
-        document.getElementById('viewTransactionModal').classList.add('open');
-        document.body.style.overflow = 'hidden';
-        document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
-        showToast(`👁️ Viewing ${transaction.id}`, 'info');
+
+        document.getElementById("viewTransactionModal").classList.add("open");
+        document.body.style.overflow = "hidden";
+        document
+          .querySelectorAll(".action-dropdown-menu")
+          .forEach((el) => el.classList.remove("open"));
+        showToast(`👁️ Viewing ${transaction.id}`, "info");
       }
 
       function closeViewModal() {
-        document.getElementById('viewTransactionModal').classList.remove('open');
-        document.body.style.overflow = '';
+        document
+          .getElementById("viewTransactionModal")
+          .classList.remove("open");
+        document.body.style.overflow = "";
         currentViewTransaction = null;
       }
 
@@ -1885,31 +2587,33 @@
         }
       }
 
-      document.getElementById('viewTransactionModal')?.addEventListener('click', function(e) {
-        if (e.target === this) closeViewModal();
-      });
+      document
+        .getElementById("viewTransactionModal")
+        ?.addEventListener("click", function (e) {
+          if (e.target === this) closeViewModal();
+        });
 
       // ==========================================
       // 10. EDIT TRANSACTION
       // ==========================================
       function editTransaction(id) {
-        const transaction = transactions.find(t => t.id === id);
+        const transaction = transactions.find((t) => t.id === id);
         if (!transaction) {
-          showToast('❌ Transaction not found', 'error');
+          showToast("❌ Transaction not found", "error");
           return;
         }
-        
+
         currentEditTransaction = { ...transaction };
-        
-        const statusOptions = ['paid', 'pending', 'failed', 'refunded'];
+
+        const statusOptions = ["paid", "pending", "failed", "refunded"];
         const statusMap = {
-          paid: 'Paid',
-          pending: 'Pending',
-          failed: 'Failed',
-          refunded: 'Refunded'
+          paid: "Paid",
+          pending: "Pending",
+          failed: "Failed",
+          refunded: "Refunded",
         };
-        
-        document.getElementById('editModalBody').innerHTML = `
+
+        document.getElementById("editModalBody").innerHTML = `
           <div class="space-y-3">
             <div>
               <label class="text-sm font-medium text-slate-700 block mb-1">Invoice #</label>
@@ -1934,39 +2638,45 @@
             <div>
               <label class="text-sm font-medium text-slate-700 block mb-1">Status</label>
               <select id="editStatus" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none">
-                ${statusOptions.map(s => `<option value="${s}" ${s === transaction.status ? 'selected' : ''}>${statusMap[s]}</option>`).join('')}
+                ${statusOptions.map((s) => `<option value="${s}" ${s === transaction.status ? "selected" : ""}>${statusMap[s]}</option>`).join("")}
               </select>
             </div>
           </div>
         `;
-        
-        document.getElementById('editTransactionModal').classList.add('open');
-        document.body.style.overflow = 'hidden';
-        document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
-        showToast(`✏️ Editing ${transaction.id}`, 'info');
+
+        document.getElementById("editTransactionModal").classList.add("open");
+        document.body.style.overflow = "hidden";
+        document
+          .querySelectorAll(".action-dropdown-menu")
+          .forEach((el) => el.classList.remove("open"));
+        showToast(`✏️ Editing ${transaction.id}`, "info");
       }
 
       function closeEditModal() {
-        document.getElementById('editTransactionModal').classList.remove('open');
-        document.body.style.overflow = '';
+        document
+          .getElementById("editTransactionModal")
+          .classList.remove("open");
+        document.body.style.overflow = "";
         currentEditTransaction = null;
       }
 
       function saveEditTransaction() {
         if (!currentEditTransaction) return;
-        
-        const patient = document.getElementById('editPatient').value.trim();
-        const owner = document.getElementById('editOwner').value.trim();
-        const service = document.getElementById('editService').value.trim();
-        const amount = parseFloat(document.getElementById('editAmount').value);
-        const status = document.getElementById('editStatus').value;
-        
+
+        const patient = document.getElementById("editPatient").value.trim();
+        const owner = document.getElementById("editOwner").value.trim();
+        const service = document.getElementById("editService").value.trim();
+        const amount = parseFloat(document.getElementById("editAmount").value);
+        const status = document.getElementById("editStatus").value;
+
         if (!patient || !owner || !service || isNaN(amount) || amount <= 0) {
-          showToast('❌ Please fill in all fields correctly', 'error');
+          showToast("❌ Please fill in all fields correctly", "error");
           return;
         }
-        
-        const original = transactions.find(t => t.id === currentEditTransaction.id);
+
+        const original = transactions.find(
+          (t) => t.id === currentEditTransaction.id,
+        );
         if (original) {
           original.patient = patient;
           original.owner = owner;
@@ -1974,34 +2684,39 @@
           original.amount = amount;
           original.status = status;
         }
-        
+
         closeEditModal();
         renderTransactionsTable();
-        showToast(`✅ Transaction ${currentEditTransaction.id} updated successfully!`, 'success');
+        showToast(
+          `✅ Transaction ${currentEditTransaction.id} updated successfully!`,
+          "success",
+        );
       }
 
-      document.getElementById('editTransactionModal')?.addEventListener('click', function(e) {
-        if (e.target === this) closeEditModal();
-      });
+      document
+        .getElementById("editTransactionModal")
+        ?.addEventListener("click", function (e) {
+          if (e.target === this) closeEditModal();
+        });
 
       // ==========================================
       // 11. PRINT TRANSACTION
       // ==========================================
       function printTransaction(id) {
-        const transaction = transactions.find(t => t.id === id);
+        const transaction = transactions.find((t) => t.id === id);
         if (!transaction) {
-          showToast('❌ Transaction not found', 'error');
+          showToast("❌ Transaction not found", "error");
           return;
         }
-        
-        const printWindow = window.open('', '_blank', 'width=600,height=500');
+
+        const printWindow = window.open("", "_blank", "width=600,height=500");
         const statusMap = {
-          paid: '✅ Paid',
-          pending: '⏳ Pending',
-          failed: '❌ Failed',
-          refunded: '🔄 Refunded'
+          paid: "✅ Paid",
+          pending: "⏳ Pending",
+          failed: "❌ Failed",
+          refunded: "🔄 Refunded",
         };
-        
+
         printWindow.document.write(`
           <html>
             <head>
@@ -2037,7 +2752,7 @@
                 <div class="row"><span class="label">Date</span><span class="value">${transaction.date}</span></div>
                 <div class="row"><span class="label">Status</span><span class="value"><span class="status-badge status-${transaction.status}">${statusMap[transaction.status] || transaction.status}</span></span></div>
               </div>
-              <div class="footer">Generated on ${new Date().toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+              <div class="footer">Generated on ${new Date().toLocaleString("en-US", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" })}</div>
               <script>
                 window.print();
               <\/script>
@@ -2045,61 +2760,77 @@
           </html>
         `);
         printWindow.document.close();
-        
-        document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
-        showToast(`🖨️ Printing ${transaction.id}`, 'info');
+
+        document
+          .querySelectorAll(".action-dropdown-menu")
+          .forEach((el) => el.classList.remove("open"));
+        showToast(`🖨️ Printing ${transaction.id}`, "info");
       }
 
       // ==========================================
       // 12. REFUND TRANSACTION
       // ==========================================
       function refundTransaction(id) {
-        const transaction = transactions.find(t => t.id === id);
+        const transaction = transactions.find((t) => t.id === id);
         if (!transaction) {
-          showToast('❌ Transaction not found', 'error');
+          showToast("❌ Transaction not found", "error");
           return;
         }
-        
-        if (transaction.status === 'refunded') {
-          showToast(`⚠️ ${id} is already refunded`, 'warning');
-          document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
+
+        if (transaction.status === "refunded") {
+          showToast(`⚠️ ${id} is already refunded`, "warning");
+          document
+            .querySelectorAll(".action-dropdown-menu")
+            .forEach((el) => el.classList.remove("open"));
           return;
         }
-        
-        if (confirm(`💰 Are you sure you want to refund ${id} for ${formatCurrency(transaction.amount)}?`)) {
-          transaction.status = 'refunded';
+
+        if (
+          confirm(
+            `💰 Are you sure you want to refund ${id} for ${formatCurrency(transaction.amount)}?`,
+          )
+        ) {
+          transaction.status = "refunded";
           renderTransactionsTable();
-          showToast(`✅ Refund processed for ${id}`, 'success');
+          showToast(`✅ Refund processed for ${id}`, "success");
         }
-        document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
+        document
+          .querySelectorAll(".action-dropdown-menu")
+          .forEach((el) => el.classList.remove("open"));
       }
 
       // ==========================================
       // 13. DELETE TRANSACTION
       // ==========================================
       function deleteTransaction(id) {
-        const transaction = transactions.find(t => t.id === id);
+        const transaction = transactions.find((t) => t.id === id);
         if (!transaction) {
-          showToast('❌ Transaction not found', 'error');
+          showToast("❌ Transaction not found", "error");
           return;
         }
-        
-        if (confirm(`⚠️ Are you sure you want to delete ${id}? This cannot be undone.`)) {
+
+        if (
+          confirm(
+            `⚠️ Are you sure you want to delete ${id}? This cannot be undone.`,
+          )
+        ) {
           const index = transactions.indexOf(transaction);
           if (index > -1) {
             transactions.splice(index, 1);
           }
           renderTransactionsTable();
-          showToast(`🗑️ Transaction ${id} deleted`, 'warning');
+          showToast(`🗑️ Transaction ${id} deleted`, "warning");
         }
-        document.querySelectorAll('.action-dropdown-menu').forEach(el => el.classList.remove('open'));
+        document
+          .querySelectorAll(".action-dropdown-menu")
+          .forEach((el) => el.classList.remove("open"));
       }
 
       // ==========================================
       // 14. PAGINATION FUNCTIONS
       // ==========================================
       function changeRowsPerPage() {
-        rowsPerPage = parseInt(document.getElementById('rowsPerPage').value);
+        rowsPerPage = parseInt(document.getElementById("rowsPerPage").value);
         currentPage = 1;
         renderTransactionsTable();
       }
@@ -2110,7 +2841,9 @@
         if (newPage >= 1 && newPage <= totalPages) {
           currentPage = newPage;
           renderTransactionsTable();
-          document.querySelector('.report-table-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document
+            .querySelector(".report-table-card")
+            .scrollIntoView({ behavior: "smooth", block: "start" });
         }
       }
 
@@ -2119,7 +2852,9 @@
         if (page >= 1 && page <= totalPages) {
           currentPage = page;
           renderTransactionsTable();
-          document.querySelector('.report-table-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document
+            .querySelector(".report-table-card")
+            .scrollIntoView({ behavior: "smooth", block: "start" });
         }
       }
 
@@ -2127,39 +2862,53 @@
       // 15. REPORT FUNCTIONS
       // ==========================================
       function applyReportFilters() {
-        const dateRange = document.getElementById('reportDateRange').value;
-        const compare = document.getElementById('reportCompare').value;
-        const species = document.getElementById('reportSpecies').value;
-        const staff = document.getElementById('selectedStaff').value;
-        
-        const staffName = staff === 'all' ? 'All Staff' : staffList.find(s => s.id === staff)?.name || 'All Staff';
-        showToast(`📊 Filters applied: ${dateRange}, ${species}, ${staffName}`, 'success');
-        
-        const revenue = document.getElementById('totalRevenue');
-        const appointments = document.getElementById('totalAppointments');
-        const patients = document.getElementById('activePatients');
-        const avgValue = document.getElementById('avgVisitValue');
-        
-        revenue.textContent = formatCurrency(48294 + Math.floor(Math.random() * 2000 - 1000));
-        appointments.textContent = (1842 + Math.floor(Math.random() * 100 - 50)).toLocaleString();
-        patients.textContent = (4721 + Math.floor(Math.random() * 200 - 100)).toLocaleString();
+        const dateRange = document.getElementById("reportDateRange").value;
+        const compare = document.getElementById("reportCompare").value;
+        const species = document.getElementById("reportSpecies").value;
+        const staff = document.getElementById("selectedStaff").value;
+
+        const staffName =
+          staff === "all"
+            ? "All Staff"
+            : staffList.find((s) => s.id === staff)?.name || "All Staff";
+        showToast(
+          `📊 Filters applied: ${dateRange}, ${species}, ${staffName}`,
+          "success",
+        );
+
+        const revenue = document.getElementById("totalRevenue");
+        const appointments = document.getElementById("totalAppointments");
+        const patients = document.getElementById("activePatients");
+        const avgValue = document.getElementById("avgVisitValue");
+
+        revenue.textContent = formatCurrency(
+          48294 + Math.floor(Math.random() * 2000 - 1000),
+        );
+        appointments.textContent = (
+          1842 + Math.floor(Math.random() * 100 - 50)
+        ).toLocaleString();
+        patients.textContent = (
+          4721 + Math.floor(Math.random() * 200 - 100)
+        ).toLocaleString();
         avgValue.textContent = formatCurrency(26.22 + (Math.random() * 2 - 1));
-        
+
         renderTransactionsTable();
       }
 
       function refreshReports() {
-        showToast('🔄 Reports refreshed!', 'success');
-        document.getElementById('totalRevenue').textContent = formatCurrency(48294);
-        document.getElementById('totalAppointments').textContent = '1,842';
-        document.getElementById('activePatients').textContent = '4,721';
-        document.getElementById('avgVisitValue').textContent = formatCurrency(26.22);
+        showToast("🔄 Reports refreshed!", "success");
+        document.getElementById("totalRevenue").textContent =
+          formatCurrency(48294);
+        document.getElementById("totalAppointments").textContent = "1,842";
+        document.getElementById("activePatients").textContent = "4,721";
+        document.getElementById("avgVisitValue").textContent =
+          formatCurrency(26.22);
         currentPage = 1;
         renderTransactionsTable();
       }
 
       function exportReportData() {
-        showToast('📊 Report exported as CSV successfully!', 'success');
+        showToast("📊 Report exported as CSV successfully!", "success");
       }
 
       // ==========================================
@@ -2169,16 +2918,17 @@
       let modalChartInstance = null;
 
       function openChartReport(chartId, title, canvasId) {
-        const modal = document.getElementById('chartReportModal');
-        document.getElementById('modalChartTitle').textContent = title + ' Report';
-        document.getElementById('reportSubtitle').textContent = 
-          `${title} Report • Generated on ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
+        const modal = document.getElementById("chartReportModal");
+        document.getElementById("modalChartTitle").textContent =
+          title + " Report";
+        document.getElementById("reportSubtitle").textContent =
+          `${title} Report • Generated on ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`;
 
         const sourceCanvas = document.getElementById(canvasId);
         const sourceChart = Chart.getChart(canvasId);
-        
+
         if (!sourceChart) {
-          showToast('❌ Chart data not available', 'error');
+          showToast("❌ Chart data not available", "error");
           return;
         }
 
@@ -2186,14 +2936,14 @@
         updateModalStats(chartId, sourceChart);
         renderModalChart(sourceChart);
 
-        modal.classList.add('open');
-        document.body.style.overflow = 'hidden';
+        modal.classList.add("open");
+        document.body.style.overflow = "hidden";
       }
 
       function renderModalChart(sourceChart) {
-        const canvas = document.getElementById('modalChartCanvas');
-        const ctx = canvas.getContext('2d');
-        
+        const canvas = document.getElementById("modalChartCanvas");
+        const ctx = canvas.getContext("2d");
+
         if (modalChartInstance) {
           modalChartInstance.destroy();
           modalChartInstance = null;
@@ -2203,31 +2953,31 @@
         const options = JSON.parse(JSON.stringify(sourceChart.options));
         options.responsive = true;
         options.maintainAspectRatio = false;
-        options.plugins.legend = { 
-          position: 'bottom',
-          labels: { font: { size: 11 }, padding: 12 }
+        options.plugins.legend = {
+          position: "bottom",
+          labels: { font: { size: 11 }, padding: 12 },
         };
         options.onClick = null;
 
         modalChartInstance = new Chart(ctx, {
           type: sourceChart.config.type,
           data: data,
-          options: options
+          options: options,
         });
       }
 
       function updateModalStats(chartId, sourceChart) {
         let data = [];
-        
+
         if (sourceChart.data.datasets && sourceChart.data.datasets.length > 0) {
           data = sourceChart.data.datasets[0].data;
         }
 
         if (data.length === 0) {
-          document.getElementById('modalStatTotal').textContent = 'N/A';
-          document.getElementById('modalStatAvg').textContent = 'N/A';
-          document.getElementById('modalStatMax').textContent = 'N/A';
-          document.getElementById('modalStatMin').textContent = 'N/A';
+          document.getElementById("modalStatTotal").textContent = "N/A";
+          document.getElementById("modalStatAvg").textContent = "N/A";
+          document.getElementById("modalStatMax").textContent = "N/A";
+          document.getElementById("modalStatMin").textContent = "N/A";
           return;
         }
 
@@ -2236,18 +2986,20 @@
         const max = Math.max(...data);
         const min = Math.min(...data);
 
-        const isCurrency = chartId === 'revenue';
-        const formatVal = (v) => isCurrency ? formatCurrency(v) : v.toLocaleString();
+        const isCurrency = chartId === "revenue";
+        const formatVal = (v) =>
+          isCurrency ? formatCurrency(v) : v.toLocaleString();
 
-        document.getElementById('modalStatTotal').textContent = formatVal(total);
-        document.getElementById('modalStatAvg').textContent = formatVal(avg);
-        document.getElementById('modalStatMax').textContent = formatVal(max);
-        document.getElementById('modalStatMin').textContent = formatVal(min);
+        document.getElementById("modalStatTotal").textContent =
+          formatVal(total);
+        document.getElementById("modalStatAvg").textContent = formatVal(avg);
+        document.getElementById("modalStatMax").textContent = formatVal(max);
+        document.getElementById("modalStatMin").textContent = formatVal(min);
       }
 
       function closeChartReport() {
-        document.getElementById('chartReportModal').classList.remove('open');
-        document.body.style.overflow = '';
+        document.getElementById("chartReportModal").classList.remove("open");
+        document.body.style.overflow = "";
         if (modalChartInstance) {
           modalChartInstance.destroy();
           modalChartInstance = null;
@@ -2255,12 +3007,14 @@
         currentModalChart = null;
       }
 
-      document.getElementById('chartReportModal')?.addEventListener('click', function(e) {
-        if (e.target === this) closeChartReport();
-      });
+      document
+        .getElementById("chartReportModal")
+        ?.addEventListener("click", function (e) {
+          if (e.target === this) closeChartReport();
+        });
 
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
           closeChartReport();
           closeViewModal();
           closeEditModal();
@@ -2271,8 +3025,8 @@
       // 17. PRINT & PDF EXPORT
       // ==========================================
       function printChartReport() {
-        const content = document.getElementById('reportPrintContainer');
-        const printWindow = window.open('', '_blank', 'width=800,height=600');
+        const content = document.getElementById("reportPrintContainer");
+        const printWindow = window.open("", "_blank", "width=800,height=600");
         printWindow.document.write(`
           <html>
             <head>
@@ -2292,40 +3046,46 @@
             </head>
             <body>
               ${content.innerHTML}
-              <div class="footer">Generated on ${new Date().toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+              <div class="footer">Generated on ${new Date().toLocaleString("en-US", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" })}</div>
             </body>
           </html>
         `);
         printWindow.document.close();
-        setTimeout(() => { printWindow.print(); }, 500);
+        setTimeout(() => {
+          printWindow.print();
+        }, 500);
       }
 
       function exportChartPDF() {
-        const content = document.getElementById('reportPrintContainer');
-        showToast('📄 Generating PDF...', 'info');
-        
+        const content = document.getElementById("reportPrintContainer");
+        showToast("📄 Generating PDF...", "info");
+
         html2canvas(content, {
           scale: 2,
-          backgroundColor: '#ffffff',
+          backgroundColor: "#ffffff",
           logging: false,
           allowTaint: true,
           useCORS: true,
           height: content.scrollHeight,
           windowHeight: content.scrollHeight,
-        }).then(canvas => {
-          const imgData = canvas.toDataURL('image/png');
-          const { jsPDF } = window.jspdf;
-          const pdf = new jsPDF('p', 'mm', 'a4');
-          const pdfWidth = pdf.internal.pageSize.getWidth();
-          const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-          
-          pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-          pdf.save(`Report_${currentModalChart?.title || 'Chart'}_${new Date().toISOString().slice(0,10)}.pdf`);
-          showToast('✅ PDF exported successfully!', 'success');
-        }).catch(err => {
-          console.error('PDF generation error:', err);
-          showToast('❌ Failed to generate PDF. Please try again.', 'error');
-        });
+        })
+          .then((canvas) => {
+            const imgData = canvas.toDataURL("image/png");
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF("p", "mm", "a4");
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+            pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+            pdf.save(
+              `Report_${currentModalChart?.title || "Chart"}_${new Date().toISOString().slice(0, 10)}.pdf`,
+            );
+            showToast("✅ PDF exported successfully!", "success");
+          })
+          .catch((err) => {
+            console.error("PDF generation error:", err);
+            showToast("❌ Failed to generate PDF. Please try again.", "error");
+          });
       }
 
       // ==========================================
@@ -2335,25 +3095,37 @@
 
       function initCharts() {
         // Revenue Trend Chart
-        const ctx1 = document.getElementById('revenueTrendChart').getContext('2d');
+        const ctx1 = document
+          .getElementById("revenueTrendChart")
+          .getContext("2d");
         charts.revenue = new Chart(ctx1, {
-          type: 'line',
+          type: "line",
           data: {
-            labels: ['Jul 30', 'Jul 31', 'Aug 01', 'Aug 02', 'Aug 03', 'Aug 04', 'Aug 05'],
-            datasets: [{
-              label: 'Revenue (GH₵)',
-              data: [4200, 5100, 4900, 6400, 8200, 7600, 7094],
-              borderColor: '#036469',
-              backgroundColor: 'rgba(3, 100, 105, 0.08)',
-              fill: true,
-              tension: 0.4,
-              pointBackgroundColor: '#036469',
-              pointBorderColor: '#fff',
-              pointBorderWidth: 2,
-              pointRadius: 4,
-              pointHoverRadius: 6,
-              borderWidth: 2.5
-            }]
+            labels: [
+              "Jul 30",
+              "Jul 31",
+              "Aug 01",
+              "Aug 02",
+              "Aug 03",
+              "Aug 04",
+              "Aug 05",
+            ],
+            datasets: [
+              {
+                label: "Revenue (GH₵)",
+                data: [4200, 5100, 4900, 6400, 8200, 7600, 7094],
+                borderColor: "#036469",
+                backgroundColor: "rgba(3, 100, 105, 0.08)",
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: "#036469",
+                pointBorderColor: "#fff",
+                pointBorderWidth: 2,
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                borderWidth: 2.5,
+              },
+            ],
           },
           options: {
             responsive: true,
@@ -2361,95 +3133,115 @@
             plugins: {
               legend: { display: false },
               tooltip: {
-                backgroundColor: '#1a1a2e',
-                titleColor: '#fff',
-                bodyColor: '#a8b2d1',
+                backgroundColor: "#1a1a2e",
+                titleColor: "#fff",
+                bodyColor: "#a8b2d1",
                 cornerRadius: 6,
                 padding: 10,
                 callbacks: {
-                  label: function(context) {
-                    return 'GH₵' + context.parsed.y.toLocaleString();
-                  }
-                }
-              }
+                  label: function (context) {
+                    return "GH₵" + context.parsed.y.toLocaleString();
+                  },
+                },
+              },
             },
             scales: {
               y: {
-                grid: { color: 'rgba(0,0,0,0.05)' },
+                grid: { color: "rgba(0,0,0,0.05)" },
                 ticks: {
-                  callback: function(value) {
-                    return 'GH₵' + value.toLocaleString();
-                  }
-                }
+                  callback: function (value) {
+                    return "GH₵" + value.toLocaleString();
+                  },
+                },
               },
-              x: { grid: { display: false } }
+              x: { grid: { display: false } },
             },
             interaction: {
               intersect: false,
-              mode: 'index'
-            }
-          }
+              mode: "index",
+            },
+          },
         });
 
         // Service Distribution Chart (Pie)
-        const ctx2 = document.getElementById('serviceChart').getContext('2d');
+        const ctx2 = document.getElementById("serviceChart").getContext("2d");
         charts.service = new Chart(ctx2, {
-          type: 'doughnut',
+          type: "doughnut",
           data: {
-            labels: ['Checkups', 'Surgery', 'Vaccinations', 'Dental', 'Emergency', 'Grooming'],
-            datasets: [{
-              data: [30, 18, 22, 12, 10, 8],
-              backgroundColor: ['#036469', '#2e7d82', '#5fa8b0', '#88d3d8', '#f59e0b', '#10b981'],
-              borderColor: '#fff',
-              borderWidth: 2,
-              hoverOffset: 8
-            }]
+            labels: [
+              "Checkups",
+              "Surgery",
+              "Vaccinations",
+              "Dental",
+              "Emergency",
+              "Grooming",
+            ],
+            datasets: [
+              {
+                data: [30, 18, 22, 12, 10, 8],
+                backgroundColor: [
+                  "#036469",
+                  "#2e7d82",
+                  "#5fa8b0",
+                  "#88d3d8",
+                  "#f59e0b",
+                  "#10b981",
+                ],
+                borderColor: "#fff",
+                borderWidth: 2,
+                hoverOffset: 8,
+              },
+            ],
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
-            cutout: '65%',
+            cutout: "65%",
             plugins: {
               legend: {
-                position: 'bottom',
+                position: "bottom",
                 labels: {
                   padding: 8,
                   usePointStyle: true,
-                  pointStyle: 'circle',
-                  font: { size: 10, weight: '500' },
-                  color: '#6b7280'
-                }
+                  pointStyle: "circle",
+                  font: { size: 10, weight: "500" },
+                  color: "#6b7280",
+                },
               },
               tooltip: {
-                backgroundColor: '#1a1a2e',
-                titleColor: '#fff',
-                bodyColor: '#a8b2d1',
+                backgroundColor: "#1a1a2e",
+                titleColor: "#fff",
+                bodyColor: "#a8b2d1",
                 cornerRadius: 6,
                 padding: 10,
                 callbacks: {
-                  label: function(context) {
-                    return context.label + ': ' + context.parsed + '%';
-                  }
-                }
-              }
-            }
-          }
+                  label: function (context) {
+                    return context.label + ": " + context.parsed + "%";
+                  },
+                },
+              },
+            },
+          },
         });
 
         // Appointments by Day Chart (Bar)
-        const ctx3 = document.getElementById('appointmentsChart').getContext('2d');
+        const ctx3 = document
+          .getElementById("appointmentsChart")
+          .getContext("2d");
         charts.appointments = new Chart(ctx3, {
-          type: 'bar',
+          type: "bar",
           data: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            datasets: [{
-              label: 'Appointments',
-              data: [28, 35, 42, 38, 45, 30, 18],
-              backgroundColor: 'rgba(3, 100, 105, 0.7)',
-              borderColor: '#036469',
-              borderWidth: 1,
-              borderRadius: 4
-            }]
+            labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            datasets: [
+              {
+                label: "Appointments",
+                data: [28, 35, 42, 38, 45, 30, 18],
+                backgroundColor: "rgba(3, 100, 105, 0.7)",
+                borderColor: "#036469",
+                borderWidth: 1,
+                borderRadius: 4,
+              },
+            ],
           },
           options: {
             responsive: true,
@@ -2457,98 +3249,112 @@
             plugins: {
               legend: { display: false },
               tooltip: {
-                backgroundColor: '#1a1a2e',
-                titleColor: '#fff',
-                bodyColor: '#a8b2d1',
+                backgroundColor: "#1a1a2e",
+                titleColor: "#fff",
+                bodyColor: "#a8b2d1",
                 cornerRadius: 6,
-                padding: 10
-              }
+                padding: 10,
+              },
             },
             scales: {
               y: {
-                grid: { color: 'rgba(0,0,0,0.05)' },
-                beginAtZero: true
+                grid: { color: "rgba(0,0,0,0.05)" },
+                beginAtZero: true,
               },
-              x: { grid: { display: false } }
-            }
-          }
+              x: { grid: { display: false } },
+            },
+          },
         });
 
         // Top Procedures Chart (Horizontal Bar)
-        const ctx4 = document.getElementById('proceduresChart').getContext('2d');
+        const ctx4 = document
+          .getElementById("proceduresChart")
+          .getContext("2d");
         charts.procedures = new Chart(ctx4, {
-          type: 'bar',
+          type: "bar",
           data: {
-            labels: ['Vaccination', 'Checkup', 'Dental', 'Emergency', 'Surgery', 'Grooming'],
-            datasets: [{
-              label: 'Procedures',
-              data: [45, 38, 28, 22, 18, 15],
-              backgroundColor: [
-                'rgba(3, 100, 105, 0.8)',
-                'rgba(46, 125, 130, 0.8)',
-                'rgba(95, 168, 176, 0.8)',
-                'rgba(136, 211, 216, 0.8)',
-                'rgba(245, 158, 11, 0.8)',
-                'rgba(16, 185, 129, 0.8)'
-              ],
-              borderColor: '#036469',
-              borderWidth: 1,
-              borderRadius: 4
-            }]
+            labels: [
+              "Vaccination",
+              "Checkup",
+              "Dental",
+              "Emergency",
+              "Surgery",
+              "Grooming",
+            ],
+            datasets: [
+              {
+                label: "Procedures",
+                data: [45, 38, 28, 22, 18, 15],
+                backgroundColor: [
+                  "rgba(3, 100, 105, 0.8)",
+                  "rgba(46, 125, 130, 0.8)",
+                  "rgba(95, 168, 176, 0.8)",
+                  "rgba(136, 211, 216, 0.8)",
+                  "rgba(245, 158, 11, 0.8)",
+                  "rgba(16, 185, 129, 0.8)",
+                ],
+                borderColor: "#036469",
+                borderWidth: 1,
+                borderRadius: 4,
+              },
+            ],
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
-            indexAxis: 'y',
+            indexAxis: "y",
             plugins: {
               legend: { display: false },
               tooltip: {
-                backgroundColor: '#1a1a2e',
-                titleColor: '#fff',
-                bodyColor: '#a8b2d1',
+                backgroundColor: "#1a1a2e",
+                titleColor: "#fff",
+                bodyColor: "#a8b2d1",
                 cornerRadius: 6,
-                padding: 10
-              }
+                padding: 10,
+              },
             },
             scales: {
               x: {
-                grid: { color: 'rgba(0,0,0,0.05)' },
-                beginAtZero: true
+                grid: { color: "rgba(0,0,0,0.05)" },
+                beginAtZero: true,
               },
-              y: { grid: { display: false } }
-            }
-          }
+              y: { grid: { display: false } },
+            },
+          },
         });
       }
 
       // ==========================================
       // 19. SEARCH
       // ==========================================
-      document.getElementById('reportSearch')?.addEventListener('input', function() {
-        const query = this.value.toLowerCase();
-        const rows = document.querySelectorAll('#transactionsTableBody tr');
-        let visibleCount = 0;
-        rows.forEach(row => {
-          const text = row.textContent.toLowerCase();
-          const match = text.includes(query);
-          row.style.display = match ? '' : 'none';
-          if (match) visibleCount++;
+      document
+        .getElementById("reportSearch")
+        ?.addEventListener("input", function () {
+          const query = this.value.toLowerCase();
+          const rows = document.querySelectorAll("#transactionsTableBody tr");
+          let visibleCount = 0;
+          rows.forEach((row) => {
+            const text = row.textContent.toLowerCase();
+            const match = text.includes(query);
+            row.style.display = match ? "" : "none";
+            if (match) visibleCount++;
+          });
+          if (query.length > 0) {
+            document.getElementById("paginationInfo").textContent =
+              `Showing ${visibleCount} results`;
+          } else {
+            renderTransactionsTable();
+          }
         });
-        if (query.length > 0) {
-          document.getElementById('paginationInfo').textContent = `Showing ${visibleCount} results`;
-        } else {
-          renderTransactionsTable();
-        }
-      });
 
       // ==========================================
       // 20. INIT
       // ==========================================
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener("DOMContentLoaded", function () {
         highlightCurrentPage();
         renderTransactionsTable();
         initCharts();
-        showToast('📊 Reports loaded successfully!', 'success');
+        showToast("📊 Reports loaded successfully!", "success");
       });
     </script>
   </body>
