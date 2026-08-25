@@ -1,5 +1,6 @@
-require("dotenv").config();
-
+const path = require("path");
+const fs = require("fs");
+require("dotenv").config({ path: path.join(__dirname, ".env") });
 const express = require("express");
 const cors = require("cors");
 const oracledb = require("oracledb");
@@ -8,7 +9,23 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 //const { GoogleGenerativeAI } = require("@google/generative-ai");
 //const OpenAI = require("openai");
- const { Groq } = require("groq-sdk");
+const { Groq } = require("groq-sdk");
+const { errorHandler } = require("./src/middleware/errorHandler");
+const authRoutes = require("./src/routes/authRoutes");
+const appointmentRoutes = require("./src/routes/appointmentRoutes");
+const billingRoutes = require("./src/routes/billingRoutes");
+const inventoryRoutes = require("./src/routes/inventoryRoutes");
+const patientRoutes = require("./src/routes/patientRoutes");
+const staffRoutes = require("./src/routes/staffRoutes");
+const emergencyRoutes = require("./src/routes/emergencyRoutes");
+const reportRoutes = require("./src/routes/reportRoutes");
+const settingsRoutes = require("./src/routes/settingsRoutes");
+const adminRoutes = require("./src/routes/adminRoutes");
+const { checkConnection } = require("./src/config/database");
+
+const publicDirectory = fs.existsSync(path.join(__dirname, "public"))
+  ? path.join(__dirname, "public")
+  : path.join(__dirname, "..", "public");
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -20,12 +37,44 @@ app.use("/node_modules", express.static("node_modules"));
 app.use(cors());
 app.use(express.json());
 
+// Modular API used by the admin panel. Legacy public endpoints remain below.
+app.use("/api/auth", authRoutes);
+app.use("/api/appointments", appointmentRoutes);
+app.use("/api/billing", billingRoutes);
+app.use("/api/inventory", inventoryRoutes);
+app.use("/api/patients", patientRoutes);
+app.use("/api/staff", staffRoutes);
+app.use("/api/emergencies", emergencyRoutes);
+app.use("/api/reports", reportRoutes);
+app.use("/api/settings", settingsRoutes);
+app.use("/api/admin", adminRoutes);
+
+app.get("/api/health", async (req, res, next) => {
+  try {
+    await checkConnection();
+    res.json({ ok: true, database: "connected" });
+  } catch (error) {
+    error.status = 503;
+    next(error);
+  }
+});
+
 // serve frontend files
-app.use(express.static("public"));
+app.use(express.static(publicDirectory));
+app.use(
+  "/admin_portal_vet_website",
+  express.static(path.join(__dirname, "admin_portal_vet_website")),
+);
+
+app.get("/admin_portal_vet_website/", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "admin_portal_vet_website", "Dashboard.html"),
+  );
+});
 
 // Add this line - serve home as the default landing page
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/public/home.html");
+  res.sendFile(path.join(publicDirectory, "home.html"));
 });
 
 const dbConfig = {
@@ -53,7 +102,8 @@ app.post("/book-appointment", async (req, res) => {
     await connection.execute(
       `INSERT INTO appointments
             (pet_name, pet_species, pet_age, owner_name, owner_phone, visit_reason, service, appointment_time)
-            VALUES (:pet_name, :pet_species, :pet_age, :owner_name, :owner_phone, :visit_reason, :service, :appointment_time)`,
+            VALUES (:pet_name, :pet_species, :pet_age, :owner_name, :owner_phone, :visit_reason, :service,
+              :appointment_time)`,
 
       {
         pet_name,
@@ -126,6 +176,17 @@ app.post("/login", async (req, res) => {
     if (!validPassword) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
+
+    const token = jwt.sign(
+      { id: user[0], email: user[1] },
+      process.env.JWT_SECRET,
+      { expiresIn: "8h" },
+    );
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "lax",
+      maxAge: 8 * 60 * 60 * 1000,
+    });
 
     res.json({
       message: "Login successful",
@@ -262,7 +323,7 @@ app.post("/api/triage", async (req, res) => {
   }
 });
 
-
+app.use(errorHandler);
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");

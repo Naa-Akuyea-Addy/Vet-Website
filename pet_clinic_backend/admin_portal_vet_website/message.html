@@ -1495,6 +1495,46 @@
       let activeFilters = { petType: "all", time: "all" };
       let currentReplyMessage = null;
 
+      async function loadMessages() {
+        try {
+          const response = await fetch("/api/admin/messages", {
+            credentials: "same-origin",
+          });
+          if (!response.ok) throw new Error("Unable to load messages");
+          const rows = await response.json();
+          enquiries = rows.map((row, index) => {
+            const timestamp = new Date(row.CREATED_AT).getTime();
+            const status = String(row.STATUS || "unread").toLowerCase();
+            return {
+              id: row.ID,
+              name: row.NAME,
+              initials: String(row.NAME || "?")
+                .split(/\s+/)
+                .map((part) => part[0])
+                .join("")
+                .slice(0, 2)
+                .toUpperCase(),
+              email: row.EMAIL,
+              pet: row.PET_BREED || "Pet details unavailable",
+              petType: "Other",
+              question: row.CUSTOMER_QUESTIONS,
+              time: Number.isNaN(timestamp)
+                ? "Unknown time"
+                : new Date(timestamp).toLocaleString(),
+              timestamp: Number.isNaN(timestamp) ? 0 : timestamp,
+              status: status === "unread" ? "new" : status,
+              colorClass:
+                index % 2 === 0
+                  ? "bg-primary-container text-on-primary-container"
+                  : "bg-secondary-container text-on-secondary-container",
+            };
+          });
+        } catch (error) {
+          console.error("Message loading error:", error);
+          showToast("Could not load messages from the database.", "error");
+        }
+      }
+
       // ===== RENDER MESSAGES =====
       function renderMessages() {
         const container = document.getElementById("messagesContainer");
@@ -1765,7 +1805,7 @@
           closeReplyDrawer();
       });
 
-      renderMessages();
+      loadMessages().then(renderMessages);
     </script>
   </body>
 </html>
