@@ -281,68 +281,56 @@
         display: block;
       }
 
-      .sidebar-collapsed .sidebar-text {
+      /* Desktop Auto-Hover Sidebar - EXACTLY like appointment.html */
+      #desktopSidebar {
+        width: 80px;
+        min-width: 80px;
+        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-x: hidden;
+      }
+      #desktopSidebar:hover {
+        width: 256px;
+        min-width: 256px;
+      }
+      #desktopSidebar:not(:hover) .sidebar-text,
+      #desktopSidebar:not(:hover) .sidebar-logo-text,
+      #desktopSidebar:not(:hover) .emergency-section {
         display: none;
       }
-
-      .sidebar-collapsed .sidebar-icon-only {
+      #desktopSidebar:not(:hover) .sidebar-icon-only {
         margin: 0 auto;
       }
-
-      .sidebar-collapsed {
-        width: 80px !important;
-      }
-
-      .sidebar-collapsed .sidebar-logo-text {
-        display: none;
-      }
-
-      .sidebar-collapsed .sidebar-logo {
+      #desktopSidebar:not(:hover) .sidebar-logo {
         margin: 0 auto;
       }
-
-      .sidebar-collapsed .sidebar-button {
+      #desktopSidebar:not(:hover) .sidebar-button {
         justify-content: center;
       }
-
-      .sidebar-collapsed .emergency-section {
-        display: none;
-      }
-
-      .aside {
-        margin-right: 100px;
-      }
-
-      .sidebar-collapsed #logoutBtnDesktop {
+      #desktopSidebar:not(:hover) #logoutBtnDesktop {
         justify-content: center;
         padding: 12px !important;
       }
-
-      .sidebar-collapsed .bottom-container {
+      #desktopSidebar:not(:hover) .bottom-container {
         padding: 16px 8px !important;
       }
-
-      .main-content-full {
-        width: 100% !important;
-        margin-left: 0 !important;
+      #desktopSidebar:not(:hover) .sidebar-header {
+        justify-content: center;
+        padding-left: 8px !important;
+        padding-right: 8px !important;
       }
-
       #mainContentWrapper {
         transition: all 0.3s ease-in-out;
       }
 
-      #mainContentWrapper > header {
-        position: fixed;
-        top: 0;
-        left: 20%;
-        right: 0;
-        width: 80%;
-        z-index: 40;
+      /* Override any conflicting styles */
+      #desktopSidebar .sidebar-text {
+        display: block;
       }
-
-      #desktopSidebar.sidebar-collapsed + #mainContentWrapper > header {
-        left: 80px;
-        width: calc(100% - 80px);
+      #desktopSidebar .sidebar-logo-text {
+        display: block;
+      }
+      #desktopSidebar .emergency-section {
+        display: block;
       }
 
       .tab-active {
@@ -715,7 +703,7 @@
 
       a[data-nav-desktop="emergency"]:hover,
       a[data-nav-mobile="emergency"]:hover {
-        background-color: #7a2526 !important; /* Slightly darker red on hover */
+        background-color: #7a2526 !important;
         color: #ffffff !important;
       }
     </style>
@@ -816,31 +804,26 @@
         >
         <a
           href="./records.html"
-          data-nav-desktop="records"
-          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-          ><span class="material-symbols-outlined sidebar-icon-only"
-            >description</span
-          ><span class="sidebar-text">Patient & Owner Records</span></a
+          data-nav-mobile="records"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          ><span class="material-symbols-outlined">description</span
+          ><span>Patient & Owner Records</span></a
         >
         <a
           href="./message.html"
-          data-nav-desktop="message"
           data-nav-mobile="message"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
           ><span class="material-symbols-outlined">message</span
-          ><span class="sidebar-text">Messages</span></a
+          ><span>Messages</span></a
         >
         <a
           href="./emergency_management.html"
-          data-nav-desktop="emergency"
           data-nav-mobile="emergency"
-          class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold bg-emergency-red/10"
         >
-          <span class="material-symbols-outlined sidebar-icon-only"
-            >emergency</span
-          ><span class="sidebar-text">Emergency Cases</span>
+          <span class="material-symbols-outlined">emergency</span
+          ><span>Emergency Cases</span>
         </a>
-        <!-- MORTUARY -->
         <a
           href="./mortuary.html"
           data-nav-mobile="mortuary"
@@ -848,7 +831,6 @@
           ><span class="material-symbols-outlined">heart_broken</span
           ><span>Mortuary</span></a
         >
-        <!-- REPORTS -->
         <a
           href="./report.html"
           data-nav-mobile="reports"
@@ -892,129 +874,132 @@
       <aside
         id="desktopSidebar"
         class="hidden md:flex flex-col bg-deep-navy h-screen sticky top-0 border-r border-outline-variant/10 text-white sidebar-transition"
-        style="width: 20%"
       >
         <div
-          class="px-6 py-6 flex items-center justify-between border-b border-white/10"
+          class="px-6 py-6 flex items-center gap-3 border-b border-white/10 sidebar-header overflow-hidden"
         >
-          <div class="flex items-center gap-3 sidebar-logo">
-            <img
-              alt="Logo"
-              class="w-10 h-10 rounded-full object-cover"
-              src="../../public/logo.png"
-            />
-            <div class="sidebar-logo-text">
-              <h1
-                class="font-headline-md text-headline-md font-bold text-primary-fixed text-sm"
-              >
-                addyPets
-              </h1>
-              <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
-            </div>
+          <img
+            alt="Logo"
+            class="w-10 h-10 rounded-full object-cover shrink-0 sidebar-logo cursor-pointer"
+            src="../../public/logo.png"
+            onclick="window.location.href='./Dashboard.html'"
+          />
+          <div class="sidebar-logo-text whitespace-nowrap overflow-hidden">
+            <h1 class="font-bold text-primary-fixed text-sm">addyPets</h1>
+            <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
           </div>
-          <button
-            id="collapseSidebarBtn"
-            class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"
-          >
-            <span class="material-symbols-outlined">chevron_left</span>
-          </button>
         </div>
         <nav class="flex-1 px-3 py-6 space-y-1 overflow-y-auto hide-scrollbar">
           <a
             href="./Dashboard.html"
             data-nav-desktop="analytics"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button"
-            ><span
-              class="material-symbols-outlined sidebar-icon-only"
-              style="font-variation-settings: &quot;FILL&quot; 1"
-              >analytics</span
-            ><span class="sidebar-text">Analytics</span></a
           >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >analytics</span
+            >
+            <span class="sidebar-text">Analytics</span>
+          </a>
           <a
             href="./clinic_calendar.html"
             data-nav-desktop="calendar"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >calendar_today</span
-            ><span class="sidebar-text">Calendar</span></a
           >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >calendar_today</span
+            >
+            <span class="sidebar-text">Calendar</span>
+          </a>
           <a
             href="./staff_service_settings.html"
             data-nav-desktop="staff"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >groups</span
-            ><span class="sidebar-text">Staff</span></a
           >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >groups</span
+            >
+            <span class="sidebar-text">Staff</span>
+          </a>
           <a
             href="./appointment.html"
             data-nav-desktop="appointments"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >event_note</span
-            ><span class="sidebar-text">Appointments</span></a
           >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >event_note</span
+            >
+            <span class="sidebar-text">Appointments</span>
+          </a>
           <a
             href="./billing.html"
             data-nav-desktop="billing"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >payments</span
-            ><span class="sidebar-text">Billing</span></a
           >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >payments</span
+            >
+            <span class="sidebar-text">Billing</span>
+          </a>
           <a
             href="./records.html"
             data-nav-desktop="records"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >description</span
-            ><span class="sidebar-text">Patient & Owner Records</span></a
           >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >description</span
+            >
+            <span class="sidebar-text">Patient & Owner Records</span>
+          </a>
           <a
             href="./message.html"
             data-nav-desktop="message"
-            data-nav-mobile="message"
-            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
-            ><span class="material-symbols-outlined">message</span
-            ><span class="sidebar-text">Messages</span></a
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >message</span
+            >
+            <span class="sidebar-text">Messages</span>
+          </a>
           <a
             href="./emergency_management.html"
             data-nav-desktop="emergency"
-            data-nav-mobile="emergency"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"
           >
             <span class="material-symbols-outlined sidebar-icon-only"
               >emergency</span
-            ><span class="sidebar-text">Emergency Cases</span>
+            >
+            <span class="sidebar-text">Emergency Cases</span>
           </a>
-          <!-- MORTUARY -->
           <a
             href="./mortuary.html"
             data-nav-desktop="mortuary"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >heart_broken</span
-            ><span class="sidebar-text">Mortuary</span></a
           >
-          <!-- REPORTS -->
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >heart_broken</span
+            >
+            <span class="sidebar-text">Mortuary</span>
+          </a>
           <a
             href="./report.html"
             data-nav-desktop="reports"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >assessment</span
-            ><span class="sidebar-text">Reports</span></a
           >
-          <!-- SETTINGS -->
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >assessment</span
+            >
+            <span class="sidebar-text">Reports</span>
+          </a>
           <a
             href="./settings.html"
             data-nav-desktop="settings"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >settings</span
-            ><span class="sidebar-text">Settings</span></a
           >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >settings</span
+            >
+            <span class="sidebar-text">Settings</span>
+          </a>
         </nav>
         <div class="p-4 mt-auto bottom-container">
           <button
@@ -1023,7 +1008,8 @@
           >
             <span class="material-symbols-outlined sidebar-icon-only"
               >logout</span
-            ><span class="sidebar-text">Logout</span>
+            >
+            <span class="sidebar-text">Logout</span>
           </button>
           <div
             class="emergency-section bg-surface-container-lowest/5 rounded-xl p-4 border border-white/10 mt-4"
@@ -1636,9 +1622,6 @@
     const closeMobileSidebar = document.getElementById("closeMobileSidebar");
     const mobileOverlay = document.getElementById("mobileOverlay");
     const desktopSidebar = document.getElementById("desktopSidebar");
-    const collapseSidebarBtn = document.getElementById("collapseSidebarBtn");
-    let isSidebarCollapsed =
-      localStorage.getItem("sidebarCollapsed") === "true";
 
     // ===== SIDEBAR FUNCTIONS =====
     function openMobileSidebar() {
@@ -1651,40 +1634,6 @@
       mobileOverlay.classList.remove("active");
       document.body.style.overflow = "";
     }
-    function toggleDesktopSidebar() {
-      isSidebarCollapsed = !isSidebarCollapsed;
-      localStorage.setItem("sidebarCollapsed", isSidebarCollapsed);
-      const mainContentWrapper = document.getElementById("mainContentWrapper");
-      if (isSidebarCollapsed) {
-        desktopSidebar.classList.add("sidebar-collapsed");
-        collapseSidebarBtn.querySelector(
-          ".material-symbols-outlined",
-        ).textContent = "chevron_right";
-        mainContentWrapper &&
-          mainContentWrapper.classList.add("main-content-full");
-      } else {
-        desktopSidebar.classList.remove("sidebar-collapsed");
-        collapseSidebarBtn.querySelector(
-          ".material-symbols-outlined",
-        ).textContent = "chevron_left";
-        mainContentWrapper &&
-          mainContentWrapper.classList.remove("main-content-full");
-      }
-
-      if (isSidebarCollapsed) {
-        desktopSidebar.classList.add("aside");
-      } else {
-        desktopSidebar.classList.remove("aside");
-      }
-    }
-
-    if (isSidebarCollapsed) {
-      desktopSidebar.classList.add("sidebar-collapsed");
-      if (collapseSidebarBtn)
-        collapseSidebarBtn.querySelector(
-          ".material-symbols-outlined",
-        ).textContent = "chevron_right";
-    }
 
     if (mobileBurgerBtn)
       mobileBurgerBtn.addEventListener("click", openMobileSidebar);
@@ -1692,8 +1641,6 @@
       closeMobileSidebar.addEventListener("click", closeMobileSidebarFunc);
     if (mobileOverlay)
       mobileOverlay.addEventListener("click", closeMobileSidebarFunc);
-    if (collapseSidebarBtn)
-      collapseSidebarBtn.addEventListener("click", toggleDesktopSidebar);
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && mobileSidebar.classList.contains("open"))
@@ -1826,61 +1773,6 @@
       if (pageMap[section]) {
         window.location.href = pageMap[section];
       }
-      // Helper function to prevent overriding the emergency button
-      const updateLinkStyle = (link, isActive) => {
-        const isEmergency =
-          link.getAttribute("data-nav-desktop") === "emergency" ||
-          link.getAttribute("data-nav-mobile") === "emergency";
-        if (isEmergency) return; // 🛡️ SKIP: Keep emergency button red
-
-        if (isActive) {
-          link.classList.add(
-            "bg-primary-container",
-            "text-on-primary-container",
-          );
-          link.classList.remove("text-tertiary-fixed-dim", "hover:bg-white/5");
-        } else {
-          link.classList.remove(
-            "bg-primary-container",
-            "text-on-primary-container",
-          );
-          link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
-        }
-      };
-
-      // Update active states for desktop
-      document.querySelectorAll("[data-nav-desktop]").forEach((link) => {
-        if (link.getAttribute("data-nav-desktop") === section) {
-          link.classList.add(
-            "bg-primary-container",
-            "text-on-primary-container",
-          );
-          link.classList.remove("text-tertiary-fixed-dim", "hover:bg-white/5");
-        } else {
-          link.classList.remove(
-            "bg-primary-container",
-            "text-on-primary-container",
-          );
-          link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
-        }
-      });
-
-      // Update active states for mobile
-      document.querySelectorAll("[data-nav-mobile]").forEach((link) => {
-        if (link.getAttribute("data-nav-mobile") === section) {
-          link.classList.add(
-            "bg-primary-container",
-            "text-on-primary-container",
-          );
-          link.classList.remove("text-tertiary-fixed-dim", "hover:bg-white/5");
-        } else {
-          link.classList.remove(
-            "bg-primary-container",
-            "text-on-primary-container",
-          );
-          link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
-        }
-      });
     }
 
     // Desktop navigation click handlers
@@ -1996,13 +1888,13 @@
 
       if (savedCalendarEvents) {
         const events = JSON.parse(savedCalendarEvents);
-        let nextId = Date.now(); // guaranteed-unique seed
+        let nextId = Date.now();
 
         appointments = events.map((event) => {
           const start = new Date(event.start);
           const date = start.toISOString().split("T")[0];
           return {
-            id: nextId++, // always unique, ignore event.id entirely
+            id: nextId++,
             doctor: event.extendedProps?.doctor || currentUser,
             patient:
               event.extendedProps?.petName ||
@@ -2606,13 +2498,7 @@
 
     // ===== WEEK NAVIGATION =====
     function navigateWeek(direction) {
-      console.log("navigateWeek called");
-      console.log("Before:", currentWeek);
-
       currentWeek.setDate(currentWeek.getDate() + direction * 7);
-
-      console.log("After:", currentWeek);
-
       renderScheduleList();
       updateStats();
     }
@@ -2737,7 +2623,6 @@
     document
       .getElementById("nextWeekBtn")
       .addEventListener("click", function () {
-        console.log("button has been clicked");
         navigateWeek(1);
       });
 

@@ -51,8 +51,7 @@ CREATE TABLE contact_form (
   email VARCHAR2(255) NOT NULL,
   customer_questions CLOB NOT NULL,
   ip_address VARCHAR2(64),
-  created_at TIMESTAMP DEFAULT SYSTIMESTAMP NOT NULL,
-  status VARCHAR2(20) DEFAULT 'Unread' NOT NULL
+  created_at TIMESTAMP DEFAULT SYSTIMESTAMP NOT NULL
 );
 
 CREATE TABLE billing (
@@ -141,6 +140,6 @@ CREATE INDEX appointments_time_ix ON appointments(appointment_time);
 CREATE INDEX appointments_status_ix ON appointments(status);
 CREATE INDEX patients_owner_phone_ix ON patients(owner_phone);
 CREATE INDEX emergency_status_ix ON emergency_cases(status);
-CREATE INDEX contact_form_status_ix ON contact_form(status);
+CREATE INDEX contactform_email_ix ON contact_form(email);
 
 COMMIT;

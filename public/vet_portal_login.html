@@ -163,6 +163,68 @@
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
       }
+
+      /* ─── Tooltip System ─── */
+      .tooltip-wrapper {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .tooltip-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #036469;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 700;
+        line-height: 1;
+        cursor: help;
+        flex-shrink: 0;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .tooltip-icon:hover { background: #004f53; }
+      .tooltip-bubble {
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+        bottom: calc(100% + 8px);
+        left: 50%;
+        transform: translateX(-50%) translateY(4px);
+        background: #1A3638;
+        color: #a4eff4;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 12px;
+        line-height: 1.5;
+        font-weight: 400;
+        border-radius: 8px;
+        padding: 8px 12px;
+        width: 220px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+        z-index: 100;
+        transition: opacity 0.18s ease, transform 0.18s ease;
+      }
+      .tooltip-bubble::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 6px solid transparent;
+        border-top-color: #1A3638;
+      }
+      .tooltip-wrapper:hover .tooltip-bubble,
+      .tooltip-icon:focus + .tooltip-bubble {
+        visibility: visible;
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
       .toast-container {
         position: fixed;
         bottom: 1.5rem;
@@ -288,9 +350,13 @@
           <form id="login-form" class="form-transition space-y-stack-md">
             <div class="space-y-2">
               <label
-                class="font-label-md text-label-md text-on-surface-variant ml-1"
-                >Email Address</label
-              >
+                class="font-label-md text-label-md text-on-surface-variant ml-1 flex items-center gap-1"
+                >Email Address
+                <span class="tooltip-wrapper">
+                  <span class="tooltip-icon" tabindex="0">i</span>
+                  <span class="tooltip-bubble">Enter the email address registered to your vet account. Only letters, numbers, dots, underscores, or hyphens before the @. Accepted domains: .com, .clinic, .gh.</span>
+                </span>
+              </label>
               <div class="relative">
                 <span
                   class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline"
@@ -312,9 +378,13 @@
             </div>
             <div class="space-y-2">
               <label
-                class="font-label-md text-label-md text-on-surface-variant ml-1"
-                >Password</label
-              >
+                class="font-label-md text-label-md text-on-surface-variant ml-1 flex items-center gap-1"
+                >Password
+                <span class="tooltip-wrapper">
+                  <span class="tooltip-icon" tabindex="0">i</span>
+                  <span class="tooltip-bubble">Enter your password. Must be at least 8 characters using only letters and numbers (A-Z, a-z, 0-9). No special characters.</span>
+                </span>
+              </label>
               <div class="relative">
                 <span
                   class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline"
@@ -374,9 +444,13 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div class="space-y-1">
                 <label
-                  class="font-label-md text-label-md text-on-surface-variant ml-1"
-                  >Full Name</label
-                >
+                  class="font-label-md text-label-md text-on-surface-variant ml-1 flex items-center gap-1"
+                  >Full Name
+                  <span class="tooltip-wrapper">
+                    <span class="tooltip-icon" tabindex="0">i</span>
+                    <span class="tooltip-bubble">Your legal full name as registered with the Ghana Vet Council. Letters, spaces, apostrophes, and hyphens only.</span>
+                  </span>
+                </label>
                 <input
                   id="registerName"
                   name="name"
@@ -387,9 +461,13 @@
               </div>
               <div class="space-y-1">
                 <label
-                  class="font-label-md text-label-md text-on-surface-variant ml-1"
-                  >Medical License ID</label
-                >
+                  class="font-label-md text-label-md text-on-surface-variant ml-1 flex items-center gap-1"
+                  >Medical License ID
+                  <span class="tooltip-wrapper">
+                    <span class="tooltip-icon" tabindex="0">i</span>
+                    <span class="tooltip-bubble">Your Ghana Vet Council license number. Must start with "GVC-" followed by 3 to 15 letters or numbers (e.g. GVC-12345).</span>
+                  </span>
+                </label>
                 <input
                   id="registerLicense"
                   name="license_number"
@@ -401,9 +479,13 @@
             </div>
             <div class="space-y-1">
               <label
-                class="font-label-md text-label-md text-on-surface-variant ml-1"
-                >Phone Number</label
-              >
+                class="font-label-md text-label-md text-on-surface-variant ml-1 flex items-center gap-1"
+                >Phone Number
+                <span class="tooltip-wrapper">
+                  <span class="tooltip-icon" tabindex="0">i</span>
+                  <span class="tooltip-bubble">Enter your Ghana phone number without the country code (e.g. 241234567). 7 to 11 digits, numbers only. The +233 prefix is added automatically.</span>
+                </span>
+              </label>
               <div class="flex">
                 <span
                   class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-outline-variant rounded-l-md"
@@ -421,9 +503,13 @@
             </div>
             <div class="space-y-1">
               <label
-                class="font-label-md text-label-md text-on-surface-variant ml-1"
-                >Personal Email</label
-              >
+                class="font-label-md text-label-md text-on-surface-variant ml-1 flex items-center gap-1"
+                >Personal Email
+                <span class="tooltip-wrapper">
+                  <span class="tooltip-icon" tabindex="0">i</span>
+                  <span class="tooltip-bubble">Enter a valid email for your account. Only letters, numbers, dots, underscores, or hyphens before the @. Accepted domains: .com, .clinic, .gh.</span>
+                </span>
+              </label>
               <input
                 id="registerEmail"
                 name="email"
@@ -438,9 +524,13 @@
             </div>
             <div class="space-y-1">
               <label
-                class="font-label-md text-label-md text-on-surface-variant ml-1"
-                >Create Password</label
-              >
+                class="font-label-md text-label-md text-on-surface-variant ml-1 flex items-center gap-1"
+                >Create Password
+                <span class="tooltip-wrapper">
+                  <span class="tooltip-icon" tabindex="0">i</span>
+                  <span class="tooltip-bubble">Create a strong password with at least 8 alphanumeric characters (A-Z, a-z, 0-9). No spaces or special characters allowed.</span>
+                </span>
+              </label>
               <div class="relative">
                 <input
                   id="registerPassword"

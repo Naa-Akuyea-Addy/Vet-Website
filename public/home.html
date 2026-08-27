@@ -147,6 +147,69 @@
           "opsz" 24;
       }
 
+      /* ─── Tooltip System ─── */
+      .tooltip-wrapper {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .tooltip-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #036469;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 700;
+        line-height: 1;
+        cursor: help;
+        flex-shrink: 0;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .tooltip-icon:hover { background: #004f53; }
+      .tooltip-bubble {
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+        bottom: calc(100% + 8px);
+        left: 50%;
+        transform: translateX(-50%);
+        background: #1A3638;
+        color: #a4eff4;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 12px;
+        line-height: 1.5;
+        font-weight: 400;
+        border-radius: 8px;
+        padding: 8px 12px;
+        width: 220px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+        z-index: 100;
+        transition: opacity 0.18s ease, transform 0.18s ease;
+        transform: translateX(-50%) translateY(4px);
+      }
+      .tooltip-bubble::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 6px solid transparent;
+        border-top-color: #1A3638;
+      }
+      .tooltip-wrapper:hover .tooltip-bubble,
+      .tooltip-icon:focus + .tooltip-bubble {
+        visibility: visible;
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
       .input-error {
         border-color: #fd0808 !important;
         box-shadow: none !important;
@@ -256,10 +319,10 @@
             class="h-10 md:h-12 w-auto object-contain"
             src="logo.png"
           />
-          <span
-            class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed text-sm md:text-headline-md"
-            >addyPets veterinary clinic</span
-          >
+          <div class="flex flex-col justify-center text-primary dark:text-primary-fixed font-bold leading-tight cursor-pointer" onclick="window.location.href='home.html'">
+            <span class="font-headline-md text-base md:text-2xl font-bold tracking-tight leading-none">addyPets</span>
+            <span class="font-body-md text-xs md:text-sm font-semibold tracking-normal leading-tight">veterinary clinic</span>
+          </div>
         </div>
         <div class="hidden md:flex items-center gap-stack-md">
           <a
@@ -276,11 +339,6 @@
             class="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80"
             href="about_us.html"
             >About Us</a
-          >
-          <a
-            class="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80"
-            href="vet_portal_login.html"
-            >Vets Portal</a
           >
         </div>
         <div class="flex items-center gap-stack-sm">
@@ -322,11 +380,6 @@
             class="block font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80 text-sm"
             href="about_us.html"
             >About Us</a
-          >
-          <a
-            class="block font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80 text-sm"
-            href="vet_portal_login.html"
-            >Vets Portal</a
           >
           <!-- Emergency and Login moved into the mobile menu for small screens -->
           <a
@@ -581,9 +634,13 @@
                 <form id="contact-form" class="space-y-stack-md">
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="space-y-2">
-                      <label class="font-label-md text-label-md text-on-surface"
-                        >Your Name</label
-                      >
+                      <label class="font-label-md text-label-md text-on-surface flex items-center gap-1">
+                        Your Name
+                        <span class="tooltip-wrapper">
+                          <span class="tooltip-icon" tabindex="0">i</span>
+                          <span class="tooltip-bubble">Enter your full name using only letters, spaces, dots, or hyphens. Numbers and special characters are not allowed.</span>
+                        </span>
+                      </label>
                       <input
                         id="name"
                         name="name"
@@ -594,9 +651,13 @@
                       />
                     </div>
                     <div class="space-y-2">
-                      <label class="font-label-md text-label-md text-on-surface"
-                        >Pet's Breed</label
-                      >
+                      <label class="font-label-md text-label-md text-on-surface flex items-center gap-1">
+                        Pet's Breed
+                        <span class="tooltip-wrapper">
+                          <span class="tooltip-icon" tabindex="0">i</span>
+                          <span class="tooltip-bubble">Enter your pet's breed (e.g. Golden Retriever). Letters and spaces only — no numbers or symbols.</span>
+                        </span>
+                      </label>
                       <input
                         id="breed"
                         name="breed"
@@ -608,9 +669,13 @@
                     </div>
                   </div>
                   <div class="space-y-2">
-                    <label class="font-label-md text-label-md text-on-surface"
-                      >Email Address</label
-                    >
+                    <label class="font-label-md text-label-md text-on-surface flex items-center gap-1">
+                      Email Address
+                      <span class="tooltip-wrapper">
+                        <span class="tooltip-icon" tabindex="0">i</span>
+                        <span class="tooltip-bubble">Enter a valid email address. Only letters, numbers, dots, underscores, or hyphens are allowed before the @. Accepted domains: .com, .clinic, .gh.</span>
+                      </span>
+                    </label>
                     <input
                       id="email"
                       name="email"
@@ -621,9 +686,13 @@
                     />
                   </div>
                   <div class="space-y-2">
-                    <label class="font-label-md text-label-md text-on-surface"
-                      >Your Question</label
-                    >
+                    <label class="font-label-md text-label-md text-on-surface flex items-center gap-1">
+                      Your Question
+                      <span class="tooltip-wrapper">
+                        <span class="tooltip-icon" tabindex="0">i</span>
+                        <span class="tooltip-bubble">Describe your pet's concern in detail. Minimum 10 characters. Our senior vet will respond within 24 hours.</span>
+                      </span>
+                    </label>
                     <textarea
                       id="question"
                       name="question"

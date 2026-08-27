@@ -104,37 +104,43 @@
       .overlay.active {
         display: block;
       }
-      .sidebar-collapsed .sidebar-text {
+      /* Desktop Auto-Hover Sidebar */
+      #desktopSidebar {
+        width: 80px;
+        min-width: 80px;
+        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-x: hidden;
+      }
+      #desktopSidebar:hover {
+        width: 256px;
+        min-width: 256px;
+      }
+      #desktopSidebar:not(:hover) .sidebar-text,
+      #desktopSidebar:not(:hover) .sidebar-logo-text,
+      #desktopSidebar:not(:hover) .emergency-section {
         display: none;
       }
-      .sidebar-collapsed .sidebar-icon-only {
+      #desktopSidebar:not(:hover) .sidebar-icon-only {
         margin: 0 auto;
       }
-      .sidebar-collapsed {
-        width: 80px !important;
-      }
-      .sidebar-collapsed .sidebar-logo-text {
-        display: none;
-      }
-      .sidebar-collapsed .sidebar-logo {
+      #desktopSidebar:not(:hover) .sidebar-logo {
         margin: 0 auto;
       }
-      .sidebar-collapsed .sidebar-button {
+      #desktopSidebar:not(:hover) .sidebar-button,
+      #desktopSidebar:not(:hover) .sidebar-link {
         justify-content: center;
       }
-      .sidebar-collapsed .emergency-section {
-        display: none;
-      }
-      .sidebar-collapsed #logoutBtnDesktop {
+      #desktopSidebar:not(:hover) #logoutBtnDesktop {
         justify-content: center;
         padding: 12px !important;
       }
-      .sidebar-collapsed .bottom-container {
+      #desktopSidebar:not(:hover) .bottom-container {
         padding: 16px 8px !important;
       }
-      .main-content-full {
-        width: 100% !important;
-        margin-left: 0 !important;
+      #desktopSidebar:not(:hover) .sidebar-header {
+        justify-content: center;
+        padding-left: 8px !important;
+        padding-right: 8px !important;
       }
       #mainContentWrapper {
         transition: all 0.3s ease-in-out;
@@ -760,28 +766,21 @@
       <!-- Desktop Sidebar (unchanged) -->
       <aside
         id="desktopSidebar"
-        class="hidden md:flex flex-col bg-deep-navy h-screen sticky top-0 border-r border-outline-variant/10 text-white sidebar-transition w-64"
+        class="hidden md:flex flex-col bg-deep-navy h-screen sticky top-0 border-r border-outline-variant/10 text-white sidebar-transition"
       >
         <div
-          class="px-6 py-6 flex items-center justify-between border-b border-white/10 flex-shrink-0"
+          class="px-6 py-6 flex items-center gap-3 border-b border-white/10 sidebar-header overflow-hidden"
         >
-          <div class="flex items-center gap-3 sidebar-logo">
-            <img
-              alt="Logo"
-              class="w-10 h-10 rounded-full object-cover"
-              src="../../public/logo.png"
-            />
-            <div class="sidebar-logo-text">
-              <h1 class="font-bold text-primary-fixed text-base">addyPets</h1>
-              <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
-            </div>
+          <img
+            alt="Logo"
+            class="w-10 h-10 rounded-full object-cover shrink-0 sidebar-logo cursor-pointer"
+            src="../../public/logo.png"
+            onclick="window.location.href='./Dashboard.html'"
+          />
+          <div class="sidebar-logo-text whitespace-nowrap overflow-hidden">
+            <h1 class="font-bold text-primary-fixed text-base">addyPets</h1>
+            <p class="text-xs text-tertiary-fixed-dim">veterinary clinic</p>
           </div>
-          <button
-            id="collapseSidebarBtn"
-            class="text-white p-2 hover:bg-white/10 rounded-lg transition-all"
-          >
-            <span class="material-symbols-outlined">chevron_left</span>
-          </button>
         </div>
         <nav class="flex-1 px-3 py-6 space-y-1 overflow-y-auto sidebar-scroll">
           <a
@@ -3792,9 +3791,6 @@
       const closeMobileSidebar = document.getElementById("closeMobileSidebar");
       const mobileOverlay = document.getElementById("mobileOverlay");
       const desktopSidebar = document.getElementById("desktopSidebar");
-      const collapseSidebarBtn = document.getElementById("collapseSidebarBtn");
-      let isSidebarCollapsed =
-        localStorage.getItem("sidebarCollapsed") === "true";
 
       function openMobileSidebar() {
         if (mobileSidebar) mobileSidebar.classList.add("open");
@@ -3806,35 +3802,10 @@
         if (mobileOverlay) mobileOverlay.classList.remove("active");
         document.body.style.overflow = "";
       }
-      function toggleDesktopSidebar() {
-        isSidebarCollapsed = !isSidebarCollapsed;
-        localStorage.setItem("sidebarCollapsed", isSidebarCollapsed);
-        const mainContentWrapper =
-          document.getElementById("mainContentWrapper");
-        if (isSidebarCollapsed) {
-          desktopSidebar?.classList.add("sidebar-collapsed");
-          collapseSidebarBtn.querySelector(
-            ".material-symbols-outlined",
-          ).textContent = "chevron_right";
-          mainContentWrapper?.classList.add("main-content-full");
-        } else {
-          desktopSidebar?.classList.remove("sidebar-collapsed");
-          collapseSidebarBtn.querySelector(
-            ".material-symbols-outlined",
-          ).textContent = "chevron_left";
-          mainContentWrapper?.classList.remove("main-content-full");
-        }
-      }
-      if (isSidebarCollapsed) {
-        desktopSidebar?.classList.add("sidebar-collapsed");
-        collapseSidebarBtn.querySelector(
-          ".material-symbols-outlined",
-        ).textContent = "chevron_right";
-      }
+
       mobileBurgerBtn?.addEventListener("click", openMobileSidebar);
       closeMobileSidebar?.addEventListener("click", closeMobileSidebarFunc);
       mobileOverlay?.addEventListener("click", closeMobileSidebarFunc);
-      collapseSidebarBtn?.addEventListener("click", toggleDesktopSidebar);
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && mobileSidebar?.classList.contains("open"))
           closeMobileSidebarFunc();

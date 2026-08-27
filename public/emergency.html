@@ -145,23 +145,26 @@
           <button id="mobile-menu-btn" class="md:hidden p-2 text-on-surface hover:bg-surface-muted rounded-lg transition-colors">
             <span class="material-symbols-outlined">menu</span>
           </button>
-          <img alt="addyPets Logo" class="h-10 w-auto object-contain" src="logo.png" />
-          <span class="font-headline-md text-sm md:text-headline-md font-bold text-primary hidden sm:inline">addyPets veterinary clinic</span>
+          <img alt="addyPets Logo" class="h-10 md:h-12 w-auto object-contain" src="logo.png" />
+          <div class="flex flex-col justify-center text-primary dark:text-primary-fixed font-bold leading-tight cursor-pointer" onclick="window.location.href='home.html'">
+            <span class="font-headline-md text-base md:text-2xl font-bold tracking-tight leading-none">addyPets</span>
+            <span class="font-body-md text-xs md:text-sm font-semibold tracking-normal leading-tight">veterinary clinic</span>
+          </div>
         </div>
         
         <!-- Desktop Nav -->
-        <nav class="hidden md:flex items-center gap-gutter flex-1 justify-center">
+        <nav class="hidden md:flex items-center gap-gutter">
           <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="home.html">Home</a>
           <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="veterinary_services.html">Services</a>
-          <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="about_us.html">About</a>
-          <button id="emergency-btn" class="font-body-md text-body-md text-primary font-bold border-b-2 border-primary border-r-0 border-l-0 border-t-0 pb-1 bg-transparent hover:opacity-80 transition-opacity">
-            Emergency
-          </button>
+          <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="about_us.html">About Us</a>
         </nav>
 
         <div class="flex items-center gap-4">
-          <button id="book-appointment-btn" class="hidden md:inline-block bg-primary text-on-primary px-stack-md py-base rounded-full font-label-md transition-transform active:scale-95">
-            Book Appointment
+          <button id="emergency-btn" class="hidden md:inline-block px-6 py-2 bg-emergency-red text-white font-label-md text-label-md rounded-lg hover:brightness-110 transition-all cursor-pointer shadow-sm text-xs md:text-sm">
+            Emergency
+          </button>
+          <button id="login-btn" class="hidden lg:block px-6 py-2 border border-primary text-primary font-label-md text-label-md rounded-lg hover:bg-primary-fixed transition-all cursor-pointer text-xs md:text-sm">
+            Login
           </button>
         </div>
       </div>
@@ -171,7 +174,7 @@
         <div class="px-margin-mobile py-4 space-y-2 max-w-container-max mx-auto">
           <a class="block font-body-md text-body-md text-primary cursor-pointer active:opacity-80 transition-colors text-sm" href="home.html">Home</a>
           <a class="block font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 text-sm" href="veterinary_services.html">Services</a>
-          <a class="block font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 text-sm" href="about_us.html">About</a>
+          <a class="block font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 text-sm" href="about_us.html">About Us</a>
           <a href="emergency.html" class="block font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer pt-0 text-sm">Emergency</a>
           <a id="mobile-login-btn" href="vet_portal_login.html" class="block font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer pt-0 text-sm">Login</a>
         </div>
@@ -728,10 +731,10 @@
         });
       }
 
-      const bookBtn = document.getElementById("book-appointment-btn");
-      if (bookBtn) {
-        bookBtn.addEventListener("click", () => {
-          window.location.href = "book_an_appointment.html";
+      const loginBtn = document.getElementById("login-btn");
+      if (loginBtn) {
+        loginBtn.addEventListener("click", () => {
+          window.location.href = "vet_portal_login.html";
         });
       }
 

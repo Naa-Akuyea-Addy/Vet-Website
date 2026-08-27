@@ -185,6 +185,68 @@
       .error-text {
         display: none !important;
       }
+
+      /* ─── Tooltip System ─── */
+      .tooltip-wrapper {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .tooltip-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #036469;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 700;
+        line-height: 1;
+        cursor: help;
+        flex-shrink: 0;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .tooltip-icon:hover { background: #004f53; }
+      .tooltip-bubble {
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+        bottom: calc(100% + 8px);
+        left: 50%;
+        transform: translateX(-50%) translateY(4px);
+        background: #1A3638;
+        color: #a4eff4;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 12px;
+        line-height: 1.5;
+        font-weight: 400;
+        border-radius: 8px;
+        padding: 8px 12px;
+        width: 220px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+        z-index: 100;
+        transition: opacity 0.18s ease, transform 0.18s ease;
+      }
+      .tooltip-bubble::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 6px solid transparent;
+        border-top-color: #1A3638;
+      }
+      .tooltip-wrapper:hover .tooltip-bubble,
+      .tooltip-icon:focus + .tooltip-bubble {
+        visibility: visible;
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
     </style>
   </head>
   <body
@@ -207,11 +269,9 @@
             class="h-12 w-auto object-contain"
             src="logo.png"
           />
-          <div class="font-bold text-primary">
-            <span class="block text-sm md:text-headline-md">addyPets'</span>
-            <span class="block text-xs md:text-body-md leading-tight"
-              >veterinary clinic</span
-            >
+          <div class="flex flex-col justify-center text-primary dark:text-primary-fixed font-bold leading-tight cursor-pointer" onclick="window.location.href='home.html'">
+            <span class="font-headline-md text-base md:text-2xl font-bold tracking-tight leading-none">addyPets</span>
+            <span class="font-body-md text-xs md:text-sm font-semibold tracking-normal leading-tight">veterinary clinic</span>
           </div>
         </div>
         <div class="hidden md:flex items-center gap-base">
@@ -230,24 +290,19 @@
             href="about_us.html"
             >About Us</a
           >
-          <a
-            class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors px-4"
-            href="vet_portal_login.html"
-            >Vets Portal</a
-          >
         </div>
         <div class="flex items-center gap-4">
-          <button
-            id="login-btn"
-            class="hidden lg:block font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors"
-          >
-            Login
-          </button>
           <button
             id="emergency-btn"
             class="hidden md:inline-block px-6 py-2 bg-emergency-red text-white font-label-md text-label-md rounded-lg hover:brightness-110 transition-all cursor-pointer shadow-sm text-xs md:text-sm"
           >
             Emergency
+          </button>
+          <button
+            id="login-btn"
+            class="hidden lg:block px-6 py-2 border border-primary text-primary font-label-md text-label-md rounded-lg hover:bg-primary-fixed transition-all cursor-pointer text-xs md:text-sm"
+          >
+            Login
           </button>
         </div>
       </nav>
@@ -273,11 +328,6 @@
             class="block font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 text-sm"
             href="about_us.html"
             >About Us</a
-          >
-          <a
-            class="block font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 text-sm"
-            href="vet_portal_login.html"
-            >Vets Portal</a
           >
           <a
             href="emergency.html"
@@ -521,10 +571,14 @@
                 <div class="space-y-4">
                   <div>
                     <label
-                      class="block font-label-md text-on-surface mb-1"
+                      class="block font-label-md text-on-surface mb-1 flex items-center gap-1"
                       for="pet_name"
-                      >Pet Name *</label
-                    >
+                      >Pet Name *
+                      <span class="tooltip-wrapper">
+                        <span class="tooltip-icon" tabindex="0">i</span>
+                        <span class="tooltip-bubble">Your pet's name. Letters, spaces, and hyphens only, 2 to 50 characters (e.g. Buddy or Max-Leo).</span>
+                      </span>
+                    </label>
                     <input
                       id="pet_name"
                       class="w-full bg-surface border border-outline-variant rounded-lg p-3 focus:outline-none transition-all"
@@ -535,10 +589,14 @@
                   </div>
                   <div>
                     <label
-                      class="block font-label-md text-on-surface mb-1"
+                      class="block font-label-md text-on-surface mb-1 flex items-center gap-1"
                       for="pet_species"
-                      >Species *</label
-                    >
+                      >Species *
+                      <span class="tooltip-wrapper">
+                        <span class="tooltip-icon" tabindex="0">i</span>
+                        <span class="tooltip-bubble">Select the species that best describes your pet. Choose "Other" if your pet's species is not listed.</span>
+                      </span>
+                    </label>
                     <select
                       id="pet_species"
                       class="w-full bg-surface border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
@@ -553,10 +611,14 @@
                   </div>
                   <div>
                     <label
-                      class="block font-label-md text-on-surface mb-1"
+                      class="block font-label-md text-on-surface mb-1 flex items-center gap-1"
                       for="pet_age"
-                      >Age (e.g., 2 years or 8 months) *</label
-                    >
+                      >Age (e.g., 2 years or 8 months) *
+                      <span class="tooltip-wrapper">
+                        <span class="tooltip-icon" tabindex="0">i</span>
+                        <span class="tooltip-bubble">Enter your pet's age as a number followed by "years" or "months" (e.g. 3 years or 6 months). This helps the vet prepare the right care plan.</span>
+                      </span>
+                    </label>
                     <input
                       id="pet_age"
                       class="w-full bg-surface border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
@@ -569,10 +631,14 @@
                 <div class="space-y-4">
                   <div>
                     <label
-                      class="block font-label-md text-on-surface mb-1"
+                      class="block font-label-md text-on-surface mb-1 flex items-center gap-1"
                       for="owner_name"
-                      >Owner Name *</label
-                    >
+                      >Owner Name *
+                      <span class="tooltip-wrapper">
+                        <span class="tooltip-icon" tabindex="0">i</span>
+                        <span class="tooltip-bubble">Your full name as the pet owner. Letters and spaces only, 3 to 60 characters. This will be used to confirm your appointment.</span>
+                      </span>
+                    </label>
                     <input
                       id="owner_name"
                       class="w-full bg-surface border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
@@ -583,10 +649,14 @@
                   </div>
                   <div>
                     <label
-                      class="block font-label-md text-on-surface mb-1"
+                      class="block font-label-md text-on-surface mb-1 flex items-center gap-1"
                       for="owner_phone"
-                      >Phone Number *</label
-                    >
+                      >Phone Number *
+                      <span class="tooltip-wrapper">
+                        <span class="tooltip-icon" tabindex="0">i</span>
+                        <span class="tooltip-bubble">Enter your Ghana phone number without the country code (e.g. 241234567). The +233 prefix is added automatically. We'll use this to confirm your appointment.</span>
+                      </span>
+                    </label>
                     <div class="flex">
                       <span
                         class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-outline-variant rounded-l-md"
@@ -604,10 +674,14 @@
                   </div>
                   <div>
                     <label
-                      class="block font-label-md text-on-surface mb-1"
+                      class="block font-label-md text-on-surface mb-1 flex items-center gap-1"
                       for="visit_reason"
-                      >Reason for Visit (Brief) *</label
-                    >
+                      >Reason for Visit (Brief) *
+                      <span class="tooltip-wrapper">
+                        <span class="tooltip-icon" tabindex="0">i</span>
+                        <span class="tooltip-bubble">Briefly describe why you're bringing your pet in (e.g. limping on right leg, not eating, annual vaccine). 5 to 300 characters. If it's an emergency, use the Emergency page instead.</span>
+                      </span>
+                    </label>
                     
                     <!-- EMERGENCY WARNING BANNER (ADDED HERE) -->
                     <div id="emergency-warning" class="hidden bg-error-container border-l-4 border-error p-4 mb-4 rounded-r-lg transition-all duration-300 shadow-sm">

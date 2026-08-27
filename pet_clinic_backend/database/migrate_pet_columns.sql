@@ -7,5 +7,6 @@ ALTER TABLE patients RENAME COLUMN age TO pet_age;
 ALTER TABLE patients MODIFY (pet_age VARCHAR2(30));
 ALTER TABLE appointments MODIFY (pet_age VARCHAR2(30));
 ALTER TABLE appointments MODIFY (appointment_time VARCHAR2(20));
+ALTER TABLE contact_form DROP COLUMN status;
 
 COMMIT;
