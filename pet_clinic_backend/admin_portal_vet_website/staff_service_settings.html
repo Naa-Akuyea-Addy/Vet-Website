@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>VetCare Ghana - Admin Portal</title>
+    <script src="./auth-guard.js"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Open+Sans:wght@400;600&amp;display=swap"
@@ -1525,13 +1526,48 @@
           <div>
             <label
               class="block font-label-md text-label-md text-on-surface mb-1"
-              >Email Address *</label
+              >System Role & Permissions *</label
+            >
+            <select
+              id="vetRole"
+              class="w-full px-4 py-3 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
+              required
+            >
+              <option value="Veterinarian" selected>Veterinarian (Clinical, Calendar, Records, Emergencies)</option>
+              <option value="Super Admin">Super Admin (Full Access to All 12 Modules)</option>
+              <option value="Admin">Admin (Executive Dashboard Access)</option>
+              <option value="Accountant">Accountant (Billing & Invoicing)</option>
+              <option value="InventoryManager">Inventory Manager (Pharmacy & Stock)</option>
+              <option value="Receptionist">Receptionist (Front Desk, Calendar & Appointments)</option>
+              <option value="Technician">Technician (Diagnostics & Records)</option>
+            </select>
+          </div>
+
+          <div>
+            <label
+              class="block font-label-md text-label-md text-on-surface mb-1"
+              >Email Address (Login Username) *</label
             >
             <input
               type="email"
               id="vetEmail"
               class="w-full px-4 py-3 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
               placeholder="vet@addypets.com"
+              required
+            />
+          </div>
+
+          <div>
+            <label
+              class="block font-label-md text-label-md text-on-surface mb-1"
+              >Account Password *</label
+            >
+            <input
+              type="password"
+              id="vetPassword"
+              class="w-full px-4 py-3 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+              placeholder="Minimum 6 characters"
+              value="Password123!"
               required
             />
           </div>
@@ -2785,6 +2821,7 @@
     // ===== EVENT LISTENERS =====
     document.addEventListener("DOMContentLoaded", function () {
       loadData();
+      fetchStaffFromBackend();
 
       document
         .getElementById("addVetBtn")
@@ -2810,14 +2847,40 @@
           showToast(`Vet ID generated: ${id}`, "success");
         });
 
+      async function fetchStaffFromBackend() {
+        try {
+          const res = await apiFetch("/api/staff");
+          if (!res.ok) return;
+          const json = await res.json();
+          if (json && json.data && json.data.length > 0) {
+            vets = json.data.map((s) => ({
+              id: s.STAFF_NUMBER || `VET-${String(s.STAFF_ID).padStart(3, "0")}`,
+              dbId: s.STAFF_ID,
+              name: s.FULL_NAME,
+              specialty: s.DEPARTMENT || s.JOB_TITLE || "General Medicine",
+              email: s.EMAIL || "staff@addypets.com",
+              phone: s.PHONE || "+233 24 000 0000",
+              status: (s.STATUS || "Active").toLowerCase() === "active" ? "online" : "offline",
+              img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAt_l2NtwBrHDxQNGs9rPyaBDSi0T_lttSSni_UFdT12mHBHPojsxTE2haa69Vl-xUxsOfIG9hBjBfFUbTbuzqUZTrwCxsYx-WVkbqBP95JzSas9Gk-vlSi5L3t6i5wijVQgjwTRZWzXWDoOxvbiuiwTwUvQerM7vTOeUAbTgk0LzdJ6ZlyU0xeXqf__Iapv8Wpu9q6UmECwczFqWAIEuCSYFKPwinFOH3N6vq0YJKWoiJViDN71AZUcTRiwGyz_FO9sM63nmOE114",
+            }));
+            renderVets();
+            updateStats();
+          }
+        } catch (e) {
+          console.warn("Staff fetch error:", e);
+        }
+      }
+
       document
         .getElementById("addVetForm")
-        .addEventListener("submit", function (e) {
+        .addEventListener("submit", async function (e) {
           e.preventDefault();
           const name = document.getElementById("vetName").value.trim();
           const vetId = document.getElementById("vetId").value.trim();
           const specialty = document.getElementById("vetSpecialty").value;
+          const role = document.getElementById("vetRole")?.value || "Veterinarian";
           const email = document.getElementById("vetEmail").value.trim();
+          const password = document.getElementById("vetPassword")?.value || "Password123!";
           const phone = document.getElementById("vetPhone").value.trim();
           const status = document.querySelector(
             'input[name="vetStatus"]:checked',
@@ -2832,12 +2895,38 @@
             return;
           }
 
-          const newVet = { id: vetId, name, specialty, email, phone, status };
+          const newVet = { id: vetId, name, specialty, role, email, phone, status };
           vets.push(newVet);
           saveVets();
           renderVets();
           updateStats();
-          showToast(`✅ ${name} added to the veterinary team!`, "success");
+
+          // Persist user and staff to Oracle DB via /api/admin/users
+          try {
+            const resp = await apiFetch("/api/admin/users", {
+              method: "POST",
+              body: JSON.stringify({
+                fullName: name,
+                email: email,
+                password: password,
+                role: role,
+                phone: phone ? `+233${phone}` : "",
+                licenseNumber: vetId,
+                status: status === "online" ? "Active" : "Inactive",
+                department: specialty,
+              }),
+            });
+            const data = await resp.json();
+            if (resp.ok) {
+              showToast(`✅ ${name} registered as ${role} with login access!`, "success");
+            } else {
+              showToast(data.message || `Added to local team list.`, "info");
+            }
+          } catch (err) {
+            console.warn("Backend user creation sync:", err);
+            showToast(`✅ ${name} added to veterinary team!`, "success");
+          }
+
           closeVetModal();
         });
 

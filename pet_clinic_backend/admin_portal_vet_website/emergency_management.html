@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Emergency & ICU Management | VetCare Ghana</title>
+    <script src="./auth-guard.js"></script>
 
     <!-- Fonts -->
     <link
@@ -2910,8 +2911,45 @@
         }
       });
 
+      async function fetchEmergenciesFromBackend() {
+        try {
+          const res = await apiFetch("/api/emergencies");
+          if (!res.ok) return;
+          const json = await res.json();
+          if (json && json.data && json.data.length > 0) {
+            // Map backend emergency cases into patients array
+            const mapped = json.data.map((c) => ({
+              id: `EM-${String(c.EMERGENCY_ID).padStart(4, "0")}`,
+              dbId: c.EMERGENCY_ID,
+              name: c.PATIENT_NAME || "Emergency Pet",
+              owner: c.OWNER_NAME || "Pet Owner",
+              triage: (c.PRIORITY || "Urgent").toLowerCase(),
+              status: (c.STATUS || "In Progress").toLowerCase().replace(" ", "-"),
+              vet: "Dr. Abena Mensah",
+              eta: "Arrived",
+              chiefComplaint: c.DESCRIPTION || "Emergency triage",
+              hr: 120,
+              rr: 28,
+              temp: 38.5,
+              crt: "1.5s",
+              tags: ["stat"],
+              cageId: null,
+              timeAdmitted: c.CREATED_AT ? new Date(c.CREATED_AT).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "Just now"
+            }));
+            
+            if (mapped.length > 0) {
+              erPatients = mapped;
+              renderAll();
+            }
+          }
+        } catch (e) {
+          console.warn("Emergency API fetch:", e);
+        }
+      }
+
       // Init
       document.addEventListener("DOMContentLoaded", function () {
+        fetchEmergenciesFromBackend();
         setTimeout(() => {
           syncFromWebsite();
         }, 500);

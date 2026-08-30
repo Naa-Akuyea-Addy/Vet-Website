@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>addyPets | Appointments</title>
+    <script src="./auth-guard.js"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap"
@@ -1457,7 +1458,7 @@
       let modalPatientId = "";
 
       // ==========================================
-      // 2. SAVE & LOAD APPOINTMENTS
+      // 2. SAVE & LOAD APPOINTMENTS (Local + API)
       // ==========================================
       function saveAppointmentsToStorage() {
         try {
@@ -1484,6 +1485,47 @@
           console.warn("Could not load from localStorage:", e);
         }
         return false;
+      }
+
+      async function fetchAppointmentsFromBackend() {
+        try {
+          const res = await apiFetch("/api/appointments");
+          if (!res.ok) return;
+          const json = await res.json();
+          if (json && json.data && json.data.length > 0) {
+            appointmentsData = json.data.map((row) => {
+              let dateVal = new Date().toISOString().slice(0, 10);
+              let timeVal = "09:00";
+              if (row.APPOINTMENT_TIME) {
+                const parts = row.APPOINTMENT_TIME.split(" ");
+                if (parts.length >= 2) {
+                  dateVal = parts[0];
+                  timeVal = parts[1];
+                } else if (row.APPOINTMENT_TIME.includes(":")) {
+                  timeVal = row.APPOINTMENT_TIME;
+                } else if (row.APPOINTMENT_TIME.includes("-")) {
+                  dateVal = row.APPOINTMENT_TIME;
+                }
+              }
+              return {
+                id: `APT-${String(row.APPOINTMENT_ID).padStart(3, "0")}`,
+                dbId: row.APPOINTMENT_ID,
+                patient: row.PET_NAME || "Pet",
+                owner: row.OWNER_NAME || "Owner",
+                type: row.SERVICE || row.VISIT_REASON || "General Checkup",
+                date: dateVal,
+                time: timeVal,
+                vet: "Dr. Abena Mensah",
+                status: row.STATUS || "Confirmed",
+                notes: row.NOTES || "",
+              };
+            });
+            saveAppointmentsToStorage();
+            renderAppointments();
+          }
+        } catch (e) {
+          console.warn("Backend appointments fetch:", e);
+        }
       }
 
       // Load appointments from localStorage on page load
@@ -2306,6 +2348,7 @@
         highlightCurrentPage();
         renderAppointments();
         checkForPatientParam();
+        fetchAppointmentsFromBackend();
       });
     </script>
   </body>

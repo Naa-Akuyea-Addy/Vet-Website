@@ -1,15 +1,27 @@
 const jwt = require("jsonwebtoken");
 
 function authenticate(req, res, next) {
+  const authHeader = req.headers.authorization;
   const token =
-    req.headers.authorization?.replace(/^Bearer\s+/i, "") || req.cookies?.token;
-  if (!token)
-    return res.status(401).json({ message: "Authentication required" });
+    (authHeader && authHeader.startsWith("Bearer ") ? authHeader.substring(7) : null) ||
+    req.cookies?.token;
+
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      message: "Authentication required. Please log in to access this resource.",
+    });
+  }
+
   try {
-    req.user = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
     next();
-  } catch {
-    res.status(401).json({ message: "Invalid or expired token" });
+  } catch (err) {
+    return res.status(401).json({
+      success: false,
+      message: "Invalid or expired session token. Please log in again.",
+    });
   }
 }
 

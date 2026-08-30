@@ -1089,16 +1089,32 @@
         };
 
         try {
-          const response = await fetch(
-            "http://localhost:3000/book-appointment",
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(data),
-            },
-          );
+          const response = await fetch("/book-appointment", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
           const result = await response.json();
           if (result.success) {
+            // Also sync with localStorage appointmentsData
+            try {
+              const existing = JSON.parse(localStorage.getItem("appointmentsData") || "[]");
+              const nextId = "APT-" + String(existing.length + 1).padStart(3, "0");
+              const timeParts = (selectedTime || "").split(" ");
+              existing.unshift({
+                id: nextId,
+                patient: data.pet_name,
+                owner: data.owner_name,
+                type: data.service || "General Checkup",
+                date: timeParts[0] || new Date().toISOString().slice(0, 10),
+                time: timeParts[1] || "09:00",
+                vet: "Dr. Abena Mensah",
+                status: "Pending",
+                notes: data.visit_reason || ""
+              });
+              localStorage.setItem("appointmentsData", JSON.stringify(existing));
+            } catch (e) {}
+
             document.getElementById("step-3").classList.add("hidden");
             document.getElementById("step-success").classList.remove("hidden");
             document

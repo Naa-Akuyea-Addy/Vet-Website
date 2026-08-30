@@ -338,13 +338,7 @@
             >
               Login
             </button>
-            <button
-              class="flex-1 py-4 font-headline-md text-headline-md border-b-2 border-transparent text-on-surface-variant hover:text-primary transition-all"
-              id="tab-register"
-              onclick="toggleTab('register')"
-            >
-              Register
-            </button>
+            <!-- REGISTER TAB - COMMENTED OUT -->
           </div>
           <!-- Login Form -->
           <form id="login-form" class="form-transition space-y-stack-md">
@@ -436,142 +430,7 @@
               Sign In
             </button>
           </form>
-          <!-- Register Form (Hidden by default) -->
-          <form
-            id="register-form"
-            class="hidden form-transition space-y-stack-sm"
-          >
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div class="space-y-1">
-                <label
-                  class="font-label-md text-label-md text-on-surface-variant ml-1 flex items-center gap-1"
-                  >Full Name
-                  <span class="tooltip-wrapper">
-                    <span class="tooltip-icon" tabindex="0">i</span>
-                    <span class="tooltip-bubble">Your legal full name as registered with the Ghana Vet Council. Letters, spaces, apostrophes, and hyphens only.</span>
-                  </span>
-                </label>
-                <input
-                  id="registerName"
-                  name="name"
-                  class="w-full px-4 py-3 rounded-lg bg-surface-container-low border border-outline-variant focus:border-primary outline-none transition-all"
-                  placeholder="Kwame Mensah"
-                  type="text"
-                />
-              </div>
-              <div class="space-y-1">
-                <label
-                  class="font-label-md text-label-md text-on-surface-variant ml-1 flex items-center gap-1"
-                  >Medical License ID
-                  <span class="tooltip-wrapper">
-                    <span class="tooltip-icon" tabindex="0">i</span>
-                    <span class="tooltip-bubble">Your Ghana Vet Council license number. Must start with "GVC-" followed by 3 to 15 letters or numbers (e.g. GVC-12345).</span>
-                  </span>
-                </label>
-                <input
-                  id="registerLicense"
-                  name="license_number"
-                  class="w-full px-4 py-3 rounded-lg bg-surface-container-low border border-outline-variant focus:border-primary outline-none transition-all"
-                  placeholder="GVC-XXXXX"
-                  type="text"
-                />
-              </div>
-            </div>
-            <div class="space-y-1">
-              <label
-                class="font-label-md text-label-md text-on-surface-variant ml-1 flex items-center gap-1"
-                >Phone Number
-                <span class="tooltip-wrapper">
-                  <span class="tooltip-icon" tabindex="0">i</span>
-                  <span class="tooltip-bubble">Enter your Ghana phone number without the country code (e.g. 241234567). 7 to 11 digits, numbers only. The +233 prefix is added automatically.</span>
-                </span>
-              </label>
-              <div class="flex">
-                <span
-                  class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-outline-variant rounded-l-md"
-                >
-                  +233
-                </span>
-                <input
-                  id="registerPhone"
-                  name="phone"
-                  class="flex-1 min-w-0 bg-surface border border-outline-variant rounded-r-lg p-3 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-                  placeholder="241234567"
-                  type="tel"
-                />
-              </div>
-            </div>
-            <div class="space-y-1">
-              <label
-                class="font-label-md text-label-md text-on-surface-variant ml-1 flex items-center gap-1"
-                >Personal Email
-                <span class="tooltip-wrapper">
-                  <span class="tooltip-icon" tabindex="0">i</span>
-                  <span class="tooltip-bubble">Enter a valid email for your account. Only letters, numbers, dots, underscores, or hyphens before the @. Accepted domains: .com, .clinic, .gh.</span>
-                </span>
-              </label>
-              <input
-                id="registerEmail"
-                name="email"
-                class="w-full px-4 py-3 rounded-lg bg-surface-container-low border border-outline-variant focus:border-primary outline-none transition-all"
-                placeholder="name@google.com"
-                type="email"
-              />
-              <p class="font-caption text-caption text-on-surface-variant mt-2">
-                Use only letters, numbers, dots, underscores, or hyphens in the
-                email. Avoid other special characters.
-              </p>
-            </div>
-            <div class="space-y-1">
-              <label
-                class="font-label-md text-label-md text-on-surface-variant ml-1 flex items-center gap-1"
-                >Create Password
-                <span class="tooltip-wrapper">
-                  <span class="tooltip-icon" tabindex="0">i</span>
-                  <span class="tooltip-bubble">Create a strong password with at least 8 alphanumeric characters (A-Z, a-z, 0-9). No spaces or special characters allowed.</span>
-                </span>
-              </label>
-              <div class="relative">
-                <input
-                  id="registerPassword"
-                  name="password"
-                  class="w-full px-4 py-3 rounded-lg bg-surface-container-low border border-outline-variant focus:border-primary outline-none transition-all"
-                  placeholder="Min. 8 characters"
-                  type="password"
-                  minlength="8"
-                />
-                <button
-                  id="toggle-register-password-btn"
-                  class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-primary"
-                  type="button"
-                >
-                  <span
-                    id="toggle-register-password-icon"
-                    class="material-symbols-outlined"
-                    >visibility</span
-                  >
-                </button>
-              </div>
-            </div>
-            <div class="py-2">
-              <p class="font-caption text-caption text-on-surface-variant">
-                By registering, you agree to our
-                <a
-                  class="text-primary underline"
-                  href="https://www.facebook.com"
-                  >Terms of Service</a
-                >
-                and confirm your registration with the
-                <span class="font-bold">Ghana Vet Council</span>.
-              </p>
-            </div>
-            <button
-              type="submit"
-              class="w-full py-4 bg-primary text-on-primary rounded-lg font-headline-md text-headline-md hover:bg-primary-container transition-all shadow-md active:scale-[0.98]"
-            >
-              Create Account
-            </button>
-          </form>
+
           <!-- Secondary Actions -->
           <div
             class="mt-stack-lg pt-stack-md border-t border-outline-variant/20 flex flex-col items-center gap-4"
@@ -637,56 +496,45 @@
       </div>
     </footer>
     <script>
+      // ============================================
+      // ROLE → PAGE REDIRECT MAP
+      // ============================================
+      const ROLE_REDIRECT_MAP = {
+        'Super Admin': '/admin_portal_vet_website/Dashboard.html',
+        'Admin': '/admin_portal_vet_website/Dashboard.html',
+        'Veterinarian': '/admin_portal_vet_website/emergency_management.html',
+        'Accountant': '/admin_portal_vet_website/billing.html',
+        'InventoryManager': '/admin_portal_vet_website/inventory.html',
+        'Receptionist': '/admin_portal_vet_website/clinic_calendar.html',
+        'Technician': '/admin_portal_vet_website/records.html'
+      };
+
+      function getRedirectUrl(role) {
+        return ROLE_REDIRECT_MAP[role] || '/admin_portal_vet_website/Dashboard.html';
+      }
+
       function toggleTab(type) {
         const loginForm = document.getElementById("login-form");
-        const registerForm = document.getElementById("register-form");
         const tabLogin = document.getElementById("tab-login");
-        const tabRegister = document.getElementById("tab-register");
 
         if (type === "login") {
           loginForm.classList.remove("hidden");
-          registerForm.classList.add("hidden");
           tabLogin.classList.add("border-primary", "text-primary");
           tabLogin.classList.remove(
             "border-transparent",
             "text-on-surface-variant",
           );
-          tabRegister.classList.add(
-            "border-transparent",
-            "text-on-surface-variant",
-          );
-          tabRegister.classList.remove("border-primary", "text-primary");
-        } else {
-          loginForm.classList.add("hidden");
-          registerForm.classList.remove("hidden");
-          tabRegister.classList.add("border-primary", "text-primary");
-          tabRegister.classList.remove(
-            "border-transparent",
-            "text-on-surface-variant",
-          );
-          tabLogin.classList.add(
-            "border-transparent",
-            "text-on-surface-variant",
-          );
-          tabLogin.classList.remove("border-primary", "text-primary");
         }
       }
 
       document.addEventListener("DOMContentLoaded", () => {
         const loginForm = document.getElementById("login-form");
-        const registerForm = document.getElementById("register-form");
 
         const emailRegex =
-          /^[A-Za-z0-9]+(?:[._-][A-Za-z0-9]+)*@[A-Za-z0-9]+(?:\.[A-Za-z0-9]+)*\.(?:com|clinic|gh)(?:\.[A-Za-z]{2,})?$/;
-        const nameRegex = /^[A-Za-z]+(?:[A-Za-z\s.'-]*[A-Za-z])?$/;
-        const licenseRegex = /^GVC-[A-Za-z0-9]{3,15}$/i;
-        const phoneRegex = /^\d{7,11}$/;
-        const passwordRegex = /^[A-Za-z0-9]{8,}$/;
+          /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const passwordRegex = /^.{6,}$/;
 
         const validateEmail = (email) => emailRegex.test(email);
-        const validateName = (name) => nameRegex.test(name);
-        const validateLicense = (license) => licenseRegex.test(license);
-        const validatePhone = (phone) => phoneRegex.test(phone);
         const validatePassword = (password) => passwordRegex.test(password);
 
         const setFieldError = (input, message) => {
@@ -761,13 +609,13 @@
           document.getElementById("loginEmail"),
           validateEmail,
           "Please enter your email address.",
-          "Email must be valid and may only contain letters, numbers, dots, underscores, or hyphens.",
+          "Please enter a valid email address.",
         );
         attachInputValidation(
           document.getElementById("loginPassword"),
           validatePassword,
           "Please enter your password.",
-          "Password must be exactly 8 alphanumeric characters.",
+          "Password must be at least 6 characters.",
         );
 
         // Password visibility toggle for LOGIN
@@ -797,72 +645,7 @@
           if (loginEmailInput) loginEmailInput.value = savedLoginEmail;
         }
 
-        // Password visibility toggle for REGISTER
-        const registerPasswordInput =
-          document.getElementById("registerPassword");
-        const registerPasswordToggleBtn = document.getElementById(
-          "toggle-register-password-btn",
-        );
-        const registerPasswordToggleIcon = document.getElementById(
-          "toggle-register-password-icon",
-        );
-        if (
-          registerPasswordToggleBtn &&
-          registerPasswordInput &&
-          registerPasswordToggleIcon
-        ) {
-          registerPasswordToggleBtn.addEventListener("click", () => {
-            const isPassword = registerPasswordInput.type === "password";
-            registerPasswordInput.type = isPassword ? "text" : "password";
-            registerPasswordToggleIcon.textContent = isPassword
-              ? "visibility_off"
-              : "visibility";
-          });
-        }
-
-        // Name input sanitization
-        const registerNameInput = document.getElementById("registerName");
-        if (registerNameInput) {
-          registerNameInput.addEventListener("input", (event) => {
-            const target = event.target;
-            const cleanedValue = target.value.replace(/[^A-Za-z\s.'-]/g, "");
-            if (target.value !== cleanedValue) target.value = cleanedValue;
-          });
-        }
-
-        // ✅ ADD THIS - Initialize REGISTER form validations (real-time)
-        attachInputValidation(
-          document.getElementById("registerName"),
-          validateName,
-          "Please enter your full name.",
-          "Please enter a valid name (letters, spaces, apostrophes, or hyphens; 3-60 characters).",
-        );
-        attachInputValidation(
-          document.getElementById("registerLicense"),
-          validateLicense,
-          "Please enter your medical license ID.",
-          "License ID must start with GVC- followed by 3-15 letters/numbers.",
-        );
-        attachInputValidation(
-          document.getElementById("registerPhone"),
-          validatePhone,
-          "Please enter your phone number.",
-          "Phone number must be 7-11 digits.",
-        );
-        attachInputValidation(
-          document.getElementById("registerEmail"),
-          validateEmail,
-          "Please enter your work email.",
-          "Email must be valid and may only contain letters, numbers, dots, underscores, or hyphens.",
-        );
-        attachInputValidation(
-          document.getElementById("registerPassword"),
-          validatePassword,
-          "Please create a password.",
-          "Password must be exactly 8 alphanumeric characters.",
-        );
-
-        // ✅ LOGIN FORM SUBMIT — now calls login()
+        // ✅ LOGIN FORM SUBMIT
         if (loginForm) {
           loginForm.addEventListener("submit", async (event) => {
             event.preventDefault();
@@ -870,7 +653,6 @@
             const emailInput = document.getElementById("loginEmail");
             const passwordInput = document.getElementById("loginPassword");
 
-            // FIXED: Added missing validation variables
             const isEmailValid = validateField(
               emailInput,
               validateEmail,
@@ -900,71 +682,7 @@
               localStorage.removeItem("savedLoginEmail");
             }
 
-            //  Actually call the login function
             await login();
-          });
-        }
-
-        //  REGISTER FORM SUBMIT — now calls register()
-        if (registerForm) {
-          registerForm.addEventListener("submit", async (event) => {
-            event.preventDefault();
-
-            const nameInput = document.getElementById("registerName");
-            const licenseInput = document.getElementById("registerLicense");
-            const phoneInput = document.getElementById("registerPhone");
-            const emailInput = document.getElementById("registerEmail");
-            const passwordInput = document.getElementById("registerPassword");
-
-            const isNameValid = validateField(
-              nameInput,
-              validateName,
-              "Please enter your full name.",
-              "Please enter a valid name (3-60 characters).",
-            );
-            const isLicenseValid = validateField(
-              licenseInput,
-              validateLicense,
-              "Please enter your medical license ID.",
-              "License ID must start with GVC- followed by 3-15 letters/numbers.",
-            );
-            const isPhoneValid = validateField(
-              phoneInput,
-              validatePhone,
-              "Please enter your phone number.",
-              "Phone number must be 7-11 digits.",
-            );
-            const isEmailValid = validateField(
-              emailInput,
-              validateEmail,
-              "Please enter your work email.",
-              "Please enter a valid clinic email address.",
-            );
-            const isPasswordValid = validateField(
-              passwordInput,
-              validatePassword,
-              "Please create a password.",
-              "Password must be exactly 8 alphanumeric characters.",
-            );
-
-            if (
-              !isNameValid ||
-              !isLicenseValid ||
-              !isPhoneValid ||
-              !isEmailValid ||
-              !isPasswordValid
-            ) {
-              const firstError = document.querySelector(".input-error");
-              if (firstError)
-                firstError.scrollIntoView({
-                  behavior: "smooth",
-                  block: "center",
-                });
-              return;
-            }
-
-            //  Actually call the register function
-            await register();
           });
         }
       });
@@ -985,18 +703,31 @@
         }, 2200);
       }
 
-      //  LOGIN function — resets only on success
+      // ============================================
+      // LOGIN function with Role-Based Redirect
+      // ============================================
       async function login() {
         const email = document.getElementById("loginEmail").value.trim();
         const password = document.getElementById("loginPassword").value.trim();
 
         if (!email || !password) {
-          alert("Email and password are required");
+          showToast("Email and password are required", "error");
           return;
         }
 
+        // Show loading state on button
+        const loginBtn = document.querySelector('button[type="submit"]');
+        const originalText = loginBtn.textContent;
+        loginBtn.textContent = "Signing in...";
+        loginBtn.disabled = true;
+
+        const loginUrl =
+          window.location.protocol === "file:" || (window.location.port && window.location.port !== "3000")
+            ? "http://localhost:3000/login"
+            : "/login";
+
         try {
-          const res = await fetch("http://localhost:3000/login", {
+          const res = await fetch(loginUrl, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -1006,85 +737,89 @@
 
           const data = await res.json();
 
-          if (res.ok) {
-            console.log(data.user);
-            showToast(
-              "Login Successful. Redirecting you to Dashboard",
-              "success",
-            );
+          if (res.ok && data.success !== false) {
+            // Store token and user info
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data.user));
+
+            // Get redirect URL
+            let targetUrl = data.redirectUrl || getRedirectUrl(data.user.role);
+            if (window.location.protocol === "file:") {
+              const pageFile = targetUrl.split("/").pop();
+              targetUrl = `../admin_portal_vet_website/${pageFile}`;
+            }
+
+            // Role emojis for welcome message
+            const roleEmojis = {
+              'Super Admin': '🛡️',
+              'Admin': '⚙️',
+              'Veterinarian': '👨‍⚕️',
+              'Accountant': '💰',
+              'InventoryManager': '📦',
+              'Receptionist': '📋',
+              'Technician': '🔬'
+            };
+            const emoji = roleEmojis[data.user.role] || '👤';
+
+            showToast(`${emoji} Welcome ${data.user.name}! Redirecting to ${data.user.role} portal...`, "success");
+
+            // Redirect after delay
             setTimeout(() => {
-              window.location.href = "admin_portal_vet_website/";
-            }, 1800);
+              window.location.href = targetUrl;
+            }, 1200);
+
           } else {
-            showToast(
-              data.message || "Login failed. Please try again.",
-              "error",
-            );
+            showToast(data.message || "Login failed. Please verify your credentials.", "error");
+            // Reset button
+            loginBtn.textContent = originalText;
+            loginBtn.disabled = false;
           }
         } catch (err) {
           console.error("Login error:", err);
-          showToast(
-            "Network error. Please check your connection and try again.",
-            "error",
-          );
+          showToast("⚠️ Could not reach server at http://localhost:3000. Please ensure the backend is running.", "error");
+          // Reset button
+          loginBtn.textContent = originalText;
+          loginBtn.disabled = false;
         }
       }
 
-      //  REGISTER function — resets only on success
-      async function register() {
-        const email = document.getElementById("registerEmail").value.trim();
-        const password = document
-          .getElementById("registerPassword")
-          .value.trim();
-        const name = document.getElementById("registerName").value.trim();
-        const license_number = document
-          .getElementById("registerLicense")
-          .value.trim();
-        let phone = document.getElementById("registerPhone").value.trim();
+      // ============================================
+      // CHECK IF ALREADY LOGGED IN
+      // ============================================
+      function checkAuth() {
+        const token = localStorage.getItem('token');
+        const userData = localStorage.getItem('user');
 
-        if (!email || !password || !name || !license_number || !phone) {
-          alert("All fields are required");
-          return;
-        }
+        if (token && userData) {
+          try {
+            const user = JSON.parse(userData);
+            const redirectUrl = getRedirectUrl(user.role);
 
-        // ✅ Add the +233 prefix to the phone number
-        if (phone) {
-          phone = "+233" + phone;
-        }
-
-        try {
-          const res = await fetch("http://localhost:3000/register", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email,
-              password,
-              name,
-              license_number,
-              phone,
-            }),
-          });
-
-          const data = await res.json();
-
-          if (res.ok) {
-            showToast("Registration successful", "success");
-            document.getElementById("register-form").reset(); //  Reset only on success
-            toggleTab("login"); //  Switch to login tab after successful registration
-          } else {
-            alert(
-              data.message ||
-                data.error ||
-                "Registration failed. Please try again.",
-            );
+            // If already logged in, redirect to their dashboard
+            // Only if not already on the login page
+            if (!window.location.pathname.includes('login')) {
+              window.location.href = redirectUrl;
+            }
+          } catch (e) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
           }
-        } catch (err) {
-          console.error("Register error:", err);
-          alert("Network error. Please check your connection and try again.");
         }
       }
+
+      // Check on page load
+      document.addEventListener('DOMContentLoaded', function() {
+        checkAuth();
+      });
+
+      // ============================================
+      // ENTER KEY SUPPORT
+      // ============================================
+      document.getElementById('loginPassword').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          document.getElementById('login-form').dispatchEvent(new Event('submit'));
+        }
+      });
     </script>
   </body>
 </html>

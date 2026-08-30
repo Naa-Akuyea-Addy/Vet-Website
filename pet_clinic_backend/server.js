@@ -21,6 +21,8 @@ const emergencyRoutes = require("./src/routes/emergencyRoutes");
 const reportRoutes = require("./src/routes/reportRoutes");
 const settingsRoutes = require("./src/routes/settingsRoutes");
 const adminRoutes = require("./src/routes/adminRoutes");
+const dashboardRoutes = require("./src/routes/dashboardRoutes");
+const authController = require("./src/controllers/authController");
 const { checkConnection } = require("./src/config/database");
 
 const publicDirectory = fs.existsSync(path.join(__dirname, "public"))
@@ -48,6 +50,7 @@ app.use("/api/emergencies", emergencyRoutes);
 app.use("/api/reports", reportRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 app.get("/api/health", async (req, res, next) => {
   try {
@@ -137,112 +140,52 @@ app.post("/book-appointment", async (req, res) => {
   }
 });
 
-//Login and Register routes
-app.post("/login", async (req, res) => {
-  let connection;
+// Login route (uses authController with roles and permissions)
+app.post("/login", authController.login);
 
-  try {
-    const { email, password } = req.body;
+// app.post("/register", async (req, res) => {
+//   let connection;
 
-    if (!email || !password || typeof password !== "string") {
-      return res
-        .status(400)
-        .json({ message: "Email and password are required" });
-    }
+//   try {
+//     const { email, password, name, license_number, phone } = req.body;
 
-    connection = await oracledb.getConnection(dbConfig);
+//     if (
+//       !email ||
+//       !password ||
+//       !name ||
+//       !license_number ||
+//       !phone ||
+//       typeof password !== "string"
+//     ) {
+//       return res
+//         .status(400)
+//         .json({ message: "All registration fields are required" });
+//     }
 
-    const result = await connection.execute(
-      `SELECT USER_ID, EMAIL, PASSWORD_HASH
-             FROM USERS
-             WHERE EMAIL = :email`,
-      { email },
-    );
+//     connection = await oracledb.getConnection(dbConfig);
 
-    if (result.rows.length === 0) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
+//     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = result.rows[0];
+//     await connection.execute(
+//       `INSERT INTO USERS (EMAIL, PASSWORD_HASH,FULL_NAME, LICENSE_NUMBER, PHONE)
+//              VALUES (:email, :password_hash, :full_name, :license_number, :phone)`,
+//       {
+//         email,
+//         password_hash: hashedPassword,
+//         full_name: name,
+//         license_number,
+//         phone,
+//       },
+//       { autoCommit: true },
+//     );
 
-    if (!user[2]) {
-      return res
-        .status(500)
-        .json({ message: "Stored password hash is missing" });
-    }
-
-    const validPassword = await bcrypt.compare(password, user[2]);
-
-    if (!validPassword) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
-
-    const token = jwt.sign(
-      { id: user[0], email: user[1] },
-      process.env.JWT_SECRET,
-      { expiresIn: "8h" },
-    );
-    res.cookie("token", token, {
-      httpOnly: true,
-      sameSite: "lax",
-      maxAge: 8 * 60 * 60 * 1000,
-    });
-
-    res.json({
-      message: "Login successful",
-      user: {
-        id: user[0],
-        email: user[1],
-      },
-    });
-  } finally {
-    if (connection) await connection.close();
-  }
-});
-
-app.post("/register", async (req, res) => {
-  let connection;
-
-  try {
-    const { email, password, name, license_number, phone } = req.body;
-
-    if (
-      !email ||
-      !password ||
-      !name ||
-      !license_number ||
-      !phone ||
-      typeof password !== "string"
-    ) {
-      return res
-        .status(400)
-        .json({ message: "All registration fields are required" });
-    }
-
-    connection = await oracledb.getConnection(dbConfig);
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    await connection.execute(
-      `INSERT INTO USERS (EMAIL, PASSWORD_HASH,FULL_NAME, LICENSE_NUMBER, PHONE)
-             VALUES (:email, :password_hash, :full_name, :license_number, :phone)`,
-      {
-        email,
-        password_hash: hashedPassword,
-        full_name: name,
-        license_number,
-        phone,
-      },
-      { autoCommit: true },
-    );
-
-    res.json({ message: "User registered successfully" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  } finally {
-    if (connection) await connection.close();
-  }
-});
+//     res.json({ message: "User registered successfully" });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   } finally {
+//     if (connection) await connection.close();
+//   }
+// });
 
 // API endpoint for contact form
 app.post("/contact-form", async (req, res) => {

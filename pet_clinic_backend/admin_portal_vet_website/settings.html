@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>addyPets | Settings</title>
+    <script src="./auth-guard.js"></script>
     <!-- Font Awesome for better icons -->
     <link
       rel="stylesheet"
@@ -2962,6 +2963,37 @@
         });
       });
 
+      async function fetchSettingsAndUsersFromBackend() {
+        try {
+          // Fetch real users
+          const usersRes = await apiFetch("/api/admin/users");
+          if (usersRes.ok) {
+            const usersData = await usersRes.json();
+            if (usersData && usersData.data) {
+              const totalUsersEl = document.getElementById("totalUsers");
+              const activeUsersEl = document.getElementById("activeUsers");
+              if (totalUsersEl) totalUsersEl.textContent = usersData.data.length;
+              const activeCount = usersData.data.filter((u) => (u.STATUS || "Active").toLowerCase() === "active").length;
+              if (activeUsersEl) activeUsersEl.textContent = activeCount;
+            }
+          }
+
+          // Fetch real roles
+          const rolesRes = await apiFetch("/api/admin/roles");
+          if (rolesRes.ok) {
+            const rolesData = await rolesRes.json();
+            if (rolesData && rolesData.data) {
+              const totalRolesEl = document.getElementById("totalRoles");
+              const totalPermEl = document.getElementById("totalPermissions");
+              if (totalRolesEl) totalRolesEl.textContent = rolesData.data.length;
+              if (totalPermEl) totalPermEl.textContent = "12";
+            }
+          }
+        } catch (e) {
+          console.warn("Settings API fetch:", e);
+        }
+      }
+
       // ==========================================
       // 15. INIT
       // ==========================================
@@ -2970,6 +3002,7 @@
         renderRolesTable();
         renderPermissionMatrix();
         renderNotificationTypes();
+        fetchSettingsAndUsersFromBackend();
         // Check for saved POS config
         try {
           const savedPOS = localStorage.getItem("posConfig");

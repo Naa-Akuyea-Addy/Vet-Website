@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Enquiries & Questions | addyPets</title>
+    <script src="./auth-guard.js"></script>
 
     <!-- 1. Load Fonts First -->
     <link
@@ -1466,41 +1467,41 @@
 
       async function loadMessages() {
         try {
-          const response = await fetch("/api/admin/messages", {
-            credentials: "same-origin",
-          });
+          const response = await apiFetch("/api/admin/messages");
           if (!response.ok) throw new Error("Unable to load messages");
-          const rows = await response.json();
-          enquiries = rows.map((row, index) => {
-            const timestamp = new Date(row.CREATED_AT).getTime();
-            const status = String(row.STATUS || "unread").toLowerCase();
-            return {
-              id: row.ID,
-              name: row.NAME,
-              initials: String(row.NAME || "?")
-                .split(/\s+/)
-                .map((part) => part[0])
-                .join("")
-                .slice(0, 2)
-                .toUpperCase(),
-              email: row.EMAIL,
-              pet: row.PET_BREED || "Pet details unavailable",
-              petType: "Other",
-              question: row.CUSTOMER_QUESTIONS,
-              time: Number.isNaN(timestamp)
-                ? "Unknown time"
-                : new Date(timestamp).toLocaleString(),
-              timestamp: Number.isNaN(timestamp) ? 0 : timestamp,
-              status: status === "unread" ? "new" : status,
-              colorClass:
-                index % 2 === 0
-                  ? "bg-primary-container text-on-primary-container"
-                  : "bg-secondary-container text-on-secondary-container",
-            };
-          });
+          const json = await response.json();
+          const rows = json.data || json || [];
+          if (rows.length > 0) {
+            enquiries = rows.map((row, index) => {
+              const timestamp = new Date(row.CREATED_AT).getTime();
+              const status = String(row.STATUS || "unread").toLowerCase();
+              return {
+                id: row.ID,
+                name: row.NAME,
+                initials: String(row.NAME || "?")
+                  .split(/\s+/)
+                  .map((part) => part[0])
+                  .join("")
+                  .slice(0, 2)
+                  .toUpperCase(),
+                email: row.EMAIL,
+                pet: row.PET_BREED || "Pet",
+                petType: row.PET_BREED && row.PET_BREED.toLowerCase().includes("cat") ? "Cat" : "Dog",
+                question: row.CUSTOMER_QUESTIONS || "No question text provided.",
+                time: Number.isNaN(timestamp)
+                  ? "Recent"
+                  : new Date(timestamp).toLocaleDateString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }),
+                timestamp: Number.isNaN(timestamp) ? 0 : timestamp,
+                status: status === "unread" ? "new" : status,
+                colorClass:
+                  index % 2 === 0
+                    ? "bg-primary-container text-on-primary-container"
+                    : "bg-secondary-container text-on-secondary-container",
+              };
+            });
+          }
         } catch (error) {
-          console.error("Message loading error:", error);
-          showToast("Could not load messages from the database.", "error");
+          console.warn("Message loading API fallback:", error);
         }
       }
 

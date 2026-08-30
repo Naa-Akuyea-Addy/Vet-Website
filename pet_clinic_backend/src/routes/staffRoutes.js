@@ -1,5 +1,11 @@
 const router = require("express").Router();
 const controller = require("../controllers/staffController");
 const { authenticate } = require("../middleware/auth");
-router.use(authenticate).get("/", controller.list);
+
+router.use(authenticate);
+router.get("/", controller.list);
+router.post("/", controller.create);
+router.patch("/:id", controller.update);
+router.delete("/:id", controller.remove);
+
 module.exports = router;

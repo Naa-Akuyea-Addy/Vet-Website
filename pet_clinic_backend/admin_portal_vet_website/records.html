@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>addyPets | Patient & Owner Management</title>
+    <script src="./auth-guard.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
@@ -2796,9 +2797,7 @@
         const lastVisit = today.toLocaleDateString("en-US", {
           month: "short",
           day: "2-digit",
-          year: "numeric",
-        });
-        patients.unshift({
+        const newPatientObj = {
           id: newId,
           name,
           species,
@@ -2809,11 +2808,27 @@
           age,
           gender,
           img: petImages[species] || null,
-        });
+        };
+        patients.unshift(newPatientObj);
         renderTable();
         closeModal();
         showToast(`Patient ${name} added successfully!`, "success");
-      });
+
+        // Sync with backend database
+        try {
+          apiFetch("/api/patients", {
+            method: "POST",
+            body: JSON.stringify({
+              pet_name: name,
+              pet_species: species,
+              pet_breed: breed,
+              pet_age: age,
+              sex: gender,
+              owner_name: owner,
+              notes: `Registered in clinic records with status ${status}.`
+            })
+          }).catch(err => console.warn("Backend patient sync:", err));
+        } catch (e) {}
 
       // ==========================================
       // 17. SCHEDULE APPOINTMENT MODAL
@@ -3101,6 +3116,42 @@
         }
       }
 
+      async function fetchPatientsFromBackend() {
+        try {
+          const res = await apiFetch("/api/patients");
+          if (!res.ok) return;
+          const json = await res.json();
+          if (json && json.data && json.data.length > 0) {
+            patients = json.data.map((p) => ({
+              id: `VC-${String(p.PATIENT_ID).padStart(4, "0")}`,
+              dbId: p.PATIENT_ID,
+              name: p.PET_NAME || "Pet",
+              species: p.PET_SPECIES || "Dog",
+              breed: p.PET_BREED || "Mixed Breed",
+              owner: p.OWNER_NAME || "Owner",
+              phone: p.OWNER_PHONE || "",
+              email: p.OWNER_EMAIL || "",
+              lastVisit: p.CREATED_AT
+                ? new Date(p.CREATED_AT).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "2-digit",
+                    year: "numeric",
+                  })
+                : "Today",
+              status: "VACCINATED",
+              age: p.PET_AGE || "1 Year",
+              gender: p.SEX || "Male",
+              notes: p.MEDICAL_NOTES || "",
+              img: petImages[p.PET_SPECIES] || petImages.Dog,
+            }));
+            filteredPatients = [...patients];
+            renderTable();
+          }
+        } catch (e) {
+          console.warn("Patient API fetch:", e);
+        }
+      }
+
       // ==========================================
       // 23. INIT
       // ==========================================
@@ -3109,6 +3160,7 @@
         renderTable();
         renderMedicalNotes();
         renderLabFiles();
+        fetchPatientsFromBackend();
         const today = new Date().toISOString().split("T")[0];
         document.getElementById("appt-date").value = today;
       });
