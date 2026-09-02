@@ -53,11 +53,30 @@
     "Technician": "records.html",
   };
 
+  function normalizeRole(role) {
+    const suppliedRole = String(role || "").trim();
+    return (
+      Object.keys(ROLE_PERMISSIONS_MAP).find(
+        (knownRole) => knownRole.toLowerCase() === suppliedRole.toLowerCase(),
+      ) || "Veterinarian"
+    );
+  }
+
   // -------------------------------------------------------
   // Detect whether the app is running through the Node.js
   // server (http/https) or opened directly as a file://
   // -------------------------------------------------------
   const isFileProtocol = window.location.protocol === "file:";
+  const isLocalDevelopmentHost = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+
+  // API routes are served by Node on port 3000. Opening an admin HTML file
+  // through Live Server/file:// makes relative /api requests return HTML,
+  // which in turn caused the profile upload JSON parsing error.
+  if (isFileProtocol || (isLocalDevelopmentHost && window.location.port !== "3000")) {
+    const requestedPage = window.location.pathname.split("/").pop() || "Dashboard.html";
+    window.location.replace(`http://localhost:3000/admin_portal_vet_website/${requestedPage}`);
+    return;
+  }
 
   function getLoginUrl() {
     if (isFileProtocol) {
@@ -102,7 +121,9 @@
       return false;
     }
 
-    const role = user.role || "Veterinarian";
+    const role = normalizeRole(user.role);
+    user.role = role;
+    localStorage.setItem("user", JSON.stringify(user));
     const allowedPages = ROLE_PERMISSIONS_MAP[role] || ["Dashboard.html"];
     const currentPage = getCurrentPageName();
 
@@ -126,10 +147,202 @@
   // Run immediate auth check
   const auth = checkAuthorization();
 
+  function escapeHtml(value) {
+    const element = document.createElement("div");
+    element.textContent = value || "";
+    return element.innerHTML;
+  }
+
+  function installNotificationBell() {
+    const icons = [...document.querySelectorAll(".material-symbols-outlined")]
+      .filter((icon) => icon.textContent.trim() === "notifications");
+    if (!icons.length) return;
+
+    const panel = document.createElement("section");
+    panel.id = "portalNotificationPanel";
+    panel.hidden = true;
+    panel.style.cssText = "position:fixed;right:16px;top:76px;width:min(360px,calc(100vw - 32px));max-height:420px;overflow:auto;background:#fff;border:1px solid #d7dddd;border-radius:12px;box-shadow:0 16px 40px #0003;z-index:1000;padding:12px;color:#1b1c1c";
+    panel.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center"><strong>Notifications</strong><button type="button" data-read-all style="color:#036469;background:none;border:0;cursor:pointer">Mark all read</button></div><div data-notification-list style="padding-top:8px"></div>';
+    document.body.appendChild(panel);
+
+    const badges = [];
+    const toggle = () => {
+      panel.hidden = !panel.hidden;
+      if (!panel.hidden) loadNotifications();
+    };
+    icons.forEach((icon) => {
+      const trigger = icon.closest("button") || icon;
+      trigger.style.cursor = "pointer";
+      trigger.setAttribute("aria-label", "Open notifications");
+      trigger.addEventListener("click", toggle);
+      const host = trigger.parentElement;
+      if (!host || host.querySelector("[data-notification-badge]")) return;
+      host.style.position = "relative";
+      const badge = document.createElement("span");
+      badge.dataset.notificationBadge = "";
+      badge.hidden = true;
+      badge.style.cssText = "position:absolute;right:0;top:0;min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:#ba1a1a;color:#fff;font:10px/16px sans-serif;text-align:center";
+      host.appendChild(badge);
+      badges.push(badge);
+    });
+
+    async function loadNotifications() {
+      const list = panel.querySelector("[data-notification-list]");
+      try {
+        const response = await window.portalApiFetch("/api/notifications");
+        const payload = await response.json();
+        const items = payload.data || [];
+        const unread = items.filter((item) => item.IS_READ === "N").length;
+        badges.forEach((badge) => { badge.hidden = unread === 0; badge.textContent = unread > 9 ? "9+" : unread; });
+        list.innerHTML = items.length ? items.map((item) => `<button data-notification-id="${item.NOTIFICATION_ID}" style="display:block;width:100%;text-align:left;border:0;background:${item.IS_READ === "N" ? "#e5fdff" : "transparent"};padding:10px;border-radius:8px;cursor:pointer"><strong>${escapeHtml(item.TITLE)}</strong><br><span style="font-size:12px">${escapeHtml(item.MESSAGE)}</span></button>`).join("") : '<p style="padding:16px;text-align:center;color:#6f797a">No notifications</p>';
+      } catch (error) {
+        list.textContent = "Unable to load notifications.";
+      }
+    }
+
+    panel.addEventListener("click", async (event) => {
+      const item = event.target.closest("[data-notification-id]");
+      if (item) await window.portalApiFetch(`/api/notifications/${item.dataset.notificationId}/read`, { method: "PATCH" });
+      if (event.target.matches("[data-read-all]")) await window.portalApiFetch("/api/notifications/read-all", { method: "PATCH" });
+      if (item || event.target.matches("[data-read-all]")) loadNotifications();
+    });
+  }
+
+  function installProfilePhotoEditor(user) {
+    const avatars = [...document.querySelectorAll('img[alt="Profile"], img[data-user-avatar]')];
+    if (!avatars.length) return;
+    const editor = document.createElement("div");
+    editor.hidden = true;
+    editor.style.cssText = "position:fixed;inset:0;background:#0008;z-index:1100;place-items:center;padding:16px";
+    editor.innerHTML = '<form style="background:#fff;border-radius:12px;padding:24px;width:min(400px,100%);color:#1b1c1c"><h2 style="margin-top:0">Update profile photo</h2><p style="font-size:14px">PNG, JPEG, or WebP up to 2 MB.</p><input type="file" accept="image/png,image/jpeg,image/webp" required><p data-photo-status role="status" style="min-height:20px;color:#ba1a1a;font-size:13px"></p><div style="margin-top:20px;display:flex;justify-content:end;gap:8px"><button type="button" data-cancel style="padding:9px 14px">Cancel</button><button data-save style="background:#036469;color:#fff;border:0;border-radius:6px;padding:9px 14px" type="submit">Save photo</button></div></form>';
+    document.body.appendChild(editor);
+    const open = () => { editor.hidden = false; editor.style.display = "grid"; };
+    avatars.forEach((avatar) => {
+      avatar.style.cursor = "pointer";
+      avatar.title = "Change profile photo";
+      avatar.addEventListener("click", open);
+      if (user.profileImage) avatar.src = user.profileImage;
+    });
+    const closeEditor = () => { editor.hidden = true; editor.style.display = "none"; editor.querySelector("form").reset(); editor.querySelector("[data-photo-status]").textContent = ""; };
+    editor.querySelector("[data-cancel]").onclick = closeEditor;
+    editor.addEventListener("click", (event) => { if (event.target === editor) closeEditor(); });
+    editor.querySelector("form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const file = editor.querySelector("input").files[0];
+      const status = editor.querySelector("[data-photo-status]");
+      const saveButton = editor.querySelector("[data-save]");
+      if (!file || file.size > 2 * 1024 * 1024) { status.textContent = "Choose an image smaller than 2 MB."; return; }
+      saveButton.disabled = true;
+      saveButton.textContent = "Saving…";
+      try {
+        const profileImage = await new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(file); });
+        const response = await window.portalApiFetch("/api/auth/profile-image", { method: "PATCH", body: JSON.stringify({ profileImage }) });
+        const isJson = (response.headers.get("content-type") || "").includes("application/json");
+        const payload = isJson ? await response.json() : { message: "The profile API returned a web page. Restart the backend and open the portal at http://localhost:3000." };
+        if (!response.ok) throw new Error(payload.message || "Unable to update your photo.");
+        user.profileImage = payload.profileImage;
+        localStorage.setItem("user", JSON.stringify(user));
+        avatars.forEach((avatar) => { avatar.src = payload.profileImage; });
+        closeEditor();
+      } catch (error) {
+        status.textContent = error.message || "Unable to update your photo.";
+      } finally {
+        saveButton.disabled = false;
+        saveButton.textContent = "Save photo";
+      }
+    });
+  }
+
+  function installLogoutDialog() {
+    const dialog = document.createElement("div");
+    dialog.hidden = true;
+    dialog.style.cssText = "position:fixed;inset:0;background:#0008;z-index:1100;place-items:center;padding:16px";
+    dialog.innerHTML = '<section role="dialog" aria-modal="true" aria-labelledby="logoutDialogTitle" style="background:#fff;border-radius:12px;padding:24px;width:min(390px,100%);color:#1b1c1c"><h2 id="logoutDialogTitle" style="margin-top:0">Log out?</h2><p>You will need to sign in again to access the portal.</p><div style="display:flex;justify-content:end;gap:8px;margin-top:24px"><button type="button" data-logout-cancel style="padding:9px 14px">Cancel</button><button type="button" data-logout-confirm style="background:#ba1a1a;color:#fff;border:0;border-radius:6px;padding:9px 14px">Log out</button></div></section>';
+    document.body.appendChild(dialog);
+    const close = () => { dialog.hidden = true; dialog.style.display = "none"; };
+    const open = () => { dialog.hidden = false; dialog.style.display = "grid"; dialog.querySelector("[data-logout-cancel]").focus(); };
+    dialog.querySelector("[data-logout-cancel]").onclick = close;
+    dialog.addEventListener("click", (event) => { if (event.target === dialog) close(); });
+    dialog.querySelector("[data-logout-confirm]").onclick = () => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      window.location.href = getLoginUrl();
+    };
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest("#logoutBtnDesktop, #logoutBtnMobile, [data-logout]")) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      open();
+    }, true);
+    window.logout = (event) => { if (event) event.preventDefault(); open(); };
+  }
+
+  function installPageSearch(allowedPages) {
+    const searchInputs = [...document.querySelectorAll("header input[type='text']")]
+      .filter((input) => /search/i.test(input.placeholder || ""));
+
+    searchInputs.forEach((input) => {
+      const host = input.parentElement;
+      if (!host || host.querySelector("[data-search-status]")) return;
+      host.style.position = "relative";
+      const status = document.createElement("div");
+      status.dataset.searchStatus = "";
+      status.hidden = true;
+      status.style.cssText = "position:absolute;left:0;right:0;top:calc(100% + 6px);max-height:260px;overflow:auto;background:#fff;border:1px solid #bec8c9;border-radius:8px;padding:8px;box-shadow:0 8px 24px #0002;z-index:10000;pointer-events:auto;font-size:12px;color:#3f4949";
+      host.appendChild(status);
+
+      const runSearch = () => {
+        const query = input.value.trim().toLowerCase();
+        const rows = [...document.querySelectorAll("tbody tr")];
+        const matchingRows = [];
+        rows.forEach((row, index) => {
+          const matchesQuery = !query || row.textContent.toLowerCase().includes(query);
+          row.hidden = !matchesQuery;
+          if (matchesQuery) matchingRows.push({ row, index });
+        });
+        status.hidden = !query;
+        if (!query) return;
+        if (!rows.length) {
+          const matchingPages = allowedPages.filter((page) => page.toLowerCase().includes(query));
+          status.innerHTML = matchingPages.length
+            ? matchingPages.map((page) => `<button type="button" data-search-page="${page}" style="display:block;width:100%;padding:8px;text-align:left;border:0;background:transparent;cursor:pointer">Open ${escapeHtml(page.replace(".html", ""))}</button>`).join("")
+            : "No matching records on this page.";
+          return;
+        }
+        status.innerHTML = matchingRows.length
+          ? matchingRows.slice(0, 6).map(({ row, index }) => `<button type="button" data-search-row="${index}" style="display:block;width:100%;padding:8px;text-align:left;border:0;background:transparent;cursor:pointer;border-radius:6px">${escapeHtml(row.textContent.trim().replace(/\s+/g, " ").slice(0, 110))}</button>`).join("") + `<p style="margin:6px 8px 0">${matchingRows.length} matching record${matchingRows.length === 1 ? "" : "s"}. Press Esc to clear.</p>`
+          : "No matching records.";
+      };
+
+      input.addEventListener("input", runSearch);
+      input.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") return;
+        input.value = "";
+        runSearch();
+        input.blur();
+      });
+      status.addEventListener("click", (event) => {
+        const rowButton = event.target.closest("[data-search-row]");
+        const pageButton = event.target.closest("[data-search-page]");
+        if (rowButton) {
+          const row = document.querySelectorAll("tbody tr")[Number(rowButton.dataset.searchRow)];
+          if (row) { row.scrollIntoView({ behavior: "smooth", block: "center" }); row.style.outline = "2px solid #036469"; setTimeout(() => { row.style.outline = ""; }, 1500); }
+        }
+        if (pageButton) window.location.href = getPortalUrl(pageButton.dataset.searchPage);
+      });
+      status.addEventListener("mousedown", (event) => event.preventDefault());
+    });
+  }
+
   // DOM Enhancements (run after DOM is ready)
   document.addEventListener("DOMContentLoaded", function () {
     if (!auth) return;
     const { user, role, allowedPages } = auth;
+
+    installNotificationBell();
+    installProfilePhotoEditor(user);
+    installLogoutDialog();
+    installPageSearch(allowedPages);
 
     // 1. Update Header Profile Info — covers most page header layouts
     const profileNameEls = document.querySelectorAll(
@@ -174,34 +387,13 @@
     });
 
     // 3. Attach logout handlers for any button with id logoutBtnDesktop/Mobile
-    function handleLogout(e) {
-      if (e) e.preventDefault();
-      if (confirm("Are you sure you want to log out of addyPets Portal?")) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        window.location.href = getLoginUrl();
-      }
-    }
-
-    const logoutDesktop = document.getElementById("logoutBtnDesktop");
-    const logoutMobile = document.getElementById("logoutBtnMobile");
-    if (logoutDesktop) logoutDesktop.onclick = handleLogout;
-    if (logoutMobile) logoutMobile.onclick = handleLogout;
-
-    // Also wire up any element with data-logout attribute
-    document.querySelectorAll("[data-logout]").forEach((btn) => {
-      btn.onclick = handleLogout;
-    });
-
-    // Expose global logout for inline onclick handlers
-    window.logout = handleLogout;
   });
 
   // -------------------------------------------------------
   // Global authenticated fetch helper
   // Usage: const data = await apiFetch('/api/appointments');
   // -------------------------------------------------------
-  window.apiFetch = async function apiFetch(url, options = {}) {
+  window.portalApiFetch = async function portalApiFetch(url, options = {}) {
     const token = localStorage.getItem("token");
     const headers = {
       "Content-Type": "application/json",

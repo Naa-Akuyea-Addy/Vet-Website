@@ -513,6 +513,30 @@
         return ROLE_REDIRECT_MAP[role] || '/admin_portal_vet_website/Dashboard.html';
       }
 
+      // The Node server owns both the login page and the admin portal. When
+      // this file is opened with file:// or a separate Live Server port,
+      // localStorage belongs to that other origin and the portal cannot see
+      // the authenticated session. Move local development to the Node server
+      // before a login can be submitted.
+      function getApplicationOrigin() {
+        const isLocalHost = ["localhost", "127.0.0.1"].includes(
+          window.location.hostname,
+        );
+        if (window.location.protocol === "file:" || isLocalHost) {
+          return "http://localhost:3000";
+        }
+        return window.location.origin;
+      }
+
+      function useApplicationOrigin() {
+        const applicationOrigin = getApplicationOrigin();
+        if (window.location.origin !== applicationOrigin) {
+          window.location.replace(applicationOrigin + "/vet_portal_login.html");
+          return false;
+        }
+        return true;
+      }
+
       function toggleTab(type) {
         const loginForm = document.getElementById("login-form");
         const tabLogin = document.getElementById("tab-login");
@@ -528,6 +552,7 @@
       }
 
       document.addEventListener("DOMContentLoaded", () => {
+        if (!useApplicationOrigin()) return;
         const loginForm = document.getElementById("login-form");
 
         const emailRegex =
@@ -721,10 +746,9 @@
         loginBtn.textContent = "Signing in...";
         loginBtn.disabled = true;
 
-        const loginUrl =
-          window.location.protocol === "file:" || (window.location.port && window.location.port !== "3000")
-            ? "http://localhost:3000/login"
-            : "/login";
+        // Keep authentication and the admin portal on the same origin. The
+        // former port check could save a session under a different origin.
+        const loginUrl = "/login";
 
         try {
           const res = await fetch(loginUrl, {

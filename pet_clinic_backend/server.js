@@ -22,6 +22,7 @@ const reportRoutes = require("./src/routes/reportRoutes");
 const settingsRoutes = require("./src/routes/settingsRoutes");
 const adminRoutes = require("./src/routes/adminRoutes");
 const dashboardRoutes = require("./src/routes/dashboardRoutes");
+const notificationRoutes = require("./src/routes/notificationRoutes");
 const authController = require("./src/controllers/authController");
 const { checkConnection } = require("./src/config/database");
 
@@ -37,7 +38,8 @@ app.use(cookieParser());
 app.use("/node_modules", express.static("node_modules"));
 
 app.use(cors());
-app.use(express.json());
+// Profile photos are sent as small base64 payloads; Express defaults to 100 KB.
+app.use(express.json({ limit: "4mb" }));
 
 // Modular API used by the admin panel. Legacy public endpoints remain below.
 app.use("/api/auth", authRoutes);
@@ -51,6 +53,7 @@ app.use("/api/reports", reportRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 app.get("/api/health", async (req, res, next) => {
   try {
@@ -142,6 +145,8 @@ app.post("/book-appointment", async (req, res) => {
 
 // Login route (uses authController with roles and permissions)
 app.post("/login", authController.login);
+app.post("/forgot-password", authController.requestPasswordReset);
+app.post("/reset-password", authController.resetPassword);
 
 // app.post("/register", async (req, res) => {
 //   let connection;

@@ -340,7 +340,7 @@
         <img
           alt="Logo"
           class="w-8 h-8 rounded-full object-cover"
-          src="../../public/logo.png"
+          src="/logo.png"
         />
         <h1 class="font-bold text-primary-fixed text-sm">addyPets</h1>
       </div>
@@ -365,7 +365,7 @@
           <img
             alt="Logo"
             class="w-10 h-10 rounded-full object-cover"
-            src="../../public/logo.png"
+            src="/logo.png"
           />
           <div>
             <h1 class="font-bold text-primary-fixed">addyPets</h1>
@@ -508,7 +508,7 @@
           <img
             alt="Logo"
             class="w-10 h-10 rounded-full object-cover shrink-0 sidebar-logo cursor-pointer"
-            src="../../public/logo.png"
+            src="/logo.png"
             onclick="window.location.href='./Dashboard.html'"
           />
           <div class="sidebar-logo-text whitespace-nowrap overflow-hidden">
@@ -751,7 +751,7 @@
                       <span class="text-secondary font-label-md text-label-md">+12% vs last week</span>
                   </div>
                   <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Today's Appts</h3>
-                  <p class="font-display-lg text-display-lg text-on-surface mt-1">24</p>
+                  <p class="font-display-lg text-display-lg text-on-surface mt-1">0</p>
               </div>
               <div class="bg-white p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
                   <div class="flex items-center justify-between mb-4">
@@ -761,7 +761,7 @@
                       <span class="text-primary font-label-md text-label-md">Next 7 days</span>
                   </div>
                   <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Upcoming</h3>
-                  <p class="font-display-lg text-display-lg text-on-surface mt-1">158</p>
+                  <p class="font-display-lg text-display-lg text-on-surface mt-1">0</p>
               </div>
               <div class="bg-white p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
                   <div class="flex items-center justify-between mb-4">
@@ -771,7 +771,7 @@
                       <span class="text-on-surface-variant font-label-md text-label-md">Total active</span>
                   </div>
                   <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Total Patients</h3>
-                  <p class="font-display-lg text-display-lg text-on-surface mt-1">1,240</p>
+                  <p class="font-display-lg text-display-lg text-on-surface mt-1">0</p>
               </div>
               <div class="bg-white p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
                   <div class="flex items-center justify-between mb-4">
@@ -781,7 +781,7 @@
                       <span class="text-primary font-label-md text-label-md">This Month</span>
                   </div>
                   <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Revenue</h3>
-                  <p class="font-display-lg text-display-lg text-on-surface mt-1">₵42.5k</p>
+                  <p class="font-display-lg text-display-lg text-on-surface mt-1">₵0</p>
               </div>
           </section>
 
@@ -1262,11 +1262,11 @@
           appointmentsChart = new Chart(appointmentsCtx, {
             type: "line",
             data: {
-              labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+              labels: [],
               datasets: [
                 {
                   label: "Appointments",
-                  data: [12, 18, 16, 24, 21, 28, 23],
+                  data: [],
                   borderColor: "#036469",
                   backgroundColor: "rgba(3, 100, 105, 0.1)",
                   tension: 0.4,
@@ -1291,11 +1291,11 @@
           revenueChart = new Chart(revenueCtx, {
             type: "bar",
             data: {
-              labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+              labels: [],
               datasets: [
                 {
                   label: "Revenue (GH₵)",
-                  data: [12500, 14800, 16200, 18900, 21400, 25800],
+                  data: [],
                   backgroundColor: "#00696d",
                   borderRadius: window.innerWidth < 768 ? 4 : 8,
                 },
@@ -1317,10 +1317,10 @@
           servicesChart = new Chart(servicesCtx, {
             type: "doughnut",
             data: {
-              labels: ["Vaccinations", "Dental Care", "Surgery", "Emergency"],
+              labels: [],
               datasets: [
                 {
-                  data: [45, 28, 15, 12],
+                  data: [],
                   backgroundColor: ["#036469", "#00696d", "#2e7d82", "#943031"],
                   borderWidth: 0,
                   cutout: window.innerWidth < 768 ? "50%" : "60%",
@@ -1347,27 +1347,18 @@
           patientsChart = new Chart(patientsCtx, {
             type: "line",
             data: {
-              labels: [
-                "Week 1",
-                "Week 2",
-                "Week 3",
-                "Week 4",
-                "Week 5",
-                "Week 6",
-                "Week 7",
-                "Week 8",
-              ],
+              labels: [],
               datasets: [
                 {
                   label: "New Patients",
-                  data: [12, 19, 15, 24, 28, 32, 38, 42],
+                  data: [],
                   borderColor: "#036469",
                   tension: 0.4,
                   pointRadius: window.innerWidth < 768 ? 3 : 4,
                 },
                 {
                   label: "Returning Patients",
-                  data: [45, 52, 48, 61, 58, 72, 68, 85],
+                  data: [],
                   borderColor: "#00696d",
                   tension: 0.4,
                   pointRadius: window.innerWidth < 768 ? 3 : 4,
@@ -1445,26 +1436,29 @@ async function apiFetch(endpoint, options = {}) {
         'Content-Type': 'application/json',
         ...options.headers
     };
-    
+
+    // attach token if available
+    let authToken = localStorage.getItem('token');
     if (authToken) {
-        headers['Authorization'] = `Bearer ${authToken}`;
+        // use Bearer token header; leave the client-side interpolation to the page runtime
+        headers["Authorization"] = "Bearer " + authToken;
     }
-    
+
     const response = await fetch(`${API_URL}${endpoint}`, {
         ...options,
         headers
     });
-    
-    const data = await response.json();
-    
-    if (!response.ok) {
-        throw new Error(data.error || 'API request failed');
-    }
-    
-    return data;
-}
 
-// ============= LOAD DASHBOARD DATA =============
+    // Prefer JSON but be robust
+    let data;
+    try { data = await response.json(); } catch (e) { data = null; }
+
+    if (!response.ok) {
+        throw new Error((data && data.error) ? data.error : 'API request failed');
+    }
+
+    return data;
+}// ============= LOAD DASHBOARD DATA =============
 async function loadDashboardData() {
     try {
         showLoading(true);
@@ -1705,7 +1699,9 @@ async function login(email, password) {
 function checkAuth() {
     const token = localStorage.getItem('token');
     if (!token) {
-        window.location.href = 'vet_portal_login.html';
+        window.location.href = window.location.protocol === 'file:'
+            ? '../public/vet_portal_login.html'
+            : '/vet_portal_login.html';
         return false;
     }
     return true;
@@ -1731,3 +1727,5 @@ window.showToast = showToast;
     </script>
   </body>
 </html>
+
+

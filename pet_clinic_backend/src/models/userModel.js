@@ -8,12 +8,55 @@ const { withConnection } = require("../config/database");
 async function findByEmail(email) {
   return withConnection(async (connection) => {
     const result = await connection.execute(
-      "SELECT USER_ID, EMAIL, PASSWORD_HASH, FULL_NAME, ROLE, PHONE, LICENSE_NUMBER, NVL(STATUS, 'Active') AS STATUS FROM USERS WHERE LOWER(EMAIL) = LOWER(:email)",
+      "SELECT USER_ID, EMAIL, PASSWORD_HASH, FULL_NAME, ROLE, PHONE, LICENSE_NUMBER, PROFILE_IMAGE, NVL(STATUS, 'Active') AS STATUS FROM USERS WHERE LOWER(EMAIL) = LOWER(:email)",
       { email: (email || "").trim() },
       { outFormat: oracledb.OUT_FORMAT_OBJECT },
     );
     return result.rows[0] || null;
   });
+}
+
+async function savePasswordResetToken(email, tokenHash) {
+  return withConnection((connection) =>
+    connection.execute(
+      `UPDATE USERS
+       SET PASSWORD_RESET_TOKEN_HASH = :tokenHash,
+           PASSWORD_RESET_EXPIRES_AT = SYSTIMESTAMP + INTERVAL '30' MINUTE
+       WHERE LOWER(EMAIL) = LOWER(:email)`,
+      { email: (email || "").trim(), tokenHash },
+      { autoCommit: true },
+    ),
+  );
+}
+
+async function resetPassword(tokenHash, passwordHash) {
+  return withConnection((connection) =>
+    connection.execute(
+      `UPDATE USERS
+       SET PASSWORD_HASH = :passwordHash,
+           PASSWORD_RESET_TOKEN_HASH = NULL,
+           PASSWORD_RESET_EXPIRES_AT = NULL,
+           UPDATED_AT = SYSTIMESTAMP
+       WHERE PASSWORD_RESET_TOKEN_HASH = :tokenHash
+         AND PASSWORD_RESET_EXPIRES_AT > SYSTIMESTAMP`,
+      { tokenHash, passwordHash },
+      { autoCommit: true },
+    ),
+  );
+}
+
+async function updateProfileImage(userId, profileImage) {
+  return withConnection((connection) => connection.execute(
+    "UPDATE USERS SET PROFILE_IMAGE = :profileImage, UPDATED_AT = SYSTIMESTAMP WHERE USER_ID = :userId",
+    { userId, profileImage }, { autoCommit: true },
+  ));
+}
+
+async function updatePasswordHash(userId, passwordHash) {
+  return withConnection((connection) => connection.execute(
+    "UPDATE USERS SET PASSWORD_HASH = :passwordHash, UPDATED_AT = SYSTIMESTAMP WHERE USER_ID = :userId",
+    { userId, passwordHash }, { autoCommit: true },
+  ));
 }
 
 async function list() {
@@ -107,6 +150,10 @@ async function remove(id) {
 
 module.exports = {
   findByEmail,
+  savePasswordResetToken,
+  resetPassword,
+  updateProfileImage,
+  updatePasswordHash,
   list,
   create,
   updateRole,
