@@ -1968,6 +1968,20 @@
                 required
               />
             </div>
+            <!-- Patient selector (populated by openNewTransaction) -->
+            <div id="txnPatientContainer" style="display:none">
+              <label class="input-label">Select Patient</label>
+              <select id="txnPatient" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+                <option value="">-- Select patient --</option>
+              </select>
+            </div>
+            <!-- Appointment selector (populated by openNewTransaction) -->
+            <div id="txnAppointmentContainer" style="display:none">
+              <label class="input-label">Select Appointment</label>
+              <select id="txnAppointment" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+                <option value="">-- Select appointment --</option>
+              </select>
+            </div>
             <div>
               <label class="input-label">Quantity</label
               ><input
@@ -3230,21 +3244,44 @@
           ?.classList.remove("open");
       }
 
-      function deleteBillingTransaction(id) {
-        if (!confirm(`Delete ${id}?`)) return;
+      async function deleteBillingTransaction(id) {
         const data = getBillingTabData();
         const idx = data.findIndex((i) => i.id === id);
         if (idx === -1) return showToast("Not found", "error");
-        data.splice(idx, 1);
-        renderBillingTable();
-        showToast(`🗑️ ${id} deleted`, "info");
+
+        const item = data[idx];
+        if (!confirm(`Delete ${id}?\n\nThis permanently removes the billing record from the database and cannot be undone.`)) return;
+
+        // A record created while offline has no database identifier, so it can
+        // only be removed from this browser session.
+        if (!item.billing_id) {
+          return showToast("This row was not saved to the database, so there is no database record to delete.", "warning");
+        }
+
+        try {
+          const fetcher = window.portalApiFetch || window.fetch;
+          const response = await fetcher(`/api/billing/${item.billing_id}`, {
+            method: "DELETE",
+          });
+          const payload = await response.json().catch(() => ({}));
+          if (!response.ok) {
+            throw new Error(payload.message || "The database could not delete this billing record.");
+          }
+
+          data.splice(idx, 1);
+          renderBillingTable();
+          showToast(`🗑️ ${id} deleted from the database`, "info");
+        } catch (error) {
+          console.error("Billing delete failed", error);
+          showToast(error.message || "Unable to delete the billing record.", "error");
+        }
         document
           .getElementById(`billing-dropdown-${id}`)
           ?.classList.remove("open");
       }
 
       // ===== TRANSACTION MODAL (UPDATED with Mortuary) =====
-      function openNewTransaction() {
+      async function openNewTransaction() {
         document.getElementById("transactionModal").classList.add("open");
         document.body.style.overflow = "hidden";
         document.getElementById("txnDate").value = new Date()
@@ -3253,6 +3290,54 @@
         document.getElementById("txnItem").focus();
         // Set default type to current tab
         document.getElementById("txnType").value = billingCurrentTab;
+
+        // Populate patient and appointment selectors for admin convenience
+        try {
+          const token = localStorage.getItem('token');
+          const headers = { 'Content-Type': 'application/json' };
+          if (token) headers['Authorization'] = 'Bearer ' + token;
+
+          const [pResp, aResp] = await Promise.all([
+            fetch('/api/patients', { headers }),
+            fetch('/api/appointments', { headers }),
+          ]);
+
+          const pJson = pResp.ok ? await pResp.json() : null;
+          const aJson = aResp.ok ? await aResp.json() : null;
+
+          const patientSelect = document.getElementById('txnPatient');
+          const appointmentSelect = document.getElementById('txnAppointment');
+
+          if (patientSelect && pJson && pJson.data) {
+            // clear existing options
+            patientSelect.innerHTML = '<option value="">Select patient (optional)</option>';
+            pJson.data.forEach(p => {
+              const opt = document.createElement('option');
+              opt.value = p.PATIENT_ID || p.ID || '';
+              opt.textContent = `${p.PET_NAME || p.PATIENT_NAME || p.OWNER_NAME || p.FULL_NAME || ''} (${p.OWNER_NAME || p.PHONE || ''})`;
+              patientSelect.appendChild(opt);
+            });
+            // show container if we have at least one patient
+            const patientContainer = document.getElementById('txnPatientContainer');
+            if (patientContainer && patientSelect.options.length > 1) patientContainer.style.display = '';
+            else if (patientContainer) patientContainer.style.display = 'none';
+          }
+
+          if (appointmentSelect && aJson && aJson.data) {
+            appointmentSelect.innerHTML = '<option value="">Select appointment (optional)</option>';
+            aJson.data.forEach(a => {
+              const opt = document.createElement('option');
+              opt.value = a.APPOINTMENT_ID || a.id || '';
+              opt.textContent = `${a.PET_NAME || a.patient || ''} — ${a.SERVICE || a.service || ''} — ${a.APPOINTMENT_TIME || a.time || a.date || ''}`;
+              appointmentSelect.appendChild(opt);
+            });
+            const apptContainer = document.getElementById('txnAppointmentContainer');
+            if (apptContainer && appointmentSelect.options.length > 1) apptContainer.style.display = '';
+            else if (apptContainer) apptContainer.style.display = 'none';
+          }
+        } catch (err) {
+          console.error('Unable to populate patient/appointment selectors', err);
+        }
       }
 
       function closeTransactionModal() {
@@ -3260,7 +3345,7 @@
         document.body.style.overflow = "";
       }
 
-      function submitTransaction(e) {
+      async function submitTransaction(e) {
         e.preventDefault();
         const type = document.getElementById("txnType").value;
         const item = document.getElementById("txnItem").value.trim();
@@ -3276,8 +3361,27 @@
         }
         const total = qty * price;
 
+        // Attempt to extract patient_id and appointment_id from notes (if provided)
+        const pidMatch = notes.match(/PatientID:\s*(\d+)/i);
+        const aidMatch = notes.match(/AppointmentID:\s*(\d+)/i);
+        // Prefer explicit selectors if available
+        const selectedPatient = document.getElementById('txnPatient') ? document.getElementById('txnPatient').value : null;
+        const selectedAppointment = document.getElementById('txnAppointment') ? document.getElementById('txnAppointment').value : null;
+        const patient_id = selectedPatient || (pidMatch ? pidMatch[1] : null);
+        const appointment_id = selectedAppointment || (aidMatch ? aidMatch[1] : null);
+
+        // Prepare payload for server
+        const payload = {
+          patient_id,
+          appointment_id,
+          amount: total,
+          description: item,
+          payment_method: 'Cash',
+          status,
+        };
+
         if (type === "mortuary") {
-          // For mortuary, create a detailed entry
+          // For mortuary, keep client-side extended fields but still attempt to persist
           const prefix = "MOR-B";
           const existing = billingData.mortuary || [];
           const ids = existing.map((i) => parseInt(i.id.split("-")[2]) || 0);
@@ -3305,44 +3409,128 @@
           const storageFee = storageDays * 15;
           const dispositionFee = price - baseFee - storageFee;
 
-          billingData.mortuary.push({
-            id: newId,
-            patient: patientName,
-            owner: notes.includes("Owner:")
-              ? notes.split("Owner:")[1].split(",")[0].trim()
-              : "Unknown Owner",
-            species: species,
-            disposition: notes.includes("Disposition:")
-              ? notes.split("Disposition:")[1].split(",")[0].trim()
-              : "Private Cremation",
-            qty: 1,
-            unitPrice: price,
-            total: price,
-            status: status,
-            date: date || new Date().toISOString().slice(0, 10),
-            notes: notes || "",
-            storageDays: storageDays,
-            baseFee: baseFee,
-            storageFee: storageFee,
-            dispositionFee: dispositionFee,
-            necropsyFee: disposition === "Necropsy" ? 220 : 0,
-          });
+          // Persist to server if possible
+          try {
+            const resp = await fetch('/api/billing', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+            });
+            const result = await resp.json();
+            const billingId = result && result.billing_id ? result.billing_id : null;
+
+            billingData.mortuary.push({
+              id: billingId || newId,
+              patient: patientName,
+              owner: notes.includes("Owner:")
+                ? notes.split("Owner:")[1].split(",")[0].trim()
+                : "Unknown Owner",
+              species: species,
+              disposition: notes.includes("Disposition:")
+                ? notes.split("Disposition:")[1].split(",")[0].trim()
+                : "Private Cremation",
+              qty: 1,
+              unitPrice: price,
+              total: price,
+              status: status,
+              date: date || new Date().toISOString().slice(0, 10),
+              notes: notes || "",
+              storageDays: storageDays,
+              baseFee: baseFee,
+              storageFee: storageFee,
+              dispositionFee: dispositionFee,
+              necropsyFee: disposition === "Necropsy" ? 220 : 0,
+              patient_id,
+              appointment_id,
+              billing_id: billingId,
+            });
+          } catch (err) {
+            console.error('Billing save failed', err);
+            // Fallback to client-only storage
+            billingData.mortuary.push({
+              id: newId,
+              patient: patientName,
+              owner: notes.includes("Owner:")
+                ? notes.split("Owner:")[1].split(",")[0].trim()
+                : "Unknown Owner",
+              species: species,
+              disposition: notes.includes("Disposition:")
+                ? notes.split("Disposition:")[1].split(",")[0].trim()
+                : "Private Cremation",
+              qty: 1,
+              unitPrice: price,
+              total: price,
+              status: status,
+              date: date || new Date().toISOString().slice(0, 10),
+              notes: notes || "",
+              storageDays: storageDays,
+              baseFee: baseFee,
+              storageFee: storageFee,
+              dispositionFee: dispositionFee,
+              necropsyFee: disposition === "Necropsy" ? 220 : 0,
+            });
+          }
         } else {
           const prefix = type === "medication" ? "MED" : "INV";
           const existing = billingData[type] || [];
-          const ids = existing.map((i) => parseInt(i.id.split("-")[1]) || 0);
-          const nextId = Math.max(0, ...ids) + 1;
-          const newId = `${prefix}-${String(nextId).padStart(3, "0")}`;
-          billingData[type].push({
-            id: newId,
-            item,
-            qty,
-            unitPrice: price,
-            total,
-            status,
-            date: date || new Date().toISOString().slice(0, 10),
-            notes: notes || "",
+          const ids = existing.map((i) => {
+            const parts = (i.id || '').split('-');
+            // try to pick numeric fragment if present
+            return parseInt(parts[parts.length-1]) || 0;
           });
+          const nextId = Math.max(0, ...ids) + 1;
+          const sequentialId = `${String(nextId).padStart(3, "0")}`;
+
+          try {
+            const resp = await fetch('/api/billing', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+            });
+            const result = await resp.json();
+            const billingId = result && result.billing_id ? result.billing_id : null;
+
+            // Build display ID: start with MED-/INV- and include patient id when available
+            let displayId;
+            if (type === 'medication') {
+              if (patient_id) displayId = `MED-${patient_id}${billingId ? `-${billingId}` : `-${sequentialId}`}`;
+              else if (billingId) displayId = `MED-${billingId}`;
+              else displayId = `MED-${sequentialId}`;
+            } else {
+              // inventory
+              if (patient_id) displayId = `INV-${patient_id}${billingId ? `-${billingId}` : `-${sequentialId}`}`;
+              else if (billingId) displayId = `INV-${billingId}`;
+              else displayId = `INV-${sequentialId}`;
+            }
+
+            billingData[type].push({
+              id: displayId,
+              item,
+              qty,
+              unitPrice: price,
+              total,
+              status,
+              date: date || new Date().toISOString().slice(0, 10),
+              notes: notes || "",
+              patient_id,
+              appointment_id,
+              billing_id: billingId,
+            });
+          } catch (err) {
+            console.error('Billing save failed', err);
+            // Fallback to client-only storage - still use MED/INV prefix but include sequential part
+            const fallbackId = `${prefix}-${sequentialId}`;
+            billingData[type].push({
+              id: fallbackId,
+              item,
+              qty,
+              unitPrice: price,
+              total,
+              status,
+              date: date || new Date().toISOString().slice(0, 10),
+              notes: notes || "",
+            });
+          }
         }
 
         closeTransactionModal();
@@ -3464,10 +3652,60 @@
       });
 
       // ===== INIT =====
-      document.addEventListener("DOMContentLoaded", function () {
+      async function loadBillingFromServer() {
+        try {
+          const token = localStorage.getItem('token');
+          const headers = { 'Content-Type': 'application/json' };
+          if (token) headers['Authorization'] = 'Bearer ' + token;
+
+          const resp = await fetch('/api/billing', { headers });
+          if (!resp.ok) return;
+          const json = await resp.json();
+          if (!json || !json.data) return;
+          // clear existing client data and populate from server
+          billingData = { medication: [], inventory: [], mortuary: [] };
+          json.data.forEach(r => {
+            // Construct a display ID that starts with MED- and includes patient id when available
+            const billingId = r.BILLING_ID || r.billing_id || r.BillingId || null;
+            const patientId = r.PATIENT_ID || r.patient_id || r.PATIENT || null;
+            // Prefer server-provided type/category if available
+            const typeRaw = (r.TYPE || r.type || r.CATEGORY || r.category || '').toString().toLowerCase();
+            let bucket = 'medication';
+            if (typeRaw.includes('inventory') || typeRaw.includes('inv')) bucket = 'inventory';
+            if (typeRaw.includes('mort') || typeRaw.includes('mortuary')) bucket = 'mortuary';
+
+            let displayId = null;
+            if (patientId) displayId = `MED-${patientId}${billingId ? `-${billingId}` : ''}`;
+            else if (billingId) displayId = `MED-${billingId}`;
+            else displayId = `MED-UNK-${Math.floor(Math.random()*900)+100}`;
+
+            const entry = {
+              id: displayId,
+              item: r.DESCRIPTION || r.description || 'Service',
+              qty: r.QUANTITY || r.quantity || 1,
+              unitPrice: Number(r.AMOUNT || r.amount || 0),
+              total: Number(r.AMOUNT || r.amount || 0),
+              status: r.STATUS || r.status || 'Paid',
+              date: r.ISSUED_AT || r.issued_at || new Date().toISOString().slice(0,10),
+              notes: r.NOTES || r.notes || '',
+              patient_id: patientId,
+              appointment_id: r.APPOINTMENT_ID || r.appointment_id || null,
+              billing_id: billingId,
+            };
+
+            billingData[bucket].push(entry);
+          });
+        } catch (err) {
+          console.error('Unable to load billing from server', err);
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", async function () {
         renderTable();
         generateMonths();
         updateDashboardStats();
+        // Load persisted billing transactions from server so they survive page reloads
+        await loadBillingFromServer();
         renderBillingTable();
         document.body.setAttribute("data-page", "billing");
         highlightBillingPage();

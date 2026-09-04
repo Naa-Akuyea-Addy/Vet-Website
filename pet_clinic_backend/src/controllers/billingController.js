@@ -11,8 +11,8 @@ async function list(req, res, next) {
 
 async function create(req, res, next) {
   try {
-    await model.create(req.body);
-    res.status(201).json({ success: true, message: "Invoice created successfully" });
+    const billingId = await model.create(req.body);
+    res.status(201).json({ success: true, message: "Invoice created successfully", billing_id: billingId });
   } catch (error) {
     next(error);
   }
@@ -32,7 +32,10 @@ async function updateStatus(req, res, next) {
 async function remove(req, res, next) {
   try {
     const { id } = req.params;
-    await model.remove(id);
+    const result = await model.remove(id);
+    if (!result.rowsAffected) {
+      return res.status(404).json({ success: false, message: "Billing record not found" });
+    }
     res.json({ success: true, message: "Invoice deleted" });
   } catch (error) {
     next(error);

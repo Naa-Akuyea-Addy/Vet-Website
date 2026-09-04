@@ -23,8 +23,12 @@ const settingsRoutes = require("./src/routes/settingsRoutes");
 const adminRoutes = require("./src/routes/adminRoutes");
 const dashboardRoutes = require("./src/routes/dashboardRoutes");
 const notificationRoutes = require("./src/routes/notificationRoutes");
+const vetRoutes = require("./src/routes/vetRoutes");
+const doctorAvailabilityRoutes = require("./src/routes/doctorAvailabilityRoutes");
+const recurringBlockRoutes = require("./src/routes/recurringBlockRoutes");
 const authController = require("./src/controllers/authController");
 const { checkConnection } = require("./src/config/database");
+const { startRetentionSchedule } = require("./src/services/retentionService");
 
 const publicDirectory = fs.existsSync(path.join(__dirname, "public"))
   ? path.join(__dirname, "public")
@@ -54,6 +58,9 @@ app.use("/api/settings", settingsRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/notifications", notificationRoutes);
+app.use("/api/vets", vetRoutes);
+app.use("/api/doctor-availability", doctorAvailabilityRoutes);
+app.use("/api/recurring-blocks", recurringBlockRoutes);
 
 app.get("/api/health", async (req, res, next) => {
   try {
@@ -99,19 +106,74 @@ app.post("/book-appointment", async (req, res) => {
     visit_reason,
     service,
     appointment_time,
+    veterinarian_id
   } = req.body;
 
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig);
 
-    await connection.execute(
-      `INSERT INTO appointments
-            (pet_name, pet_species, pet_age, owner_name, owner_phone, visit_reason, service, appointment_time)
-            VALUES (:pet_name, :pet_species, :pet_age, :owner_name, :owner_phone, :visit_reason, :service,
-              :appointment_time)`,
+    // Assignment is made on the server so a client cannot choose or spoof a
+    // veterinarian. The least-busy active vet is selected from STAFF and
+    // matched to its portal account in USERS.
+    const vetResult = await connection.execute(
+      `SELECT USER_ID
+       FROM (
+         SELECT u.USER_ID, COUNT(a.APPOINTMENT_ID) AS ACTIVE_APPOINTMENTS
+         FROM STAFF s
+         JOIN USERS u ON (s.USER_ID = u.USER_ID OR LOWER(s.EMAIL) = LOWER(u.EMAIL))
+         LEFT JOIN APPOINTMENTS a
+           ON a.VETERINARIAN_ID = u.USER_ID
+          AND a.STATUS IN ('Pending', 'Confirmed')
+         WHERE LOWER(NVL(s.STATUS, 'Active')) = 'active'
+           AND LOWER(NVL(u.STATUS, 'Active')) = 'active'
+           AND (LOWER(NVL(s.JOB_TITLE, '')) LIKE '%vet%'
+             OR LOWER(NVL(s.JOB_TITLE, '')) LIKE '%surgeon%'
+             OR LOWER(NVL(s.DEPARTMENT, '')) LIKE '%veterinary%'
+             OR LOWER(NVL(s.DEPARTMENT, '')) LIKE '%clinical%')
+         GROUP BY u.USER_ID
+         ORDER BY ACTIVE_APPOINTMENTS ASC, u.USER_ID ASC
+       ) WHERE ROWNUM = 1`,
+      [],
+      { outFormat: oracledb.OUT_FORMAT_OBJECT },
+    );
+    const assignedVeterinarianId = vetResult.rows?.[0]?.USER_ID || null;
 
+    // 1) Create or find a patient record. For simplicity, insert a new patient for each booking.
+    const patientSql = `
+      INSERT INTO patients (owner_name, owner_phone, pet_name, pet_species, pet_age)
+      VALUES (:owner_name, :owner_phone, :pet_name, :pet_species, :pet_age)
+      RETURNING patient_id INTO :patient_id
+    `;
+
+    const patientResult = await connection.execute(
+      patientSql,
       {
+        owner_name,
+        owner_phone,
+        pet_name,
+        pet_species,
+        pet_age,
+        patient_id: { dir: oracledb.BIND_OUT, type: oracledb.NUMBER },
+      },
+      { autoCommit: false },
+    );
+
+    const patient_id = patientResult.outBinds.patient_id
+      ? patientResult.outBinds.patient_id[0]
+      : null;
+
+    // 2) Insert appointment linked to the patient
+    const appointmentSql = `
+      INSERT INTO appointments (patient_id, pet_name, pet_species, pet_age, owner_name, owner_phone, visit_reason, service, appointment_time, veterinarian_id)
+      VALUES (:patient_id, :pet_name, :pet_species, :pet_age, :owner_name, :owner_phone, :visit_reason, :service, :appointment_time, :veterinarian_id)
+      RETURNING appointment_id INTO :appointment_id
+    `;
+
+    const appointmentResult = await connection.execute(
+      appointmentSql,
+      {
+        patient_id,
         pet_name,
         pet_species,
         pet_age,
@@ -120,17 +182,35 @@ app.post("/book-appointment", async (req, res) => {
         visit_reason,
         service,
         appointment_time,
+        veterinarian_id: assignedVeterinarianId,
+        appointment_id: { dir: oracledb.BIND_OUT, type: oracledb.NUMBER },
       },
-
       { autoCommit: true },
     );
+
+    const appointment_id = appointmentResult.outBinds.appointment_id
+      ? appointmentResult.outBinds.appointment_id[0]
+      : null;
 
     res.json({
       success: true,
       message: "Appointment booked successfully",
+      appointment_id,
+      patient_id,
+      veterinarian_id: assignedVeterinarianId,
+      message: assignedVeterinarianId
+        ? "Appointment booked and veterinarian assigned"
+        : "Appointment booked, but no eligible veterinarian is available",
     });
   } catch (err) {
     console.error(err);
+
+    // If there was a DB error, attempt to rollback any partial work
+    try {
+      if (connection) await connection.rollback();
+    } catch (e) {
+      console.error('Rollback failed', e);
+    }
 
     res.status(500).json({
       success: false,
@@ -275,4 +355,5 @@ app.use(errorHandler);
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");
+  startRetentionSchedule();
 });

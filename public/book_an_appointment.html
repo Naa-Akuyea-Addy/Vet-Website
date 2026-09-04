@@ -738,6 +738,13 @@
                 We've sent a confirmation email to you. We look forward to
                 seeing you and your pet at addyPets' veterinary clinic.
               </p>
+
+              <!-- Booking identifiers returned by server -->
+              <p id="booking-ids" class="text-caption text-on-surface-variant">
+                Appointment ID: <span id="booking-appointment-id" class="font-label-md"></span>
+                &nbsp;•&nbsp;
+                Patient ID: <span id="booking-patient-id" class="font-label-md"></span>
+              </p>
               <div class="flex gap-4 pt-4">
                 <button
                   class="border-2 border-primary text-primary px-6 py-2 rounded-lg font-label-md hover:bg-primary/5"
@@ -956,6 +963,9 @@
         const btn = document.getElementById("btn-next-1");
         btn.disabled = false;
         btn.classList.remove("opacity-50", "cursor-not-allowed");
+
+        // Populate preferred veterinarian list for this service
+        populateVetOptions(service);
       }
 
       function selectTime(time) {
@@ -1086,6 +1096,7 @@
           visit_reason: document.getElementById("visit_reason").value.trim(),
           service: selectedService,
           appointment_time: selectedTime,
+        veterinarian_id: (document.getElementById('preferred_vet') && document.getElementById('preferred_vet').value) ? document.getElementById('preferred_vet').value : null
         };
 
         try {
@@ -1099,20 +1110,32 @@
             // Also sync with localStorage appointmentsData
             try {
               const existing = JSON.parse(localStorage.getItem("appointmentsData") || "[]");
-              const nextId = "APT-" + String(existing.length + 1).padStart(3, "0");
+              const dbId = (result && result.appointment_id) ? result.appointment_id : ("APT-" + String(existing.length + 1).padStart(3, "0"));
               const timeParts = (selectedTime || "").split(" ");
               existing.unshift({
-                id: nextId,
+                id: dbId,
                 patient: data.pet_name,
                 owner: data.owner_name,
                 type: data.service || "General Checkup",
                 date: timeParts[0] || new Date().toISOString().slice(0, 10),
                 time: timeParts[1] || "09:00",
-                vet: "Dr. Abena Mensah",
+                vet: (result && result.veterinarian) ? result.veterinarian : "TBD",
                 status: "Pending",
-                notes: data.visit_reason || ""
+                notes: data.visit_reason || "",
+                patient_id: (result && result.patient_id) ? result.patient_id : null,
+                appointment_id: (result && result.appointment_id) ? result.appointment_id : null
               });
               localStorage.setItem("appointmentsData", JSON.stringify(existing));
+
+              // Show returned IDs in success view
+              if (result && result.appointment_id) {
+                const apptEl = document.getElementById('booking-appointment-id');
+                if (apptEl) apptEl.textContent = result.appointment_id;
+              }
+              if (result && result.patient_id) {
+                const pidEl = document.getElementById('booking-patient-id');
+                if (pidEl) pidEl.textContent = result.patient_id;
+              }
             } catch (e) {}
 
             document.getElementById("step-3").classList.add("hidden");
@@ -1167,6 +1190,47 @@
         }
         attachRealtimeValidation();
         const loginBtn = document.getElementById("login-btn");
+
+        // Populate vet select when a service is chosen
+        async function populateVetOptions(service) {
+          try {
+            if (!service) return;
+            const res = await fetch(`/api/vets?service=${encodeURIComponent(service)}`);
+            const json = await res.json();
+            if (!json || !json.data) return;
+            const vets = json.data;
+            let select = document.getElementById('preferred_vet');
+            if (!select) {
+              // create select near owner_phone field
+              const ownerPhone = document.getElementById('owner_phone');
+              if (ownerPhone && ownerPhone.parentElement) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'mt-3';
+                wrapper.innerHTML = `
+                  <label class="block font-label-md text-on-surface mb-1">Preferred Veterinarian (optional)</label>
+                  <select id="preferred_vet" class="w-full bg-surface border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all">
+                    <option value="">No preference</option>
+                  </select>
+                `;
+                ownerPhone.parentElement.parentElement.appendChild(wrapper);
+                select = document.getElementById('preferred_vet');
+              }
+            }
+
+            if (!select) return;
+            // Clear existing options except first
+            select.querySelectorAll('option:not(:first-child)').forEach(o => o.remove());
+            vets.forEach(v => {
+              const opt = document.createElement('option');
+              opt.value = v.staff_id;
+              opt.textContent = `${v.full_name} ${v.job_title ? '— ' + v.job_title : ''}`;
+              select.appendChild(opt);
+            });
+          } catch (err) {
+            console.error('Unable to load vets', err);
+          }
+        }
+
         if (loginBtn)
           loginBtn.addEventListener(
             "click",

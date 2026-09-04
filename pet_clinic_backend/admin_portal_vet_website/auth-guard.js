@@ -253,6 +253,47 @@
     });
   }
 
+  function renderCurrentProfile(user) {
+    document.querySelectorAll("header p.font-label-md, .user-profile-name, [data-user-name]").forEach((element) => {
+      if (user.name) element.textContent = user.name;
+    });
+    document.querySelectorAll("header p.font-caption, .user-profile-role, [data-user-role]").forEach((element) => {
+      element.textContent = user.role;
+    });
+
+    // Admin pages use a few different Tailwind class combinations for the
+    // name and role. In every layout, however, those two paragraphs share a
+    // container with the profile avatar. Update that pair as the reliable
+    // fallback for pages that do not expose the data-user-* attributes.
+    document.querySelectorAll('img[alt="Profile"], img[data-user-avatar]').forEach((avatar) => {
+      const profileContainer = avatar.parentElement;
+      const textContainer = [...(profileContainer?.children || [])].find(
+        (child) => child !== avatar && child.querySelector && child.querySelector("p"),
+      );
+      const lines = textContainer ? [...textContainer.querySelectorAll("p")] : [];
+      if (lines.length) {
+        if (user.name) lines[0].textContent = user.name;
+        if (user.role && lines.length > 1) lines[lines.length - 1].textContent = user.role;
+      }
+      if (user.profileImage) avatar.src = user.profileImage;
+    });
+  }
+
+  async function refreshCurrentProfile(user) {
+    try {
+      const response = await window.portalApiFetch("/api/auth/profile");
+      if (!response.ok) return;
+      const payload = await response.json();
+      if (!payload || !payload.user) return;
+
+      Object.assign(user, payload.user);
+      localStorage.setItem("user", JSON.stringify(user));
+      renderCurrentProfile(user);
+    } catch (error) {
+      console.warn("Unable to refresh the current user profile:", error);
+    }
+  }
+
   function installLogoutDialog() {
     const dialog = document.createElement("div");
     dialog.hidden = true;
@@ -343,21 +384,10 @@
     installProfilePhotoEditor(user);
     installLogoutDialog();
     installPageSearch(allowedPages);
+    refreshCurrentProfile(user);
 
-    // 1. Update Header Profile Info — covers most page header layouts
-    const profileNameEls = document.querySelectorAll(
-      "header p.font-label-md, .user-profile-name, [data-user-name]"
-    );
-    profileNameEls.forEach((el) => {
-      if (user.name) el.textContent = user.name;
-    });
-
-    const profileRoleEls = document.querySelectorAll(
-      "header p.font-caption, .user-profile-role, [data-user-role]"
-    );
-    profileRoleEls.forEach((el) => {
-      el.textContent = role;
-    });
+    // 1. Update Header Profile Info — covers all admin page header layouts.
+    renderCurrentProfile({ ...user, role });
 
     // 2. Filter Sidebar Links to match role privileges
     const navLinks = document.querySelectorAll("nav a[href], aside a[href]");
@@ -412,4 +442,34 @@
     }
     return response;
   };
+
+  // Provide a compatibility helper named apiFetch for pages that call it.
+  // apiFetch will prefer portalApiFetch (so it includes Authorization when available)
+  // and will return the raw Response object (same shape as fetch). Callers that
+  // want parsed JSON can use the helper apiFetchJson below which safely handles
+  // both Response objects and already-parsed JSON values.
+  window.apiFetch = window.apiFetch || (async function apiFetch(endpoint, options = {}) {
+    try {
+      const fetcher = typeof window.portalApiFetch === "function" ? window.portalApiFetch : fetch;
+      const res = await fetcher(endpoint, options);
+      return res;
+    } catch (err) {
+      // Re-throw so callers can handle network errors as before
+      throw err;
+    }
+  });
+
+  // Convenience helper that returns parsed JSON regardless of whether the
+  // underlying apiFetch returned a Response or a parsed object.
+  window.apiFetchJson = window.apiFetchJson || (async function apiFetchJson(endpoint, options = {}) {
+    const resOrJson = await window.apiFetch(endpoint, options);
+    try {
+      if (resOrJson && typeof resOrJson.json === "function") {
+        return await resOrJson.json();
+      }
+    } catch (e) {
+      // fall through to return whatever we have
+    }
+    return resOrJson;
+  });
 })();

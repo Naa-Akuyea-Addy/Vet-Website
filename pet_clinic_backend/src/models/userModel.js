@@ -16,6 +16,17 @@ async function findByEmail(email) {
   });
 }
 
+async function findPublicById(userId) {
+  return withConnection(async (connection) => {
+    const result = await connection.execute(
+      "SELECT USER_ID, EMAIL, FULL_NAME, ROLE, PHONE, PROFILE_IMAGE, NVL(STATUS, 'Active') AS STATUS FROM USERS WHERE USER_ID = :userId",
+      { userId },
+      { outFormat: oracledb.OUT_FORMAT_OBJECT },
+    );
+    return result.rows[0] || null;
+  });
+}
+
 async function savePasswordResetToken(email, tokenHash) {
   return withConnection((connection) =>
     connection.execute(
@@ -81,7 +92,8 @@ async function create(userData) {
     // 1. Insert into USERS table
     const userRes = await connection.execute(
       `INSERT INTO USERS (EMAIL, PASSWORD_HASH, FULL_NAME, ROLE, LICENSE_NUMBER, PHONE, STATUS, CREATED_AT)
-       VALUES (:email, :passwordHash, :fullName, :role, :licenseNumber, :phone, :status, SYSTIMESTAMP)`,
+       VALUES (:email, :passwordHash, :fullName, :role, :licenseNumber, :phone, :status, SYSTIMESTAMP)
+       RETURNING USER_ID INTO :userId`,
       {
         email: (userData.email || "").trim(),
         passwordHash,
@@ -90,17 +102,20 @@ async function create(userData) {
         licenseNumber: userData.licenseNumber || userData.license_number || "",
         phone: userData.phone || "",
         status,
+        userId: { dir: oracledb.BIND_OUT, type: oracledb.NUMBER },
       },
       { autoCommit: true },
     );
+    const userId = userRes.outBinds?.userId?.[0] || null;
 
     // 2. Also ensure staff member is recorded in STAFF table if not already present
     try {
       await connection.execute(
-        `INSERT INTO STAFF (FULL_NAME, JOB_TITLE, DEPARTMENT, EMAIL, PHONE, STATUS)
-         SELECT :fullName, :jobTitle, :department, :email, :phone, :status FROM DUAL
+        `INSERT INTO STAFF (USER_ID, FULL_NAME, JOB_TITLE, DEPARTMENT, EMAIL, PHONE, STATUS)
+         SELECT :userId, :fullName, :jobTitle, :department, :email, :phone, :status FROM DUAL
          WHERE NOT EXISTS (SELECT 1 FROM STAFF WHERE LOWER(EMAIL) = LOWER(:email))`,
         {
+          userId,
           fullName: userData.fullName || userData.full_name || userData.name || "Clinic Staff",
           jobTitle: role,
           department: userData.department || "Clinical Operations",
@@ -150,6 +165,7 @@ async function remove(id) {
 
 module.exports = {
   findByEmail,
+  findPublicById,
   savePasswordResetToken,
   resetPassword,
   updateProfileImage,

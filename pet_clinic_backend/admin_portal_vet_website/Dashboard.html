@@ -840,10 +840,12 @@
           <section class="bg-white rounded-xl border border-outline-variant shadow-sm overflow-hidden">
               <div class="px-8 py-6 border-b border-outline-variant flex justify-between items-center">
                   <h2 class="font-headline-md text-headline-md text-on-surface">Today's Schedule</h2>
+                  <!-- New Appointment button commented out per request
                   <button id="newAppointmentBtn" class="bg-primary text-white px-6 py-2 rounded-lg font-label-md text-label-md flex items-center gap-2 hover:bg-primary/90 transition-all">
                       <span class="material-symbols-outlined text-[20px]">add</span>
                       New Appointment
                   </button>
+                  -->
               </div>
 
               <!-- Scrollable table container - hidden until button click -->
@@ -856,7 +858,7 @@
                               <th class="px-4 py-4">Vet</th>
                               <th class="px-4 py-4">Time</th>
                               <th class="px-4 py-4">Status</th>
-                              <th class="px-8 py-4 text-right">Action</th>
+                              <!-- Action column removed per request -->
                           </tr>
                       </thead>
                       <tbody class="divide-y divide-outline-variant/30">
@@ -1018,7 +1020,7 @@
                               <th class="px-4 py-4">Vet</th>
                               <th class="px-4 py-4">Time</th>
                               <th class="px-4 py-4">Status</th>
-                              <th class="px-8 py-4 text-right">Action</th>
+                              <!-- Action column removed per request -->
                           </tr>
                       </thead>
                       <tbody class="divide-y divide-outline-variant/30">
@@ -1101,7 +1103,7 @@
               <!-- View All Button -->
               <div id="viewAllButton" class="px-8 py-4 bg-surface-muted border-t border-outline-variant text-center">
                   <button id="viewAllScheduleBtn" class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors">
-                      View All Schedule (18 more)
+                      View All Schedule
                   </button>
               </div>
           </section>
@@ -1359,7 +1361,7 @@
                 {
                   label: "Returning Patients",
                   data: [],
-                  borderColor: "#00696d",
+                  borderColor: "#7c3aed",
                   tension: 0.4,
                   pointRadius: window.innerWidth < 768 ? 3 : 4,
                 },
@@ -1481,34 +1483,66 @@ async function loadDashboardData() {
     } catch (error) {
         console.warn('Backend API fetch error, calculating from local storage:', error);
         
-        // Fallback calculation from local appointments and billing data
+        // Fallback: try retrieving raw data directly from backend endpoints
         try {
-            const localAppts = JSON.parse(localStorage.getItem('appointmentsData') || '[]');
-            const localBilling = JSON.parse(localStorage.getItem('billingData') || '{}');
-            
+            const [aResp, bResp] = await Promise.allSettled([
+                apiFetch('/appointments').catch(() => null),
+                apiFetch('/billing').catch(() => null),
+            ]);
+
+            let appts = [];
+            let billing = { medication: [], inventory: [], mortuary: [] };
+
+            if (aResp && aResp.status === 'fulfilled' && aResp.value && aResp.value.data) {
+                appts = aResp.value.data.map(row => ({
+                    id: row.APPOINTMENT_ID ? `APT-${String(row.APPOINTMENT_ID).padStart(3,'0')}` : null,
+                    dbId: row.APPOINTMENT_ID,
+                    patient: row.PET_NAME || 'Pet',
+                    owner: row.OWNER_NAME || 'Owner',
+                    type: row.SERVICE || row.VISIT_REASON || 'General Checkup',
+                    date: (row.APPOINTMENT_TIME || '').split(' ')[0] || new Date().toISOString().slice(0,10),
+                    time: (row.APPOINTMENT_TIME || '').split(' ')[1] || '09:00',
+                    vet: row.VETERINARIAN_ID || 'Dr. Abena Mensah',
+                    status: row.STATUS || 'Confirmed'
+                }));
+            }
+
+            if (bResp && bResp.status === 'fulfilled' && bResp.value && bResp.value.data) {
+                // Map billing rows into local shape for totals
+                billing = { medication: [], inventory: [], mortuary: [] };
+                (bResp.value.data || []).forEach(b => {
+                    const entry = {
+                        id: b.BILLING_ID || b.billing_id || null,
+                        total: Number(b.AMOUNT || b.amount || 0),
+                        status: b.STATUS || b.status || 'Paid'
+                    };
+                    billing.medication.push(entry);
+                });
+            }
+
             const today = new Date().toISOString().slice(0, 10);
-            const todayAppts = localAppts.filter(a => a.date === today);
-            const upcoming = localAppts.filter(a => a.status === 'Confirmed' || a.status === 'Pending');
-            const uniquePatients = new Set(localAppts.map(a => a.patient)).size;
-            
+            const todayAppts = appts.filter(a => a.date === today);
+            const upcoming = appts.filter(a => a.status === 'Confirmed' || a.status === 'Pending');
+            const uniquePatients = new Set(appts.map(a => a.patient)).size;
+
             let totalRevenue = 42500;
-            if (localBilling && localBilling.medication) {
-                const medTotal = (localBilling.medication || []).reduce((sum, item) => sum + (item.status === 'Paid' ? Number(item.total || 0) : 0), 0);
-                const invTotal = (localBilling.inventory || []).reduce((sum, item) => sum + (item.status === 'Paid' ? Number(item.total || 0) : 0), 0);
-                const morTotal = (localBilling.mortuary || []).reduce((sum, item) => sum + (item.status === 'Paid' ? Number(item.total || 0) : 0), 0);
+            if (billing && (billing.medication || billing.inventory || billing.mortuary)) {
+                const medTotal = (billing.medication || []).reduce((sum, item) => sum + (item.status === 'Paid' ? Number(item.total || 0) : 0), 0);
+                const invTotal = (billing.inventory || []).reduce((sum, item) => sum + (item.status === 'Paid' ? Number(item.total || 0) : 0), 0);
+                const morTotal = (billing.mortuary || []).reduce((sum, item) => sum + (item.status === 'Paid' ? Number(item.total || 0) : 0), 0);
                 const sum = medTotal + invTotal + morTotal;
                 if (sum > 0) totalRevenue = sum;
             }
 
             updateStats({
-                todayAppointments: todayAppts.length > 0 ? todayAppts.length : Math.min(localAppts.length, 24),
+                todayAppointments: todayAppts.length,
                 upcomingAppointments: upcoming.length > 0 ? upcoming.length : 158,
                 totalPatients: uniquePatients > 0 ? uniquePatients : 1240,
                 monthlyRevenue: totalRevenue
             });
 
-            if (localAppts.length > 0) {
-                updateSchedule(localAppts.slice(0, 8).map(a => ({
+            if (todayAppts.length > 0) {
+                updateSchedule(todayAppts.map(a => ({
                     id: a.id,
                     patient: `${a.patient} (${a.type || 'Pet'})`,
                     owner: a.owner || 'Pet Owner',
@@ -1575,6 +1609,8 @@ function updateCharts(weeklyData, revenueData, servicesData, growthData) {
 // ============= UPDATE SCHEDULE =============
 function updateSchedule(appointments) {
     const tbodies = document.querySelectorAll('#scheduleScrollContainer tbody, #limitedScheduleView tbody');
+    const viewAllBtn = document.getElementById('viewAllScheduleBtn');
+    const viewAllButtonDiv = document.getElementById('viewAllButton');
     if (!tbodies.length) return;
     
     if (!appointments || appointments.length === 0) {
@@ -1587,6 +1623,7 @@ function updateSchedule(appointments) {
                 </tr>
             `;
         });
+        if (viewAllButtonDiv) viewAllButtonDiv.classList.add('hidden');
         return;
     }
     
@@ -1601,8 +1638,8 @@ function updateSchedule(appointments) {
         'Scheduled': 'bg-green-100 text-green-800'
     };
     
-    const rowsHtml = appointments.map(apt => `
-        <tr class="hover:bg-surface-container-low transition-colors cursor-pointer" onclick="window.location.href='appointment.html'">
+    const buildRows = (schedule) => schedule.map(apt => `
+        <tr class="hover:bg-surface-container-low transition-colors cursor-pointer" onclick="window.location.href='appointment.html?id=${apt.id || apt.appointment_id}'">
             <td class="px-8 py-5">
                 <div class="flex items-center gap-4">
                     <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
@@ -1622,17 +1659,23 @@ function updateSchedule(appointments) {
                     ${apt.status}
                 </span>
             </td>
-            <td class="px-8 py-5 text-right">
-                <button onclick="event.stopPropagation(); window.location.href='appointment.html'" class="p-2 text-outline hover:text-primary transition-colors">
-                    <span class="material-symbols-outlined">more_vert</span>
-                </button>
-            </td>
+            <!-- Action column commented out per request -->
         </tr>
     `).join('');
 
-    tbodies.forEach(tbody => {
-        tbody.innerHTML = rowsHtml;
-    });
+    const limitedTbody = document.querySelector('#limitedScheduleView tbody');
+    const fullTbody = document.querySelector('#scheduleScrollContainer tbody');
+    const visibleCount = 5;
+    const remainingCount = Math.max(appointments.length - visibleCount, 0);
+    if (limitedTbody) limitedTbody.innerHTML = buildRows(appointments.slice(0, visibleCount));
+    if (fullTbody) fullTbody.innerHTML = buildRows(appointments);
+
+    if (viewAllBtn && viewAllButtonDiv) {
+        viewAllBtn.textContent = remainingCount
+            ? `View All Schedule (${remainingCount} more)`
+            : 'All scheduled appointments are shown';
+        viewAllButtonDiv.classList.toggle('hidden', remainingCount === 0);
+    }
 }
 
 // ============= TOAST =============

@@ -683,7 +683,7 @@
     </div>
 
     <!-- Desktop Layout -->
-    <div class="flex min-h-screen w-full">
+    <div>
       <!-- Desktop Sidebar -->
       <aside
         id="desktopSidebar"
@@ -1002,8 +1002,14 @@
                   id="currentMonthYear"
                   class="font-headline-lg text-headline-base text-deep-navy"
                 >
-                  October 2024
+                  Calendar
                 </h2>
+                <input
+                  id="calendarMonthPicker"
+                  type="month"
+                  class="rounded-lg border border-outline-variant bg-white px-3 py-2 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  aria-label="Choose calendar month and year"
+                />
                 <div class="flex bg-surface-container p-1 rounded-lg">
                   <button
                     id="weekViewBtn"
@@ -1795,6 +1801,7 @@
     <script>
       // ===== GLOBAL VARIABLES =====
       let calendar;
+      let calendarAppointments = [];
 
       // Sidebar elements
       const mobileBurgerBtn = document.getElementById("mobileBurgerBtn");
@@ -2185,106 +2192,12 @@
         if (savedEvents) {
           try {
             appointments = JSON.parse(savedEvents);
+            appointments = appointments.filter((event) =>
+              !["1", "2", "3", "4", "5", "6"].includes(String(event.id)) || !String(event.start).startsWith("2024-10-"),
+            );
           } catch (error) {
             localStorage.removeItem("clinicCalendarEvents");
           }
-        }
-
-        if (!appointments || appointments.length === 0) {
-          appointments = [
-            {
-              id: 1,
-              title: " Simba - Annual Checkup",
-              start: "2024-10-23T08:15:00",
-              end: "2024-10-23T08:45:00",
-              backgroundColor: "#2e7d82",
-              borderColor: "#2e7d82",
-              extendedProps: {
-                petName: "Simba",
-                petType: "Cat",
-                owner: "Ama Serwaa",
-                service: "Annual Checkup",
-                phone: "+233 24 123 4567",
-              },
-            },
-            {
-              id: 2,
-              title: " Bella - Dental Surgery",
-              start: "2024-10-23T08:00:00",
-              end: "2024-10-23T10:00:00",
-              backgroundColor: "#617677",
-              borderColor: "#617677",
-              extendedProps: {
-                petName: "Bella",
-                petType: "Golden Retriever",
-                owner: "Kofi Appiah",
-                service: "Root Canal",
-                phone: "+233 24 234 5678",
-              },
-            },
-            {
-              id: 3,
-              title: " Rocky - Vaccination",
-              start: "2024-10-23T09:30:00",
-              end: "2024-10-23T10:00:00",
-              backgroundColor: "#00696d",
-              borderColor: "#00696d",
-              extendedProps: {
-                petName: "Rocky",
-                petType: "Pug",
-                owner: "John Doe",
-                service: "Rabies Jab",
-                phone: "+233 24 345 6789",
-              },
-            },
-            {
-              id: 4,
-              title: "⚠️ Max - Emergency Surgery",
-              start: "2024-10-23T10:15:00",
-              end: "2024-10-23T13:00:00",
-              backgroundColor: "#943031",
-              borderColor: "#943031",
-              textColor: "#ffffff",
-              extendedProps: {
-                petName: "Max",
-                petType: "Alsatian",
-                owner: "Emelia Tetteh",
-                service: "Emergency Surgery",
-                phone: "+233 24 456 7890",
-                isEmergency: true,
-              },
-            },
-            {
-              id: 5,
-              title: " Whiskers - Checkup",
-              start: "2024-10-24T10:00:00",
-              end: "2024-10-24T10:30:00",
-              backgroundColor: "#2e7d82",
-              borderColor: "#2e7d82",
-              extendedProps: {
-                petName: "Whiskers",
-                petType: "Persian Cat",
-                owner: "Mary Johnson",
-                service: "General Checkup",
-                phone: "+233 24 567 8901",
-              },
-            },
-            {
-              id: 6,
-              title: " Charlie - Vaccination",
-              start: "2024-10-25T14:00:00",
-              end: "2024-10-25T14:30:00",
-              backgroundColor: "#00696d",
-              borderColor: "#00696d",
-              extendedProps: {
-                petName: "Charlie",
-                petType: "Labrador",
-                owner: "Sarah Williams",
-                service: "Vaccination",
-                phone: "+233 24 678 9012",
-              },
-            },
-          ];
         }
 
         calendar = new FullCalendar.Calendar(calendarEl, {
@@ -2302,6 +2215,9 @@
           slotLabelInterval: "01:00",
           nowIndicator: true,
           events: appointments,
+          datesSet: function () {
+            syncCalendarDateControls();
+          },
 
           eventClick: function (info) {
             const event = info.event;
@@ -2412,43 +2328,89 @@
         calendar.render();
         saveCalendarEvents();
 
-        // Load real-time appointments from Oracle DB backend
-        try {
-          apiFetch("/api/appointments")
-            .then((r) => r.json())
-            .then((json) => {
-              if (json && json.data && json.data.length > 0) {
-                json.data.forEach((apt) => {
-                  const timeParts = (apt.APPOINTMENT_TIME || "").split(" ");
-                  const dateStr =
-                    timeParts[0] && timeParts[0].includes("-")
-                      ? timeParts[0]
-                      : new Date().toISOString().slice(0, 10);
-                  const timeStr =
-                    timeParts[1] ||
-                    (timeParts[0] && timeParts[0].includes(":")
-                      ? timeParts[0]
-                      : "09:00");
-                  const startIso = `${dateStr}T${timeStr.padStart(5, "0")}:00`;
-                  calendar.addEvent({
-                    id: `APT-${apt.APPOINTMENT_ID}`,
-                    title: `🐾 ${apt.PET_NAME} - ${apt.SERVICE || apt.VISIT_REASON || "Checkup"}`,
-                    start: startIso,
-                    backgroundColor: "#036469",
-                    borderColor: "#036469",
-                    extendedProps: {
-                      petName: apt.PET_NAME,
-                      petType: apt.PET_SPECIES || "Pet",
-                      owner: apt.OWNER_NAME || "Owner",
-                      service: apt.SERVICE || "General Checkup",
-                      phone: apt.OWNER_PHONE || "",
-                    },
-                  });
+        // Load real-time appointments from backend (handles both Response and parsed JSON)
+        (async function loadCalendarAppointments() {
+          try {
+            const json = await window.apiFetchJson("/api/appointments");
+            const list = json && json.data ? json.data : Array.isArray(json) ? json : [];
+            if (list && list.length > 0) {
+              calendarAppointments = list;
+              list.forEach((apt) => {
+                const timeParts = (apt.APPOINTMENT_TIME || "").split(" ");
+                const dateStr =
+                  timeParts[0] && timeParts[0].includes("-")
+                    ? timeParts[0]
+                    : new Date().toISOString().slice(0, 10);
+                const timeStr =
+                  timeParts[1] ||
+                  (timeParts[0] && timeParts[0].includes(":" )
+                    ? timeParts[0]
+                    : "09:00");
+                const startIso = `${dateStr}T${timeStr.padStart(5, "0")}:00`;
+                calendar.addEvent({
+                  id: apt.APPOINTMENT_ID ? `APT-${apt.APPOINTMENT_ID}` : `APT-${Math.floor(Math.random()*900)+100}`,
+                  title: `🐾 ${apt.PET_NAME} - ${apt.SERVICE || apt.VISIT_REASON || "Checkup"}`,
+                  start: startIso,
+                  backgroundColor: "#036469",
+                  borderColor: "#036469",
+                  extendedProps: {
+                    petName: apt.PET_NAME,
+                    petType: apt.PET_SPECIES || "Pet",
+                    owner: apt.OWNER_NAME || "Owner",
+                    service: apt.SERVICE || "General Checkup",
+                    phone: apt.OWNER_PHONE || "",
+                    dbId: apt.APPOINTMENT_ID,
+                    veterinarianId: apt.VETERINARIAN_ID || null,
+                    veterinarianName: apt.VET_NAME || "",
+                  },
                 });
-              }
-            })
-            .catch((e) => console.warn("Calendar live fetch:", e));
-        } catch (e) {}
+              });
+              renderDoctors();
+            }
+          } catch (e) {
+            console.warn("Calendar live fetch:", e);
+          }
+        })();
+
+        // Load doctors list (prefer server, fallback to localStorage)
+        async function loadDoctors() {
+          const select = document.getElementById('doctorNames');
+          if (!select) return;
+          select.innerHTML = '<option value="">Select doctor</option>';
+          try {
+            const token = localStorage.getItem('token');
+            const headers = token ? { 'Authorization': 'Bearer ' + token } : {};
+            let resp = await fetch('/api/staff', { headers });
+            if (!resp.ok) resp = await fetch('/api/vets');
+            if (resp.ok) {
+              const json = await resp.json();
+              const list = json && json.data ? json.data : [];
+              list.forEach(d => {
+                const opt = document.createElement('option');
+                opt.value = d.staff_id || d.staffId || d.STAFF_ID || d.staff_id || d.full_name || d.fullName || d.FULL_NAME || d.fullname || d.fullname || d;
+                opt.textContent = d.full_name || d.fullName || d.FULL_NAME || d.fullname || d;
+                select.appendChild(opt);
+              });
+              return;
+            }
+          } catch (e) {
+            console.warn('Doctor list fetch failed', e);
+          }
+          const saved = localStorage.getItem('doctors');
+          if (saved) {
+            try {
+              const parsed = JSON.parse(saved);
+              parsed.forEach((d) => {
+                const opt = document.createElement('option');
+                opt.value = d.name || d;
+                opt.textContent = d.name || d;
+                select.appendChild(opt);
+              });
+            } catch (e) { console.warn('Failed to parse doctors from localStorage', e); }
+          }
+        }
+
+        loadDoctors();
       });
 
       function updateViewButtons(activeBtnId) {
@@ -2470,44 +2432,55 @@
         });
       }
 
+      function syncCalendarDateControls() {
+        if (!calendar) return;
+        const calendarDate = calendar.getDate();
+        document.getElementById("currentMonthYear").textContent = calendarDate.toLocaleDateString("en", {
+          month: "long",
+          year: "numeric",
+        });
+        document.getElementById("calendarMonthPicker").value = `${calendarDate.getFullYear()}-${String(calendarDate.getMonth() + 1).padStart(2, "0")}`;
+        renderDoctors();
+      }
+
+      document.getElementById("calendarMonthPicker").addEventListener("change", (event) => {
+        if (!event.target.value || !calendar) return;
+        calendar.gotoDate(`${event.target.value}-01`);
+        saveCalendarEvents();
+      });
+
       document.getElementById("prevBtn").addEventListener("click", () => {
         calendar.prev();
-        updateMonthYearDisplay();
         saveCalendarEvents();
       });
       document.getElementById("nextBtn").addEventListener("click", () => {
         calendar.next();
-        updateMonthYearDisplay();
         saveCalendarEvents();
       });
       document.getElementById("todayBtn").addEventListener("click", () => {
         calendar.today();
-        updateMonthYearDisplay();
         saveCalendarEvents();
       });
       document.getElementById("weekViewBtn").addEventListener("click", () => {
         calendar.changeView("timeGridWeek");
         updateViewButtons("weekViewBtn");
-        updateMonthYearDisplay();
         saveCalendarEvents();
       });
       document.getElementById("monthViewBtn").addEventListener("click", () => {
         calendar.changeView("dayGridMonth");
         updateViewButtons("monthViewBtn");
-        updateMonthYearDisplay();
         saveCalendarEvents();
       });
       document.getElementById("dayViewBtn").addEventListener("click", () => {
         calendar.changeView("timeGridDay");
         updateViewButtons("dayViewBtn");
-        updateMonthYearDisplay();
         saveCalendarEvents();
       });
 
       // ===== FORM SUBMISSION =====
       document
         .getElementById("appointmentForm")
-        .addEventListener("submit", function (e) {
+        .addEventListener("submit", async function (e) {
           e.preventDefault();
           if (!validateForm()) return;
 
@@ -2539,27 +2512,75 @@
           };
           const eventColor = serviceColors[data.serviceType] || "#036469";
 
-          calendar.addEvent({
-            title: `${data.petName} - ${data.serviceType}`,
-            start: startDateTime,
-            end: endDateTime.toISOString(),
-            backgroundColor: eventColor,
-            borderColor: eventColor,
-            extendedProps: {
-              petName: data.petName,
-              petType: data.petType,
-              owner: data.ownerName,
-              service: data.serviceType,
-              phone: data.phoneNumber,
-              doctor: data.doctorName,
-              notes: data.notes,
-            },
-          });
+          // Persist appointment to server first
+          const payload = {
+            pet_name: data.petName,
+            pet_species: data.petType,
+            owner_name: data.ownerName,
+            owner_phone: data.phoneNumber,
+            service: data.serviceType,
+            appointment_time: `${data.date} ${data.time}`,
+            status: 'Pending',
+            notes: data.notes,
+            // veterinarian_id: if doctor select has numeric value use it
+            veterinarian_id: isNaN(Number(data.doctorName)) ? null : Number(data.doctorName),
+          };
 
-          showToast(
-            `✅ Appointment created for ${data.petName} (${data.serviceType})`,
-            "success",
-          );
+          try {
+            const resp = await fetch('/api/appointments', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+            });
+            const js = await resp.json();
+            const dbId = js && js.appointment_id ? js.appointment_id : null;
+            const eventId = dbId ? `APT-${dbId}` : `APT-${Math.floor(Math.random()*900)+100}`;
+
+            calendar.addEvent({
+              id: eventId,
+              title: `🐾 ${data.petName} - ${data.serviceType}`,
+              start: startDateTime,
+              end: endDateTime.toISOString(),
+              backgroundColor: eventColor,
+              borderColor: eventColor,
+              extendedProps: {
+                petName: data.petName,
+                petType: data.petType,
+                owner: data.ownerName,
+                service: data.serviceType,
+                phone: data.phoneNumber,
+                doctor: data.doctorName,
+                notes: data.notes,
+                dbId,
+              },
+            });
+
+            showToast(
+              `✅ Appointment created for ${data.petName} (${data.serviceType})`,
+              "success",
+            );
+          } catch (e) {
+            console.error('Failed to persist appointment', e);
+            // Fallback to client-only add
+            calendar.addEvent({
+              id: `APT-${Math.floor(Math.random()*900)+100}`,
+              title: `🐾 ${data.petName} - ${data.serviceType}`,
+              start: startDateTime,
+              end: endDateTime.toISOString(),
+              backgroundColor: eventColor,
+              borderColor: eventColor,
+              extendedProps: {
+                petName: data.petName,
+                petType: data.petType,
+                owner: data.ownerName,
+                service: data.serviceType,
+                phone: data.phoneNumber,
+                doctor: data.doctorName,
+                notes: data.notes,
+              },
+            });
+            showToast('Appointment created locally (server unavailable)', 'warning');
+          }
 
           // Clear the stored selection
           window.selectedAppointmentSlot = null;
@@ -2693,41 +2714,43 @@
         return "block";
       }
 
-      function addRecurringBlock(block) {
-        // Add to array
-        recurringBlocks.push(block);
+      async function loadRecurringBlocksFromDatabase() {
+        try {
+          const response = await window.apiFetchJson("/api/recurring-blocks");
+          recurringBlocks = (response?.data || []).map((block) => ({
+            id: block.BLOCK_ID,
+            name: block.TITLE,
+            days: String(block.DAYS_OF_WEEK).split(",").map(Number),
+            startTime: block.START_TIME,
+            endTime: block.END_TIME,
+            icon: block.ICON || "block",
+          }));
+          renderRecurringBlocks();
+          addAllBlocksToCalendar();
+        } catch (error) {
+          console.warn("Recurring blocks fetch failed:", error);
+          recurringBlocks = [];
+          renderRecurringBlocks();
+        }
+      }
 
-        // Save to localStorage
-        localStorage.setItem(
-          "recurringBlocks",
-          JSON.stringify(recurringBlocks),
-        );
-
-        // Render the block in the UI
-        renderRecurringBlocks();
-
-        // Add to calendar if calendar exists
-        if (calendar) {
-          // Get day names for display
-          const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-          const days = block.days.map((d) => dayNames[d]).join(", ");
-
-          calendar.addEvent({
+      async function addRecurringBlock(block) {
+        const response = await fetch("/api/recurring-blocks", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+          },
+          body: JSON.stringify({
             title: block.name,
             daysOfWeek: block.days,
             startTime: block.startTime,
             endTime: block.endTime,
-            color: block.color || "#ff9800",
-            display: "background",
-            backgroundColor: block.backgroundColor || "rgba(255, 152, 0, 0.15)",
-            borderColor: "transparent",
-            extendedProps: {
-              isBlock: true,
-              icon: block.icon,
-            },
-          });
-        }
-
+            icon: block.icon,
+          }),
+        });
+        if (!response.ok) throw new Error("Unable to save recurring block");
+        await loadRecurringBlocksFromDatabase();
         showToast(`✅ "${block.name}" added successfully!`, "success");
       }
       function renderRecurringBlocks() {
@@ -2735,37 +2758,6 @@
         if (!container) {
           console.error("Container .space-y-base not found");
           return;
-        }
-
-        // Load from localStorage
-        const saved = localStorage.getItem("recurringBlocks");
-        if (saved) {
-          recurringBlocks = JSON.parse(saved);
-        } else {
-          // Default blocks
-          const defaultBlocks = [
-            {
-              name: "Daily Lunch Break",
-              time: "12:30 - 13:30",
-              icon: "restaurant",
-              days: [1, 2, 3, 4, 5],
-              startTime: "12:30",
-              endTime: "13:30",
-            },
-            {
-              name: "Staff Briefing",
-              time: "08:00 - 08:30",
-              icon: "groups",
-              days: [1, 2, 3, 4, 5],
-              startTime: "08:00",
-              endTime: "08:30",
-            },
-          ];
-          recurringBlocks = defaultBlocks;
-          localStorage.setItem(
-            "recurringBlocks",
-            JSON.stringify(recurringBlocks),
-          );
         }
 
         if (recurringBlocks.length === 0) {
@@ -2795,18 +2787,23 @@
           .join("");
       }
 
-      function deleteRecurringBlock(index) {
+      async function deleteRecurringBlock(index) {
         if (!confirm("Delete this recurring block?")) return;
 
         // Get the block to delete
         const blockToDelete = recurringBlocks[index];
 
-        // Remove from array
-        recurringBlocks.splice(index, 1);
-        localStorage.setItem(
-          "recurringBlocks",
-          JSON.stringify(recurringBlocks),
-        );
+        try {
+          const response = await fetch(`/api/recurring-blocks/${blockToDelete.id}`, {
+            method: "DELETE",
+            headers: { Authorization: `Bearer ${localStorage.getItem("token") || ""}` },
+          });
+          if (!response.ok) throw new Error("Unable to delete recurring block");
+          recurringBlocks.splice(index, 1);
+        } catch (error) {
+          showToast(error.message, "error");
+          return;
+        }
 
         // Remove from calendar if calendar exists
         if (calendar) {
@@ -2866,13 +2863,8 @@
         });
         console.log(`Removed ${removedCount} existing block events`);
 
-        // Add all blocks from localStorage
-        const saved = localStorage.getItem("recurringBlocks");
-        if (saved) {
-          const blocks = JSON.parse(saved);
-          console.log(`Adding ${blocks.length} blocks to calendar`);
-
-          blocks.forEach((block, index) => {
+        if (recurringBlocks.length) {
+          recurringBlocks.forEach((block, index) => {
             // Make sure we have valid days
             const days = block.days || [1, 2, 3, 4, 5];
 
@@ -2896,14 +2888,11 @@
             console.log(`Added block: ${block.name}`);
           });
 
-          console.log("All blocks added to calendar");
-        } else {
-          console.log("No blocks found in localStorage");
         }
       }
       // ===== BLOCK FORM SUBMISSION =====
       if (blockForm) {
-        blockForm.addEventListener("submit", function (e) {
+        blockForm.addEventListener("submit", async function (e) {
           e.preventDefault();
 
           // Get form data
@@ -2955,7 +2944,12 @@
           };
 
           // Add the block
-          addRecurringBlock(block);
+          try {
+            await addRecurringBlock(block);
+          } catch (error) {
+            showToast(error.message, "error");
+            return;
+          }
 
           // Close modal
           closeBlockModal();
@@ -2980,26 +2974,21 @@
           });
         }
 
-        // Initialize recurring blocks
-        renderRecurringBlocks();
-
-        // Add blocks to calendar if calendar exists
-        setTimeout(addAllBlocksToCalendar, 500);
+        loadRecurringBlocksFromDatabase();
       });
 
       // ===== INITIALIZE DOCTORS =====
       document.addEventListener("DOMContentLoaded", function () {
         // ... your existing code ...
 
-        // Load and render doctors
-        loadDoctors();
-        renderDoctors();
+        // Load and render doctors from the staff table
+        loadDoctorsFromDatabase();
 
         // Refresh button
         document
           .getElementById("refreshDoctorsBtn")
-          ?.addEventListener("click", function () {
-            renderDoctors();
+          ?.addEventListener("click", async function () {
+            await loadDoctorsFromDatabase();
             showToast("🔄 Availability refreshed", "info");
           });
 
@@ -3039,12 +3028,50 @@
           ?.addEventListener("click", openManageDoctorsModal);
 
         // Auto-refresh every 5 minutes
-        setInterval(renderDoctors, 300000);
+        setInterval(loadDoctorsFromDatabase, 300000);
       });
 
       // ===== DOCTOR AVAILABILITY DATA =====
       let doctors = [];
       let editingDoctorId = null;
+
+      async function loadDoctorsFromDatabase() {
+        try {
+          const response = typeof window.apiFetchJson === "function"
+            ? await window.apiFetchJson("/api/doctor-availability")
+            : await fetch("/api/doctor-availability", {
+              headers: { Authorization: `Bearer ${localStorage.getItem("token") || ""}` },
+            }).then((result) => result.json());
+          const staff = Array.isArray(response?.data) ? response.data : [];
+          const selectedDate = calendar?.getDate().toISOString().slice(0, 10) || new Date().toISOString().slice(0, 10);
+
+          doctors = staff.map((member) => {
+              const userId = member.USER_ID || null;
+              const bookedAppointments = calendarAppointments.filter((appointment) =>
+                String(appointment.APPOINTMENT_TIME || "").startsWith(selectedDate) && String(appointment.VETERINARIAN_ID || "") === String(userId || ""),
+              ).length;
+              const availabilityStatus = member.AVAILABILITY_STATUS || "Available";
+              return {
+                id: member.STAFF_ID,
+                name: member.FULL_NAME,
+                available: availabilityStatus === "Available",
+                startTime: member.START_TIME || "08:00",
+                endTime: member.END_TIME || "18:00",
+                specialty: member.JOB_TITLE || member.DEPARTMENT,
+                phone: member.PHONE,
+                email: member.EMAIL,
+                onLeave: availabilityStatus === "On Leave",
+                leaveReason: member.LEAVE_REASON || null,
+                bookedAppointments,
+              };
+            });
+          renderDoctors();
+        } catch (error) {
+          console.warn("Doctor availability fetch failed:", error);
+          doctors = [];
+          renderDoctors();
+        }
+      }
 
       // Load doctors from localStorage
       function loadDoctors() {
@@ -3159,7 +3186,7 @@
                 ? "bg-error"
                 : "bg-gray-400";
             const statusText = isAvailable
-              ? `Available: ${doctor.startTime || "N/A"} - ${doctor.endTime || "N/A"}`
+              ? `Available: ${doctor.startTime || "N/A"} - ${doctor.endTime || "N/A"} • ${doctor.bookedAppointments || 0} booked`
               : doctor.onLeave
                 ? `On Leave (${doctor.leaveReason || "Unavailable"})`
                 : "Unavailable";
@@ -3292,29 +3319,43 @@
       }
 
       // ===== STATUS TOGGLE FUNCTIONS =====
-      function toggleDoctorStatus(id) {
+      async function saveDoctorAvailability(id, availabilityStatus, startTime, endTime, leaveReason) {
+        const response = await fetch(`/api/doctor-availability/${id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+          },
+          body: JSON.stringify({ availabilityStatus, startTime, endTime, leaveReason }),
+        });
+        if (!response.ok) throw new Error("Unable to update doctor availability");
+      }
+
+      async function toggleDoctorStatus(id) {
         const doctor = doctors.find((d) => d.id === id);
         if (!doctor) return;
 
+        let availabilityStatus;
         if (doctor.onLeave) {
-          // If on leave, toggle back to available
-          doctor.onLeave = false;
-          doctor.available = true;
-          doctor.startTime = doctor.startTime || "09:00";
-          doctor.endTime = doctor.endTime || "17:00";
-          doctor.leaveReason = null;
+          availabilityStatus = "Available";
         } else if (doctor.available) {
-          // If available, set to unavailable (not on leave)
-          doctor.available = false;
+          availabilityStatus = "Unavailable";
         } else {
-          // If unavailable, set to available
-          doctor.available = true;
-          doctor.startTime = doctor.startTime || "09:00";
-          doctor.endTime = doctor.endTime || "17:00";
+          availabilityStatus = "Available";
         }
-        saveDoctors();
-        renderDoctors();
-        showToast(`✅ ${doctor.name} status updated`, "success");
+        try {
+          await saveDoctorAvailability(
+            id,
+            availabilityStatus,
+            availabilityStatus === "Available" ? doctor.startTime || "08:00" : null,
+            availabilityStatus === "Available" ? doctor.endTime || "18:00" : null,
+            null,
+          );
+          await loadDoctorsFromDatabase();
+          showToast(`✅ ${doctor.name} status updated`, "success");
+        } catch (error) {
+          showToast(error.message, "error");
+        }
       }
 
       function deleteDoctor(id) {
@@ -3337,7 +3378,7 @@
       doctorForm.parentNode.replaceChild(newDoctorForm, doctorForm);
 
       // Now attach the event listener to the new form
-      newDoctorForm.addEventListener("submit", function (e) {
+      newDoctorForm.addEventListener("submit", async function (e) {
         e.preventDefault();
 
         // Get form data
@@ -3412,47 +3453,25 @@
 
         // Create or update doctor
         if (editId) {
-          // Edit existing doctor
-          const index = doctors.findIndex((d) => d.id === parseInt(editId));
-          if (index !== -1) {
-            doctors[index] = {
-              ...doctors[index],
-              name: doctorName,
-              specialty: specialty,
-              phone: phone,
-              email: email,
-              startTime: available ? startTime : null,
-              endTime: available ? endTime : null,
-              available: available,
-              onLeave: onLeave,
-              leaveReason: onLeave ? leaveReason : null,
-            };
-            showToast(`✅ ${doctorName} updated successfully!`, "success");
-          } else {
-            showToast("❌ Doctor not found.", "error");
+          try {
+            await saveDoctorAvailability(
+              editId,
+              onLeave ? "On Leave" : available ? "Available" : "Unavailable",
+              available ? startTime : null,
+              available ? endTime : null,
+              onLeave ? leaveReason : null,
+            );
+            await loadDoctorsFromDatabase();
+            showToast(`✅ ${doctorName} availability updated`, "success");
+            closeDoctorModal();
+            return;
+          } catch (error) {
+            showToast(error.message, "error");
             return;
           }
-        } else {
-          // Add new doctor
-          const newDoctor = {
-            id: Math.max(0, ...doctors.map((d) => d.id)) + 1,
-            name: doctorName,
-            specialty: specialty,
-            phone: phone,
-            email: email,
-            startTime: available ? startTime : null,
-            endTime: available ? endTime : null,
-            available: available,
-            onLeave: onLeave,
-            leaveReason: onLeave ? leaveReason : null,
-          };
-          doctors.push(newDoctor);
-          showToast(`✅ ${doctorName} added successfully!`, "success");
         }
 
-        saveDoctors();
-        renderDoctors();
-        closeDoctorModal();
+        showToast("Create doctors through Staff Management before setting their availability.", "info");
       });
 
       // ===== SHOW/HIDE LEAVE REASON =====

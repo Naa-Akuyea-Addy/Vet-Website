@@ -76,6 +76,32 @@ function getPermissions(role) {
   return ROLE_PERMISSIONS_MAP[role] || ["Dashboard.html"];
 }
 
+async function getCurrentProfile(req, res, next) {
+  try {
+    const user = await userModel.findPublicById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User profile not found" });
+    }
+
+    const role = normalizeRole(user.ROLE);
+    return res.json({
+      success: true,
+      user: {
+        id: user.USER_ID,
+        email: user.EMAIL,
+        name: user.FULL_NAME,
+        role,
+        phone: user.PHONE,
+        status: user.STATUS,
+        profileImage: user.PROFILE_IMAGE || null,
+        permissions: getPermissions(role),
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function login(req, res) {
   const { email, password } = req.body;
   
@@ -219,6 +245,7 @@ module.exports = {
   requestPasswordReset,
   resetPassword,
   updateProfileImage,
+  getCurrentProfile,
   getRedirectUrl,
   getPermissions,
   ROLE_REDIRECT_MAP,

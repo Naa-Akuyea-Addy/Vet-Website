@@ -7,6 +7,7 @@ const { authenticate } = require("../middleware/auth");
 router.post("/login", requireBody(["email", "password"]), controller.login);
 router.post("/forgot-password", requireBody(["email"]), controller.requestPasswordReset);
 router.post("/reset-password", requireBody(["token", "password"]), controller.resetPassword);
+router.get("/profile", authenticate, controller.getCurrentProfile);
 router.patch("/profile-image", authenticate, controller.updateProfileImage);
 
 // Register route - COMMENTED OUT
