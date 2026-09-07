@@ -1495,7 +1495,7 @@ async function loadDashboardData() {
 
             if (aResp && aResp.status === 'fulfilled' && aResp.value && aResp.value.data) {
                 appts = aResp.value.data.map(row => ({
-                    id: row.APPOINTMENT_ID ? `APT-${String(row.APPOINTMENT_ID).padStart(3,'0')}` : null,
+                    id: row.APPOINTMENT_NUMBER || (row.APPOINTMENT_ID ? `APT-${String(row.APPOINTMENT_ID).padStart(4,'0')}` : null),
                     dbId: row.APPOINTMENT_ID,
                     patient: row.PET_NAME || 'Pet',
                     owner: row.OWNER_NAME || 'Owner',

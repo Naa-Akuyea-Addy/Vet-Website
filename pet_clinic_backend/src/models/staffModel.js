@@ -19,11 +19,10 @@ async function list() {
 async function create(data) {
   return withConnection((c) =>
     c.execute(
-      `INSERT INTO STAFF (FULL_NAME, STAFF_NUMBER, DEPARTMENT, JOB_TITLE, PHONE, EMAIL, STATUS, SALARY, CREATED_AT)
-       VALUES (:full_name, :staff_number, :department, :job_title, :phone, :email, NVL(:status, 'Active'), :salary, SYSTIMESTAMP)`,
+      `INSERT INTO STAFF (FULL_NAME, DEPARTMENT, JOB_TITLE, PHONE, EMAIL, STATUS, SALARY, CREATED_AT)
+       VALUES (:full_name, :department, :job_title, :phone, :email, NVL(:status, 'Active'), :salary, SYSTIMESTAMP)`,
       {
         full_name: data.full_name || data.name || "Staff Member",
-        staff_number: data.staff_number || `STF-${Math.floor(100 + Math.random() * 900)}`,
         department: data.department || data.specialty || "Clinical Operations",
         job_title: data.job_title || data.role || "Veterinarian",
         phone: data.phone || "",

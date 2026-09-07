@@ -43,7 +43,7 @@ async function getDashboardData() {
                             )
                           GROUP BY TRUNC(a.CREATED_AT, 'IW')
                           ORDER BY TRUNC(a.CREATED_AT, 'IW')`, [], { outFormat: oracledb.OUT_FORMAT_OBJECT }),
-      connection.execute(`SELECT a.APPOINTMENT_ID, a.PET_NAME, a.PET_SPECIES,
+      connection.execute(`SELECT a.APPOINTMENT_ID, a.APPOINTMENT_NUMBER, a.PET_NAME, a.PET_SPECIES,
                                  a.OWNER_NAME, a.OWNER_PHONE, a.SERVICE,
                                  a.APPOINTMENT_TIME, a.STATUS, a.NOTES,
                                  u.FULL_NAME AS VET_NAME
@@ -68,7 +68,7 @@ async function getDashboardData() {
       revenue: { labels: monthlyDates.map((date) => date.toLocaleDateString("en", { month: "short" })), data: monthlyDates.map((date) => monthlyMap.get(dateKey(date).slice(0, 7)) || 0) },
       services: { labels: (serviceRes.rows || []).map((row) => row.SERVICE_NAME), data: (serviceRes.rows || []).map((row) => number(row.TOTAL)) },
       growth: { labels: growthWeeks.map((date) => date.toLocaleDateString("en", { month: "short", day: "numeric" })), newPatients: growthWeeks.map((date) => growthMap.get(isoWeekKey(date)) || 0), returningPatients: growthWeeks.map((date) => returningMap.get(isoWeekKey(date)) || 0) },
-      schedule: (scheduleRes.rows || []).map((row) => ({ id: `APT-${String(row.APPOINTMENT_ID).padStart(3, "0")}`, patient: `${row.PET_NAME || "Pet"} (${row.PET_SPECIES || "Unknown"})`, owner: row.OWNER_NAME || "Pet Owner", phone: row.OWNER_PHONE || "", service: row.SERVICE || "Unspecified", vet: row.VET_NAME || "Unassigned", time: row.APPOINTMENT_TIME || "—", status: row.STATUS || "Pending", notes: row.NOTES || "" })),
+      schedule: (scheduleRes.rows || []).map((row) => ({ id: row.APPOINTMENT_NUMBER || `APT-${String(row.APPOINTMENT_ID).padStart(4, "0")}`, patient: `${row.PET_NAME || "Pet"} (${row.PET_SPECIES || "Unknown"})`, owner: row.OWNER_NAME || "Pet Owner", phone: row.OWNER_PHONE || "", service: row.SERVICE || "Unspecified", vet: row.VET_NAME || "Unassigned", time: row.APPOINTMENT_TIME || "—", status: row.STATUS || "Pending", notes: row.NOTES || "" })),
     };
   });
 }

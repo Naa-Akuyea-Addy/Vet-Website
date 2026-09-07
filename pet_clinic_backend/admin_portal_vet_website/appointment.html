@@ -1436,7 +1436,7 @@
               }
 
               return {
-                id: row.APPOINTMENT_ID ? `APT-${String(row.APPOINTMENT_ID).padStart(3, "0")}` : (row.ID || ""),
+                id: row.APPOINTMENT_NUMBER || (row.APPOINTMENT_ID ? `APT-${String(row.APPOINTMENT_ID).padStart(4, "0")}` : (row.ID || "")),
                 dbId: row.APPOINTMENT_ID || row.ID || null,
                 patientId: row.PATIENT_ID || null,
                 patient: row.PET_NAME || row.PATIENT_NAME || "Pet",
@@ -1522,7 +1522,7 @@
         patientsData.forEach((patient) => {
           const option = document.createElement("option");
           option.value = patient.PATIENT_ID;
-          option.textContent = `${patient.PET_NAME} — ${patient.OWNER_NAME}`;
+          option.textContent = `${patient.PATIENT_NUMBER || `PAT-${String(patient.PATIENT_ID).padStart(4, "0")}`} — ${patient.PET_NAME} (${patient.OWNER_NAME})`;
           option.selected = String(patient.PATIENT_ID) === String(selectedPatientId);
           selector.appendChild(option);
         });

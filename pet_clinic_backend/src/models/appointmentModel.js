@@ -63,16 +63,51 @@ async function findLeastBusyVeterinarianId(connection) {
   return result.rows?.[0]?.USER_ID || null;
 }
 
+async function findOrCreatePatientId(connection, data) {
+  if (data.patient_id) return Number(data.patient_id);
+
+  const petName = data.pet_name || data.patient || "Pet";
+  const ownerName = data.owner_name || data.owner || "Owner";
+  const ownerPhone = data.owner_phone || data.phone || "";
+  const existing = await connection.execute(
+    `SELECT PATIENT_ID
+     FROM PATIENTS
+     WHERE UPPER(TRIM(PET_NAME)) = UPPER(TRIM(:pet_name))
+       AND UPPER(TRIM(OWNER_NAME)) = UPPER(TRIM(:owner_name))
+       AND NVL(REGEXP_REPLACE(OWNER_PHONE, '[^0-9]', ''), '') = NVL(REGEXP_REPLACE(:owner_phone, '[^0-9]', ''), '')
+     FETCH FIRST 1 ROWS ONLY`,
+    { pet_name: petName, owner_name: ownerName, owner_phone: ownerPhone },
+    { outFormat: oracledb.OUT_FORMAT_OBJECT },
+  );
+  if (existing.rows?.[0]?.PATIENT_ID) return existing.rows[0].PATIENT_ID;
+
+  const created = await connection.execute(
+    `INSERT INTO PATIENTS (PET_NAME, PET_SPECIES, PET_AGE, OWNER_NAME, OWNER_PHONE)
+     VALUES (:pet_name, :pet_species, :pet_age, :owner_name, :owner_phone)
+     RETURNING PATIENT_ID INTO :patient_id`,
+    {
+      pet_name: petName,
+      pet_species: data.pet_species || "Dog",
+      pet_age: data.pet_age || "1 year",
+      owner_name: ownerName,
+      owner_phone: ownerPhone,
+      patient_id: { dir: oracledb.BIND_OUT, type: oracledb.NUMBER },
+    },
+  );
+  return created.outBinds?.patient_id?.[0] || null;
+}
+
 async function create(data) {
   return withConnection(async (c) => {
     const veterinarianId = data.veterinarian_id || await findLeastBusyVeterinarianId(c);
+    const patientId = await findOrCreatePatientId(c, data);
     const result = await c.execute(
       `INSERT INTO ${table} (PATIENT_ID, PET_NAME, PET_SPECIES, PET_AGE, OWNER_NAME, OWNER_PHONE, VISIT_REASON, SERVICE, APPOINTMENT_TIME, STATUS, NOTES, VETERINARIAN_ID)
        VALUES (:patient_id, :pet_name, :pet_species, :pet_age, :owner_name, :owner_phone, :visit_reason, :service,
                :appointment_time, NVL(:status, 'Pending'), :notes, :veterinarian_id)
        RETURNING APPOINTMENT_ID INTO :appointment_id`,
       {
-        patient_id: data.patient_id || null,
+        patient_id: patientId,
         pet_name: data.pet_name || data.patient || 'Pet',
         pet_species: data.pet_species || 'Dog',
         pet_age: data.pet_age || '1 year',
@@ -90,6 +125,7 @@ async function create(data) {
     );
     return {
       appointmentId: result.outBinds?.appointment_id?.[0] || null,
+      patientId,
       veterinarianId,
     };
   });

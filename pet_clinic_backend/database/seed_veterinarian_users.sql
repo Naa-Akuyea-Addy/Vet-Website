@@ -24,7 +24,7 @@ SELECT
   'Active',
   SYSTIMESTAMP
 FROM staff s
-WHERE UPPER(s.staff_number) LIKE 'VET%'
+WHERE LOWER(NVL(s.job_title, '')) LIKE '%vet%'
   AND s.user_id IS NULL
   AND NOT EXISTS (
     SELECT 1
@@ -39,7 +39,7 @@ SET s.user_id = (
   FROM users u
   WHERE LOWER(u.email) = LOWER(NVL(TRIM(s.email), LOWER(s.staff_number) || '@vet.addypets.invalid'))
 )
-WHERE UPPER(s.staff_number) LIKE 'VET%'
+WHERE LOWER(NVL(s.job_title, '')) LIKE '%vet%'
   AND s.user_id IS NULL
   AND EXISTS (
     SELECT 1

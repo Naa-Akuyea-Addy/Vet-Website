@@ -26,6 +26,7 @@ async function create(req, res, next) {
     res.status(201).json({
       success: true,
       appointment_id: result.appointmentId,
+      patient_id: result.patientId,
       veterinarian_id: result.veterinarianId,
       message: result.veterinarianId
         ? "Appointment created and veterinarian assigned"

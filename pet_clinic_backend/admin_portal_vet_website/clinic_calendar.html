@@ -2348,7 +2348,7 @@
                     : "09:00");
                 const startIso = `${dateStr}T${timeStr.padStart(5, "0")}:00`;
                 calendar.addEvent({
-                  id: apt.APPOINTMENT_ID ? `APT-${apt.APPOINTMENT_ID}` : `APT-${Math.floor(Math.random()*900)+100}`,
+                  id: apt.APPOINTMENT_NUMBER || (apt.APPOINTMENT_ID ? `APT-${String(apt.APPOINTMENT_ID).padStart(4, "0")}` : `APT-${Math.floor(Math.random()*900)+100}`),
                   title: `🐾 ${apt.PET_NAME} - ${apt.SERVICE || apt.VISIT_REASON || "Checkup"}`,
                   start: startIso,
                   backgroundColor: "#036469",

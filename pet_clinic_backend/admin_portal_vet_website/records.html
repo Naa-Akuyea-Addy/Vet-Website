@@ -3123,7 +3123,7 @@
           const json = await res.json();
           if (json && json.data && json.data.length > 0) {
             patients = json.data.map((p) => ({
-              id: `VC-${String(p.PATIENT_ID).padStart(4, "0")}`,
+              id: p.PATIENT_NUMBER || `PAT-${String(p.PATIENT_ID).padStart(4, "0")}`,
               dbId: p.PATIENT_ID,
               name: p.PET_NAME || "Pet",
               species: p.PET_SPECIES || "Dog",

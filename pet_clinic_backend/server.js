@@ -139,31 +139,41 @@ app.post("/book-appointment", async (req, res) => {
     );
     const assignedVeterinarianId = vetResult.rows?.[0]?.USER_ID || null;
 
-    // 1) Create or find a patient record. For simplicity, insert a new patient for each booking.
-    const patientSql = `
-      INSERT INTO patients (owner_name, owner_phone, pet_name, pet_species, pet_age)
-      VALUES (:owner_name, :owner_phone, :pet_name, :pet_species, :pet_age)
-      RETURNING patient_id INTO :patient_id
-    `;
-
-    const patientResult = await connection.execute(
-      patientSql,
+    const patientLookup = await connection.execute(
+      `SELECT PATIENT_ID
+       FROM PATIENTS
+       WHERE UPPER(TRIM(PET_NAME)) = UPPER(TRIM(:pet_name))
+         AND UPPER(TRIM(OWNER_NAME)) = UPPER(TRIM(:owner_name))
+         AND NVL(REGEXP_REPLACE(OWNER_PHONE, '[^0-9]', ''), '') = NVL(REGEXP_REPLACE(:owner_phone, '[^0-9]', ''), '')
+       FETCH FIRST 1 ROWS ONLY`,
       {
         owner_name,
         owner_phone,
         pet_name,
-        pet_species,
-        pet_age,
-        patient_id: { dir: oracledb.BIND_OUT, type: oracledb.NUMBER },
       },
-      { autoCommit: false },
+      { outFormat: oracledb.OUT_FORMAT_OBJECT },
     );
 
-    const patient_id = patientResult.outBinds.patient_id
-      ? patientResult.outBinds.patient_id[0]
-      : null;
+    let patient_id = patientLookup.rows?.[0]?.PATIENT_ID || null;
+    if (!patient_id) {
+      const patientResult = await connection.execute(
+        `INSERT INTO patients (owner_name, owner_phone, pet_name, pet_species, pet_age)
+         VALUES (:owner_name, :owner_phone, :pet_name, :pet_species, :pet_age)
+         RETURNING patient_id INTO :patient_id`,
+        {
+          owner_name,
+          owner_phone,
+          pet_name,
+          pet_species,
+          pet_age,
+          patient_id: { dir: oracledb.BIND_OUT, type: oracledb.NUMBER },
+        },
+        { autoCommit: false },
+      );
+      patient_id = patientResult.outBinds.patient_id?.[0] || null;
+    }
 
-    // 2) Insert appointment linked to the patient
+    // Insert the appointment linked to the existing or newly created patient.
     const appointmentSql = `
       INSERT INTO appointments (patient_id, pet_name, pet_species, pet_age, owner_name, owner_phone, visit_reason, service, appointment_time, veterinarian_id)
       VALUES (:patient_id, :pet_name, :pet_species, :pet_age, :owner_name, :owner_phone, :visit_reason, :service, :appointment_time, :veterinarian_id)
