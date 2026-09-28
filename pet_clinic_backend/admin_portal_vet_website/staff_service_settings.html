@@ -791,7 +791,7 @@
         >
         <a
           href="./appointment.html"
-          data-nav-mobile="appointments"
+          data-nav-mobile="appointment"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
           ><span class="material-symbols-outlined">event_note</span
           ><span>Appointments</span></a
@@ -824,6 +824,15 @@
         >
           <span class="material-symbols-outlined">emergency</span
           ><span>Emergency Cases</span>
+        </a>
+
+        <a
+          href="./inventory.html"
+          data-nav-mobile="inventory"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">inventory_2</span>
+          <span>Inventory</span>
         </a>
         <a
           href="./mortuary.html"
@@ -883,7 +892,7 @@
             alt="Logo"
             class="w-10 h-10 rounded-full object-cover shrink-0 sidebar-logo cursor-pointer"
             src="/logo.png"
-            onclick="window.location.href='./Dashboard.html'"
+            onclick="window.location.href = './Dashboard.html'"
           />
           <div class="sidebar-logo-text whitespace-nowrap overflow-hidden">
             <h1 class="font-bold text-primary-fixed text-sm">addyPets</h1>
@@ -894,7 +903,7 @@
           <a
             href="./Dashboard.html"
             data-nav-desktop="analytics"
-            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all sidebar-button"
           >
             <span class="material-symbols-outlined sidebar-icon-only"
               >analytics</span
@@ -923,7 +932,7 @@
           </a>
           <a
             href="./appointment.html"
-            data-nav-desktop="appointments"
+            data-nav-desktop="appointment"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
             <span class="material-symbols-outlined sidebar-icon-only"
@@ -949,7 +958,17 @@
             <span class="material-symbols-outlined sidebar-icon-only"
               >description</span
             >
-            <span class="sidebar-text">Patient & Owner Records</span>
+            <span class="sidebar-text">Patient &amp; Owner Records</span>
+          </a>
+          <a
+            href="./inventory.html"
+            data-nav-desktop="inventory"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only"
+              >inventory_2</span
+            >
+            <span class="sidebar-text">Inventory</span>
           </a>
           <a
             href="./message.html"
@@ -1092,7 +1111,7 @@
                     class="bg-primary text-on-primary px-5 py-2.5 rounded-lg font-label-md flex items-center gap-2 hover:bg-primary/90 transition-all shadow-sm"
                   >
                     <span class="material-symbols-outlined">person_add</span>
-                    Add Vet
+                    Add Staff
                   </button>
                 </div>
               </div>
@@ -1114,11 +1133,11 @@
                   <div>
                     <p
                       class="text-2xl font-bold text-on-surface"
-                      id="totalVets"
+                      id="totalStaff"
                     >
                       8
                     </p>
-                    <p class="text-sm text-on-surface-variant">Total Vets</p>
+                    <p class="text-sm text-on-surface-variant">Total Staff</p>
                   </div>
                 </div>
                 <div
@@ -1193,65 +1212,83 @@
                   class="flex border-b border-outline-variant px-6 pt-4 bg-surface-bright overflow-x-auto"
                 >
                   <button
-                    class="px-6 py-3 font-label-md text-label-md transition-all tab-active whitespace-nowrap"
+                    class="px-6 py-3 font-label-md text-label-md transition-all tab-active whitespace-nowrap flex items-center gap-2"
                     id="allVetsTab"
                     onclick="switchTab('all')"
                   >
-                    <span class="material-symbols-outlined text-sm mr-2"
+                    <span class="material-symbols-outlined text-sm"
                       >groups</span
                     >
-                    All Vets
+                    Staff Directory
                   </button>
                   <button
-                    class="px-6 py-3 font-label-md text-label-md transition-all tab-inactive whitespace-nowrap"
-                    id="onlineTab"
-                    onclick="switchTab('online')"
-                  >
-                    <span class="material-symbols-outlined text-sm mr-2"
-                      >wifi</span
-                    >
-                    Online
-                  </button>
-                  <button
-                    class="px-6 py-3 font-label-md text-label-md transition-all tab-inactive whitespace-nowrap"
+                    class="px-6 py-3 font-label-md text-label-md transition-all tab-inactive whitespace-nowrap flex items-center gap-2"
                     id="scheduleTab"
                     onclick="switchTab('schedule')"
                   >
-                    <span class="material-symbols-outlined text-sm mr-2"
+                    <span class="material-symbols-outlined text-sm"
                       >calendar_month</span
                     >
                     Schedule
                   </button>
                   <button
-                    class="px-6 py-3 font-label-md text-label-md transition-all tab-inactive whitespace-nowrap"
+                    class="px-6 py-3 font-label-md text-label-md transition-all tab-inactive whitespace-nowrap flex items-center gap-2"
                     id="chatTab"
                     onclick="switchTab('chat')"
                   >
-                    <span class="material-symbols-outlined text-sm mr-2"
-                      >chat</span
-                    >
+                    <span class="material-symbols-outlined text-sm">chat</span>
                     Messages
                   </button>
                 </div>
 
-                <!-- All Vets / Online View -->
+                <!-- Staff Directory View -->
                 <div id="vetsView" class="p-6">
+                  <!-- Search and Live Presence Bar -->
+                  <div
+                    class="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+                  >
+                    <div class="relative w-full max-w-md">
+                      <span
+                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-lg"
+                        >search</span
+                      >
+                      <input
+                        type="text"
+                        id="staffSearchInput"
+                        placeholder="Search staff by name, department, or role..."
+                        class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-lg text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                        oninput="filterStaffDirectory()"
+                      />
+                    </div>
+                    <div
+                      class="flex items-center gap-2 text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200"
+                    >
+                      <span
+                        class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping inline-block"
+                      ></span>
+                      <span>Live Colleague Presence</span>
+                    </div>
+                  </div>
+
                   <div
                     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
                     id="vetsContainer"
                   >
-                    <!-- Vet cards rendered here -->
+                    <!-- Staff cards rendered here -->
                   </div>
                 </div>
 
                 <!-- Schedule View Section -->
                 <div id="scheduleView" class="p-6 hidden">
                   <!-- Navigation Controls -->
-                  <div class="flex items-center justify-between mb-6">
-                    <div class="flex items-center gap-4">
+                  <div
+                    class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4"
+                  >
+                    <div class="flex items-center gap-3 flex-wrap">
                       <button
                         id="prevWeekBtn"
-                        class="p-2 hover:bg-surface-muted rounded-lg transition-colors"
+                        class="p-2 hover:bg-surface-muted rounded-lg transition-colors border border-outline-variant"
+                        title="Previous Week"
                       >
                         <span class="material-symbols-outlined"
                           >chevron_left</span
@@ -1259,47 +1296,55 @@
                       </button>
                       <h3
                         id="weekDisplay"
-                        class="font-headline-md text-headline-md text-deep-navy"
+                        class="font-headline-md text-headline-md text-deep-navy font-bold"
                       >
                         This Week
                       </h3>
                       <button
                         id="nextWeekBtn"
-                        class="p-2 hover:bg-surface-muted rounded-lg transition-colors"
+                        class="p-2 hover:bg-surface-muted rounded-lg transition-colors border border-outline-variant"
+                        title="Next Week"
                       >
                         <span class="material-symbols-outlined"
                           >chevron_right</span
                         >
                       </button>
-                      <div class="flex items-center gap-2">
-                        <button
-                          id="todayBtn"
-                          class="px-3 py-1 text-xs bg-primary text-white rounded hover:bg-primary/90 transition-colors"
-                        >
-                          Today
-                        </button>
-                      </div>
+                      <button
+                        id="todayBtn"
+                        class="px-3 py-1 text-xs bg-primary text-white rounded-md font-semibold hover:bg-primary/90 transition-colors"
+                      >
+                        Today
+                      </button>
                     </div>
-                    <div class="current-user-badge">Dr. Abena Mensah</div>
+
+                    <!-- Direct Calendar Link Button -->
+                    <a
+                      href="./clinic_calendar.html"
+                      class="px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 rounded-lg text-xs font-bold flex items-center gap-2 transition-all shadow-sm"
+                    >
+                      <span class="material-symbols-outlined text-sm"
+                        >calendar_month</span
+                      >
+                      Open Clinic Calendar
+                    </a>
                   </div>
 
                   <!-- Legend -->
-                  <div class="flex items-center gap-4 mb-4 flex-wrap">
-                    <span class="text-xs flex items-center gap-1">
+                  <div
+                    class="flex items-center gap-4 mb-4 flex-wrap text-xs text-on-surface-variant"
+                  >
+                    <span class="flex items-center gap-1.5 font-medium">
                       <span
-                        class="w-3 h-3 rounded bg-blue-50 border-l-2 border-primary"
+                        class="w-3 h-3 rounded bg-blue-100 border-l-2 border-primary"
                       ></span>
-                      Appointment
+                      Assigned Appointment
                     </span>
-                    <span class="text-xs flex items-center gap-1">
+                    <span class="flex items-center gap-1.5 font-medium">
                       <span
-                        class="w-3 h-3 rounded bg-green-50 border-l-2 border-green-500"
+                        class="w-3 h-3 rounded bg-green-100 border-l-2 border-green-600"
                       ></span>
-                      Completed
+                      Completed Procedure
                     </span>
-                    <span class="text-xs text-gray-400 ml-4"
-                      >💡 Drag and drop appointments to reschedule</span
-                    >
                   </div>
 
                   <!-- Schedule List -->
@@ -1311,44 +1356,57 @@
                 <!-- Chat / Messaging View -->
                 <div id="chatView" class="p-6 hidden">
                   <div
-                    class="flex h-[600px] border border-outline-variant rounded-lg overflow-hidden"
+                    class="flex h-[620px] border border-outline-variant rounded-xl overflow-hidden shadow-sm bg-white"
                   >
                     <!-- Chat List Sidebar -->
                     <div
-                      class="w-80 border-r border-outline-variant flex flex-col bg-surface-bright"
+                      class="w-80 border-r border-outline-variant flex flex-col bg-surface-bright shrink-0"
                     >
-                      <div class="p-4 border-b border-outline-variant">
-                        <h4 class="font-semibold text-on-surface">Messages</h4>
-                        <p class="text-xs text-on-surface-variant">
-                          Clinic staff communications
-                        </p>
-                      </div>
-                      <div class="flex-1 overflow-y-auto" id="chatList">
-                        <!-- Chat list items rendered here -->
-                      </div>
-                      <div class="p-3 border-t border-outline-variant">
-                        <button
-                          id="newChatBtn"
-                          class="w-full text-primary text-sm font-medium hover:underline flex items-center justify-center gap-1"
-                        >
-                          <span class="material-symbols-outlined text-sm"
-                            >add</span
+                      <div
+                        class="p-4 border-b border-outline-variant space-y-2"
+                      >
+                        <div class="flex items-center justify-between">
+                          <h4 class="font-bold text-on-surface text-sm">
+                            Colleagues
+                          </h4>
+                          <span
+                            class="text-[10px] uppercase font-bold text-primary tracking-wider bg-primary/10 px-2 py-0.5 rounded"
+                            >Staff Chat</span
                           >
-                          New Conversation
-                        </button>
+                        </div>
+                        <div class="relative">
+                          <span
+                            class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline text-sm"
+                            >search</span
+                          >
+                          <input
+                            type="text"
+                            id="chatSearchInput"
+                            placeholder="Filter colleagues..."
+                            class="w-full pl-8 pr-3 py-1.5 bg-white border border-outline-variant rounded-lg text-xs focus:border-primary outline-none transition-all"
+                            oninput="filterChatConversations()"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="flex-1 overflow-y-auto custom-scrollbar"
+                        id="chatList"
+                      >
+                        <!-- Chat list items rendered here -->
                       </div>
                     </div>
 
                     <!-- Chat Conversation Area -->
-                    <div class="flex-1 flex flex-col bg-white">
+                    <div class="flex-1 flex flex-col bg-white overflow-hidden">
                       <!-- Chat Header -->
                       <div
                         id="chatHeader"
-                        class="p-4 border-b border-outline-variant flex items-center justify-between"
+                        class="p-4 border-b border-outline-variant flex items-center justify-between bg-surface-bright"
                       >
                         <div class="flex items-center gap-3">
                           <div
-                            class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center"
+                            id="chatPartnerAvatar"
+                            class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary shrink-0"
                           >
                             <span class="material-symbols-outlined text-primary"
                               >person</span
@@ -1357,64 +1415,124 @@
                           <div>
                             <p
                               id="chatPartnerName"
-                              class="font-semibold text-on-surface"
+                              class="font-bold text-on-surface text-sm"
                             >
-                              Select a conversation
+                              Select a colleague
                             </p>
                             <p
                               id="chatPartnerStatus"
-                              class="text-xs text-on-surface-variant"
+                              class="text-xs text-on-surface-variant flex items-center gap-1"
                             >
-                              Choose a staff member to chat with
+                              Choose a staff member from the list to start
+                              communicating
                             </p>
                           </div>
                         </div>
-                        <button
-                          class="text-outline hover:text-primary transition-colors"
+                        <div class="flex items-center gap-2">
+                          <a
+                            href="./clinic_calendar.html"
+                            class="p-1.5 text-outline hover:text-primary rounded-lg hover:bg-primary/10 transition-all text-xs flex items-center gap-1 font-semibold"
+                            title="View Appointments Calendar"
+                          >
+                            <span class="material-symbols-outlined text-sm"
+                              >calendar_month</span
+                            >
+                            Calendar
+                          </a>
+                        </div>
+                      </div>
+
+                      <!-- Chat Messages Container -->
+                      <div
+                        id="chatMessages"
+                        class="flex-1 overflow-y-auto p-4 space-y-3 bg-[#fdfdfd] custom-scrollbar"
+                      >
+                        <div
+                          class="text-center text-xs text-on-surface-variant py-16"
                         >
-                          <span class="material-symbols-outlined"
-                            >more_vert</span
+                          <span
+                            class="material-symbols-outlined text-5xl text-outline/60 block mb-3"
+                            >forum</span
+                          >
+                          <p class="font-medium text-sm text-deep-navy">
+                            Doctor & Staff Messaging
+                          </p>
+                          <p class="text-xs text-gray-500 mt-1">
+                            Select a colleague to view conversation history and
+                            share medical documents or X-rays.
+                          </p>
+                        </div>
+                      </div>
+
+                      <!-- Attachment Preview (Shown before sending) -->
+                      <div
+                        id="chatAttachmentPreview"
+                        class="hidden px-4 py-2 bg-primary/5 border-t border-primary/20 flex items-center justify-between text-xs"
+                      >
+                        <div class="flex items-center gap-2 overflow-hidden">
+                          <span
+                            class="material-symbols-outlined text-primary text-base"
+                            id="previewFileIcon"
+                            >attachment</span
+                          >
+                          <span
+                            id="previewFileName"
+                            class="font-semibold text-deep-navy truncate max-w-[280px]"
+                            >file.pdf</span
+                          >
+                          <span
+                            id="previewFileSize"
+                            class="text-gray-500 text-[11px]"
+                          ></span>
+                        </div>
+                        <button
+                          type="button"
+                          onclick="clearSelectedAttachment()"
+                          class="text-red-500 hover:text-red-700 p-1 hover:bg-red-50 rounded"
+                          title="Remove attachment"
+                        >
+                          <span class="material-symbols-outlined text-sm"
+                            >close</span
                           >
                         </button>
                       </div>
 
-                      <!-- Chat Messages -->
+                      <!-- Chat Input Bar -->
                       <div
-                        id="chatMessages"
-                        class="flex-1 overflow-y-auto p-4 space-y-1"
+                        class="message-input-container flex items-center gap-2 p-3 bg-white border-t border-outline-variant"
                       >
-                        <div
-                          class="text-center text-xs text-on-surface-variant py-8"
-                        >
-                          <span
-                            class="material-symbols-outlined text-4xl text-outline block mb-2"
-                            >chat</span
-                          >
-                          Select a staff member to start messaging
-                        </div>
-                      </div>
-
-                      <!-- Chat Input -->
-                      <div
-                        class="message-input-container flex items-center gap-3"
-                      >
+                        <input
+                          type="file"
+                          id="chatAttachmentInput"
+                          class="hidden"
+                          accept=".png,.jpg,.jpeg,.webp,.pdf,.doc,.docx,.xls,.xlsx,.dcm,.txt"
+                          onchange="handleAttachmentSelected(this)"
+                        />
                         <button
-                          class="text-outline hover:text-primary transition-colors"
+                          type="button"
+                          id="chatAttachBtn"
+                          onclick="
+                            document
+                              .getElementById('chatAttachmentInput')
+                              .click()
+                          "
+                          class="p-2 text-outline hover:text-primary hover:bg-primary/10 rounded-full transition-colors"
+                          title="Attach Medical Document, X-ray, Scan, or Lab Report (.pdf, .dcm, .docx, .png, .jpg)"
                         >
-                          <span class="material-symbols-outlined"
+                          <span class="material-symbols-outlined text-xl"
                             >attach_file</span
                           >
                         </button>
                         <input
                           type="text"
                           id="chatInput"
-                          class="flex-1 px-4 py-2 border border-outline-variant rounded-full focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                          placeholder="Type a message..."
+                          class="flex-1 px-4 py-2.5 border border-outline-variant rounded-full text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                          placeholder="Type a clinical note, message, or attach medical files..."
                           disabled
                         />
                         <button
                           id="sendMessageBtn"
-                          class="p-2 bg-primary text-white rounded-full hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                          class="p-2.5 bg-primary text-white rounded-full hover:bg-primary/90 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center shadow-sm"
                           disabled
                         >
                           <span class="material-symbols-outlined text-sm"
@@ -1427,7 +1545,10 @@
                 </div>
               </div>
               <!-- Footer -->
-              <footer style="width: 90%" class="mt-auto bg-deep-navy py-4">
+              <footer
+                style="width: 90%"
+                class="mt-auto bg-deep-navy py-4 rounded-xl"
+              >
                 <div
                   class="px-margin-desktop text-center text-tertiary-fixed-dim text-caption"
                 >
@@ -1446,18 +1567,20 @@
 
     <div
       id="addVetModal"
-      class="fixed inset-0 bg-black/50 flex items-center justify-center z-5 hidden"
+      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
     >
       <div
-        class="bg-white rounded-xl max-w-lg w-full mx-4 p-6 max-h-[90vh] overflow-y-auto"
+        class="bg-white rounded-xl max-w-lg w-full mx-4 p-6 max-h-[90vh] overflow-y-auto shadow-2xl"
       >
         <div class="flex justify-between items-center mb-6">
-          <h3 class="font-headline-md text-headline-md text-deep-navy">
-            Add New Veterinarian
+          <h3
+            class="font-headline-md text-headline-md text-deep-navy font-bold"
+          >
+            Add New Staff / Veterinarian
           </h3>
           <button
             id="closeVetModal"
-            class="text-gray-500 hover:text-gray-700 transition-colors"
+            class="text-gray-500 hover:text-gray-700 transition-colors p-1"
           >
             <span class="material-symbols-outlined">close</span>
           </button>
@@ -1472,7 +1595,7 @@
             <input
               type="text"
               id="vetName"
-              class="w-full px-4 py-3 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+              class="w-full px-4 py-2.5 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
               placeholder="e.g., Dr. Kwesi Mensah"
               required
             />
@@ -1481,20 +1604,19 @@
           <div>
             <label
               class="block font-label-md text-label-md text-on-surface mb-1"
-              >Vet ID</label
+              >Staff / License Number</label
             >
             <div class="flex gap-2">
               <input
                 type="text"
                 id="vetId"
-                class="flex-1 px-4 py-3 rounded-lg border border-outline-variant bg-gray-50 text-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                placeholder="Auto-generated"
-                readonly
+                class="flex-1 px-4 py-2.5 rounded-lg border border-outline-variant bg-gray-50 text-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm font-mono"
+                placeholder="Auto-generated or custom"
               />
               <button
                 type="button"
                 id="generateVetIdBtn"
-                class="px-4 py-3 bg-secondary text-white rounded-lg font-label-md hover:bg-secondary/90 transition-all whitespace-nowrap"
+                class="px-3.5 py-2.5 bg-secondary text-white rounded-lg font-label-md text-xs hover:bg-secondary/90 transition-all whitespace-nowrap font-bold"
               >
                 Generate ID
               </button>
@@ -1504,14 +1626,14 @@
           <div>
             <label
               class="block font-label-md text-label-md text-on-surface mb-1"
-              >Specialty *</label
+              >Department / Specialty *</label
             >
             <select
               id="vetSpecialty"
-              class="w-full px-4 py-3 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+              class="w-full px-4 py-2.5 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
               required
             >
-              <option value="">Select specialty...</option>
+              <option value="">Select department...</option>
               <option value="General Medicine">General Medicine</option>
               <option value="Surgery">Surgery</option>
               <option value="Cardiology">Cardiology</option>
@@ -1519,7 +1641,9 @@
               <option value="Radiology">Radiology</option>
               <option value="Dentistry">Dentistry</option>
               <option value="Emergency Medicine">Emergency Medicine</option>
-              <option value="Orthopedics">Orthopedics</option>
+              <option value="Diagnostics & Lab">Diagnostics & Lab</option>
+              <option value="Pharmacy">Pharmacy</option>
+              <option value="Administration">Administration</option>
             </select>
           </div>
 
@@ -1530,16 +1654,28 @@
             >
             <select
               id="vetRole"
-              class="w-full px-4 py-3 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
+              class="w-full px-4 py-2.5 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium text-sm"
               required
             >
-              <option value="Veterinarian" selected>Veterinarian (Clinical, Calendar, Records, Emergencies)</option>
-              <option value="Super Admin">Super Admin (Full Access to All 12 Modules)</option>
+              <option value="Veterinarian" selected>
+                Veterinarian (Clinical, Calendar, Records, Emergencies)
+              </option>
+              <option value="Super Admin">
+                Super Admin (Full Access to All 12 Modules)
+              </option>
               <option value="Admin">Admin (Executive Dashboard Access)</option>
-              <option value="Accountant">Accountant (Billing & Invoicing)</option>
-              <option value="InventoryManager">Inventory Manager (Pharmacy & Stock)</option>
-              <option value="Receptionist">Receptionist (Front Desk, Calendar & Appointments)</option>
-              <option value="Technician">Technician (Diagnostics & Records)</option>
+              <option value="Accountant">
+                Accountant (Billing & Invoicing)
+              </option>
+              <option value="InventoryManager">
+                Inventory Manager (Pharmacy & Stock)
+              </option>
+              <option value="Receptionist">
+                Receptionist (Front Desk, Calendar & Appointments)
+              </option>
+              <option value="Technician">
+                Technician (Diagnostics & Records)
+              </option>
             </select>
           </div>
 
@@ -1551,8 +1687,8 @@
             <input
               type="email"
               id="vetEmail"
-              class="w-full px-4 py-3 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-              placeholder="vet@addypets.com"
+              class="w-full px-4 py-2.5 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
+              placeholder="staff@addypets.com"
               required
             />
           </div>
@@ -1565,7 +1701,7 @@
             <input
               type="password"
               id="vetPassword"
-              class="w-full px-4 py-3 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+              class="w-full px-4 py-2.5 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
               placeholder="Minimum 6 characters"
               value="Password123!"
               required
@@ -1579,67 +1715,30 @@
             >
             <div class="flex">
               <span
-                class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-outline-variant rounded-l-md"
+                class="inline-flex items-center px-3 text-xs text-gray-700 bg-gray-100 border border-r-0 border-outline-variant rounded-l-lg font-semibold"
                 >+233</span
               >
               <input
                 type="tel"
                 id="vetPhone"
-                class="flex-1 min-w-0 bg-surface border border-outline-variant rounded-r-lg p-3 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                class="flex-1 min-w-0 bg-surface border border-outline-variant rounded-r-lg p-2.5 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
                 placeholder="241234567"
               />
-            </div>
-          </div>
-
-          <div>
-            <label
-              class="block font-label-md text-label-md text-on-surface mb-1"
-              >Status</label
-            >
-            <div class="flex gap-4">
-              <label class="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="vetStatus"
-                  value="online"
-                  checked
-                  class="w-4 h-4 text-primary"
-                />
-                <span class="text-sm">Online</span>
-              </label>
-              <label class="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="vetStatus"
-                  value="offline"
-                  class="w-4 h-4 text-primary"
-                />
-                <span class="text-sm">Offline</span>
-              </label>
-              <label class="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="vetStatus"
-                  value="away"
-                  class="w-4 h-4 text-primary"
-                />
-                <span class="text-sm">Away</span>
-              </label>
             </div>
           </div>
 
           <div class="flex gap-3 pt-4 border-t border-outline-variant">
             <button
               type="submit"
-              class="flex-1 bg-primary text-white py-3 rounded-lg font-label-md hover:bg-primary/90 transition-all flex items-center justify-center gap-2"
+              class="flex-1 bg-primary text-white py-2.5 rounded-lg font-label-md hover:bg-primary/90 transition-all flex items-center justify-center gap-2 font-bold text-sm shadow-sm"
             >
-              <span class="material-symbols-outlined">send</span>
-              Add Veterinarian
+              <span class="material-symbols-outlined text-sm">person_add</span>
+              Save Staff Member
             </button>
             <button
               type="button"
               id="cancelVetModal"
-              class="flex-1 text-on-surface-variant py-3 rounded-lg font-label-md bg-red-600 hover:bg-red-700 text-white font-bold transition-all"
+              class="px-5 text-gray-700 py-2.5 rounded-lg font-label-md bg-gray-100 hover:bg-gray-200 font-bold transition-all text-sm"
             >
               Cancel
             </button>
@@ -1648,189 +1747,9 @@
       </div>
     </div>
   </body>
+  <script src="fix_nav.js"></script>
   <script>
-    // ===== GLOBAL VARIABLES =====
-    let calendar;
-
-    // Sidebar elements
-    const mobileBurgerBtn = document.getElementById("mobileBurgerBtn");
-    const mobileSidebar = document.getElementById("mobileSidebar");
-    const closeMobileSidebar = document.getElementById("closeMobileSidebar");
-    const mobileOverlay = document.getElementById("mobileOverlay");
-    const desktopSidebar = document.getElementById("desktopSidebar");
-
-    // ===== SIDEBAR FUNCTIONS =====
-    function openMobileSidebar() {
-      mobileSidebar.classList.add("open");
-      mobileOverlay.classList.add("active");
-      document.body.style.overflow = "hidden";
-    }
-    function closeMobileSidebarFunc() {
-      mobileSidebar.classList.remove("open");
-      mobileOverlay.classList.remove("active");
-      document.body.style.overflow = "";
-    }
-
-    if (mobileBurgerBtn)
-      mobileBurgerBtn.addEventListener("click", openMobileSidebar);
-    if (closeMobileSidebar)
-      closeMobileSidebar.addEventListener("click", closeMobileSidebarFunc);
-    if (mobileOverlay)
-      mobileOverlay.addEventListener("click", closeMobileSidebarFunc);
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && mobileSidebar.classList.contains("open"))
-        closeMobileSidebarFunc();
-    });
-    window.addEventListener("resize", () => {
-      if (window.innerWidth >= 768 && mobileSidebar.classList.contains("open"))
-        closeMobileSidebarFunc();
-    });
-
-    function switchTab(tab) {
-      const staffBtn = document.getElementById("staff-tab");
-      const serviceBtn = document.getElementById("services-tab");
-      const staffSection = document.getElementById("staff-section");
-      const serviceSection = document.getElementById("services-section");
-
-      if (tab === "staff") {
-        staffBtn.classList.add("border-primary", "text-primary", "font-bold");
-        staffBtn.classList.remove(
-          "border-transparent",
-          "text-on-surface-variant",
-        );
-        serviceBtn.classList.add(
-          "border-transparent",
-          "text-on-surface-variant",
-        );
-        serviceBtn.classList.remove(
-          "border-primary",
-          "text-primary",
-          "font-bold",
-        );
-        staffSection.classList.remove("hidden");
-        serviceSection.classList.add("hidden");
-      } else {
-        serviceBtn.classList.add("border-primary", "text-primary", "font-bold");
-        serviceBtn.classList.remove(
-          "border-transparent",
-          "text-on-surface-variant",
-        );
-        staffBtn.classList.add("border-transparent", "text-on-surface-variant");
-        staffBtn.classList.remove(
-          "border-primary",
-          "text-primary",
-          "font-bold",
-        );
-        serviceSection.classList.remove("hidden");
-        staffSection.classList.add("hidden");
-      }
-    }
-
-    function toggleModal(type) {
-      const overlay = document.getElementById("modal-overlay");
-      const content = document.getElementById("modal-content");
-
-      if (!type) {
-        overlay.classList.add("hidden");
-        overlay.classList.remove("flex");
-        return;
-      }
-
-      let html = "";
-      if (type === "staff") {
-        html = `
-                <h2 class="font-headline-md text-deep-navy mb-4">Add New Team Member</h2>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block font-label-md mb-1">Full Name</label>
-                        <input type="text" class="w-full border-outline-variant rounded-lg p-2.5 focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="e.g. Ama Mensah">
-                    </div>
-                    <div>
-                        <label class="block font-label-md mb-1">Role</label>
-                        <select class="w-full border-outline-variant rounded-lg p-2.5 focus:border-primary focus:ring-1 focus:ring-primary outline-none">
-                            <option>Veterinarian</option>
-                            <option>Technician</option>
-                            <option>Administrator</option>
-                        </select>
-                    </div>
-                    <button class="w-full bg-primary text-on-primary py-3 rounded-lg mt-4 font-bold">Register Staff Member</button>
-                </div>
-            `;
-      } else {
-        html = `
-                <h2 class="font-headline-md text-deep-navy mb-4">Create New Service</h2>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block font-label-md mb-1">Service Name</label>
-                        <input type="text" class="w-full border-outline-variant rounded-lg p-2.5 focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="e.g. Heartworm Testing">
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block font-label-md mb-1">Price (GHS)</label>
-                            <input type="number" class="w-full border-outline-variant rounded-lg p-2.5 focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="0.00">
-                        </div>
-                        <div>
-                            <label class="block font-label-md mb-1">Duration</label>
-                            <select class="w-full border-outline-variant rounded-lg p-2.5 focus:border-primary focus:ring-1 focus:ring-primary outline-none">
-                                <option>15m</option>
-                                <option>30m</option>
-                                <option>60m</option>
-                                <option>120m+</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button class="w-full bg-secondary text-on-secondary py-3 rounded-lg mt-4 font-bold">Add Service to Catalog</button>
-                </div>
-            `;
-      }
-
-      content.innerHTML = html;
-      overlay.classList.remove("hidden");
-      overlay.classList.add("flex");
-    }
-
-    // Navigation function
-    function navigateTo(section) {
-      const pageMap = {
-        analytics: "Dashboard.html",
-        calendar: "clinic_calendar.html",
-        staff: "staff_service_settings.html",
-        billing: "billing.html",
-        records: "records.html",
-        message: "message.html",
-        emergency: "emergency_management.html",
-        appointments: "appointment.html",
-        mortuary: "mortuary.html",
-        reports: "report.html",
-        settings: "settings.html",
-      };
-
-      if (pageMap[section]) {
-        window.location.href = pageMap[section];
-      }
-    }
-
-    // Desktop navigation click handlers
-    document.querySelectorAll("[data-nav-desktop]").forEach((link) => {
-      link.addEventListener("click", (e) => {
-        e.preventDefault();
-        const section = link.getAttribute("data-nav-desktop");
-        navigateTo(section);
-      });
-    });
-
-    // Mobile navigation click handlers
-    document.querySelectorAll("[data-nav-mobile]").forEach((link) => {
-      link.addEventListener("click", (e) => {
-        e.preventDefault();
-        const section = link.getAttribute("data-nav-mobile");
-        navigateTo(section);
-        closeMobileSidebarFunc();
-      });
-    });
-
-    // Logout function
+    // Logout
     function logout() {
       if (confirm("Are you sure you want to logout?")) {
         localStorage.removeItem("user");
@@ -1846,11 +1765,9 @@
       .getElementById("logoutBtnDesktop")
       ?.addEventListener("click", logout);
 
-    // ===== AUTO-HIGHLIGHT ACTIVE PAGE =====
+    // Active page highlight
     function highlightCurrentPage() {
       const currentPage = document.body.getAttribute("data-page") || "staff";
-
-      // Desktop
       document.querySelectorAll("[data-nav-desktop]").forEach((link) => {
         if (link.getAttribute("data-nav-desktop") === currentPage) {
           link.classList.add(
@@ -1866,43 +1783,9 @@
           link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
         }
       });
-
-      // Mobile
-      document.querySelectorAll("[data-nav-mobile]").forEach((link) => {
-        if (link.getAttribute("data-nav-mobile") === currentPage) {
-          link.classList.add(
-            "bg-primary-container",
-            "text-on-primary-container",
-          );
-          link.classList.remove("text-tertiary-fixed-dim", "hover:bg-white/5");
-        } else {
-          link.classList.remove(
-            "bg-primary-container",
-            "text-on-primary-container",
-          );
-          link.classList.add("text-tertiary-fixed-dim", "hover:bg-white/5");
-        }
-      });
     }
 
-    // Call it on load
-    document.addEventListener("DOMContentLoaded", function () {
-      highlightCurrentPage();
-      // ... rest of your code
-    });
-
-    // ===== DATA =====
-    let vets = [];
-    let currentFilter = "all";
-    let currentUser = "Dr. Abena Mensah";
-    let currentWeek = new Date();
-    let appointments = [];
-    let draggedItem = null;
-    let vetIdCounter = 0;
-    let activeChat = null;
-    let messages = {};
-
-    // ===== TOAST =====
+    // Toast Notifications
     function showToast(message, type = "success") {
       const container = document.getElementById("toast-container");
       if (!container) return;
@@ -1917,365 +1800,323 @@
       }, 4500);
     }
 
-    // ===== SCHEDULE DATA =====
-    function loadScheduleData() {
-      const savedCalendarEvents = localStorage.getItem("clinicCalendarEvents");
-      const savedCalendarDate = localStorage.getItem("clinicCalendarViewDate");
+    // ===== TAB SWITCHING =====
+    function switchTab(tab) {
+      const tabs = ["allVetsTab", "scheduleTab", "chatTab"];
+      const views = ["vetsView", "scheduleView", "chatView"];
 
-      if (savedCalendarEvents) {
-        const events = JSON.parse(savedCalendarEvents);
-        let nextId = Date.now();
-
-        appointments = events.map((event) => {
-          const start = new Date(event.start);
-          const date = start.toISOString().split("T")[0];
-          return {
-            id: nextId++,
-            doctor: event.extendedProps?.doctor || currentUser,
-            patient:
-              event.extendedProps?.petName ||
-              event.title.split(" - ")[0].trim() ||
-              "Unknown",
-            owner: event.extendedProps?.owner || "Unknown",
-            service:
-              event.extendedProps?.service ||
-              event.title.split(" - ")[1]?.trim() ||
-              event.title,
-            date,
-            time: start.toTimeString().slice(0, 5),
-            status: event.extendedProps?.status || "pending",
-          };
-        });
-      } else {
-        const today = new Date();
-        const todayStr = today.toISOString().split("T")[0];
-        const tomorrow = new Date(today);
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        const tomorrowStr = tomorrow.toISOString().split("T")[0];
-        const dayAfter = new Date(today);
-        dayAfter.setDate(dayAfter.getDate() + 2);
-        const dayAfterStr = dayAfter.toISOString().split("T")[0];
-
-        appointments = [
-          {
-            id: 1,
-            doctor: "Dr. Abena Mensah",
-            patient: "🐕 Buddy",
-            owner: "John Doe",
-            service: "Annual Checkup",
-            date: todayStr,
-            time: "08:00",
-            status: "completed",
-          },
-          {
-            id: 2,
-            doctor: "Dr. Abena Mensah",
-            patient: "🐱 Luna",
-            owner: "Jane Smith",
-            service: "Vaccination",
-            date: todayStr,
-            time: "10:00",
-            status: "pending",
-          },
-          {
-            id: 3,
-            doctor: "Dr. Abena Mensah",
-            patient: "🐕 Max",
-            owner: "Emelia Tetteh",
-            service: "Surgery Consultation",
-            date: todayStr,
-            time: "14:00",
-            status: "pending",
-          },
-          {
-            id: 4,
-            doctor: "Dr. Abena Mensah",
-            patient: "🐱 Whiskers",
-            owner: "Mary Johnson",
-            service: "Dental Cleaning",
-            date: tomorrowStr,
-            time: "09:00",
-            status: "pending",
-          },
-          {
-            id: 5,
-            doctor: "Dr. Abena Mensah",
-            patient: "🐕 Charlie",
-            owner: "Sarah Williams",
-            service: "Vaccination",
-            date: tomorrowStr,
-            time: "11:00",
-            status: "pending",
-          },
-          {
-            id: 6,
-            doctor: "Dr. Abena Mensah",
-            patient: "🐕 Rocky",
-            owner: "Kofi Annan",
-            service: "Vaccination",
-            date: tomorrowStr,
-            time: "15:00",
-            status: "pending",
-          },
-          {
-            id: 7,
-            doctor: "Dr. Abena Mensah",
-            patient: "🐱 Bella",
-            owner: "Ama Serwaa",
-            service: "Wellness Exam",
-            date: dayAfterStr,
-            time: "09:30",
-            status: "pending",
-          },
-          {
-            id: 8,
-            doctor: "Dr. Abena Mensah",
-            patient: "🐕 Simba",
-            owner: "Esi Tetteh",
-            service: "Surgery",
-            date: dayAfterStr,
-            time: "13:00",
-            status: "pending",
-          },
-        ];
-        saveScheduleData();
-      }
-
-      if (savedCalendarDate) {
-        currentWeek = new Date(savedCalendarDate);
-      }
-
-      appointments = appointments.filter((a) => a.doctor === currentUser);
-    }
-
-    function saveScheduleData() {
-      localStorage.setItem("scheduleViewData", JSON.stringify(appointments));
-
-      const calendarEvents = appointments.map((appointment) => {
-        const start = `${appointment.date}T${appointment.time}:00`;
-        const end = new Date(
-          new Date(start).getTime() + 30 * 60 * 1000,
-        ).toISOString();
-
-        return {
-          id: appointment.id,
-          title: `${appointment.patient} - ${appointment.service}`,
-          start,
-          end,
-          backgroundColor:
-            appointment.status === "completed" ? "#2e7d82" : "#00696d",
-          borderColor:
-            appointment.status === "completed" ? "#2e7d82" : "#00696d",
-          extendedProps: {
-            petName: appointment.patient,
-            owner: appointment.owner,
-            service: appointment.service,
-            doctor: appointment.doctor,
-            status: appointment.status,
-          },
-        };
+      tabs.forEach((t) => {
+        const el = document.getElementById(t);
+        if (el) el.classList.remove("tab-active", "tab-inactive");
+      });
+      views.forEach((v) => {
+        const el = document.getElementById(v);
+        if (el) el.classList.add("hidden");
       });
 
-      localStorage.setItem(
-        "clinicCalendarEvents",
-        JSON.stringify(calendarEvents),
-      );
-      localStorage.setItem("clinicCalendarViewDate", currentWeek.toISOString());
-    }
+      if (tab === "all") {
+        document.getElementById("allVetsTab")?.classList.add("tab-active");
+        document.getElementById("vetsView")?.classList.remove("hidden");
+        renderStaffDirectory();
 
-    // ===== SAMPLE CHAT DATA =====
-    const chatData = {
-      "Dr. Kwesi Mensah": {
-        status: "online",
-        messages: [
-          {
-            sender: "Dr. Kwesi Mensah",
-            text: "Good morning! How are the surgery prep lists looking?",
-            time: "09:30 AM",
-          },
-          {
-            sender: "You",
-            text: "All prepped and ready. We have 3 procedures scheduled today.",
-            time: "09:32 AM",
-          },
-          {
-            sender: "Dr. Kwesi Mensah",
-            text: "Perfect. I'll be in OR 2 from 10:30.",
-            time: "09:35 AM",
-          },
-          {
-            sender: "You",
-            text: "Great, I'll make sure the team is ready.",
-            time: "09:36 AM",
-          },
-        ],
-      },
-      "Dr. Abena Osei": {
-        status: "online",
-        messages: [
-          {
-            sender: "Dr. Abena Osei",
-            text: "Hi! Can you check on the lab results for patient #342?",
-            time: "10:15 AM",
-          },
-          {
-            sender: "You",
-            text: "Let me check... They just came in. All clear.",
-            time: "10:18 AM",
-          },
-          {
-            sender: "Dr. Abena Osei",
-            text: "Thank you! I'll update the owner.",
-            time: "10:20 AM",
-          },
-        ],
-      },
-      "Dr. Kofi Annan": {
-        status: "offline",
-        messages: [
-          {
-            sender: "You",
-            text: "Dr. Annan, can we discuss the new X-ray machine?",
-            time: "Yesterday, 04:30 PM",
-          },
-          {
-            sender: "Dr. Kofi Annan",
-            text: "Yes, I'll be in tomorrow morning. Let's meet at 9.",
-            time: "Yesterday, 05:00 PM",
-          },
-        ],
-      },
-    };
-
-    // ===== LOAD DATA =====
-    function loadData() {
-      const savedVets = localStorage.getItem("vets");
-      if (savedVets) {
-        vets = JSON.parse(savedVets);
-        vetIdCounter = vets.length;
-      } else {
-        vets = [
-          {
-            id: "VET-0042",
-            name: "Dr. Kwesi Mensah",
-            specialty: "Surgery",
-            email: "kwesi.mensah@addypets.com",
-            phone: "241234567",
-            status: "online",
-          },
-          {
-            id: "VET-0043",
-            name: "Dr. Abena Osei",
-            specialty: "Cardiology",
-            email: "abena.osei@addypets.com",
-            phone: "242345678",
-            status: "online",
-          },
-          {
-            id: "VET-0044",
-            name: "Dr. Kofi Annan",
-            specialty: "General Medicine",
-            email: "kofi.annan@addypets.com",
-            phone: "243456789",
-            status: "offline",
-          },
-          {
-            id: "VET-0045",
-            name: "Dr. Ama Serwaa",
-            specialty: "Emergency Medicine",
-            email: "ama.serwaa@addypets.com",
-            phone: "244567890",
-            status: "online",
-          },
-          {
-            id: "VET-0046",
-            name: "Dr. Esi Tetteh",
-            specialty: "Dermatology",
-            email: "esi.tetteh@addypets.com",
-            phone: "245678901",
-            status: "away",
-          },
-        ];
-        saveVets();
+        // Auto-open chat if navigated from notification with ?chatUserId=
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetChatUserId = urlParams.get("chatUserId");
+        if (targetChatUserId && staffDirectory && staffDirectory.length > 0) {
+          const targetStaff = staffDirectory.find(
+            (s) =>
+              Number(s.USER_ID || s.userId || s.id) ===
+              Number(targetChatUserId),
+          );
+          if (targetStaff) {
+            setTimeout(() => {
+              startChatWithColleague(
+                targetStaff.USER_ID || targetStaff.userId || targetStaff.id,
+                encodeURIComponent(targetStaff.FULL_NAME || targetStaff.name),
+                encodeURIComponent(
+                  targetStaff.ROLE || targetStaff.role || "Colleague",
+                ),
+                encodeURIComponent(
+                  targetStaff.DEPARTMENT || targetStaff.department || "General",
+                ),
+                targetStaff.STATUS === "Active" ? "online" : "offline",
+              );
+            }, 300);
+          }
+        }
+      } else if (tab === "schedule") {
+        document.getElementById("scheduleTab")?.classList.add("tab-active");
+        document.getElementById("scheduleView")?.classList.remove("hidden");
+        loadScheduleAppointments();
+      } else if (tab === "chat") {
+        document.getElementById("chatTab")?.classList.add("tab-active");
+        document.getElementById("chatView")?.classList.remove("hidden");
+        renderChatList();
+        if (activePartner) {
+          loadStaffMessages(activePartner.userId);
+        }
       }
-      loadScheduleData();
-      renderAll();
-      updateStats();
+
+      tabs.forEach((t) => {
+        const el = document.getElementById(t);
+        if (el && !el.classList.contains("tab-active")) {
+          el.classList.add("tab-inactive");
+        }
+      });
     }
 
-    function saveVets() {
-      localStorage.setItem("vets", JSON.stringify(vets));
+    // ===== PERMISSIONS & USER INITIALIZATION =====
+    function checkPermissions() {
+      try {
+        if (typeof window.getCurrentUser === "function") {
+          loggedInUser = window.getCurrentUser();
+        } else {
+          const userStr = localStorage.getItem("user");
+          loggedInUser = userStr ? JSON.parse(userStr) : null;
+        }
+      } catch (e) {
+        loggedInUser = null;
+      }
+
+      const addVetBtn = document.getElementById("addVetBtn");
+      if (addVetBtn) {
+        const role = (loggedInUser?.role || "").trim();
+        if (role === "Super Admin" || role.toLowerCase() === "super admin") {
+          addVetBtn.classList.remove("hidden");
+        } else {
+          addVetBtn.classList.add("hidden");
+        }
+      }
     }
 
-    // ===== GENERATE ID =====
-    function generateVetId() {
-      vetIdCounter++;
-      return `VET-${String(vetIdCounter).padStart(4, "0")}`;
+    // ===== LIVE KPIS =====
+    async function loadKPIs() {
+      // 1. Total Staff & Online Count
+      try {
+        const res = await (window.apiFetch
+          ? window.apiFetch("/api/staff")
+          : fetch("/api/staff"));
+        if (res.ok) {
+          const json = await res.json();
+          const list = json.data || [];
+          document.getElementById("totalStaff").textContent = list.length;
+          const activeCount = list.filter(
+            (s) => (s.STATUS || "Active").toLowerCase() === "active",
+          ).length;
+          document.getElementById("onlineVets").textContent = activeCount;
+        }
+      } catch (e) {
+        console.warn("KPI staff fetch note:", e);
+      }
+
+      // 2. Today's Appointments
+      try {
+        const res = await (window.apiFetch
+          ? window.apiFetch("/api/appointments")
+          : fetch("/api/appointments"));
+        if (res.ok) {
+          const json = await res.json();
+          const appts = json.data || [];
+          const todayStr = new Date().toISOString().split("T")[0];
+          const todayAppts = appts.filter((a) => {
+            const dateStr = (a.APPOINTMENT_DATE || a.START_TIME || "").split(
+              "T",
+            )[0];
+            return dateStr === todayStr;
+          });
+          document.getElementById("todayAppointments").textContent =
+            todayAppts.length;
+        }
+      } catch (e) {
+        console.warn("KPI appointments fetch note:", e);
+      }
+
+      // 3. Urgent Cases
+      try {
+        const res = await (window.apiFetch
+          ? window.apiFetch("/api/emergencies")
+          : fetch("/api/emergencies"));
+        if (res.ok) {
+          const json = await res.json();
+          const ems = json.data || [];
+          const urgent = ems.filter(
+            (em) =>
+              (em.STATUS || "").toLowerCase() !== "resolved" &&
+              (em.STATUS || "").toLowerCase() !== "discharged",
+          );
+          document.getElementById("urgentCases").textContent = urgent.length;
+        }
+      } catch (e) {
+        console.warn("KPI emergencies fetch note:", e);
+      }
     }
 
-    // ===== RENDER =====
-    function renderAll() {
-      renderVets();
-      renderScheduleList();
-      renderChatList();
-      renderChatMessages();
+    // ===== STAFF DIRECTORY =====
+    async function loadStaffDirectory() {
+      try {
+        const res = await (window.apiFetch
+          ? window.apiFetch("/api/staff")
+          : fetch("/api/staff"));
+        if (!res.ok) throw new Error("Failed to load staff list");
+        const json = await res.json();
+        allStaff = json.data || [];
+        currentStaffList = allStaff;
+        renderStaffDirectory();
+        renderChatList();
+      } catch (err) {
+        console.error("Staff directory load error:", err);
+      }
     }
 
-    function renderVets() {
+    function filterStaffDirectory() {
+      const q = (document.getElementById("staffSearchInput")?.value || "")
+        .toLowerCase()
+        .trim();
+      if (!q) {
+        currentStaffList = allStaff;
+      } else {
+        currentStaffList = allStaff.filter((s) => {
+          return (
+            (s.FULL_NAME || "").toLowerCase().includes(q) ||
+            (s.ROLE || "").toLowerCase().includes(q) ||
+            (s.DEPARTMENT || "").toLowerCase().includes(q) ||
+            (s.STAFF_NUMBER || "").toLowerCase().includes(q) ||
+            (s.EMAIL || "").toLowerCase().includes(q)
+          );
+        });
+      }
+      renderStaffDirectory();
+    }
+
+    function renderStaffDirectory() {
       const container = document.getElementById("vetsContainer");
       if (!container) return;
 
-      let filtered = vets;
-      if (currentFilter === "online") {
-        filtered = vets.filter((v) => v.status === "online");
-      }
-
-      if (filtered.length === 0) {
-        container.innerHTML = `<div class="col-span-full text-center py-12"><span class="material-symbols-outlined text-5xl text-outline">medical_services</span><p class="text-on-surface-variant mt-2">No veterinarians found</p></div>`;
+      if (!currentStaffList || currentStaffList.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full text-center py-16 bg-white rounded-xl border border-outline-variant">
+            <span class="material-symbols-outlined text-5xl text-outline/60 block mb-2">groups</span>
+            <p class="font-bold text-on-surface">No staff members found</p>
+            <p class="text-xs text-on-surface-variant mt-1">Try adjusting your search criteria</p>
+          </div>
+        `;
         return;
       }
 
-      container.innerHTML = filtered
-        .map(
-          (vet) => `
-        <div class="vet-card bg-white rounded-xl border border-outline-variant p-5 shadow-sm">
-            <div class="flex items-start justify-between mb-4">
-                <div class="flex items-center gap-4">
-                    <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-3xl text-primary">medical_services</span>
+      container.innerHTML = currentStaffList
+        .map((staff) => {
+          const isActive =
+            (staff.STATUS || "Active").toLowerCase() === "active";
+          const staffNum =
+            staff.STAFF_NUMBER ||
+            staff.LICENSE_NUMBER ||
+            `STF-${String(staff.STAFF_ID || staff.USER_ID).padStart(3, "0")}`;
+          const dept =
+            staff.DEPARTMENT || staff.JOB_TITLE || "General Medicine";
+          const role = staff.ROLE || staff.JOB_TITLE || "Staff";
+          const avatarUrl =
+            staff.PROFILE_IMAGE ||
+            `https://ui-avatars.com/api/?name=${encodeURIComponent(staff.FULL_NAME || "Staff")}&background=036469&color=fff`;
+
+          return `
+            <div class="vet-card bg-white rounded-xl border border-outline-variant p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+              <div>
+                <div class="flex items-start justify-between mb-4">
+                  <div class="flex items-center gap-3.5">
+                    <div class="relative w-13 h-13 rounded-full overflow-hidden shrink-0 ring-2 ${isActive ? "ring-emerald-500" : "ring-gray-300"}">
+                      <img src="${avatarUrl}" alt="${staff.FULL_NAME}" class="w-12 h-12 rounded-full object-cover" />
+                      <span class="absolute bottom-0 right-0 w-3 h-3 rounded-full ${isActive ? "bg-emerald-500 ring-2 ring-white" : "bg-gray-400 ring-2 ring-white"}" title="${isActive ? "Online / Active" : "Offline"}"></span>
                     </div>
                     <div>
-                        <h3 class="font-headline-md text-[18px] text-deep-navy">${vet.name}</h3>
-                        <div class="flex items-center gap-2 flex-wrap">
-                            <span class="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary">${vet.specialty}</span>
-                            <span class="flex items-center gap-1 text-xs">
-                                <span class="status-dot ${vet.status}"></span>
-                                ${vet.status.charAt(0).toUpperCase() + vet.status.slice(1)}
-                            </span>
-                        </div>
+                      <h3 class="font-bold text-[17px] text-deep-navy">${staff.FULL_NAME}</h3>
+                      <div class="flex items-center gap-1.5 flex-wrap mt-0.5">
+                        <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-primary/10 text-primary">${role}</span>
+                        <span class="text-[11px] text-gray-500">${dept}</span>
+                      </div>
                     </div>
+                  </div>
                 </div>
-                <button onclick="toggleVetStatus('${vet.id}')" class="p-1.5 text-outline hover:text-primary rounded-lg hover:bg-primary/10 transition-colors">
-                    <span class="material-symbols-outlined text-sm">sync</span>
+
+                <div class="space-y-1.5 text-xs border-t border-outline-variant/30 pt-3.5 text-on-surface-variant">
+                  <div class="flex justify-between items-center">
+                    <span class="text-gray-500">ID / License:</span>
+                    <span class="font-mono font-bold text-gray-700">${staffNum}</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-gray-500">Email:</span>
+                    <span class="truncate max-w-[180px] font-medium text-gray-800" title="${staff.EMAIL}">${staff.EMAIL}</span>
+                  </div>
+                  ${
+                    staff.PHONE
+                      ? `
+                  <div class="flex justify-between items-center">
+                    <span class="text-gray-500">Phone:</span>
+                    <span class="font-medium text-gray-800">${staff.PHONE}</span>
+                  </div>`
+                      : ""
+                  }
+                  <div class="flex justify-between items-center pt-1">
+                    <span class="text-gray-500">Presence:</span>
+                    <span class="inline-flex items-center gap-1 font-semibold ${isActive ? "text-emerald-600" : "text-gray-500"}">
+                      <span class="w-2 h-2 rounded-full ${isActive ? "bg-emerald-500" : "bg-gray-400"}"></span>
+                      ${isActive ? "Active Now" : "Offline"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action button to message colleague -->
+              <div class="mt-4 pt-3 border-t border-outline-variant/30">
+                <button
+                  type="button"
+                  onclick="startChatWithColleague('${staff.USER_ID || staff.STAFF_ID}', '${encodeURIComponent(staff.FULL_NAME || "")}', '${encodeURIComponent(role)}', '${encodeURIComponent(dept)}', '${isActive ? "online" : "offline"}')"
+                  class="w-full bg-primary/10 hover:bg-primary text-primary hover:text-white py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-sm"
+                >
+                  <span class="material-symbols-outlined text-base">chat</span>
+                  Message Colleague
                 </button>
+              </div>
             </div>
-            <div class="space-y-1.5 text-sm border-t border-outline-variant/30 pt-4">
-                <div class="flex justify-between"><span class="text-on-surface-variant">Vet ID</span><span class="font-mono font-medium">${vet.id}</span></div>
-                <div class="flex justify-between"><span class="text-on-surface-variant">Email</span><span class="truncate max-w-[180px]">${vet.email}</span></div>
-                ${vet.phone ? `<div class="flex justify-between"><span class="text-on-surface-variant">Phone</span><span>+233 ${vet.phone}</span></div>` : ""}
-            </div>
-            <div class="flex gap-2 mt-4 pt-4 border-t border-outline-variant/30">
-                <button onclick="startChat('${vet.name}')" class="flex-1 text-primary border border-primary/30 py-2 rounded-lg text-sm font-semibold hover:bg-primary/5 transition-colors flex items-center justify-center gap-1">
-                    <span class="material-symbols-outlined text-sm">chat</span> Message
-                </button>
-                <button onclick="deleteVet('${vet.id}')" class="px-3 border border-outline-variant rounded-lg text-on-surface-variant hover:bg-error/5 hover:text-error transition-colors">
-                    <span class="material-symbols-outlined text-sm block">delete</span>
-                </button>
-            </div>
-        </div>
-    `,
-        )
+          `;
+        })
         .join("");
+    }
+
+    // ===== SCHEDULE TAB =====
+    async function loadScheduleAppointments() {
+      const container = document.getElementById("scheduleList");
+      if (!container) return;
+
+      container.innerHTML = `<div class="text-center py-10 text-xs text-gray-500">Loading assigned clinical schedule...</div>`;
+
+      try {
+        const res = await (window.apiFetch
+          ? window.apiFetch("/api/appointments")
+          : fetch("/api/appointments"));
+        if (!res.ok) throw new Error("Failed to fetch appointments");
+        const json = await res.json();
+        const allAppts = json.data || [];
+
+        // Filter for logged-in user or show clinical team appointments
+        const userName = (loggedInUser?.fullName || "").toLowerCase();
+        const userId = loggedInUser?.userId;
+
+        staffAppointments = allAppts.filter((a) => {
+          if (!userName && !userId) return true;
+          const docName = (a.DOCTOR_NAME || a.VET_NAME || "").toLowerCase();
+          const docId = a.DOCTOR_ID || a.VET_ID;
+          return (
+            (userName && docName.includes(userName)) ||
+            (userId && Number(docId) === Number(userId)) ||
+            loggedInUser?.role === "Super Admin"
+          );
+        });
+
+        renderScheduleList();
+      } catch (err) {
+        console.warn("Schedule appointments load error:", err);
+        renderScheduleList();
+      }
     }
 
     function renderScheduleList() {
@@ -2287,8 +2128,9 @@
       const diffToMonday = (dayOfWeek + 6) % 7;
       weekStart.setDate(weekStart.getDate() - diffToMonday);
 
+      const weekEnd = new Date(weekStart.getTime() + 6 * 24 * 60 * 60 * 1000);
       document.getElementById("weekDisplay").textContent =
-        `${weekStart.toLocaleDateString("default", { month: "short", day: "numeric" })} - ${new Date(weekStart.getTime() + 6 * 24 * 60 * 60 * 1000).toLocaleDateString("default", { month: "short", day: "numeric", year: "numeric" })}`;
+        `${weekStart.toLocaleDateString("default", { month: "short", day: "numeric" })} - ${weekEnd.toLocaleDateString("default", { month: "short", day: "numeric", year: "numeric" })}`;
 
       const days = [
         "Monday",
@@ -2301,657 +2143,677 @@
       ];
       let html = "";
 
-      days.forEach((day) => {
-        const dayIndex = days.indexOf(day);
+      days.forEach((day, index) => {
         const date = new Date(weekStart);
-        date.setDate(date.getDate() + dayIndex);
-        const isToday = date.toDateString() === new Date().toDateString();
+        date.setDate(date.getDate() + index);
         const dateStr = date.toISOString().split("T")[0];
+        const isToday = date.toDateString() === new Date().toDateString();
 
-        const dayAppointments = appointments.filter(
-          (a) => a.date === dateStr && a.doctor === currentUser,
-        );
-        dayAppointments.sort((a, b) => a.time.localeCompare(b.time));
+        const dayAppts = staffAppointments.filter((a) => {
+          const aDate = (
+            a.APPOINTMENT_DATE ||
+            a.START_TIME ||
+            a.date ||
+            ""
+          ).split("T")[0];
+          return aDate === dateStr;
+        });
 
-        if (dayAppointments.length === 0) {
+        dayAppts.sort((a, b) => {
+          const tA = (a.START_TIME || a.time || "").toString();
+          const tB = (b.START_TIME || b.time || "").toString();
+          return tA.localeCompare(tB);
+        });
+
+        if (dayAppts.length === 0) {
           html += `
-                <div class="day-section">
-            <div class="day-header flex justify-between ${isToday ? "bg-primary/5" : ""}">
-                <span>${day} <span class="date">${date.getDate()}</span> ${isToday ? '<span class="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full ml-2">Today</span>' : ""}</span>
-                <span class="text-sm font-normal text-gray-400">No appointments</span>
+            <div class="day-section">
+              <div class="day-header flex justify-between items-center ${isToday ? "bg-primary/5 border-l-4 border-l-primary" : ""}">
+                <span class="font-bold">${day} <span class="date ml-1 font-normal">${date.toLocaleDateString("default", { month: "short", day: "numeric" })}</span> ${isToday ? '<span class="text-[11px] bg-primary text-white font-semibold px-2 py-0.5 rounded-full ml-2">Today</span>' : ""}</span>
+                <span class="text-xs text-gray-400">No appointments scheduled</span>
+              </div>
+              <div class="schedule-list p-4 text-center text-xs text-gray-400">
+                <span>Free schedule</span>
+              </div>
             </div>
-            <div class="schedule-list" data-day="${dateStr}" style="min-height: 60px;">
-                <div class="flex items-center justify-center h-full text-xs text-gray-300 py-4">
-                    Drop here to schedule
-                </div>
-            </div>
-        </div>
-            `;
+          `;
           return;
         }
 
         html += `
-            <div class="day-section">
-                <div class="day-header flex justify-between ${isToday ? "bg-primary/5" : ""}">
-                    <span>${day} <span class="date">${date.getDate()}</span> ${isToday ? '<span class="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full ml-2">Today</span>' : ""}</span>
-                    <span class="text-sm font-normal text-gray-500">${dayAppointments.length} appointments</span>
-                </div>
-                <div class="schedule-list" data-day="${dateStr}">
-                    ${dayAppointments
-                      .map(
-                        (appointment) => `
-                        <div class="schedule-item ${appointment.status === "completed" ? "completed" : "appointment"} flex items-center justify-between px-4 py-2 border-b border-gray-50 last:border-0 hover:bg-gray-50 transition-all"
-                             draggable="true"
-                             data-id="${appointment.id}"
-                             data-date="${appointment.date}"
-                             data-time="${appointment.time}">
-                            <div class="flex items-center gap-3 flex-1">
-                                <span class="drag-handle material-symbols-outlined text-sm text-gray-400">drag_indicator</span>
-                                <span class="material-symbols-outlined text-sm text-primary">pets</span>
-                                <span class="text-xs font-medium text-gray-500 w-14">${appointment.time}</span>
-                                <div class="flex-1">
-                                    <span class="font-medium text-sm">${appointment.patient}</span>
-                                    <span class="text-xs text-gray-500 ml-2">(${appointment.owner})</span>
-                                </div>
-                                <span class="text-xs text-primary font-medium">${appointment.service}</span>
-                                <span class="text-xs px-2 py-0.5 rounded-full ${appointment.status === "completed" ? "bg-green-100 text-green-600" : "bg-yellow-100 text-yellow-600"}">
-                                    ${appointment.status}
-                                </span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <button onclick="toggleAppointmentStatus(${appointment.id})" class="text-xs text-primary hover:underline">
-                                    ${appointment.status === "completed" ? "Reopen" : "Complete"}
-                                </button>
-                                <button onclick="confirmDelete(${appointment.id})" class="delete-btn">
-                                    Delete
-                                </button>
-                            </div>
-                        </div>
-                    `,
-                      )
-                      .join("")}
-                </div>
+          <div class="day-section">
+            <div class="day-header flex justify-between items-center ${isToday ? "bg-primary/5 border-l-4 border-l-primary" : ""}">
+              <span class="font-bold">${day} <span class="date ml-1 font-normal">${date.toLocaleDateString("default", { month: "short", day: "numeric" })}</span> ${isToday ? '<span class="text-[11px] bg-primary text-white font-semibold px-2 py-0.5 rounded-full ml-2">Today</span>' : ""}</span>
+              <span class="text-xs font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">${dayAppts.length} procedure${dayAppts.length > 1 ? "s" : ""}</span>
             </div>
+            <div class="schedule-list divide-y divide-gray-100">
+              ${dayAppts
+                .map((a) => {
+                  const id = a.APPOINTMENT_ID || a.id;
+                  const isCompleted =
+                    (a.STATUS || "").toLowerCase() === "completed";
+                  const petName = a.PET_NAME || a.patient || "Patient";
+                  const ownerName = a.OWNER_NAME || a.owner || "Owner";
+                  const serviceName =
+                    a.SERVICE_NAME || a.TYPE || a.service || "Clinical Visit";
+                  const time = (a.START_TIME || a.time || "09:00").substring(
+                    0,
+                    5,
+                  );
+
+                  return `
+                    <div class="schedule-item ${isCompleted ? "completed" : "appointment"} flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-all">
+                      <div class="flex items-center gap-3 flex-1 min-w-0">
+                        <span class="material-symbols-outlined text-sm text-primary">pets</span>
+                        <span class="text-xs font-bold text-deep-navy w-14">${time}</span>
+                        <div class="flex-1 truncate">
+                          <span class="font-bold text-sm text-deep-navy">${petName}</span>
+                          <span class="text-xs text-gray-500 ml-1.5 font-normal">(${ownerName})</span>
+                        </div>
+                        <span class="text-xs font-semibold px-2 py-0.5 rounded bg-primary/10 text-primary truncate max-w-[150px]">${serviceName}</span>
+                        <span class="text-[11px] px-2 py-0.5 rounded-full font-bold ${isCompleted ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700"}">
+                          ${a.STATUS || "Scheduled"}
+                        </span>
+                      </div>
+                      <div class="flex items-center gap-2 ml-4">
+                        <button
+                          onclick="toggleAppointmentComplete(${id}, '${a.STATUS}')"
+                          class="text-xs font-bold px-2.5 py-1 rounded border border-outline-variant hover:bg-surface-muted transition-all"
+                        >
+                          ${isCompleted ? "Reopen" : "Mark Done"}
+                        </button>
+                        <a
+                          href="./clinic_calendar.html"
+                          class="p-1 text-outline hover:text-primary rounded transition-colors"
+                          title="Edit in Full Calendar"
+                        >
+                          <span class="material-symbols-outlined text-sm">open_in_new</span>
+                        </a>
+                      </div>
+                    </div>
+                  `;
+                })
+                .join("")}
+            </div>
+          </div>
         `;
       });
 
       container.innerHTML = html;
-      setupDragAndDrop();
     }
 
-    // ===== DELETE APPOINTMENT =====
-    function confirmDelete(id) {
-      const appointment = appointments.find((a) => a.id === id);
-      if (!appointment) return;
-
-      appointments = appointments.filter((a) => a.id !== id);
-      saveScheduleData();
-      renderScheduleList();
-      updateStats();
-      showToast(`🗑️ ${appointment.patient} has been deleted`, "info");
-    }
-
-    // ===== TOGGLE APPOINTMENT STATUS =====
-    function toggleAppointmentStatus(id) {
-      const appointment = appointments.find((a) => a.id === id);
-      if (appointment) {
-        appointment.status =
-          appointment.status === "completed" ? "pending" : "completed";
-        saveScheduleData();
-        renderScheduleList();
-        updateStats();
-        showToast(
-          `✅ ${appointment.patient} marked as ${appointment.status}`,
-          "info",
-        );
+    async function toggleAppointmentComplete(id, currentStatus) {
+      const nextStatus =
+        (currentStatus || "").toLowerCase() === "completed"
+          ? "Scheduled"
+          : "Completed";
+      try {
+        const res = await (window.apiFetch
+          ? window.apiFetch(`/api/appointments/${id}`, {
+              method: "PUT",
+              body: JSON.stringify({ status: nextStatus }),
+            })
+          : fetch(`/api/appointments/${id}`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ status: nextStatus }),
+            }));
+        if (res.ok) {
+          showToast(
+            `✅ Appointment status updated to ${nextStatus}`,
+            "success",
+          );
+          loadScheduleAppointments();
+          loadKPIs();
+        } else {
+          showToast("Failed to update status on server", "error");
+        }
+      } catch (e) {
+        showToast("Error updating appointment", "error");
       }
     }
 
-    // ===== DRAG AND DROP =====
-    function setupDragAndDrop() {
-      const items = document.querySelectorAll(
-        '.schedule-item[draggable="true"]',
-      );
-      const containers = document.querySelectorAll(".schedule-list");
-
-      items.forEach((item) => {
-        item.addEventListener("dragstart", function (e) {
-          draggedItem = this;
-          this.classList.add("dragging");
-          e.dataTransfer.effectAllowed = "move";
-          e.dataTransfer.setData("appointmentId", this.dataset.id);
-          e.dataTransfer.setData("sourceDate", this.dataset.date);
-        });
-
-        item.addEventListener("dragend", function () {
-          this.classList.remove("dragging");
-          document
-            .querySelectorAll(".schedule-item.drag-over")
-            .forEach((el) => el.classList.remove("drag-over"));
-          document
-            .querySelectorAll(".drop-indicator.visible")
-            .forEach((el) => el.classList.remove("visible"));
-        });
-
-        item.addEventListener("dragover", function (e) {
-          e.preventDefault();
-          e.dataTransfer.dropEffect = "move";
-          if (draggedItem !== this) {
-            document
-              .querySelectorAll(".schedule-item.drag-over")
-              .forEach((el) => {
-                if (el !== this) el.classList.remove("drag-over");
-              });
-            this.classList.add("drag-over");
-          }
-        });
-
-        item.addEventListener("dragleave", function () {
-          this.classList.remove("drag-over");
-        });
-
-        item.addEventListener("drop", function (e) {
-          e.preventDefault();
-          this.classList.remove("drag-over");
-
-          const draggedId = parseInt(e.dataTransfer.getData("appointmentId"));
-          const targetId = parseInt(this.dataset.id);
-          const targetAppt = appointments.find((a) => a.id === targetId);
-          const draggedAppt = appointments.find((a) => a.id === draggedId);
-
-          if (draggedAppt && targetAppt && draggedId !== targetId) {
-            const tempDate = draggedAppt.date;
-            const tempTime = draggedAppt.time;
-
-            draggedAppt.date = targetAppt.date;
-            draggedAppt.time = targetAppt.time;
-            targetAppt.date = tempDate;
-            targetAppt.time = tempTime;
-
-            saveScheduleData();
-            showToast("📅 Appointment rescheduled successfully!", "success");
-            renderScheduleList();
-            updateStats();
-          }
-        });
-      });
-
-      containers.forEach((container) => {
-        container.addEventListener("dragover", function (e) {
-          e.preventDefault();
-          e.dataTransfer.dropEffect = "move";
-          let indicator = this.querySelector(".drop-indicator");
-          if (!indicator) {
-            indicator = document.createElement("div");
-            indicator.className = "drop-indicator visible";
-            this.appendChild(indicator);
-          } else {
-            indicator.classList.add("visible");
-          }
-        });
-
-        container.addEventListener("dragleave", function () {
-          const indicator = this.querySelector(".drop-indicator");
-          if (indicator) indicator.classList.remove("visible");
-        });
-
-        container.addEventListener("drop", function (e) {
-          e.preventDefault();
-          const indicator = this.querySelector(".drop-indicator");
-          if (indicator) indicator.classList.remove("visible");
-
-          const draggedId = parseInt(e.dataTransfer.getData("appointmentId"));
-          const targetDate = this.dataset.day;
-
-          if (draggedId && targetDate) {
-            const draggedAppt = appointments.find((a) => a.id === draggedId);
-            if (draggedAppt) {
-              if (draggedAppt.date === targetDate) {
-                return;
-              }
-              draggedAppt.date = targetDate;
-              saveScheduleData();
-              showToast("📅 Appointment moved successfully!", "success");
-              renderScheduleList();
-              updateStats();
-            }
-          }
-        });
-      });
+    // ===== MESSAGING & ATTACHMENTS =====
+    function filterChatConversations() {
+      const q = (document.getElementById("chatSearchInput")?.value || "")
+        .toLowerCase()
+        .trim();
+      renderChatList(q);
     }
 
-    // ===== UPDATE STATS =====
-    function updateStats() {
-      document.getElementById("totalVets").textContent = vets.length;
-      document.getElementById("onlineVets").textContent = vets.filter(
-        (v) => v.status === "online",
-      ).length;
-      const today = new Date().toISOString().split("T")[0];
-      document.getElementById("todayAppointments").textContent =
-        appointments.filter((a) => a.date === today).length;
-      document.getElementById("urgentCases").textContent = 3;
-    }
-
-    // ===== WEEK NAVIGATION =====
-    function navigateWeek(direction) {
-      currentWeek.setDate(currentWeek.getDate() + direction * 7);
-      renderScheduleList();
-      updateStats();
-    }
-
-    // ===== GO TO TODAY =====
-    function goToToday() {
-      currentWeek = new Date();
-      renderScheduleList();
-      updateStats();
-    }
-
-    function renderChatList() {
+    function renderChatList(filterQuery = "") {
       const container = document.getElementById("chatList");
       if (!container) return;
 
-      const chatNames = Object.keys(chatData);
-      if (chatNames.length === 0) {
-        container.innerHTML = `<div class="text-center text-sm text-on-surface-variant py-8">No conversations yet</div>`;
+      const myId =
+        loggedInUser?.userId || loggedInUser?.id || loggedInUser?.user_id;
+      // Filter out self
+      let colleagues = allStaff.filter((s) => {
+        const uid = Number(s.USER_ID);
+        const sid = Number(s.STAFF_ID);
+        const me = Number(myId);
+        return uid !== me && sid !== me;
+      });
+
+      if (filterQuery) {
+        colleagues = colleagues.filter(
+          (s) =>
+            (s.FULL_NAME || "").toLowerCase().includes(filterQuery) ||
+            (s.ROLE || "").toLowerCase().includes(filterQuery) ||
+            (s.DEPARTMENT || "").toLowerCase().includes(filterQuery),
+        );
+      }
+
+      if (colleagues.length === 0) {
+        container.innerHTML = `<div class="text-center text-xs text-gray-500 py-10">No colleagues found</div>`;
         return;
       }
 
-      container.innerHTML = chatNames
-        .map((name) => {
-          const chat = chatData[name];
-          const lastMsg = chat.messages[chat.messages.length - 1];
-          const isActive = activeChat === name;
+      container.innerHTML = colleagues
+        .map((staff) => {
+          const userId = staff.USER_ID || staff.STAFF_ID;
+          const name = staff.FULL_NAME || "Colleague";
+          const role = staff.ROLE || staff.JOB_TITLE || "Staff";
+          const dept = staff.DEPARTMENT || "Clinical";
+          const isActive =
+            (staff.STATUS || "Active").toLowerCase() === "active";
+          const isSelected =
+            activePartner && Number(activePartner.userId) === Number(userId);
+          const avatarUrl =
+            staff.PROFILE_IMAGE ||
+            `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=036469&color=fff`;
+
           return `
-            <div class="chat-list-item ${isActive ? "active" : ""}" onclick="startChat('${name}')">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                        <span class="material-symbols-outlined text-primary text-sm">person</span>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <div class="flex items-center justify-between">
-                            <p class="font-medium text-on-surface text-sm">${name}</p>
-                            <span class="text-xs text-on-surface-variant">${lastMsg ? lastMsg.time : ""}</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="online-indicator ${chat.status}"></span>
-                            <p class="text-xs text-on-surface-variant truncate">${lastMsg ? lastMsg.text : "Start a conversation"}</p>
-                        </div>
-                    </div>
+            <div
+              class="chat-list-item px-3.5 py-3 border-b border-gray-100 hover:bg-white cursor-pointer transition-all ${isSelected ? "bg-primary/10 border-l-4 border-l-primary" : ""}"
+              onclick="startChatWithColleague('${userId}', '${encodeURIComponent(name)}', '${encodeURIComponent(role)}', '${encodeURIComponent(dept)}', '${isActive ? "online" : "offline"}')"
+            >
+              <div class="flex items-center gap-3">
+                <div class="relative w-9 h-9 rounded-full shrink-0">
+                  <img src="${avatarUrl}" class="w-9 h-9 rounded-full object-cover ring-1 ring-gray-200" alt="${name}" />
+                  <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full ${isActive ? "bg-emerald-500 ring-2 ring-white" : "bg-gray-400 ring-2 ring-white"}"></span>
                 </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center justify-between">
+                    <p class="font-bold text-xs text-deep-navy truncate">${name}</p>
+                    <span class="text-[10px] text-gray-400">${isActive ? "🟢" : "⚪"}</span>
+                  </div>
+                  <p class="text-[11px] text-gray-500 truncate">${role} • ${dept}</p>
+                </div>
+              </div>
             </div>
-        `;
+          `;
         })
         .join("");
     }
 
-    function renderChatMessages() {
-      const container = document.getElementById("chatMessages");
+    function startChatWithColleague(userId, nameEnc, roleEnc, deptEnc, status) {
+      const name = decodeURIComponent(nameEnc);
+      const role = decodeURIComponent(roleEnc);
+      const dept = decodeURIComponent(deptEnc);
+
+      activePartner = {
+        userId: Number(userId),
+        fullName: name,
+        role: role,
+        department: dept,
+        status: status,
+      };
+
+      // Switch to Chat tab
+      switchTab("chat");
+      renderChatList();
+
+      // Update header
+      document.getElementById("chatPartnerName").textContent = name;
+      document.getElementById("chatPartnerStatus").innerHTML = `
+        <span class="inline-block w-2 h-2 rounded-full ${status === "online" ? "bg-emerald-500" : "bg-gray-400"}"></span>
+        <span class="font-semibold text-gray-700">${role} (${dept})</span> • ${status === "online" ? "Active Now" : "Offline"}
+      `;
+
+      // Enable input and send button
       const input = document.getElementById("chatInput");
       const sendBtn = document.getElementById("sendMessageBtn");
-      const nameDisplay = document.getElementById("chatPartnerName");
-      const statusDisplay = document.getElementById("chatPartnerStatus");
-
-      if (!activeChat || !chatData[activeChat]) {
-        container.innerHTML = `<div class="text-center text-xs text-on-surface-variant py-8"><span class="material-symbols-outlined text-4xl text-outline block mb-2">chat</span>Select a staff member to start messaging</div>`;
-        input.disabled = true;
-        sendBtn.disabled = true;
-        nameDisplay.textContent = "Select a conversation";
-        statusDisplay.textContent = "Choose a staff member to chat with";
-        return;
-      }
-
-      const chat = chatData[activeChat];
-      nameDisplay.textContent = activeChat;
-      statusDisplay.textContent = `${chat.status.charAt(0).toUpperCase() + chat.status.slice(1)} ${chat.status === "online" ? "🟢" : ""}`;
       input.disabled = false;
       sendBtn.disabled = false;
+      input.focus();
 
-      if (chat.messages.length === 0) {
-        container.innerHTML = `<div class="text-center text-sm text-on-surface-variant py-8">No messages yet. Start the conversation!</div>`;
+      // Load conversation history
+      loadStaffMessages(userId);
+
+      // Start auto-poll interval for real-time chat
+      if (chatPollInterval) clearInterval(chatPollInterval);
+      chatPollInterval = setInterval(() => {
+        if (
+          activePartner &&
+          !document.getElementById("chatView").classList.contains("hidden")
+        ) {
+          loadStaffMessages(activePartner.userId, true);
+        }
+      }, 4000);
+    }
+
+    async function loadStaffMessages(partnerId, isSilent = false) {
+      const container = document.getElementById("chatMessages");
+      if (!container || !partnerId) return;
+
+      const myId =
+        loggedInUser?.userId || loggedInUser?.id || loggedInUser?.user_id || 1;
+
+      try {
+        const res = await (window.apiFetch
+          ? window.apiFetch(
+              `/api/staff-messages?currentUserId=${myId}&otherUserId=${partnerId}`,
+            )
+          : fetch(
+              `/api/staff-messages?currentUserId=${myId}&otherUserId=${partnerId}`,
+            ));
+
+        if (!res.ok) return;
+        const json = await res.json();
+        staffMessages = json.data || [];
+        renderChatMessages(isSilent);
+      } catch (e) {
+        console.warn("Staff message fetch note:", e);
+      }
+    }
+
+    function renderChatMessages(isSilent = false) {
+      const container = document.getElementById("chatMessages");
+      if (!container) return;
+
+      if (!activePartner) {
+        container.innerHTML = `
+          <div class="text-center text-xs text-on-surface-variant py-16">
+            <span class="material-symbols-outlined text-4xl text-outline/60 block mb-2">forum</span>
+            Select a colleague to start messaging
+          </div>
+        `;
         return;
       }
 
-      container.innerHTML = chat.messages
-        .map((msg) => {
-          const isSent = msg.sender === "You";
-          return `
-            <div class="flex ${isSent ? "justify-end" : "justify-start"}">
-                <div class="chat-message ${isSent ? "sent" : "received"}">
-                    <div class="text-sm">${msg.text}</div>
-                    <span class="time">${msg.time}</span>
-                </div>
-            </div>
+      if (staffMessages.length === 0) {
+        container.innerHTML = `
+          <div class="text-center text-xs text-gray-400 py-16">
+            <span class="material-symbols-outlined text-4xl text-primary/30 block mb-2">mark_chat_unread</span>
+            <p class="font-bold text-gray-700">No previous messages with ${activePartner.fullName}</p>
+            <p class="text-gray-400 mt-1">Send a clinical update, request assistance, or share medical records.</p>
+          </div>
         `;
+        return;
+      }
+
+      const myId =
+        loggedInUser?.userId || loggedInUser?.id || loggedInUser?.user_id || 1;
+
+      container.innerHTML = staffMessages
+        .map((msg) => {
+          const isMe = Number(msg.SENDER_ID) === Number(myId);
+          const timeStr = msg.CREATED_AT
+            ? new Date(msg.CREATED_AT).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })
+            : "";
+
+          // Render attachment if exists
+          let attachmentHtml = "";
+          if (msg.ATTACHMENT_DATA) {
+            const isImage =
+              msg.ATTACHMENT_TYPE && msg.ATTACHMENT_TYPE.startsWith("image/");
+            const isDcm =
+              msg.ATTACHMENT_NAME &&
+              msg.ATTACHMENT_NAME.toLowerCase().endsWith(".dcm");
+
+            if (isImage) {
+              attachmentHtml = `
+                <div class="mt-2 rounded-lg overflow-hidden border border-white/20">
+                  <img
+                    src="${msg.ATTACHMENT_DATA}"
+                    alt="${msg.ATTACHMENT_NAME || "Medical Scan"}"
+                    class="max-h-60 rounded object-cover cursor-pointer hover:opacity-95 transition-opacity"
+                    onclick="openImageLightbox('${encodeURIComponent(msg.ATTACHMENT_DATA)}')"
+                  />
+                  <div class="p-1.5 flex items-center justify-between text-[11px] ${isMe ? "bg-white/10 text-white" : "bg-gray-100 text-gray-700"}">
+                    <span class="truncate max-w-[160px] font-semibold">${msg.ATTACHMENT_NAME || "Medical Scan"}</span>
+                    <a href="${msg.ATTACHMENT_DATA}" download="${msg.ATTACHMENT_NAME || "medical_scan.png"}" class="hover:underline flex items-center gap-0.5 ml-2 font-bold">
+                      <span class="material-symbols-outlined text-xs">download</span> Save
+                    </a>
+                  </div>
+                </div>
+              `;
+            } else {
+              attachmentHtml = `
+                <div class="mt-2 p-2.5 rounded-lg border flex items-center justify-between gap-3 ${isMe ? "bg-white/10 border-white/20 text-white" : "bg-white border-gray-200 text-gray-800"} shadow-sm">
+                  <div class="flex items-center gap-2 min-w-0">
+                    <span class="material-symbols-outlined text-lg ${isMe ? "text-primary-fixed" : "text-primary"}">
+                      ${isDcm ? "medical_information" : "description"}
+                    </span>
+                    <div class="truncate">
+                      <p class="font-bold text-xs truncate">${msg.ATTACHMENT_NAME || "Medical Report"}</p>
+                      <p class="text-[10px] opacity-75">${formatBytes(msg.ATTACHMENT_SIZE || 0)}</p>
+                    </div>
+                  </div>
+                  <a
+                    href="${msg.ATTACHMENT_DATA}"
+                    download="${msg.ATTACHMENT_NAME || "clinical_document.pdf"}"
+                    class="px-2 py-1 rounded text-xs font-bold shrink-0 ${isMe ? "bg-white text-primary hover:bg-gray-100" : "bg-primary text-white hover:bg-primary/90"} transition-all"
+                  >
+                    Download
+                  </a>
+                </div>
+              `;
+            }
+          }
+
+          return `
+            <div class="flex ${isMe ? "justify-end" : "justify-start"}">
+              <div class="max-w-[78%] rounded-2xl px-4 py-2.5 shadow-sm ${isMe ? "bg-primary text-white rounded-br-none" : "bg-gray-100 text-gray-900 rounded-bl-none"}">
+                ${msg.MESSAGE_TEXT ? `<p class="text-sm whitespace-pre-wrap leading-relaxed">${escapeHtml(msg.MESSAGE_TEXT)}</p>` : ""}
+                ${attachmentHtml}
+                <div class="flex items-center justify-end gap-1 mt-1 text-[10px] ${isMe ? "text-white/70" : "text-gray-400"}">
+                  <span>${timeStr}</span>
+                  ${isMe ? `<span class="material-symbols-outlined text-xs">${msg.IS_READ ? "done_all" : "done"}</span>` : ""}
+                </div>
+              </div>
+            </div>
+          `;
         })
         .join("");
 
-      container.scrollTop = container.scrollHeight;
-    }
-
-    function startChat(name) {
-      activeChat = name;
-      renderChatList();
-      renderChatMessages();
-      document.getElementById("chatTab").click();
-      switchTab("chat");
-    }
-
-    // ===== VET ACTIONS =====
-    function toggleVetStatus(id) {
-      const vet = vets.find((v) => v.id === id);
-      if (vet) {
-        const statuses = ["online", "offline", "away"];
-        const currentIndex = statuses.indexOf(vet.status);
-        vet.status = statuses[(currentIndex + 1) % statuses.length];
-        saveVets();
-        renderVets();
-        updateStats();
-        showToast(`${vet.name} is now ${vet.status}`, "info");
+      if (!isSilent) {
+        container.scrollTop = container.scrollHeight;
       }
     }
 
-    document
-      .getElementById("prevWeekBtn")
-      .addEventListener("click", function () {
-        navigateWeek(-1);
-      });
+    // Attachment handlers
+    function handleAttachmentSelected(input) {
+      const file = input.files?.[0];
+      if (!file) return;
 
-    document
-      .getElementById("nextWeekBtn")
-      .addEventListener("click", function () {
-        navigateWeek(1);
-      });
-
-    document.getElementById("todayBtn").addEventListener("click", function () {
-      goToToday();
-    });
-
-    document
-      .getElementById("sendMessageBtn")
-      .addEventListener("click", sendMessage);
-    document
-      .getElementById("chatInput")
-      .addEventListener("keydown", function (e) {
-        if (e.key === "Enter" && !e.shiftKey) {
-          e.preventDefault();
-          sendMessage();
-        }
-      });
-
-    document
-      .getElementById("newChatBtn")
-      .addEventListener("click", function () {
-        const vetNames = vets.map((v) => v.name);
-        const name = prompt(
-          "Enter the name of the staff member to chat with:\n\n" +
-            vetNames.join("\n"),
-        );
-        if (name && name.trim()) {
-          const cleanName = name.trim();
-          if (!chatData[cleanName]) {
-            chatData[cleanName] = {
-              status: "online",
-              messages: [],
-            };
-            showToast(`New conversation started with ${cleanName}`, "success");
-          }
-          startChat(cleanName);
-        }
-      });
-
-    function deleteVet(id) {
-      const vet = vets.find((v) => v.id === id);
-      if (!vet) return;
-      if (confirm(`Remove ${vet.name} from the veterinary team?`)) {
-        vets = vets.filter((v) => v.id !== id);
-        saveVets();
-        renderVets();
-        updateStats();
-        showToast(`${vet.name} has been removed`, "info");
-      }
-    }
-
-    // ===== TAB SWITCH =====
-    function switchTab(tab) {
-      currentFilter = tab;
-      const tabs = ["allVetsTab", "onlineTab", "scheduleTab", "chatTab"];
-      const views = ["vetsView", "scheduleView", "chatView"];
-
-      tabs.forEach((t) =>
-        document
-          .getElementById(t)
-          .classList.remove("tab-active", "tab-inactive"),
-      );
-      views.forEach((v) => document.getElementById(v).classList.add("hidden"));
-
-      if (tab === "all" || tab === "online") {
-        document
-          .getElementById(tab === "all" ? "allVetsTab" : "onlineTab")
-          .classList.add("tab-active");
-        document.getElementById("vetsView").classList.remove("hidden");
-        renderVets();
-      } else if (tab === "schedule") {
-        document.getElementById("scheduleTab").classList.add("tab-active");
-        document.getElementById("scheduleView").classList.remove("hidden");
-        renderScheduleList();
-      } else if (tab === "chat") {
-        document.getElementById("chatTab").classList.add("tab-active");
-        document.getElementById("chatView").classList.remove("hidden");
-        renderChatList();
-        renderChatMessages();
+      if (file.size > 15 * 1024 * 1024) {
+        showToast("Attachment size exceeds the 15MB limit.", "error");
+        input.value = "";
+        return;
       }
 
-      tabs.forEach((t) => {
-        if (!document.getElementById(t).classList.contains("tab-active")) {
-          document.getElementById(t).classList.add("tab-inactive");
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        selectedAttachment = {
+          name: file.name,
+          type: file.type || "application/octet-stream",
+          size: file.size,
+          data: e.target.result,
+        };
+
+        const previewBar = document.getElementById("chatAttachmentPreview");
+        const nameEl = document.getElementById("previewFileName");
+        const sizeEl = document.getElementById("previewFileSize");
+        const iconEl = document.getElementById("previewFileIcon");
+
+        nameEl.textContent = file.name;
+        sizeEl.textContent = `(${formatBytes(file.size)})`;
+
+        if (file.type.startsWith("image/")) {
+          iconEl.textContent = "image";
+        } else if (file.type.includes("pdf")) {
+          iconEl.textContent = "picture_as_pdf";
+        } else {
+          iconEl.textContent = "description";
         }
-      });
+
+        previewBar.classList.remove("hidden");
+      };
+      reader.readAsDataURL(file);
     }
 
-    // ===== SEND MESSAGE =====
-    function sendMessage() {
+    function clearSelectedAttachment() {
+      selectedAttachment = null;
+      const input = document.getElementById("chatAttachmentInput");
+      if (input) input.value = "";
+      document.getElementById("chatAttachmentPreview")?.classList.add("hidden");
+    }
+
+    async function sendMessage() {
+      if (!activePartner) return;
       const input = document.getElementById("chatInput");
-      const text = input.value.trim();
-      if (!text || !activeChat || !chatData[activeChat]) return;
+      const text = (input?.value || "").trim();
 
-      const now = new Date();
-      const time = now.toLocaleTimeString("default", {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
+      if (!text && !selectedAttachment) return;
 
-      chatData[activeChat].messages.push({
-        sender: "You",
-        text: text,
-        time: time,
-      });
+      const myId =
+        loggedInUser?.userId || loggedInUser?.id || loggedInUser?.user_id || 1;
+      const payload = {
+        senderId: Number(myId),
+        receiverId: Number(activePartner.userId),
+        messageText: text || "",
+        attachmentData: selectedAttachment ? selectedAttachment.data : null,
+        attachmentName: selectedAttachment ? selectedAttachment.name : null,
+        attachmentType: selectedAttachment ? selectedAttachment.type : null,
+        attachmentSize: selectedAttachment ? selectedAttachment.size : null,
+      };
 
-      input.value = "";
+      // Optimistic message append
+      const tempMsg = {
+        MESSAGE_ID: Date.now(),
+        SENDER_ID: Number(myId),
+        RECEIVER_ID: Number(activePartner.userId),
+        MESSAGE_TEXT: text,
+        ATTACHMENT_DATA: selectedAttachment ? selectedAttachment.data : null,
+        ATTACHMENT_NAME: selectedAttachment ? selectedAttachment.name : null,
+        ATTACHMENT_TYPE: selectedAttachment ? selectedAttachment.type : null,
+        ATTACHMENT_SIZE: selectedAttachment ? selectedAttachment.size : null,
+        CREATED_AT: new Date().toISOString(),
+        IS_READ: 0,
+      };
+      staffMessages.push(tempMsg);
       renderChatMessages();
-      renderChatList();
 
-      // Simulate reply
-      setTimeout(
-        () => {
-          const replies = [
-            "Got it! I'll look into that.",
-            "Thanks for the update!",
-            "I agree with that approach.",
-            "Let me check and get back to you.",
-            "Perfect, I'll handle it.",
-            "Thanks for letting me know.",
-            "I'll be there in a moment.",
-            "Great work, team!",
-          ];
-          const reply = replies[Math.floor(Math.random() * replies.length)];
-          chatData[activeChat].messages.push({
-            sender: activeChat,
-            text: reply,
-            time: new Date().toLocaleTimeString("default", {
-              hour: "2-digit",
-              minute: "2-digit",
-            }),
-          });
-          renderChatMessages();
-          renderChatList();
-        },
-        1500 + Math.random() * 2000,
-      );
+      // Reset inputs
+      input.value = "";
+      clearSelectedAttachment();
+
+      try {
+        const res = await (window.apiFetch
+          ? window.apiFetch("/api/staff-messages", {
+              method: "POST",
+              body: JSON.stringify(payload),
+            })
+          : fetch("/api/staff-messages", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            }));
+
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          showToast(json.message || "Failed to deliver message", "error");
+        } else {
+          loadStaffMessages(activePartner.userId, true);
+        }
+      } catch (err) {
+        console.error("Send message error:", err);
+        showToast("Error sending message", "error");
+      }
     }
 
-    // ===== MODAL FUNCTIONS =====
+    // Modal Helpers
     function openVetModal() {
-      document.getElementById("addVetModal").classList.remove("hidden");
+      const modal = document.getElementById("addVetModal");
+      if (!modal) return;
+      modal.classList.remove("hidden");
       document.body.style.overflow = "hidden";
-      document.getElementById("addVetForm").reset();
+      document.getElementById("addVetForm")?.reset();
       document.getElementById("vetId").value = "";
-      document
-        .getElementById("vetId")
-        .classList.add("bg-gray-50", "text-gray-600");
-      document
-        .getElementById("vetId")
-        .classList.remove("bg-white", "text-on-surface");
     }
 
     function closeVetModal() {
-      document.getElementById("addVetModal").classList.add("hidden");
+      const modal = document.getElementById("addVetModal");
+      if (!modal) return;
+      modal.classList.add("hidden");
       document.body.style.overflow = "";
     }
 
-    // ===== EVENT LISTENERS =====
-    document.addEventListener("DOMContentLoaded", function () {
-      loadData();
-      fetchStaffFromBackend();
+    function generateStaffId() {
+      const num = Math.floor(1000 + Math.random() * 9000);
+      return `VET-${num}`;
+    }
 
+    // Format file sizes
+    function formatBytes(bytes) {
+      if (bytes === 0) return "0 Bytes";
+      const k = 1024;
+      const sizes = ["Bytes", "KB", "MB", "GB"];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function openImageLightbox(src) {
+      const decoded = decodeURIComponent(src);
+      const win = window.open("", "_blank");
+      win.document.write(
+        `<title>Medical Attachment Preview</title><body style="margin:0;background:#111;display:flex;align-items:center;justify-content:center;height:100vh;"><img src="${decoded}" style="max-width:95%;max-height:95%;border-radius:8px;box-shadow:0 0 20px rgba(0,0,0,0.8);" /></body>`,
+      );
+    }
+
+    // ===== INITIALIZATION =====
+    document.addEventListener("DOMContentLoaded", function () {
+      highlightCurrentPage();
+      checkPermissions();
+      loadKPIs();
+      loadStaffDirectory();
+
+      // Modal Events
       document
         .getElementById("addVetBtn")
-        .addEventListener("click", openVetModal);
+        ?.addEventListener("click", openVetModal);
       document
         .getElementById("closeVetModal")
-        .addEventListener("click", closeVetModal);
+        ?.addEventListener("click", closeVetModal);
       document
         .getElementById("cancelVetModal")
-        .addEventListener("click", closeVetModal);
+        ?.addEventListener("click", closeVetModal);
 
       document
         .getElementById("generateVetIdBtn")
-        .addEventListener("click", function () {
-          const id = generateVetId();
+        ?.addEventListener("click", function () {
+          const id = generateStaffId();
           document.getElementById("vetId").value = id;
-          document
-            .getElementById("vetId")
-            .classList.remove("bg-gray-50", "text-gray-600");
-          document
-            .getElementById("vetId")
-            .classList.add("bg-white", "text-on-surface");
-          showToast(`Vet ID generated: ${id}`, "success");
+          showToast(`Generated ID: ${id}`, "info");
         });
 
-      async function fetchStaffFromBackend() {
-        try {
-          const res = await apiFetch("/api/staff");
-          if (!res.ok) return;
-          const json = await res.json();
-          if (json && json.data && json.data.length > 0) {
-            vets = json.data.map((s) => ({
-              id: s.STAFF_NUMBER || `VET-${String(s.STAFF_ID).padStart(3, "0")}`,
-              dbId: s.STAFF_ID,
-              name: s.FULL_NAME,
-              specialty: s.DEPARTMENT || s.JOB_TITLE || "General Medicine",
-              email: s.EMAIL || "staff@addypets.com",
-              phone: s.PHONE || "+233 24 000 0000",
-              status: (s.STATUS || "Active").toLowerCase() === "active" ? "online" : "offline",
-              img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAt_l2NtwBrHDxQNGs9rPyaBDSi0T_lttSSni_UFdT12mHBHPojsxTE2haa69Vl-xUxsOfIG9hBjBfFUbTbuzqUZTrwCxsYx-WVkbqBP95JzSas9Gk-vlSi5L3t6i5wijVQgjwTRZWzXWDoOxvbiuiwTwUvQerM7vTOeUAbTgk0LzdJ6ZlyU0xeXqf__Iapv8Wpu9q6UmECwczFqWAIEuCSYFKPwinFOH3N6vq0YJKWoiJViDN71AZUcTRiwGyz_FO9sM63nmOE114",
-            }));
-            renderVets();
-            updateStats();
-          }
-        } catch (e) {
-          console.warn("Staff fetch error:", e);
-        }
-      }
-
+      // Add Vet Form Submit
       document
         .getElementById("addVetForm")
-        .addEventListener("submit", async function (e) {
+        ?.addEventListener("submit", async function (e) {
           e.preventDefault();
-          const name = document.getElementById("vetName").value.trim();
-          const vetId = document.getElementById("vetId").value.trim();
-          const specialty = document.getElementById("vetSpecialty").value;
-          const role = document.getElementById("vetRole")?.value || "Veterinarian";
-          const email = document.getElementById("vetEmail").value.trim();
-          const password = document.getElementById("vetPassword")?.value || "Password123!";
-          const phone = document.getElementById("vetPhone").value.trim();
-          const status = document.querySelector(
-            'input[name="vetStatus"]:checked',
-          ).value;
+          const fullName = document.getElementById("vetName")?.value.trim();
+          const licenseNumber =
+            document.getElementById("vetId")?.value.trim() || generateStaffId();
+          const department = document.getElementById("vetSpecialty")?.value;
+          const role =
+            document.getElementById("vetRole")?.value || "Veterinarian";
+          const email = document.getElementById("vetEmail")?.value.trim();
+          const password =
+            document.getElementById("vetPassword")?.value || "Password123!";
+          const phone = document.getElementById("vetPhone")?.value.trim();
 
-          if (!name || !vetId || !specialty || !email) {
+          if (!fullName || !email || !department) {
             showToast("Please fill in all required fields", "error");
             return;
           }
-          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            showToast("Please enter a valid email address", "error");
-            return;
-          }
 
-          const newVet = { id: vetId, name, specialty, role, email, phone, status };
-          vets.push(newVet);
-          saveVets();
-          renderVets();
-          updateStats();
-
-          // Persist user and staff to Oracle DB via /api/admin/users
           try {
-            const resp = await apiFetch("/api/admin/users", {
-              method: "POST",
-              body: JSON.stringify({
-                fullName: name,
-                email: email,
-                password: password,
-                role: role,
-                phone: phone ? `+233${phone}` : "",
-                licenseNumber: vetId,
-                status: status === "online" ? "Active" : "Inactive",
-                department: specialty,
-              }),
-            });
-            const data = await resp.json();
-            if (resp.ok) {
-              showToast(`✅ ${name} registered as ${role} with login access!`, "success");
+            const res = await (window.apiFetch
+              ? window.apiFetch("/api/admin/users", {
+                  method: "POST",
+                  body: JSON.stringify({
+                    fullName,
+                    email,
+                    password,
+                    role,
+                    phone: phone ? `+233${phone}` : "",
+                    licenseNumber,
+                    department,
+                    salary: 6500,
+                    status: "Active",
+                  }),
+                })
+              : fetch("/api/admin/users", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    fullName,
+                    email,
+                    password,
+                    role,
+                    phone: phone ? `+233${phone}` : "",
+                    licenseNumber,
+                    department,
+                    salary: 6500,
+                    status: "Active",
+                  }),
+                }));
+
+            const data = await res.json();
+            if (res.ok) {
+              showToast(`✅ ${fullName} added as ${role}!`, "success");
+              closeVetModal();
+              loadStaffDirectory();
+              loadKPIs();
             } else {
-              showToast(data.message || `Added to local team list.`, "info");
+              showToast(data.message || "Failed to add staff member", "error");
             }
           } catch (err) {
-            console.warn("Backend user creation sync:", err);
-            showToast(`✅ ${name} added to veterinary team!`, "success");
+            console.error("Add staff submit error:", err);
+            showToast("Error creating staff record", "error");
           }
-
-          closeVetModal();
         });
 
+      // Chat input events
       document
-        .getElementById("addVetModal")
-        .addEventListener("click", function (e) {
-          if (e.target === this) closeVetModal();
+        .getElementById("sendMessageBtn")
+        ?.addEventListener("click", sendMessage);
+      document
+        .getElementById("chatInput")
+        ?.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+          }
         });
 
-      document.addEventListener("keydown", function (e) {
-        if (
-          e.key === "Escape" &&
-          !document.getElementById("addVetModal").classList.contains("hidden")
-        ) {
-          closeVetModal();
-        }
+      // Schedule Week Navigation
+      document.getElementById("prevWeekBtn")?.addEventListener("click", () => {
+        currentWeek.setDate(currentWeek.getDate() - 7);
+        renderScheduleList();
+      });
+      document.getElementById("nextWeekBtn")?.addEventListener("click", () => {
+        currentWeek.setDate(currentWeek.getDate() + 7);
+        renderScheduleList();
+      });
+      document.getElementById("todayBtn")?.addEventListener("click", () => {
+        currentWeek = new Date();
+        renderScheduleList();
       });
     });
 
-    // ===== EXPOSE =====
+    // ===== EXPOSING GLOBAL HANDLERS =====
     window.switchTab = switchTab;
-    window.toggleVetStatus = toggleVetStatus;
-    window.deleteVet = deleteVet;
-    window.startChat = startChat;
-    window.showToast = showToast;
+    window.startChatWithColleague = startChatWithColleague;
+    window.filterStaffDirectory = filterStaffDirectory;
+    window.filterChatConversations = filterChatConversations;
+    window.toggleAppointmentComplete = toggleAppointmentComplete;
+    window.handleAttachmentSelected = handleAttachmentSelected;
+    window.clearSelectedAttachment = clearSelectedAttachment;
     window.sendMessage = sendMessage;
+    window.openImageLightbox = openImageLightbox;
+    window.showToast = showToast;
   </script>
 </html>

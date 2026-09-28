@@ -8,7 +8,7 @@ const { withConnection } = require("../config/database");
 async function findByEmail(email) {
   return withConnection(async (connection) => {
     const result = await connection.execute(
-      "SELECT USER_ID, EMAIL, PASSWORD_HASH, FULL_NAME, ROLE, PHONE, LICENSE_NUMBER, PROFILE_IMAGE, NVL(STATUS, 'Active') AS STATUS FROM USERS WHERE LOWER(EMAIL) = LOWER(:email)",
+      "SELECT USER_ID, EMAIL, PASSWORD_HASH, FULL_NAME, ROLE, PHONE, PROFILE_IMAGE, NVL(STATUS, 'Active') AS STATUS FROM USERS WHERE LOWER(EMAIL) = LOWER(:email)",
       { email: (email || "").trim() },
       { outFormat: oracledb.OUT_FORMAT_OBJECT },
     );
@@ -74,7 +74,7 @@ async function list() {
   return withConnection((connection) =>
     connection
       .execute(
-        "SELECT USER_ID, EMAIL, FULL_NAME, ROLE, PHONE, LICENSE_NUMBER, NVL(STATUS, 'Active') AS STATUS, CREATED_AT, LAST_LOGIN FROM USERS ORDER BY USER_ID DESC",
+        "SELECT USER_ID, EMAIL, FULL_NAME, ROLE, PHONE, NVL(STATUS, 'Active') AS STATUS, CREATED_AT, LAST_LOGIN, UPDATED_AT FROM USERS ORDER BY USER_ID DESC",
         [],
         { outFormat: oracledb.OUT_FORMAT_OBJECT },
       )
@@ -89,17 +89,16 @@ async function create(userData) {
   const status = userData.status || "Active";
 
   return withConnection(async (connection) => {
-    // 1. Insert into USERS table
+    // 1. Insert into USERS table (personal and account info only)
     const userRes = await connection.execute(
-      `INSERT INTO USERS (EMAIL, PASSWORD_HASH, FULL_NAME, ROLE, LICENSE_NUMBER, PHONE, STATUS, CREATED_AT)
-       VALUES (:email, :passwordHash, :fullName, :role, :licenseNumber, :phone, :status, SYSTIMESTAMP)
+      `INSERT INTO USERS (EMAIL, PASSWORD_HASH, FULL_NAME, ROLE, PHONE, STATUS, CREATED_AT, UPDATED_AT)
+       VALUES (:email, :passwordHash, :fullName, :role, :phone, :status, SYSTIMESTAMP, SYSTIMESTAMP)
        RETURNING USER_ID INTO :userId`,
       {
         email: (userData.email || "").trim(),
         passwordHash,
         fullName: userData.fullName || userData.full_name || userData.name || "Clinic Staff",
         role,
-        licenseNumber: userData.licenseNumber || userData.license_number || "",
         phone: userData.phone || "",
         status,
         userId: { dir: oracledb.BIND_OUT, type: oracledb.NUMBER },
@@ -108,28 +107,28 @@ async function create(userData) {
     );
     const userId = userRes.outBinds?.userId?.[0] || null;
 
-    // 2. Also ensure staff member is recorded in STAFF table if not already present
-    try {
-      await connection.execute(
-        `INSERT INTO STAFF (USER_ID, FULL_NAME, JOB_TITLE, DEPARTMENT, EMAIL, PHONE, STATUS)
-         SELECT :userId, :fullName, :jobTitle, :department, :email, :phone, :status FROM DUAL
-         WHERE NOT EXISTS (SELECT 1 FROM STAFF WHERE LOWER(EMAIL) = LOWER(:email))`,
-        {
-          userId,
-          fullName: userData.fullName || userData.full_name || userData.name || "Clinic Staff",
-          jobTitle: role,
-          department: userData.department || "Clinical Operations",
-          email: (userData.email || "").trim(),
-          phone: userData.phone || "",
-          status,
-        },
-        { autoCommit: true },
-      );
-    } catch (e) {
-      console.warn("Staff mirror insert skipped:", e.message);
+    // 2. Insert into STAFF table (employment and professional info only)
+    if (userId) {
+      try {
+        await connection.execute(
+          `INSERT INTO STAFF (USER_ID, LICENSE_NUMBER, JOB_TITLE, DEPARTMENT, SALARY, CREATED_AT)
+           SELECT :userId, :licenseNumber, :jobTitle, :department, :salary, SYSTIMESTAMP FROM DUAL
+           WHERE NOT EXISTS (SELECT 1 FROM STAFF WHERE USER_ID = :userId)`,
+          {
+            userId,
+            licenseNumber: userData.licenseNumber || userData.license_number || "",
+            jobTitle: userData.jobTitle || userData.job_title || role,
+            department: userData.department || userData.specialty || "Clinical Operations",
+            salary: Number(userData.salary || 6000),
+          },
+          { autoCommit: true },
+        );
+      } catch (e) {
+        console.warn("Staff record creation skipped/failed:", e.message);
+      }
     }
 
-    return userRes;
+    return { ...userRes, userId };
   });
 }
 

@@ -11,24 +11,28 @@ Run them in this order as the application schema owner:
 
 `schema.sql` creates the tables used by the public pages and admin dashboard. `seed.sql` adds non-sensitive roles, notification preferences, and clinic defaults. Create the first real user through the existing registration flow so the password is stored as a bcrypt hash.
 
-If the older schema has already been installed, run `migrate_pet_columns.sql` once before using the updated booking flow. It renames the patient profile fields to `pet_species`, `pet_breed`, and `pet_age`, and changes age storage to match the website values such as `2 years`.
+## Schema Architecture: Users & Staff Normalization
 
-For automatic veterinarian assignment, run `link_staff_users.sql` once. Each veterinarian must have an active `STAFF` record and an active `USERS` account with the same email address. The server assigns the eligible vet with the fewest pending or confirmed appointments.
+The schema cleanly divides user and employee domain data:
+- **`USERS` table**: Stores core personal profile & authentication attributes:
+  - `user_id`, `email`, `password_hash`, `full_name`, `phone`, `role`, `status`, `profile_image`, `password_reset_token_hash`, `password_reset_expires_at`, `last_login`, `created_at`, `updated_at`.
+- **`STAFF` table**: Stores professional and clinic employment details linked via foreign key:
+  - `staff_id`, `user_id` (`NOT NULL UNIQUE REFERENCES users(user_id)`), `staff_number`, `license_number`, `department`, `job_title`, `salary`, `created_at`, `updated_at`.
 
-For development data, `seed_veterinarian_users.sql` creates missing active `Veterinarian` user accounts for unlinked staff numbers beginning with `VET`. Every created account uses the temporary password `ChangeMe123!`; change or replace these accounts before production use.
+### Existing Database Migration
 
-## Billing data retention
+If upgrading an existing schema with duplicate fields, run `migrate_normalize_users_staff.sql`. It:
+1. Ensures work columns exist on `STAFF` and copies `license_number` from `USERS`.
+2. Links unlinked `STAFF` records to `USERS`.
+3. Drops duplicate personal columns (`full_name`, `email`, `phone`, `status`, `role`) from `STAFF`.
+4. Drops work columns (`license_number`, `department`, `job_title`, `salary`) from `USERS`.
+5. Establishes the unique and foreign key constraints on `STAFF(user_id)`.
 
-Automatic deletion is disabled by default. After the clinic's data-protection authority approves a retention period, add a positive whole-number value to `../.env` and restart the server:
+## Billing & Appointment Data Retention
+
+Automatic deletion is disabled by default. After the clinic's data-protection authority approves a retention period, add positive whole-number values to `../.env` and restart the server:
 
 ```env
 BILLING_RETENTION_YEARS=7
-```
-
-The server then removes billing rows whose `ISSUED_AT` value is older than that period at startup and once every 24 hours. Choose the approved period before enabling this setting; the deletion is permanent. Records subject to legal, tax, clinical, or audit holds must be excluded before enabling an automated purge policy.
-
-Appointments use a separate setting and their stored creation date:
-
-```env
 APPOINTMENT_RETENTION_YEARS=7
 ```

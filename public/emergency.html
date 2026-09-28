@@ -213,10 +213,32 @@
               <span class="font-bold text-deep-navy">AI Symptom Analysis:</span> Not a substitute for veterinary care — for guidance on next steps only.
             </p>
             
+            <div id="booking-transfer-banner" class="hidden mb-4 p-3 bg-amber-50 border-l-4 border-amber-500 rounded-r-lg text-xs text-amber-900 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-amber-600 text-sm">info</span>
+                <span><strong>Details imported from appointment booking:</strong> Please review and click <em>Get Risk Assessment</em> below.</span>
+              </div>
+              <button type="button" onclick="this.parentElement.classList.add('hidden')" class="text-amber-700 hover:text-amber-900 text-xs font-bold">✕</button>
+            </div>
+
             <label class="block text-sm font-bold text-deep-navy mb-2">Describe your pet's symptoms</label>
             <textarea id="symptom-input" class="w-full p-4 border border-outline-variant rounded-xl mb-6 bg-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-all" rows="3" placeholder='Example: "My dog is vomiting and weak"'></textarea>
             
             <div class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="flex flex-col">
+                  <label class="block text-sm font-bold text-deep-navy mb-1">Pet Name (Optional)</label>
+                  <input type="text" id="pet-name-input" class="w-full mt-auto p-3 border border-outline-variant rounded-xl bg-surface focus:ring-2 focus:ring-primary focus:border-transparent text-sm" placeholder="e.g. Milo" />
+                </div>
+                <div class="flex flex-col">
+                  <label class="block text-sm font-bold text-deep-navy mb-1">Owner Name (Optional)</label>
+                  <input type="text" id="owner-name-input" class="w-full mt-auto p-3 border border-outline-variant rounded-xl bg-surface focus:ring-2 focus:ring-primary focus:border-transparent text-sm" placeholder="e.g. Kwame Mensah" />
+                </div>
+                <div class="flex flex-col">
+                  <label class="block text-sm font-bold text-deep-navy mb-1">Your Phone (Optional)</label>
+                  <input type="tel" id="owner-phone-input" class="w-full mt-auto p-3 border border-outline-variant rounded-xl bg-surface focus:ring-2 focus:ring-primary focus:border-transparent text-sm" placeholder="e.g. +233 24 123 4567" />
+                </div>
+              </div>
               <div>
                 <label class="block text-sm font-bold text-deep-navy mb-1">AI Question: How old is your pet?</label>
                 <select id="age-select" class="w-full p-3 border border-outline-variant rounded-xl bg-surface focus:ring-2 focus:ring-primary focus:border-transparent">
@@ -504,6 +526,9 @@
   if (getAssessmentBtn) {
     getAssessmentBtn.addEventListener('click', async () => {
       const symptoms = symptomInput.value.trim();
+      const pet_name = document.getElementById('pet-name-input')?.value.trim() || "";
+      const owner_name = document.getElementById('owner-name-input')?.value.trim() || "";
+      const owner_phone = document.getElementById('owner-phone-input')?.value.trim() || "";
       const age = document.getElementById('age-select')?.value || "Unknown";
       const animal = document.getElementById('animal-select')?.value || "Unknown";
       const duration = document.getElementById('duration-select')?.value || "Unknown";
@@ -519,11 +544,11 @@
       getAssessmentBtn.innerHTML = `<span class="material-symbols-outlined animate-spin" style="animation: spin 1s linear infinite;">progress_activity</span> Analyzing...`;
 
       try {
-        // Send data to your backend server
+        // Send data to backend server
         const response = await fetch('http://localhost:3000/api/triage', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ symptoms, age, animal, duration })
+          body: JSON.stringify({ symptoms, pet_name, owner_name, owner_phone, age, animal, duration })
         });
 
         if (!response.ok) {
@@ -536,7 +561,7 @@
         if (!data.isValid) {
           alert("We couldn't identify specific symptoms in your description. Please describe what your pet is experiencing (e.g., 'vomiting', 'limping') so we can provide accurate guidance.");
         } else {
-          openTriagePopup(data.triageLevel.toLowerCase(), data.reasoning);
+          openTriagePopup(data.triageLevel.toLowerCase(), data.reasoning, data.emergencyId);
         }
       } catch (error) {
         console.error("Triage Error:", error);
@@ -549,7 +574,7 @@
     });
   }
 
-   function openTriagePopup(triageType, aiReasoning) {
+   function openTriagePopup(triageType, aiReasoning, emergencyId) {
     const profile = triageProfiles[triageType] || triageProfiles.standard;
     const popup = document.getElementById('triage-popup');
     const iconContainer = document.getElementById('triage-popup-icon');
@@ -559,7 +584,11 @@
     const actionsContainer = document.getElementById('triage-actions');
 
     levelText.textContent = profile.level;
-    descText.textContent = aiReasoning || profile.description; 
+    if (emergencyId) {
+      descText.innerHTML = `${aiReasoning || profile.description}<div class="mt-3 p-2 bg-emerald-50 text-emerald-800 rounded-lg text-xs font-bold border border-emerald-200 flex items-center justify-center gap-1.5"><span class="material-symbols-outlined text-sm">notification_important</span> Emergency Team alerted (Case #EM-${String(emergencyId).padStart(4, '0')})</div>`;
+    } else {
+      descText.textContent = aiReasoning || profile.description;
+    }
     icon.textContent = profile.icon;
     
     iconContainer.className = `w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 bg-${profile.color}/10 text-${profile.color}`;
@@ -739,52 +768,72 @@
       }
 
       // ==========================================
-// AUTO-OPEN EMERGENCY MODAL FROM BOOKING PAGE
-// ==========================================
-document.addEventListener("DOMContentLoaded", () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const alertKeyword = urlParams.get('alert');
-
-  if (alertKeyword) {
-    // Map the booking page keywords to your exact data-emergency strings
-    const keywordMap = {
-      "bleed": "Bleeding",
-      "bleeding": "Bleeding",
-      "blood": "Bleeding",
-      "poison": "Poisoning",
-      "poisoning": "Poisoning",
-      "toxic": "Poisoning",
-      "seizure": "Seizures",
-      "seizures": "Seizures",
-      "breathing": "Breathing Problems",
-      "choke": "Breathing Problems",
-      "chok": "Breathing Problems",
-      "trauma": "Bleeding",
-      "hit by car": "Bleeding",
-      "hit by a car": "Bleeding"
-    };
-
-    const matchedEmergency = keywordMap[alertKeyword.toLowerCase()];
-
-    if (matchedEmergency) {
-      console.log("Auto-opening emergency module for:", matchedEmergency);
-      
-      // Wait 500ms for smooth page load, then trigger your existing openModal function
-      setTimeout(() => {
-        openModal(matchedEmergency);
-      }, 500);
-    }
-  }
-});
-
-      // ==========================================
-      // AUTO-OPEN EMERGENCY MODAL FROM BOOKING PAGE
+      // EXTRACT DETAILS FROM APPOINTMENT BOOKING
       // ==========================================
       document.addEventListener("DOMContentLoaded", () => {
         const urlParams = new URLSearchParams(window.location.search);
+        const petName = urlParams.get('pet_name');
+        const ownerName = urlParams.get('owner_name');
+        const ownerPhone = urlParams.get('owner_phone');
+        const species = urlParams.get('species');
+        const age = urlParams.get('age');
+        const symptoms = urlParams.get('symptoms');
         const alertKeyword = urlParams.get('alert');
 
-        if (alertKeyword) {
+        let transferredFromBooking = false;
+
+        if (petName && document.getElementById('pet-name-input')) {
+          document.getElementById('pet-name-input').value = petName;
+          transferredFromBooking = true;
+        }
+        if (ownerName && document.getElementById('owner-name-input')) {
+          document.getElementById('owner-name-input').value = ownerName;
+          transferredFromBooking = true;
+        }
+        if (ownerPhone && document.getElementById('owner-phone-input')) {
+          document.getElementById('owner-phone-input').value = ownerPhone;
+          transferredFromBooking = true;
+        }
+        if (species && document.getElementById('animal-select')) {
+          const animalEl = document.getElementById('animal-select');
+          for (let opt of animalEl.options) {
+            if (opt.value.toLowerCase() === species.toLowerCase()) {
+              opt.selected = true;
+              break;
+            }
+          }
+          transferredFromBooking = true;
+        }
+        if (age && document.getElementById('age-select')) {
+          const ageEl = document.getElementById('age-select');
+          const cleanAge = age.toLowerCase();
+          for (let opt of ageEl.options) {
+            if (cleanAge.includes('month') || cleanAge.includes('under') || cleanAge === '0' || cleanAge === '1') {
+              if (opt.value.toLowerCase().includes('under 1')) { opt.selected = true; break; }
+            } else if (cleanAge.includes('senior') || cleanAge.includes('7+') || cleanAge.includes('8') || cleanAge.includes('9')) {
+              if (opt.value.toLowerCase().includes('senior')) { opt.selected = true; break; }
+            } else {
+              if (opt.value.toLowerCase().includes('adult')) { opt.selected = true; break; }
+            }
+          }
+          transferredFromBooking = true;
+        }
+        if (symptoms && document.getElementById('symptom-input')) {
+          document.getElementById('symptom-input').value = decodeURIComponent(symptoms);
+          transferredFromBooking = true;
+        }
+
+        if (transferredFromBooking) {
+          const aiSection = document.getElementById('ai-assistant-section');
+          if (aiSection) {
+            aiSection.classList.remove('hidden');
+            const transferBanner = document.getElementById('booking-transfer-banner');
+            if (transferBanner) transferBanner.classList.remove('hidden');
+            setTimeout(() => {
+              aiSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 300);
+          }
+        } else if (alertKeyword) {
           const keywordMap = {
             "bleed": "Bleeding", "bleeding": "Bleeding", "blood": "Bleeding",
             "poison": "Poisoning", "poisoning": "Poisoning", "toxic": "Poisoning",
@@ -792,11 +841,8 @@ document.addEventListener("DOMContentLoaded", () => {
             "breathing": "Breathing Problems", "choke": "Breathing Problems", "chok": "Breathing Problems",
             "trauma": "Bleeding", "hit by car": "Bleeding", "hit by a car": "Bleeding"
           };
-
           const matchedEmergency = keywordMap[alertKeyword.toLowerCase()];
-
           if (matchedEmergency) {
-            console.log("Auto-opening emergency module for:", matchedEmergency);
             setTimeout(() => {
               openModal(matchedEmergency);
             }, 500);

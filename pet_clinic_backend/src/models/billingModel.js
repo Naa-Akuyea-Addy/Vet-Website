@@ -6,9 +6,16 @@ const table = "BILLING";
 async function list() {
   return withConnection((c) =>
     c
-      .execute(`SELECT * FROM ${table} ORDER BY BILLING_ID DESC`, [], {
-        outFormat: oracledb.OUT_FORMAT_OBJECT,
-      })
+      .execute(
+        `SELECT b.*,
+                p.PET_NAME, p.PET_SPECIES, p.PET_BREED, p.PET_AGE, p.PET_AGE_VALUE, p.PET_AGE_UNIT,
+                p.OWNER_NAME, p.OWNER_PHONE
+         FROM ${table} b
+         LEFT JOIN PATIENTS p ON p.PATIENT_ID = b.PATIENT_ID
+         ORDER BY b.BILLING_ID DESC`,
+        [],
+        { outFormat: oracledb.OUT_FORMAT_OBJECT },
+      )
       .then((r) => r.rows || []),
   );
 }

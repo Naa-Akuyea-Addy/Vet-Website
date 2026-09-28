@@ -26,29 +26,33 @@ const notificationRoutes = require("./src/routes/notificationRoutes");
 const vetRoutes = require("./src/routes/vetRoutes");
 const doctorAvailabilityRoutes = require("./src/routes/doctorAvailabilityRoutes");
 const recurringBlockRoutes = require("./src/routes/recurringBlockRoutes");
+const staffMessageRoutes = require("./src/routes/staffMessageRoutes");
+const payrollRoutes = require("./src/routes/payrollRoutes");
 const authController = require("./src/controllers/authController");
 const { checkConnection } = require("./src/config/database");
 const { startRetentionSchedule } = require("./src/services/retentionService");
+const emergencyModel = require("./src/models/emergencyModel");
 
 const publicDirectory = fs.existsSync(path.join(__dirname, "public"))
   ? path.join(__dirname, "public")
   : path.join(__dirname, "..", "public");
 
 const app = express();
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true, limit: "15mb" }));
 app.use(cookieParser());
 
 // Add this line to your server.js
 app.use("/node_modules", express.static("node_modules"));
 
 app.use(cors());
-// Profile photos are sent as small base64 payloads; Express defaults to 100 KB.
-app.use(express.json({ limit: "4mb" }));
+// Profile photos & medical documents (x-rays, PDFs) sent as base64 payloads
+app.use(express.json({ limit: "15mb" }));
 
 // Modular API used by the admin panel. Legacy public endpoints remain below.
 app.use("/api/auth", authRoutes);
 app.use("/api/appointments", appointmentRoutes);
 app.use("/api/billing", billingRoutes);
+app.use("/api/payroll", payrollRoutes);
 app.use("/api/inventory", inventoryRoutes);
 app.use("/api/patients", patientRoutes);
 app.use("/api/staff", staffRoutes);
@@ -61,6 +65,7 @@ app.use("/api/notifications", notificationRoutes);
 app.use("/api/vets", vetRoutes);
 app.use("/api/doctor-availability", doctorAvailabilityRoutes);
 app.use("/api/recurring-blocks", recurringBlockRoutes);
+app.use("/api/staff-messages", staffMessageRoutes);
 
 app.get("/api/health", async (req, res, next) => {
   try {
@@ -121,12 +126,11 @@ app.post("/book-appointment", async (req, res) => {
        FROM (
          SELECT u.USER_ID, COUNT(a.APPOINTMENT_ID) AS ACTIVE_APPOINTMENTS
          FROM STAFF s
-         JOIN USERS u ON (s.USER_ID = u.USER_ID OR LOWER(s.EMAIL) = LOWER(u.EMAIL))
+         JOIN USERS u ON s.USER_ID = u.USER_ID
          LEFT JOIN APPOINTMENTS a
            ON a.VETERINARIAN_ID = u.USER_ID
           AND a.STATUS IN ('Pending', 'Confirmed')
-         WHERE LOWER(NVL(s.STATUS, 'Active')) = 'active'
-           AND LOWER(NVL(u.STATUS, 'Active')) = 'active'
+         WHERE LOWER(NVL(u.STATUS, 'Active')) = 'active'
            AND (LOWER(NVL(s.JOB_TITLE, '')) LIKE '%vet%'
              OR LOWER(NVL(s.JOB_TITLE, '')) LIKE '%surgeon%'
              OR LOWER(NVL(s.DEPARTMENT, '')) LIKE '%veterinary%'
@@ -139,30 +143,61 @@ app.post("/book-appointment", async (req, res) => {
     );
     const assignedVeterinarianId = vetResult.rows?.[0]?.USER_ID || null;
 
-    const patientLookup = await connection.execute(
-      `SELECT PATIENT_ID
-       FROM PATIENTS
-       WHERE UPPER(TRIM(PET_NAME)) = UPPER(TRIM(:pet_name))
-         AND UPPER(TRIM(OWNER_NAME)) = UPPER(TRIM(:owner_name))
-         AND NVL(REGEXP_REPLACE(OWNER_PHONE, '[^0-9]', ''), '') = NVL(REGEXP_REPLACE(:owner_phone, '[^0-9]', ''), '')
-       FETCH FIRST 1 ROWS ONLY`,
-      {
-        owner_name,
-        owner_phone,
-        pet_name,
-      },
-      { outFormat: oracledb.OUT_FORMAT_OBJECT },
-    );
+    const trimmedPhone = (owner_phone || "").toString().trim();
+    const cleanPhone = trimmedPhone.replace(/[^0-9]/g, "");
 
-    let patient_id = patientLookup.rows?.[0]?.PATIENT_ID || null;
-    if (!patient_id) {
+    let patientLookup = null;
+    if (cleanPhone) {
+      patientLookup = await connection.execute(
+        `SELECT PATIENT_ID, OWNER_PHONE
+         FROM PATIENTS
+         WHERE UPPER(TRIM(PET_NAME)) = UPPER(TRIM(:pet_name))
+           AND UPPER(TRIM(OWNER_NAME)) = UPPER(TRIM(:owner_name))
+           AND NVL(REGEXP_REPLACE(OWNER_PHONE, '[^0-9]', ''), '') = :clean_phone
+         ORDER BY PATIENT_ID DESC
+         FETCH FIRST 1 ROWS ONLY`,
+        {
+          owner_name,
+          clean_phone: cleanPhone,
+          pet_name,
+        },
+        { outFormat: oracledb.OUT_FORMAT_OBJECT },
+      );
+    }
+
+    if (!patientLookup?.rows?.[0]?.PATIENT_ID) {
+      patientLookup = await connection.execute(
+        `SELECT PATIENT_ID, OWNER_PHONE
+         FROM PATIENTS
+         WHERE UPPER(TRIM(PET_NAME)) = UPPER(TRIM(:pet_name))
+           AND UPPER(TRIM(OWNER_NAME)) = UPPER(TRIM(:owner_name))
+         ORDER BY PATIENT_ID DESC
+         FETCH FIRST 1 ROWS ONLY`,
+        {
+          owner_name,
+          pet_name,
+        },
+        { outFormat: oracledb.OUT_FORMAT_OBJECT },
+      );
+    }
+
+    let patient_id = patientLookup?.rows?.[0]?.PATIENT_ID || null;
+    if (patient_id) {
+      const currentPhone = (patientLookup.rows[0].OWNER_PHONE || "").toString().trim();
+      if (!currentPhone && trimmedPhone) {
+        await connection.execute(
+          `UPDATE PATIENTS SET OWNER_PHONE = :owner_phone WHERE PATIENT_ID = :id`,
+          { owner_phone: trimmedPhone, id: patient_id },
+        );
+      }
+    } else {
       const patientResult = await connection.execute(
         `INSERT INTO patients (owner_name, owner_phone, pet_name, pet_species, pet_age)
          VALUES (:owner_name, :owner_phone, :pet_name, :pet_species, :pet_age)
          RETURNING patient_id INTO :patient_id`,
         {
           owner_name,
-          owner_phone,
+          owner_phone: trimmedPhone,
           pet_name,
           pet_species,
           pet_age,
@@ -202,11 +237,72 @@ app.post("/book-appointment", async (req, res) => {
       ? appointmentResult.outBinds.appointment_id[0]
       : null;
 
+    // Check if appointment falls under emergency cases
+    const reasonText = (visit_reason || "").toLowerCase();
+    const serviceText = (service || "").toLowerCase();
+    const emergencyKeywords = [
+      "bleed", "blood", "seizure", "chok", "unconscious", "breathing",
+      "hit by car", "hit by a car", "poison", "toxic", "swallow", "ate a",
+      "paraly", "severe pain", "screaming", "crying in pain", "vomiting blood",
+      "bloody", "heatstroke", "burn", "broken bone", "trauma", "attack",
+      "bite wound", "not waking up", "limping badly", "collapse", "bloat",
+      "swollen stomach", "straining to pee", "euthanasia", "dying", "emergency"
+    ];
+
+    const isEmergencyReason = emergencyKeywords.some(kw => reasonText.includes(kw));
+    const isEmergencyService = serviceText.includes("emergency") || serviceText.includes("urgent");
+
+    let emergencyCaseId = null;
+    if (isEmergencyReason || isEmergencyService) {
+      try {
+        const isCritical = reasonText.includes("unconscious") ||
+                           reasonText.includes("collapse") ||
+                           reasonText.includes("blue gums") ||
+                           reasonText.includes("seizure") ||
+                           reasonText.includes("hit by") ||
+                           reasonText.includes("chok") ||
+                           reasonText.includes("poison") ||
+                           reasonText.includes("not waking up");
+        const priority = isCritical ? "CRITICAL" : "URGENT";
+
+        const tags = [];
+        if (isCritical || reasonText.includes("dehydrat") || reasonText.includes("bleed") || reasonText.includes("collapse")) {
+          tags.push("iv");
+        }
+        if (reasonText.includes("cough") || reasonText.includes("parvo") || reasonText.includes("vomit") || reasonText.includes("infect")) {
+          tags.push("contagious");
+        }
+        if (reasonText.includes("bite") || reasonText.includes("growl")) {
+          tags.push("bite");
+        }
+        if (reasonText.includes("aggress") || reasonText.includes("attack")) {
+          tags.push("aggressive");
+        }
+
+        emergencyCaseId = await emergencyModel.create({
+          patient_id: patient_id,
+          patient_name: pet_name,
+          species: pet_species || "Dog",
+          age: pet_age || "Adult",
+          owner_name: owner_name,
+          owner_phone: trimmedPhone || owner_phone,
+          description: `Appointment Booking [${service || "Visit"}]: ${visit_reason}`,
+          priority: priority,
+          source: "booking",
+          ai_reasoning: `Emergency intake flagged during appointment booking (${priority} priority). Chief complaint: "${visit_reason}"`,
+          tags: tags,
+        });
+      } catch (emErr) {
+        console.error("Failed to auto-create emergency case from booking:", emErr);
+      }
+    }
+
     res.json({
       success: true,
       message: "Appointment booked successfully",
       appointment_id,
       patient_id,
+      emergency_case_id: emergencyCaseId,
       veterinarian_id: assignedVeterinarianId,
       message: assignedVeterinarianId
         ? "Appointment booked and veterinarian assigned"
@@ -330,7 +426,7 @@ const groq = new Groq({
 
 app.post("/api/triage", async (req, res) => {
   try {
-    const { symptoms, age, animal, duration } = req.body;
+    const { symptoms, age, animal, duration, pet_name, owner_name, owner_phone } = req.body;
 
     const prompt = `You are a veterinary triage assistant. Analyze the following pet symptoms and return ONLY a valid JSON object with no markdown formatting or extra text. 
     The JSON must have exactly these three keys:
@@ -344,14 +440,63 @@ app.post("/api/triage", async (req, res) => {
     - Animal: "${animal}"
     - Duration: "${duration}"`;
 
-    const response = await groq.chat.completions.create({
-      messages: [{ role: "user", content: prompt }],
-      model: "llama-3.3-70b-versatile", // Free, incredibly fast model
-      temperature: 0.2,
-      response_format: { type: "json_object" },
-    });
+    let response;
+    try {
+      response = await groq.chat.completions.create({
+        messages: [{ role: "user", content: prompt }],
+        model: "openai/gpt-oss-120b",
+        temperature: 0.2,
+        response_format: { type: "json_object" },
+      });
+    } catch (modelErr) {
+      console.warn("Primary model failed, trying fallback model:", modelErr.message);
+      response = await groq.chat.completions.create({
+        messages: [{ role: "user", content: prompt }],
+        model: "openai/gpt-oss-20b",
+        temperature: 0.2,
+        response_format: { type: "json_object" },
+      });
+    }
 
     const result = JSON.parse(response.choices[0].message.content);
+
+    // If valid emergency triage, persist directly into EMERGENCY_CASES database
+    if (result && result.isValid) {
+      try {
+        const text = (symptoms || "").toLowerCase();
+        const tags = [];
+        if (result.triageLevel === "CRITICAL" || text.includes("dehydrat") || text.includes("bleed") || text.includes("collapse")) {
+          tags.push("iv");
+        }
+        if (text.includes("cough") || text.includes("parvo") || text.includes("discharge") || text.includes("fever") || text.includes("infect") || text.includes("vomit")) {
+          tags.push("contagious");
+        }
+        if (text.includes("bite") || text.includes("growl") || text.includes("snarl")) {
+          tags.push("bite");
+        }
+        if (text.includes("aggress") || text.includes("attack")) {
+          tags.push("aggressive");
+        }
+
+        const emergencyId = await emergencyModel.create({
+          patient_name: pet_name || (animal ? `Guest ${animal}` : "Emergency Pet"),
+          owner_name: owner_name || "Website Pet Parent",
+          owner_phone: owner_phone || "",
+          species: animal || "Dog",
+          age: age || "Adult",
+          description: `${symptoms} (Duration: ${duration || "Unknown"})`,
+          priority: result.triageLevel,
+          source: "website",
+          ai_reasoning: result.reasoning,
+          tags: tags,
+        });
+
+        result.emergencyId = emergencyId;
+      } catch (dbErr) {
+        console.error("Error saving emergency triage to DB:", dbErr);
+      }
+    }
+
     res.json(result);
   } catch (error) {
     console.error("Groq Triage Error:", error);

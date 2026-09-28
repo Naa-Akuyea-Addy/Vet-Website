@@ -602,7 +602,7 @@
         <a
           href="./Dashboard.html"
           data-nav-mobile="analytics"
-          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg  hover:bg-white/5 transition-all"
           ><span class="material-symbols-outlined">analytics</span
           ><span>Analytics</span></a
         >
@@ -620,7 +620,7 @@
           ><span class="material-symbols-outlined">groups</span
           ><span>Staff</span></a
         >
-        <a href="./appointment.html" data-nav-mobile="appointments" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">event_note</span><span>Appointments</span></a>
+        <a href="./appointment.html" data-nav-mobile="appointment" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"><span class="material-symbols-outlined">event_note</span><span>Appointments</span></a>
         <a
           href="./billing.html"
           data-nav-mobile="billing"
@@ -645,6 +645,15 @@
           <span class="material-symbols-outlined sidebar-icon-only"
             >emergency</span
           ><span class="sidebar-text">Emergency Cases</span>
+        </a>
+        
+        <a
+          href="./inventory.html"
+          data-nav-mobile="inventory"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">inventory_2</span>
+          <span>Inventory</span>
         </a>
         <a
           href="./mortuary.html"
@@ -683,7 +692,9 @@
     </div>
 
     <!-- Desktop Layout -->
-    <div>
+   <script>
+    
+   </script>
       <!-- Desktop Sidebar -->
       <aside
         id="desktopSidebar"
@@ -710,97 +721,103 @@
         <nav class="flex-1 px-3 py-6 space-y-1 overflow-y-auto hide-scrollbar">
           <a
             href="./Dashboard.html"
+            style="color: #B4CBCC !important"
             data-nav-desktop="analytics"
-            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button"
-            ><span
-              class="material-symbols-outlined sidebar-icon-only"
-              style="font-variation-settings: &quot;FILL&quot; 1"
-              >analytics</span
-            ><span class="sidebar-text">Analytics</span></a
+            class="flex items-center gap-4 px-4 py-3 rounded-lg transition-all sidebar-button"
           >
+            <span class="material-symbols-outlined sidebar-icon-only">analytics</span>
+            <span class="sidebar-text">Analytics</span>
+          </a>
           <a
             href="./clinic_calendar.html"
+            style="color: white !important"
+
             data-nav-desktop="calendar"
-            class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-primary-container hover:bg-white/5 transition-all bg-primary-container sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >calendar_today</span
-            ><span class="sidebar-text">Calendar</span></a
+            class="flex items-center gap-4 px-4 py-3 bg-primary-container rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
+            <span class="material-symbols-outlined sidebar-icon-only">calendar_today</span>
+            <span class="sidebar-text">Calendar</span>
+          </a>
           <a
             href="./staff_service_settings.html"
             data-nav-desktop="staff"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >groups</span
-            ><span class="sidebar-text">Staff</span></a
           >
-          <a href="./appointment.html" data-nav-desktop="appointments" class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"><span class="material-symbols-outlined sidebar-icon-only">event_note</span><span class="sidebar-text">Appointments</span></a>
+            <span class="material-symbols-outlined sidebar-icon-only">groups</span>
+            <span class="sidebar-text">Staff</span>
+          </a>
+          <a
+            href="./appointment.html"
+            data-nav-desktop="appointment"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only">event_note</span>
+            <span class="sidebar-text">Appointments</span>
+          </a>
           <a
             href="./billing.html"
             data-nav-desktop="billing"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >payments</span
-            ><span class="sidebar-text">Billing</span></a
           >
+            <span class="material-symbols-outlined sidebar-icon-only">payments</span>
+            <span class="sidebar-text">Billing</span>
+          </a>
           <a
             href="./records.html"
             data-nav-desktop="records"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >description</span
-            ><span class="sidebar-text">Patient & Owner Records</span></a
           >
+            <span class="material-symbols-outlined sidebar-icon-only">description</span>
+            <span class="sidebar-text">Patient &amp; Owner Records</span>
+          </a>
+          <a
+            href="./inventory.html"
+            data-nav-desktop="inventory"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only">inventory_2</span>
+            <span class="sidebar-text">Inventory</span>
+          </a>
           <a
             href="./message.html"
             data-nav-desktop="message"
-            data-nav-mobile="message"
-            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
-            ><span class="material-symbols-outlined">message</span
-            ><span class="sidebar-text">Messages</span></a
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
+            <span class="material-symbols-outlined sidebar-icon-only">message</span>
+            <span class="sidebar-text">Messages</span>
+          </a>
           <a
             href="./emergency_management.html"
             data-nav-desktop="emergency"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >emergency</span
-            ><span class="sidebar-text">Emergency Cases</span>
+            <span class="material-symbols-outlined sidebar-icon-only">emergency</span>
+            <span class="sidebar-text">Emergency Cases</span>
           </a>
-          <a
-            href="#"
-            data-nav-desktop="appointments"
-            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >event_note</span
-            ><span class="sidebar-text">Appointments</span></a
-          >
           <a
             href="./mortuary.html"
             data-nav-desktop="mortuary"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >heart_broken</span
-            ><span class="sidebar-text">Mortuary</span></a
           >
+            <span class="material-symbols-outlined sidebar-icon-only">heart_broken</span>
+            <span class="sidebar-text">Mortuary</span>
+          </a>
           <a
             href="./report.html"
             data-nav-desktop="reports"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >assessment</span
-            ><span class="sidebar-text">Reports</span></a
           >
+            <span class="material-symbols-outlined sidebar-icon-only">assessment</span>
+            <span class="sidebar-text">Reports</span>
+          </a>
           <a
             href="./settings.html"
             data-nav-desktop="settings"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >settings</span
-            ><span class="sidebar-text">Settings</span></a
           >
-        </nav>
+            <span class="material-symbols-outlined sidebar-icon-only">settings</span>
+            <span class="sidebar-text">Settings</span>
+          </a>        </nav>
         <div class="p-4 mt-auto bottom-container">
           <button
             id="logoutBtnDesktop"
@@ -814,6 +831,7 @@
           </div>
         </div>
       </aside>
+      <script src="fix_nav.js"></script>
 
       <!-- Main Content Area -->
       <div
@@ -869,10 +887,10 @@
           class="max-w-container-max mx-auto px-margin-desktop py-stack-md flex flex-col md:flex-row gap-gutter"
         >
           <!-- Sidebar: Availability & Filters -->
-          <aside class="w-full9 flex-shrink-0 space-y-stack-md">
+          <aside class="w-1/3 flex-shrink-0 space-y-stack-md" >
             <!-- Doctor Availability Card -->
             <div
-              class="bg-surface-container-lowest p-stack-md rounded-xl border border-outline-variant shadow-sm"
+              class="bg-surface-container-lowest p-stack-md rounded-xl border border-outline-variant shadow-sm "
             >
               <div class="flex items-center justify-between mb-stack-sm">
                 <div>
@@ -957,7 +975,7 @@
 
             <!-- Legend Card -->
             <div
-              class="bg-surface-container-lowest p-stack-md rounded-xl border border-outline-variant shadow-sm"
+              class="bg-surface-container-lowest p-stack-md rounded-xl border border-outline-variant shadow-sm" 
             >
               <h4
                 class="font-label-md text-label-md mb-stack-sm uppercase tracking-wider text-outline"
@@ -990,7 +1008,7 @@
           <!-- Main Calendar Canvas -->
           <section
             class="flex-grow flex flex-col bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm"
-            style="overflow-y: hidden; width: 90%"
+            style=" width: 90%"
           >
             <!-- Calendar Header/Toolbar -->
             <header
@@ -1124,7 +1142,7 @@
       </div>
     </div>
 
-    <!-- New Appointment Modal -->
+    <!-- Appointment Modal (Create / Edit) -->
     <div
       id="appointmentModal"
       class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
@@ -1133,7 +1151,7 @@
         class="bg-white rounded-xl max-w-lg w-full mx-4 p-6 max-h-[90vh] overflow-y-auto"
       >
         <div class="flex justify-between items-center mb-3">
-          <h3 class="font-headline-md text-headline-md text-deep-navy">
+          <h3 id="appointmentModalTitle" class="font-headline-md text-headline-md text-deep-navy">
             New Appointment
           </h3>
           <button
@@ -1144,6 +1162,7 @@
           </button>
         </div>
         <form id="appointmentForm" class="space-y-4">
+          <input type="hidden" id="appointmentId" value="" />
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label
@@ -1211,6 +1230,8 @@
               <input
                 type="tel"
                 id="phoneNumber"
+                pattern="^\+233\d+$"
+                title="Phone number must start with +233 followed by digits"
                 class="w-full px-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
                 placeholder="e.g., +233 24 123 4567"
               />
@@ -1300,22 +1321,39 @@
               ></span>
             </div>
           </div>
-          <div>
-            <label
-              class="block font-label-md text-label-md text-on-surface mb-1"
-              >Duration</label
-            >
-            <select
-              id="duration"
-              class="w-full px-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-            >
-              <option value="15">15 minutes</option>
-              <option value="30" selected>30 minutes</option>
-              <option value="45">45 minutes</option>
-              <option value="60">60 minutes</option>
-              <option value="90">90 minutes</option>
-              <option value="120">120 minutes</option>
-            </select>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label
+                class="block font-label-md text-label-md text-on-surface mb-1"
+                >Status</label
+              >
+              <select
+                id="appointmentStatus"
+                class="w-full px-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+              >
+                <option value="Pending" selected>Pending</option>
+                <option value="Confirmed">Confirmed</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+            </div>
+            <div>
+              <label
+                class="block font-label-md text-label-md text-on-surface mb-1"
+                >Duration</label
+              >
+              <select
+                id="duration"
+                class="w-full px-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+              >
+                <option value="15">15 minutes</option>
+                <option value="30" selected>30 minutes</option>
+                <option value="45">45 minutes</option>
+                <option value="60">60 minutes</option>
+                <option value="90">90 minutes</option>
+                <option value="120">120 minutes</option>
+              </select>
+            </div>
           </div>
           <div>
             <label
@@ -1332,9 +1370,11 @@
           <div class="flex gap-3 pt-4 border-t border-outline-variant">
             <button
               type="submit"
-              class="flex-1 bg-primary text-white py-3 rounded-lg font-label-md hover:bg-primary/90 transition-all"
+              id="appointmentSubmitBtn"
+              class="flex-1 bg-primary text-white py-3 rounded-lg font-label-md hover:bg-primary/90 transition-all flex items-center justify-center gap-2"
             >
-              Create Appointment
+              <span class="material-symbols-outlined text-sm">save</span>
+              <span id="appointmentSubmitText">Create Appointment</span>
             </button>
             <button
               type="button"
@@ -1799,9 +1839,40 @@
     </div>
 
     <script>
+      // Determine API base URL dynamically just like records.html
+      const API_BASE = (window.location.origin && window.location.origin.includes(":3000")) 
+        ? "" 
+        : "http://localhost:3000";
+
       // ===== GLOBAL VARIABLES =====
       let calendar;
       let calendarAppointments = [];
+
+      function saveCalendarEvents() {
+        if (!calendar) return;
+        const eventsToSave = calendar
+          .getEvents()
+          .filter((event) => event.start)
+          .map((event) => ({
+            id: event.id,
+            title: event.title,
+            start: event.start.toISOString(),
+            end: event.end ? event.end.toISOString() : null,
+            backgroundColor: event.backgroundColor,
+            borderColor: event.borderColor,
+            textColor: event.textColor,
+            extendedProps: event.extendedProps,
+          }));
+
+        localStorage.setItem(
+          "clinicCalendarEvents",
+          JSON.stringify(eventsToSave),
+        );
+        localStorage.setItem(
+          "clinicCalendarViewDate",
+          calendar.getDate().toISOString(),
+        );
+      }
 
       // Sidebar elements
       const mobileBurgerBtn = document.getElementById("mobileBurgerBtn");
@@ -1994,16 +2065,18 @@
         });
 
         // ── DOCTOR (dropdown) ─────────────────────────────────────────
-        const doctorName = document.getElementById("doctorName");
+        const doctorNamesEl = document.getElementById("doctorNames");
         const doctorError = document.getElementById("doctorError");
-        doctorName.addEventListener("change", function () {
-          validateField(
-            this,
-            doctorError,
-            this.value !== "",
-            "Please select a doctor",
-          );
-        });
+        if (doctorNamesEl && doctorError) {
+          doctorNamesEl.addEventListener("change", function () {
+            validateField(
+              this,
+              doctorError,
+              this.value !== "",
+              "Please select a doctor",
+            );
+          });
+        }
 
         // ── DATE (date picker) ────────────────────────────────────────
         const dateInput = document.getElementById("appointmentDate");
@@ -2036,6 +2109,7 @@
         const check = (id, errId, condition, msg) => {
           const el = document.getElementById(id);
           const err = document.getElementById(errId);
+          if (!el || !err) return;
           if (!condition(el)) {
             validateField(el, err, false, msg);
             isValid = false;
@@ -2046,7 +2120,7 @@
           "petName",
           "petNameError",
           (el) => /^[A-Za-z][A-Za-z\s.'-]{1,49}$/.test(el.value.trim()),
-          "A-Z only(2-60 characters)",
+          "A-Z only (2-60 characters)",
         );
         check(
           "ownerName",
@@ -2056,8 +2130,8 @@
         );
         const phone = document.getElementById("phoneNumber");
         const phoneErr = document.getElementById("phoneError");
-        const pv = phone.value.trim();
-        if (pv && !/^(\+233|0)?[0-9]{7,10}$/.test(pv)) {
+        const pv = phone ? phone.value.trim() : "";
+        if (pv && !/^\+233\d+$/.test(pv.replace(/\s+/g, ""))) {
           validateField(
             phone,
             phoneErr,
@@ -2066,7 +2140,9 @@
           );
           isValid = false;
           if (!firstInvalid) firstInvalid = phone;
-        } else validateField(phone, phoneErr, true, "");
+        } else if (phone && phoneErr) {
+          validateField(phone, phoneErr, true, "");
+        }
         check(
           "petType",
           "petTypeError",
@@ -2080,7 +2156,7 @@
           "Please select a service type",
         );
         check(
-          "doctorName",
+          "doctorNames",
           "doctorError",
           (el) => el.value !== "",
           "Please select a doctor",
@@ -2114,10 +2190,41 @@
         });
       }
 
+      function getServiceColor(serviceType, status) {
+        if (status === "Cancelled") {
+          return { bg: "#94a3b8", border: "#64748b" };
+        }
+        const s = String(serviceType || "").toLowerCase();
+        if (s.includes("surgery") || s.includes("emergency")) {
+          return { bg: "#ba1a1a", border: "#943031" };
+        }
+        if (s.includes("vaccin")) {
+          return { bg: "#00696d", border: "#036469" };
+        }
+        if (s.includes("dental")) {
+          return { bg: "#617677", border: "#475569" };
+        }
+        if (s.includes("groom")) {
+          return { bg: "#0d9488", border: "#0f766e" };
+        }
+        return { bg: "#2e7d82", border: "#036469" };
+      }
+
       // ===== MODAL FUNCTIONS =====
       function openModal() {
-        document.getElementById("appointmentModal").classList.remove("hidden");
+        const modal = document.getElementById("appointmentModal");
+        if (!modal) return;
+        modal.classList.remove("hidden");
         document.body.style.overflow = "hidden";
+
+        // Set mode to New Appointment
+        document.getElementById("appointmentId").value = "";
+        const titleEl = document.getElementById("appointmentModalTitle");
+        if (titleEl) titleEl.textContent = "New Appointment";
+        const btnTextEl = document.getElementById("appointmentSubmitText");
+        if (btnTextEl) btnTextEl.textContent = "Create Appointment";
+        const statusEl = document.getElementById("appointmentStatus");
+        if (statusEl) statusEl.value = "Pending";
 
         // If there's a selected appointment slot from the calendar, use it
         if (window.selectedAppointmentSlot) {
@@ -2131,9 +2238,6 @@
           if (timeInput) {
             timeInput.value = start.toTimeString().slice(0, 5);
           }
-
-          // Clear the stored selection after using it
-          // window.selectedAppointmentSlot = null;
         } else {
           // Default to today
           document.getElementById("appointmentDate").value = new Date()
@@ -2149,13 +2253,97 @@
         clearValidationErrors();
         setupRealtimeValidation();
       }
-      function closeModal() {
-        document.getElementById("appointmentModal").classList.add("hidden");
-        document.body.style.overflow = "";
-        document.getElementById("appointmentForm").reset();
+
+      function openEditAppointmentModal(event) {
+        if (!event) return;
+        const modal = document.getElementById("appointmentModal");
+        if (!modal) return;
+        modal.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+
+        const props = event.extendedProps || {};
+        const dbId = props.dbId || (event.id ? String(event.id).replace("APT-", "") : "");
+
+        // Set mode to Edit
+        document.getElementById("appointmentId").value = dbId;
+        const titleEl = document.getElementById("appointmentModalTitle");
+        if (titleEl) titleEl.textContent = `Edit Appointment (${event.id || 'APT-' + dbId})`;
+        const btnTextEl = document.getElementById("appointmentSubmitText");
+        if (btnTextEl) btnTextEl.textContent = "Save Changes";
+
+        // Populate fields
+        const petName = document.getElementById("petName");
+        if (petName) petName.value = props.petName || "";
+
+        const petType = document.getElementById("petType");
+        if (petType) petType.value = props.petType || props.petSpecies || "Dog";
+
+        const ownerName = document.getElementById("ownerName");
+        if (ownerName) ownerName.value = props.owner || props.ownerName || "";
+
+        const phoneNumber = document.getElementById("phoneNumber");
+        if (phoneNumber) phoneNumber.value = props.phone || props.ownerPhone || "";
+
+        const serviceType = document.getElementById("serviceType");
+        if (serviceType) {
+          const matchedOption = Array.from(serviceType.options).find(o => 
+            o.value.toLowerCase() === String(props.service || "").toLowerCase() ||
+            o.text.toLowerCase().includes(String(props.service || "").toLowerCase())
+          );
+          serviceType.value = matchedOption ? matchedOption.value : (props.service || "Checkup");
+        }
+
+        const doctorNames = document.getElementById("doctorNames");
+        if (doctorNames) {
+          if (props.veterinarianId) {
+            doctorNames.value = props.veterinarianId;
+          } else if (props.doctor) {
+            const docOpt = Array.from(doctorNames.options).find(o => 
+              o.text.toLowerCase() === String(props.doctor).toLowerCase() || 
+              o.value == props.doctor
+            );
+            if (docOpt) doctorNames.value = docOpt.value;
+          }
+        }
+
+        const statusEl = document.getElementById("appointmentStatus");
+        if (statusEl) statusEl.value = props.status || "Pending";
+
+        if (event.start) {
+          const d = new Date(event.start);
+          const dateInput = document.getElementById("appointmentDate");
+          if (dateInput) {
+            const pad = (n) => String(n).padStart(2, "0");
+            dateInput.value = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+          }
+          const timeInput = document.getElementById("appointmentTime");
+          if (timeInput) {
+            const pad = (n) => String(n).padStart(2, "0");
+            timeInput.value = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+          }
+        }
+
+        const durationEl = document.getElementById("duration");
+        if (durationEl && event.start && event.end) {
+          const mins = Math.round((event.end.getTime() - event.start.getTime()) / 60000);
+          if (mins > 0) durationEl.value = String(mins);
+        }
+
+        const notesEl = document.getElementById("notes");
+        if (notesEl) notesEl.value = props.notes || "";
+
         clearValidationErrors();
-        // Do NOT reset _validationSetUp — listeners are on persistent DOM elements,
-        // so they stay valid across modal open/close cycles.
+        setupRealtimeValidation();
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("appointmentModal");
+        if (modal) modal.classList.add("hidden");
+        document.body.style.overflow = "";
+        const form = document.getElementById("appointmentForm");
+        if (form) form.reset();
+        document.getElementById("appointmentId").value = "";
+        clearValidationErrors();
       }
 
       document
@@ -2181,6 +2369,30 @@
         )
           closeModal();
       });
+
+      // ===== DELETE APPOINTMENT =====
+      async function deleteAppointment(event) {
+        const props = event.extendedProps || {};
+        const petName = props.petName || "this pet";
+        if (!confirm(`Are you sure you want to delete the appointment for ${petName}?`)) {
+          return;
+        }
+
+        const dbId = props.dbId || (event.id ? String(event.id).replace("APT-", "") : null);
+        if (dbId) {
+          try {
+            const token = localStorage.getItem("token");
+            const headers = token ? { Authorization: "Bearer " + token } : {};
+            await fetch(`${API_BASE}/api/appointments/${dbId}`, { method: "DELETE", headers });
+          } catch (err) {
+            console.warn("Delete appointment API failed:", err);
+          }
+        }
+
+        event.remove();
+        saveCalendarEvents();
+        showToast(`🗑️ Appointment for ${petName} deleted successfully`, "info");
+      }
 
       // ===== FULLCALENDAR INIT =====
       document.addEventListener("DOMContentLoaded", function () {
@@ -2221,32 +2433,156 @@
 
           eventClick: function (info) {
             const event = info.event;
-            const props = event.extendedProps;
-            document.body.insertAdjacentHTML(
-              "beforeend",
-              `
-            <div id="eventDetailModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-              <div class="bg-white rounded-xl max-w-md w-full mx-4 p-6">
-                <div class="flex justify-between items-center mb-4">
-                  <h3 class="font-headline-md text-headline-md text-deep-navy">Appointment Details</h3>
-                  <button onclick="document.getElementById('eventDetailModal').remove()" class="text-gray-500 hover:text-gray-700"><span class="material-symbols-outlined">close</span></button>
-                </div>
-                <div class="space-y-3">
-                  <div class="flex items-center gap-3"><span class="material-symbols-outlined text-primary">pets</span><div><p class="font-label-md text-label-md">Pet: ${props.petName || "N/A"}</p><p class="text-caption text-gray-600">Type: ${props.petType || "N/A"}</p></div></div>
-                  <div class="flex items-center gap-3"><span class="material-symbols-outlined text-primary">person</span><p class="font-label-md text-label-md">Owner: ${props.owner || "N/A"}</p></div>
-                  <div class="flex items-center gap-3"><span class="material-symbols-outlined text-primary">medical_services</span><p>${props.service || "N/A"}</p></div>
-                  <div class="flex items-center gap-3"><span class="material-symbols-outlined text-primary">schedule</span><p>${event.start.toLocaleString()} - ${event.end ? event.end.toLocaleTimeString() : "N/A"}</p></div>
-                  <div class="flex items-center gap-3"><span class="material-symbols-outlined text-primary">phone</span><p>${props.phone || "N/A"}</p></div>
-                </div>
-                <div class="flex gap-3 mt-6">
-                  <button onclick="alert('Edit: ${props.petName}'); document.getElementById('eventDetailModal').remove();" class="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-primary/90">Edit</button>
-                  <button onclick="if(confirm('Delete this appointment?')){ document.getElementById('eventDetailModal').remove(); showToast('Appointment deleted', 'info'); }" class="flex-1 bg-error-container text-error py-2 rounded-lg hover:bg-error-container/80">Delete</button>
+            const props = event.extendedProps || {};
+            const existingDetail = document.getElementById("eventDetailModal");
+            if (existingDetail) existingDetail.remove();
+
+            const status = props.status || "Pending";
+            let statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-800">Pending</span>`;
+            if (status === "Confirmed") {
+              statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">Confirmed</span>`;
+            } else if (status === "Completed") {
+              statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">Completed</span>`;
+            } else if (status === "Cancelled") {
+              statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-800">Cancelled</span>`;
+            }
+
+            const startTimeStr = event.start ? event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "N/A";
+            const endTimeStr = event.end ? event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "";
+            const dateStr = event.start ? event.start.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }) : "";
+
+            const detailHtml = `
+              <div id="eventDetailModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-fadeIn">
+                <div class="bg-white rounded-2xl max-w-lg w-full mx-4 p-6 shadow-2xl border border-outline-variant max-h-[90vh] overflow-y-auto">
+                  <!-- Header -->
+                  <div class="flex justify-between items-start mb-4 pb-3 border-b border-outline-variant">
+                    <div>
+                      <div class="flex items-center gap-2 mb-1">
+                        <span class="text-xs font-bold uppercase tracking-wider text-primary bg-primary/10 px-2 py-0.5 rounded">${event.id || 'APT'}</span>
+                        ${statusBadge}
+                      </div>
+                      <h3 class="font-headline-md text-headline-md text-deep-navy font-bold">
+                        ${props.petName || "Pet"} • ${props.service || "Appointment"}
+                      </h3>
+                    </div>
+                    <button onclick="document.getElementById('eventDetailModal').remove()" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-surface-muted transition-colors">
+                      <span class="material-symbols-outlined">close</span>
+                    </button>
+                  </div>
+
+                  <!-- Info Grid -->
+                  <div class="space-y-3.5 text-body-md">
+                    <div class="flex items-center gap-3 p-2.5 bg-surface-container-low rounded-xl">
+                      <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+                        <span class="material-symbols-outlined">pets</span>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-deep-navy">${props.petName || "N/A"}</p>
+                        <p class="text-xs text-on-surface-variant">Species: ${props.petType || props.petSpecies || "Pet"}</p>
+                      </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-2.5 bg-surface-container-low rounded-xl">
+                      <div class="w-10 h-10 rounded-lg bg-secondary-container text-secondary flex items-center justify-center flex-shrink-0">
+                        <span class="material-symbols-outlined">person</span>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-deep-navy">${props.owner || props.ownerName || "N/A"}</p>
+                        ${props.phone ? `<a href="tel:${props.phone}" class="text-xs text-primary hover:underline flex items-center gap-1"><span class="material-symbols-outlined text-xs">call</span>${props.phone}</a>` : '<p class="text-xs text-on-surface-variant">No phone provided</p>'}
+                      </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-2.5 bg-surface-container-low rounded-xl">
+                      <div class="w-10 h-10 rounded-lg bg-tertiary-container text-tertiary flex items-center justify-center flex-shrink-0">
+                        <span class="material-symbols-outlined">schedule</span>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-deep-navy">${dateStr}</p>
+                        <p class="text-xs text-on-surface-variant">${startTimeStr} ${endTimeStr ? '- ' + endTimeStr : ''}</p>
+                      </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-2.5 bg-surface-container-low rounded-xl">
+                      <div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center flex-shrink-0">
+                        <span class="material-symbols-outlined">medical_services</span>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-deep-navy">Assigned Vet: ${props.veterinarianName || props.doctor || "General On-Duty"}</p>
+                        <p class="text-xs text-on-surface-variant">Service: ${props.service || "General Care"}</p>
+                      </div>
+                    </div>
+
+                    ${props.notes ? `
+                      <div class="p-3 bg-surface-muted rounded-xl border border-outline-variant/60">
+                        <p class="text-xs font-bold text-on-surface-variant mb-1 uppercase tracking-wider">Notes & Reason</p>
+                        <p class="text-xs text-on-surface whitespace-pre-wrap">${props.notes}</p>
+                      </div>
+                    ` : ''}
+                  </div>
+
+                  <!-- Actions -->
+                  <div class="flex gap-3 mt-6 pt-4 border-t border-outline-variant">
+                    <button id="editDetailBtn" class="flex-1 bg-primary text-white py-2.5 px-4 rounded-xl font-label-md hover:bg-primary/90 transition-all flex items-center justify-center gap-2 shadow-sm">
+                      <span class="material-symbols-outlined text-sm">edit</span>
+                      Edit Appointment
+                    </button>
+                    <button id="deleteDetailBtn" class="bg-error-container text-error py-2.5 px-4 rounded-xl font-label-md hover:bg-error-container/80 transition-all flex items-center justify-center gap-1.5">
+                      <span class="material-symbols-outlined text-sm">delete</span>
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          `,
-            );
+            `;
+            document.body.insertAdjacentHTML("beforeend", detailHtml);
+
+            document.getElementById("editDetailBtn").addEventListener("click", () => {
+              document.getElementById("eventDetailModal").remove();
+              openEditAppointmentModal(event);
+            });
+
+            document.getElementById("deleteDetailBtn").addEventListener("click", () => {
+              document.getElementById("eventDetailModal").remove();
+              deleteAppointment(event);
+            });
           },
+
+          eventDrop: async function (info) {
+            const event = info.event;
+            const props = event.extendedProps || {};
+            const dbId = props.dbId || (event.id ? String(event.id).replace("APT-", "") : null);
+
+            if (event.start) {
+              const d = new Date(event.start);
+              const pad = (n) => String(n).padStart(2, "0");
+              const dateStr = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+              const timeStr = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+              const newTime = `${dateStr} ${timeStr}`;
+
+              if (dbId) {
+                try {
+                  const token = localStorage.getItem("token");
+                  const headers = { "Content-Type": "application/json" };
+                  if (token) headers["Authorization"] = "Bearer " + token;
+
+                  const resp = await fetch(`/api/appointments/${dbId}`, {
+                    method: "PUT",
+                    headers,
+                    body: JSON.stringify({ appointment_time: newTime }),
+                  });
+                  if (resp.ok) {
+                    showToast(`📅 Rescheduled "${props.petName || event.title}" to ${newTime}`, "success");
+                  } else {
+                    showToast(`⚠️ Moved locally, server update failed`, "warning");
+                  }
+                } catch (e) {
+                  console.warn("Drag update failed:", e);
+                }
+              }
+            }
+            saveCalendarEvents();
+          },
+
           select: function (info) {
             const start = info.start;
             const end = info.end;
@@ -2274,15 +2610,18 @@
               }
             }, 100);
           },
+
           eventResize: function (info) {
             const duration = Math.round(
               (info.event.end - info.event.start) / 60000,
             );
             showToast(
-              `⏱️ "${info.event.title}" resized to ${duration} minutes`,
+              `⏱️ "${info.event.title}" duration set to ${duration} minutes`,
               "info",
             );
+            saveCalendarEvents();
           },
+
           eventDidMount: function (info) {
             if (info.event.extendedProps.isEmergency) {
               info.el.style.borderLeft = "4px solid #ff0000";
@@ -2300,30 +2639,7 @@
           },
         });
 
-        function saveCalendarEvents() {
-          const eventsToSave = calendar
-            .getEvents()
-            .filter((event) => event.start)
-            .map((event) => ({
-              id: event.id,
-              title: event.title,
-              start: event.start.toISOString(),
-              end: event.end ? event.end.toISOString() : null,
-              backgroundColor: event.backgroundColor,
-              borderColor: event.borderColor,
-              textColor: event.textColor,
-              extendedProps: event.extendedProps,
-            }));
 
-          localStorage.setItem(
-            "clinicCalendarEvents",
-            JSON.stringify(eventsToSave),
-          );
-          localStorage.setItem(
-            "clinicCalendarViewDate",
-            calendar.getDate().toISOString(),
-          );
-        }
 
         calendar.render();
         saveCalendarEvents();
@@ -2331,10 +2647,13 @@
         // Load real-time appointments from backend (handles both Response and parsed JSON)
         (async function loadCalendarAppointments() {
           try {
-            const json = await window.apiFetchJson("/api/appointments");
+            const json = await window.apiFetchJson(API_BASE + "/api/appointments");
             const list = json && json.data ? json.data : Array.isArray(json) ? json : [];
             if (list && list.length > 0) {
               calendarAppointments = list;
+              // Clear existing local demo events if loading from server
+              calendar.removeAllEvents();
+
               list.forEach((apt) => {
                 const timeParts = (apt.APPOINTMENT_TIME || "").split(" ");
                 const dateStr =
@@ -2343,28 +2662,36 @@
                     : new Date().toISOString().slice(0, 10);
                 const timeStr =
                   timeParts[1] ||
-                  (timeParts[0] && timeParts[0].includes(":" )
+                  (timeParts[0] && timeParts[0].includes(":")
                     ? timeParts[0]
                     : "09:00");
                 const startIso = `${dateStr}T${timeStr.padStart(5, "0")}:00`;
+                const colors = getServiceColor(apt.SERVICE || apt.VISIT_REASON, apt.STATUS);
+
                 calendar.addEvent({
                   id: apt.APPOINTMENT_NUMBER || (apt.APPOINTMENT_ID ? `APT-${String(apt.APPOINTMENT_ID).padStart(4, "0")}` : `APT-${Math.floor(Math.random()*900)+100}`),
                   title: `🐾 ${apt.PET_NAME} - ${apt.SERVICE || apt.VISIT_REASON || "Checkup"}`,
                   start: startIso,
-                  backgroundColor: "#036469",
-                  borderColor: "#036469",
+                  backgroundColor: colors.bg,
+                  borderColor: colors.border,
                   extendedProps: {
                     petName: apt.PET_NAME,
                     petType: apt.PET_SPECIES || "Pet",
+                    petSpecies: apt.PET_SPECIES || "Pet",
                     owner: apt.OWNER_NAME || "Owner",
-                    service: apt.SERVICE || "General Checkup",
+                    ownerName: apt.OWNER_NAME || "Owner",
+                    service: apt.SERVICE || apt.VISIT_REASON || "General Checkup",
                     phone: apt.OWNER_PHONE || "",
+                    ownerPhone: apt.OWNER_PHONE || "",
+                    status: apt.STATUS || "Pending",
+                    notes: apt.NOTES || "",
                     dbId: apt.APPOINTMENT_ID,
                     veterinarianId: apt.VETERINARIAN_ID || null,
                     veterinarianName: apt.VET_NAME || "",
                   },
                 });
               });
+              saveCalendarEvents();
               renderDoctors();
             }
           } catch (e) {
@@ -2387,7 +2714,7 @@
               const list = json && json.data ? json.data : [];
               list.forEach(d => {
                 const opt = document.createElement('option');
-                opt.value = d.staff_id || d.staffId || d.STAFF_ID || d.staff_id || d.full_name || d.fullName || d.FULL_NAME || d.fullname || d.fullname || d;
+                opt.value = d.user_id || d.USER_ID || d.staff_id || d.STAFF_ID || d.full_name || d.fullName || d.FULL_NAME || d;
                 opt.textContent = d.full_name || d.fullName || d.FULL_NAME || d.fullname || d;
                 select.appendChild(opt);
               });
@@ -2416,6 +2743,7 @@
       function updateViewButtons(activeBtnId) {
         ["weekViewBtn", "monthViewBtn", "dayViewBtn"].forEach((id) => {
           const btn = document.getElementById(id);
+          if (!btn) return;
           if (id === activeBtnId) {
             btn.classList.remove(
               "text-on-surface-variant",
@@ -2435,54 +2763,64 @@
       function syncCalendarDateControls() {
         if (!calendar) return;
         const calendarDate = calendar.getDate();
-        document.getElementById("currentMonthYear").textContent = calendarDate.toLocaleDateString("en", {
-          month: "long",
-          year: "numeric",
-        });
-        document.getElementById("calendarMonthPicker").value = `${calendarDate.getFullYear()}-${String(calendarDate.getMonth() + 1).padStart(2, "0")}`;
+        const monthYearEl = document.getElementById("currentMonthYear");
+        if (monthYearEl) {
+          monthYearEl.textContent = calendarDate.toLocaleDateString("en", {
+            month: "long",
+            year: "numeric",
+          });
+        }
+        const pickerEl = document.getElementById("calendarMonthPicker");
+        if (pickerEl) {
+          pickerEl.value = `${calendarDate.getFullYear()}-${String(calendarDate.getMonth() + 1).padStart(2, "0")}`;
+        }
         renderDoctors();
       }
 
-      document.getElementById("calendarMonthPicker").addEventListener("change", (event) => {
+      document.getElementById("calendarMonthPicker")?.addEventListener("change", (event) => {
         if (!event.target.value || !calendar) return;
         calendar.gotoDate(`${event.target.value}-01`);
         saveCalendarEvents();
       });
 
-      document.getElementById("prevBtn").addEventListener("click", () => {
+      document.getElementById("prevBtn")?.addEventListener("click", () => {
         calendar.prev();
         saveCalendarEvents();
       });
-      document.getElementById("nextBtn").addEventListener("click", () => {
+      document.getElementById("nextBtn")?.addEventListener("click", () => {
         calendar.next();
         saveCalendarEvents();
       });
-      document.getElementById("todayBtn").addEventListener("click", () => {
+      document.getElementById("todayBtn")?.addEventListener("click", () => {
         calendar.today();
         saveCalendarEvents();
       });
-      document.getElementById("weekViewBtn").addEventListener("click", () => {
+      document.getElementById("weekViewBtn")?.addEventListener("click", () => {
         calendar.changeView("timeGridWeek");
         updateViewButtons("weekViewBtn");
         saveCalendarEvents();
       });
-      document.getElementById("monthViewBtn").addEventListener("click", () => {
+      document.getElementById("monthViewBtn")?.addEventListener("click", () => {
         calendar.changeView("dayGridMonth");
         updateViewButtons("monthViewBtn");
         saveCalendarEvents();
       });
-      document.getElementById("dayViewBtn").addEventListener("click", () => {
+      document.getElementById("dayViewBtn")?.addEventListener("click", () => {
         calendar.changeView("timeGridDay");
         updateViewButtons("dayViewBtn");
         saveCalendarEvents();
       });
 
-      // ===== FORM SUBMISSION =====
+      // ===== FORM SUBMISSION (CREATE & EDIT) =====
       document
         .getElementById("appointmentForm")
         .addEventListener("submit", async function (e) {
           e.preventDefault();
           if (!validateForm()) return;
+
+          const editId = document.getElementById("appointmentId").value;
+          const doctorSelect = document.getElementById("doctorNames");
+          const selectedDocText = doctorSelect && doctorSelect.selectedIndex > 0 ? doctorSelect.options[doctorSelect.selectedIndex].text : "";
 
           const data = {
             petName: document.getElementById("petName").value.trim(),
@@ -2490,9 +2828,11 @@
             ownerName: document.getElementById("ownerName").value.trim(),
             phoneNumber: document.getElementById("phoneNumber").value.trim(),
             serviceType: document.getElementById("serviceType").value,
-            doctorName: document.getElementById("doctorName").value,
+            doctorVal: doctorSelect ? doctorSelect.value : "",
+            doctorName: selectedDocText,
             date: document.getElementById("appointmentDate").value,
             time: document.getElementById("appointmentTime").value,
+            status: document.getElementById("appointmentStatus") ? document.getElementById("appointmentStatus").value : "Pending",
             duration: document.getElementById("duration").value,
             notes: document.getElementById("notes").value.trim(),
           };
@@ -2502,84 +2842,136 @@
             new Date(startDateTime).getTime() + parseInt(data.duration) * 60000,
           );
 
-          const serviceColors = {
-            Checkup: "#2e7d82",
-            Vaccination: "#00696d",
-            Dental: "#617677",
-            Surgery: "#943031",
-            Emergency: "#ba1a1a",
-            Grooming: "#9bedf1",
-          };
-          const eventColor = serviceColors[data.serviceType] || "#036469";
+          const colors = getServiceColor(data.serviceType, data.status);
+          const vetId = !isNaN(Number(data.doctorVal)) && data.doctorVal !== "" ? Number(data.doctorVal) : null;
 
-          // Persist appointment to server first
           const payload = {
             pet_name: data.petName,
             pet_species: data.petType,
             owner_name: data.ownerName,
             owner_phone: data.phoneNumber,
             service: data.serviceType,
+            visit_reason: data.serviceType,
             appointment_time: `${data.date} ${data.time}`,
-            status: 'Pending',
+            status: data.status,
             notes: data.notes,
-            // veterinarian_id: if doctor select has numeric value use it
-            veterinarian_id: isNaN(Number(data.doctorName)) ? null : Number(data.doctorName),
+            veterinarian_id: vetId,
           };
 
-          try {
-            const resp = await fetch('/api/appointments', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload),
-            });
-            const js = await resp.json();
-            const dbId = js && js.appointment_id ? js.appointment_id : null;
-            const eventId = dbId ? `APT-${dbId}` : `APT-${Math.floor(Math.random()*900)+100}`;
+          const token = localStorage.getItem("token");
+          const headers = { "Content-Type": "application/json" };
+          if (token) headers["Authorization"] = "Bearer " + token;
 
-            calendar.addEvent({
-              id: eventId,
-              title: `🐾 ${data.petName} - ${data.serviceType}`,
-              start: startDateTime,
-              end: endDateTime.toISOString(),
-              backgroundColor: eventColor,
-              borderColor: eventColor,
-              extendedProps: {
-                petName: data.petName,
-                petType: data.petType,
-                owner: data.ownerName,
-                service: data.serviceType,
-                phone: data.phoneNumber,
-                doctor: data.doctorName,
-                notes: data.notes,
-                dbId,
-              },
-            });
+          if (editId) {
+            // ===== UPDATE EXISTING APPOINTMENT =====
+            try {
+              const resp = await fetch(`${API_BASE}/api/appointments/${editId}`, {
+                method: "PUT",
+                headers,
+                body: JSON.stringify(payload),
+              });
+              const js = await resp.json();
 
-            showToast(
-              `✅ Appointment created for ${data.petName} (${data.serviceType})`,
-              "success",
-            );
-          } catch (e) {
-            console.error('Failed to persist appointment', e);
-            // Fallback to client-only add
-            calendar.addEvent({
-              id: `APT-${Math.floor(Math.random()*900)+100}`,
-              title: `🐾 ${data.petName} - ${data.serviceType}`,
-              start: startDateTime,
-              end: endDateTime.toISOString(),
-              backgroundColor: eventColor,
-              borderColor: eventColor,
-              extendedProps: {
-                petName: data.petName,
-                petType: data.petType,
-                owner: data.ownerName,
-                service: data.serviceType,
-                phone: data.phoneNumber,
-                doctor: data.doctorName,
-                notes: data.notes,
-              },
-            });
-            showToast('Appointment created locally (server unavailable)', 'warning');
+              // Update calendar event
+              let event = calendar.getEventById(`APT-${editId}`) || calendar.getEventById(editId);
+              if (!event) {
+                event = calendar.getEvents().find(ev => ev.extendedProps && String(ev.extendedProps.dbId) === String(editId));
+              }
+
+              if (event) {
+                event.setProp("title", `🐾 ${data.petName} - ${data.serviceType}`);
+                event.setStart(startDateTime);
+                event.setEnd(endDateTime.toISOString());
+                event.setProp("backgroundColor", colors.bg);
+                event.setProp("borderColor", colors.border);
+                event.setExtendedProp("petName", data.petName);
+                event.setExtendedProp("petType", data.petType);
+                event.setExtendedProp("petSpecies", data.petType);
+                event.setExtendedProp("owner", data.ownerName);
+                event.setExtendedProp("ownerName", data.ownerName);
+                event.setExtendedProp("phone", data.phoneNumber);
+                event.setExtendedProp("ownerPhone", data.phoneNumber);
+                event.setExtendedProp("service", data.serviceType);
+                event.setExtendedProp("status", data.status);
+                event.setExtendedProp("doctor", data.doctorName);
+                event.setExtendedProp("veterinarianName", data.doctorName);
+                event.setExtendedProp("veterinarianId", vetId);
+                event.setExtendedProp("notes", data.notes);
+                event.setExtendedProp("dbId", editId);
+              }
+
+              saveCalendarEvents();
+              showToast(`✅ Appointment for ${data.petName} updated successfully!`, "success");
+            } catch (err) {
+              console.error("Update appointment error:", err);
+              showToast("Error saving appointment to server", "error");
+            }
+          } else {
+            // ===== CREATE NEW APPOINTMENT =====
+            try {
+              const resp = await fetch(`${API_BASE}/api/appointments`, {
+                method: "POST",
+                headers,
+                body: JSON.stringify(payload),
+              });
+              const js = await resp.json();
+              const dbId = js && js.appointment_id ? js.appointment_id : null;
+              const eventId = dbId ? `APT-${String(dbId).padStart(4, "0")}` : `APT-${Math.floor(Math.random()*900)+100}`;
+
+              calendar.addEvent({
+                id: eventId,
+                title: `🐾 ${data.petName} - ${data.serviceType}`,
+                start: startDateTime,
+                end: endDateTime.toISOString(),
+                backgroundColor: colors.bg,
+                borderColor: colors.border,
+                extendedProps: {
+                  petName: data.petName,
+                  petType: data.petType,
+                  petSpecies: data.petType,
+                  owner: data.ownerName,
+                  ownerName: data.ownerName,
+                  service: data.serviceType,
+                  phone: data.phoneNumber,
+                  ownerPhone: data.phoneNumber,
+                  doctor: data.doctorName,
+                  veterinarianName: data.doctorName,
+                  veterinarianId: vetId,
+                  status: data.status,
+                  notes: data.notes,
+                  dbId,
+                },
+              });
+
+              saveCalendarEvents();
+              showToast(
+                `✅ Appointment created for ${data.petName} (${data.serviceType})`,
+                "success",
+              );
+            } catch (e) {
+              console.error("Failed to persist appointment", e);
+              // Fallback to client-only add
+              calendar.addEvent({
+                id: `APT-${Math.floor(Math.random()*900)+100}`,
+                title: `🐾 ${data.petName} - ${data.serviceType}`,
+                start: startDateTime,
+                end: endDateTime.toISOString(),
+                backgroundColor: colors.bg,
+                borderColor: colors.border,
+                extendedProps: {
+                  petName: data.petName,
+                  petType: data.petType,
+                  owner: data.ownerName,
+                  service: data.serviceType,
+                  phone: data.phoneNumber,
+                  doctor: data.doctorName,
+                  status: data.status,
+                  notes: data.notes,
+                },
+              });
+              saveCalendarEvents();
+              showToast("Appointment created locally", "warning");
+            }
           }
 
           // Clear the stored selection
@@ -2735,7 +3127,7 @@
       }
 
       async function addRecurringBlock(block) {
-        const response = await fetch("/api/recurring-blocks", {
+        const response = await fetch(`${API_BASE}/api/recurring-blocks`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -2794,7 +3186,7 @@
         const blockToDelete = recurringBlocks[index];
 
         try {
-          const response = await fetch(`/api/recurring-blocks/${blockToDelete.id}`, {
+          const response = await fetch(`${API_BASE}/api/recurring-blocks/${blockToDelete.id}`, {
             method: "DELETE",
             headers: { Authorization: `Bearer ${localStorage.getItem("token") || ""}` },
           });
@@ -3524,6 +3916,7 @@
       window.openEditDoctorModal = openEditDoctorModal;
       window.openManageDoctorsModal = openManageDoctorsModal;
       window.renderDoctors = renderDoctors;
+    
     </script>
   </body>
 </html>

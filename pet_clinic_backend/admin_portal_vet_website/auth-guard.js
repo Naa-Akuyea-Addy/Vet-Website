@@ -21,15 +21,29 @@
     ],
     "Admin": [
       "Dashboard.html",
+      "appointment.html",
+      "billing.html",
+      "clinic_calendar.html",
+      "emergency_management.html",
+      "inventory.html",
+      "message.html",
+      "mortuary.html",
+      "records.html",
+      "report.html",
+      "settings.html",
+      "staff_service_settings.html",
     ],
     "Veterinarian": [
+      "Dashboard.html",
       "emergency_management.html",
       "clinic_calendar.html",
       "records.html",
       "staff_service_settings.html",
+      "appointment.html",
     ],
     "Accountant": [
       "billing.html",
+      "report.html",
     ],
     "InventoryManager": [
       "inventory.html",
@@ -37,9 +51,12 @@
     "Receptionist": [
       "clinic_calendar.html",
       "appointment.html",
+      "records.html",
+      "message.html",
     ],
     "Technician": [
       "records.html",
+      "inventory.html",
     ],
   };
 
@@ -153,59 +170,355 @@
     return element.innerHTML;
   }
 
-  function installNotificationBell() {
-    const icons = [...document.querySelectorAll(".material-symbols-outlined")]
-      .filter((icon) => icon.textContent.trim() === "notifications");
-    if (!icons.length) return;
+  function formatTimeAgo(dateInput) {
+    if (!dateInput) return "Just now";
+    const date = new Date(dateInput);
+    if (isNaN(date.getTime())) return "Recently";
+    const seconds = Math.floor((new Date() - date) / 1000);
+    if (seconds < 60) return "Just now";
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return `${minutes}m ago`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours}h ago`;
+    const days = Math.floor(hours / 24);
+    if (days < 7) return `${days}d ago`;
+    return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  }
 
+  function installNotificationBell(allowedPages = []) {
+    // Collect all notification bell triggers across desktop header, mobile bar, etc.
+    const icons = [...document.querySelectorAll(".material-symbols-outlined")].filter((icon) => {
+      const text = icon.textContent.trim();
+      if (text !== "notifications" && text !== "notifications_active") return false;
+      // Exclude settings tabs, sidebars, form buttons, table items
+      if (icon.closest("nav, aside, [data-tab], .tab-panel, #tab-notifications, .tab-button, form, table")) {
+        return false;
+      }
+      return true;
+    });
+
+    const explicitBells = [
+      ...document.querySelectorAll("#notificationBell, #notificationBellDesktop, [data-notification-bell], [data-notif-trigger]"),
+    ];
+
+    const triggers = new Set();
+    icons.forEach((icon) => {
+      const btn = icon.closest("button") || icon.closest(".cursor-pointer") || icon.parentElement || icon;
+      triggers.add(btn);
+    });
+    explicitBells.forEach((bell) => triggers.add(bell));
+
+    if (triggers.size === 0) return;
+
+    // Create container panel
     const panel = document.createElement("section");
     panel.id = "portalNotificationPanel";
-    panel.hidden = true;
-    panel.style.cssText = "position:fixed;right:16px;top:76px;width:min(360px,calc(100vw - 32px));max-height:420px;overflow:auto;background:#fff;border:1px solid #d7dddd;border-radius:12px;box-shadow:0 16px 40px #0003;z-index:1000;padding:12px;color:#1b1c1c";
-    panel.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center"><strong>Notifications</strong><button type="button" data-read-all style="color:#036469;background:none;border:0;cursor:pointer">Mark all read</button></div><div data-notification-list style="padding-top:8px"></div>';
+    panel.style.cssText = `
+      position: fixed;
+      display: none;
+      flex-direction: column;
+      width: min(420px, calc(100vw - 24px));
+      max-height: 520px;
+      background: #ffffff;
+      border: 1px solid #d7dddd;
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
+      z-index: 99999;
+      color: #1b1c1c;
+      overflow: hidden;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    `;
+
+    panel.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid #eef2f2;background:#fbfdfd">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-weight:700;font-size:15px;color:#0b3032">Notifications</span>
+          <span data-unread-pill style="background:#ba1a1a;color:#fff;font-size:11px;font-weight:700;padding:2px 7px;border-radius:999px;display:none">0</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <button type="button" data-read-all style="color:#036469;background:none;border:0;font-size:12px;font-weight:600;cursor:pointer;padding:4px 6px;border-radius:6px;transition:background 0.2s" onmouseover="this.style.background='#e5fdff'" onmouseout="this.style.background='none'">Mark all read</button>
+          <button type="button" data-close-panel style="color:#6f797a;background:none;border:0;font-size:20px;font-weight:700;cursor:pointer;padding:2px 6px;line-height:1;border-radius:6px" title="Close">&times;</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;padding:8px 16px;background:#f8fafa;border-bottom:1px solid #eef2f2;font-size:12px">
+        <button type="button" data-filter="all" style="padding:4px 10px;border-radius:20px;border:0;background:#036469;color:#fff;font-weight:600;cursor:pointer">All</button>
+        <button type="button" data-filter="unread" style="padding:4px 10px;border-radius:20px;border:0;background:transparent;color:#4a5556;font-weight:600;cursor:pointer">Unread</button>
+        <button type="button" data-filter="emergency" style="padding:4px 10px;border-radius:20px;border:0;background:transparent;color:#4a5556;font-weight:600;cursor:pointer">🚨 Alerts</button>
+        <button type="button" data-filter="appointment" style="padding:4px 10px;border-radius:20px;border:0;background:transparent;color:#4a5556;font-weight:600;cursor:pointer">📅 Bookings</button>
+      </div>
+      <div data-notification-list style="flex:1;overflow-y:auto;padding:8px;max-height:400px;display:flex;flex-direction:column;gap:6px">
+        <p style="padding:24px;text-align:center;color:#6f797a;font-size:13px">Loading notifications...</p>
+      </div>
+    `;
     document.body.appendChild(panel);
 
     const badges = [];
-    const toggle = () => {
-      panel.hidden = !panel.hidden;
-      if (!panel.hidden) loadNotifications();
+    let currentNotifications = [];
+    let currentFilter = "all";
+    let activeTrigger = null;
+
+    const positionPanel = (trigger) => {
+      if (!trigger) return;
+      const rect = trigger.getBoundingClientRect();
+      const panelWidth = Math.min(420, window.innerWidth - 24);
+      let top = rect.bottom + 8;
+      let right = window.innerWidth - rect.right;
+      if (right < 8) right = 8;
+      if (right + panelWidth > window.innerWidth) {
+        right = 8;
+      }
+      panel.style.top = `${Math.round(top)}px`;
+      panel.style.right = `${Math.round(right)}px`;
+      panel.style.width = `${Math.round(panelWidth)}px`;
     };
-    icons.forEach((icon) => {
-      const trigger = icon.closest("button") || icon;
+
+    const isOpen = () => panel.style.display === "flex";
+
+    const openPanel = (trigger) => {
+      activeTrigger = trigger;
+      positionPanel(trigger);
+      panel.style.display = "flex";
+      loadNotifications();
+    };
+
+    const closePanel = () => {
+      panel.style.display = "none";
+      activeTrigger = null;
+    };
+
+    const toggle = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const trigger = e.currentTarget;
+      if (isOpen()) {
+        closePanel();
+      } else {
+        openPanel(trigger);
+      }
+    };
+
+    // Close on click outside
+    document.addEventListener("click", (event) => {
+      if (!isOpen()) return;
+      if (panel.contains(event.target)) return;
+      if (event.target.closest("[data-notif-trigger]")) return;
+      closePanel();
+    });
+
+    // Close on Escape key
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && isOpen()) {
+        closePanel();
+      }
+    });
+
+    // Handle window resize
+    window.addEventListener("resize", () => {
+      if (isOpen() && activeTrigger) {
+        positionPanel(activeTrigger);
+      }
+    });
+
+    panel.querySelector("[data-close-panel]").addEventListener("click", (e) => {
+      e.stopPropagation();
+      closePanel();
+    });
+
+    // Setup filter buttons
+    panel.querySelectorAll("[data-filter]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        panel.querySelectorAll("[data-filter]").forEach((b) => {
+          b.style.background = "transparent";
+          b.style.color = "#4a5556";
+        });
+        btn.style.background = "#036469";
+        btn.style.color = "#fff";
+        currentFilter = btn.dataset.filter;
+        renderNotificationItems();
+      });
+    });
+
+    // Attach to bells across page
+    triggers.forEach((trigger) => {
       trigger.style.cursor = "pointer";
       trigger.setAttribute("aria-label", "Open notifications");
+      trigger.dataset.notifTrigger = "true";
+
+      // Clear any conflicting inline toast clicks
+      if (trigger.getAttribute("onclick") && trigger.getAttribute("onclick").includes("showToast")) {
+        trigger.removeAttribute("onclick");
+      }
+
       trigger.addEventListener("click", toggle);
-      const host = trigger.parentElement;
-      if (!host || host.querySelector("[data-notification-badge]")) return;
-      host.style.position = "relative";
+
+      if (trigger.querySelector("[data-notification-badge]")) return;
+      trigger.style.position = "relative";
+
+      // Hide any existing hardcoded static dot inside the bell button
+      const staticDots = trigger.querySelectorAll(".bg-emergency-red");
+      staticDots.forEach((dot) => {
+        if (!dot.hasAttribute("data-notification-badge")) {
+          dot.style.display = "none";
+        }
+      });
+
       const badge = document.createElement("span");
       badge.dataset.notificationBadge = "";
       badge.hidden = true;
-      badge.style.cssText = "position:absolute;right:0;top:0;min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:#ba1a1a;color:#fff;font:10px/16px sans-serif;text-align:center";
-      host.appendChild(badge);
+      badge.style.cssText = `
+        position: absolute;
+        top: -3px;
+        right: -3px;
+        min-width: 17px;
+        height: 17px;
+        padding: 0 4px;
+        border-radius: 999px;
+        background: #ba1a1a;
+        color: #ffffff;
+        font: bold 10px/17px sans-serif;
+        text-align: center;
+        box-shadow: 0 2px 6px rgba(186, 26, 26, 0.4);
+        pointer-events: none;
+        z-index: 20;
+        display: none;
+      `;
+      trigger.appendChild(badge);
       badges.push(badge);
     });
 
-    async function loadNotifications() {
-      const list = panel.querySelector("[data-notification-list]");
-      try {
-        const response = await window.portalApiFetch("/api/notifications");
-        const payload = await response.json();
-        const items = payload.data || [];
-        const unread = items.filter((item) => item.IS_READ === "N").length;
-        badges.forEach((badge) => { badge.hidden = unread === 0; badge.textContent = unread > 9 ? "9+" : unread; });
-        list.innerHTML = items.length ? items.map((item) => `<button data-notification-id="${item.NOTIFICATION_ID}" style="display:block;width:100%;text-align:left;border:0;background:${item.IS_READ === "N" ? "#e5fdff" : "transparent"};padding:10px;border-radius:8px;cursor:pointer"><strong>${escapeHtml(item.TITLE)}</strong><br><span style="font-size:12px">${escapeHtml(item.MESSAGE)}</span></button>`).join("") : '<p style="padding:16px;text-align:center;color:#6f797a">No notifications</p>';
-      } catch (error) {
-        list.textContent = "Unable to load notifications.";
+    function getCategoryConfig(type) {
+      switch (type) {
+        case "emergency":
+          return { icon: "emergency", color: "#ba1a1a", bg: "#ffdad6", border: "#ffb4ab", label: "EMERGENCY" };
+        case "appointment":
+          return { icon: "calendar_month", color: "#036469", bg: "#e5fdff", border: "#b2ebf2", label: "BOOKING" };
+        case "message":
+          return { icon: "chat", color: "#6b4fa2", bg: "#f3e8ff", border: "#e9d5ff", label: "MESSAGE" };
+        case "billing":
+          return { icon: "receipt_long", color: "#1b6f38", bg: "#dcfce7", border: "#bbf7d0", label: "BILLING" };
+        case "inventory":
+          return { icon: "inventory_2", color: "#b45309", bg: "#fef3c7", border: "#fde68a", label: "INVENTORY" };
+        case "reminder":
+        default:
+          return { icon: "notifications_active", color: "#c2410c", bg: "#ffedd5", border: "#fed7aa", label: "REMINDER" };
       }
     }
 
+    function renderNotificationItems() {
+      const list = panel.querySelector("[data-notification-list]");
+      let filtered = currentNotifications;
+
+      if (currentFilter === "unread") {
+        filtered = filtered.filter((i) => i.is_read === "N");
+      } else if (currentFilter === "emergency") {
+        filtered = filtered.filter((i) => i.type === "emergency");
+      } else if (currentFilter === "appointment") {
+        filtered = filtered.filter((i) => i.type === "appointment");
+      }
+
+      if (!filtered.length) {
+        list.innerHTML = '<p style="padding:28px 16px;text-align:center;color:#6f797a;font-size:13px">No notifications in this category.</p>';
+        return;
+      }
+
+      list.innerHTML = filtered
+        .map((item) => {
+          const cfg = getCategoryConfig(item.type);
+          const isUnread = item.is_read === "N";
+          const timeAgo = formatTimeAgo(item.created_at);
+
+          return `
+            <div data-notification-id="${escapeHtml(item.id)}" data-notification-link="${escapeHtml(item.link || "")}"
+                 style="display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:12px;cursor:pointer;border:1px solid ${isUnread ? cfg.border : "#f0f4f4"};background:${isUnread ? (cfg.bg + "40") : "#ffffff"};transition:all 0.15s ease"
+                 onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.06)'"
+                 onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+              <div style="width:36px;height:36px;border-radius:10px;background:${cfg.bg};color:${cfg.color};display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">
+                <span class="material-symbols-outlined" style="font-size:20px">${cfg.icon}</span>
+              </div>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+                  <span style="font-size:10px;font-weight:700;letter-spacing:0.5px;color:${cfg.color};text-transform:uppercase">${cfg.label}</span>
+                  <span style="font-size:11px;color:#8e9999">${timeAgo}</span>
+                </div>
+                <strong style="display:block;font-size:13px;font-weight:700;color:${isUnread ? "#0b3032" : "#3b4445"};margin-bottom:3px;line-height:1.3">${escapeHtml(item.title)}</strong>
+                <p style="margin:0;font-size:12px;color:#5b6566;line-height:1.4">${escapeHtml(item.message)}</p>
+              </div>
+              ${isUnread ? `<span style="width:8px;height:8px;border-radius:50%;background:${cfg.color};flex-shrink:0;margin-top:8px"></span>` : ""}
+            </div>
+          `;
+        })
+        .join("");
+    }
+
+    async function loadNotifications() {
+      try {
+        const response = await window.portalApiFetch("/api/notifications");
+        if (!response.ok) return;
+        const payload = await response.json();
+        currentNotifications = payload.data || [];
+        const unreadCount = currentNotifications.filter((item) => item.is_read === "N").length;
+
+        // Update badges
+        badges.forEach((badge) => {
+          badge.hidden = unreadCount === 0;
+          badge.style.display = unreadCount > 0 ? "inline-block" : "none";
+          badge.textContent = unreadCount > 9 ? "9+" : unreadCount;
+        });
+
+        // Update unread pill in dropdown header
+        const unreadPill = panel.querySelector("[data-unread-pill]");
+        if (unreadPill) {
+          unreadPill.style.display = unreadCount > 0 ? "inline-block" : "none";
+          unreadPill.textContent = unreadCount > 9 ? "9+" : unreadCount;
+        }
+
+        renderNotificationItems();
+      } catch (error) {
+        console.warn("Unable to load notifications:", error);
+      }
+    }
+
+    // Handle clicks inside panel
     panel.addEventListener("click", async (event) => {
-      const item = event.target.closest("[data-notification-id]");
-      if (item) await window.portalApiFetch(`/api/notifications/${item.dataset.notificationId}/read`, { method: "PATCH" });
-      if (event.target.matches("[data-read-all]")) await window.portalApiFetch("/api/notifications/read-all", { method: "PATCH" });
-      if (item || event.target.matches("[data-read-all]")) loadNotifications();
+      const card = event.target.closest("[data-notification-id]");
+      if (card) {
+        const id = card.dataset.notificationId;
+        const link = card.dataset.notificationLink;
+
+        // Mark read
+        try {
+          await window.portalApiFetch(`/api/notifications/${id}/read`, { method: "PATCH" });
+          const item = currentNotifications.find((i) => i.id === id);
+          if (item) item.is_read = "Y";
+          loadNotifications();
+        } catch (e) {}
+
+        // If notification has a link, verify permissions and navigate
+        if (link) {
+          const targetPage = link.split("?")[0].replace(/^\.\//, "").split("/").pop();
+          const canAccess = allowedPages.some((p) => targetPage.toLowerCase().endsWith(p.toLowerCase()));
+          if (canAccess) {
+            closePanel();
+            window.location.href = getPortalUrl(link);
+          }
+        }
+        return;
+      }
+
+      if (event.target.matches("[data-read-all]") || event.target.closest("[data-read-all]")) {
+        try {
+          await window.portalApiFetch("/api/notifications/read-all", { method: "PATCH" });
+          currentNotifications.forEach((item) => (item.is_read = "Y"));
+          loadNotifications();
+        } catch (e) {}
+      }
     });
+
+    // Initial load on page ready
+    loadNotifications();
+
+    // Auto refresh every 30 seconds
+    setInterval(loadNotifications, 30000);
   }
 
   function installProfilePhotoEditor(user) {
@@ -320,6 +633,9 @@
 
   function installPageSearch(allowedPages) {
     const searchInputs = [...document.querySelectorAll("header input[type='text']")]
+      // Page-specific searches manage their own data and results. Do not add
+      // the generic table/search-page behavior on top of them.
+      .filter((input) => !input.matches("[data-record-search]"))
       .filter((input) => /search/i.test(input.placeholder || ""));
 
     searchInputs.forEach((input) => {
@@ -380,7 +696,7 @@
     if (!auth) return;
     const { user, role, allowedPages } = auth;
 
-    installNotificationBell();
+    installNotificationBell(allowedPages);
     installProfilePhotoEditor(user);
     installLogoutDialog();
     installPageSearch(allowedPages);
@@ -472,4 +788,20 @@
     }
     return resOrJson;
   });
+
+  window.getCurrentUser = function getCurrentUser() {
+    try {
+      const userRaw = localStorage.getItem("user");
+      if (!userRaw) return null;
+      const userObj = JSON.parse(userRaw);
+      if (userObj) {
+        userObj.id = userObj.id || userObj.userId || userObj.user_id;
+        userObj.userId = userObj.id;
+        userObj.user_id = userObj.id;
+      }
+      return userObj;
+    } catch (e) {
+      return null;
+    }
+  };
 })();

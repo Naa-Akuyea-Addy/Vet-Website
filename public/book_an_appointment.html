@@ -612,20 +612,32 @@
                   <div>
                     <label
                       class="block font-label-md text-on-surface mb-1 flex items-center gap-1"
-                      for="pet_age"
-                      >Age (e.g., 2 years or 8 months) *
+                      for="pet_age_value"
+                      >Pet Age *
                       <span class="tooltip-wrapper">
                         <span class="tooltip-icon" tabindex="0">i</span>
-                        <span class="tooltip-bubble">Enter your pet's age as a number followed by "years" or "months" (e.g. 3 years or 6 months). This helps the vet prepare the right care plan.</span>
+                        <span class="tooltip-bubble">Enter your pet's age as a number and select the unit (Years, Months, Weeks). This helps the vet prepare the right care plan.</span>
                       </span>
                     </label>
-                    <input
-                      id="pet_age"
-                      class="w-full bg-surface border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
-                      placeholder="e.g. 3 years or 4 months"
-                      type="text"
-                    />
-                    <p id="pet_age-error" class="error-text hidden"></p>
+                    <div class="flex gap-2">
+                      <input
+                        id="pet_age_value"
+                        class="w-1/2 bg-surface border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+                        placeholder="e.g. 3"
+                        type="number"
+                        min="1"
+                        max="100"
+                      />
+                      <select
+                        id="pet_age_unit"
+                        class="w-1/2 bg-surface border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+                      >
+                        <option value="years">Years</option>
+                        <option value="months">Months</option>
+                        <option value="weeks">Weeks</option>
+                      </select>
+                    </div>
+                    <p id="pet_age_value-error" class="error-text hidden"></p>
                   </div>
                 </div>
                 <div class="space-y-4">
@@ -1023,7 +1035,7 @@
         const rules = [
           { id: "pet_name", regex: /^[A-Za-z\s-]{2,50}$/ },
           { id: "pet_species", regex: /^(Dog|Cat|Bird|Other)$/ },
-          { id: "pet_age", regex: /^\d+\s*(?:years?|months?)$/i },
+          { id: "pet_age_value", regex: /^[1-9]\d{0,2}$/ },
           { id: "owner_name", regex: /^[A-Za-z\s]{3,60}$/ },
           { id: "owner_phone", regex: /^\+?[1-9]\d{1,12}$/ },
           { id: "visit_reason", regex: /^[A-Za-z0-9\s.,!?'-]{5,300}$/ },
@@ -1050,7 +1062,7 @@
         const rules = [
           { id: "pet_name", regex: /^[A-Za-z\s-]{2,50}$/ },
           { id: "pet_species", regex: /^(Dog|Cat|Bird|Other)$/ },
-          { id: "pet_age", regex: /^\d+\s*(?:years?|months?)$/i },
+          { id: "pet_age_value", regex: /^[1-9]\d{0,2}$/ },
           { id: "owner_name", regex: /^[A-Za-z\s]{3,60}$/ },
           { id: "owner_phone", regex: /^\+?[1-9]\d{1,14}$/ },
           { id: "visit_reason", regex: /^[A-Za-z0-9\s.,!?'-]{5,300}$/ },
@@ -1087,16 +1099,22 @@
           owner_phone = "+233" + owner_phone;
         }
 
+        const ageVal = document.getElementById("pet_age_value")?.value.trim() || "";
+        const ageUnit = document.getElementById("pet_age_unit")?.value || "years";
+        const formattedAge = ageVal ? `${ageVal} ${ageUnit}` : "";
+
         const data = {
           pet_name: document.getElementById("pet_name").value.trim(),
           pet_species: document.getElementById("pet_species").value,
-          pet_age: document.getElementById("pet_age").value.trim(),
+          pet_age: formattedAge,
+          pet_age_value: ageVal ? parseInt(ageVal, 10) : null,
+          pet_age_unit: ageUnit,
           owner_name: document.getElementById("owner_name").value.trim(),
           owner_phone,
           visit_reason: document.getElementById("visit_reason").value.trim(),
           service: selectedService,
           appointment_time: selectedTime,
-        veterinarian_id: (document.getElementById('preferred_vet') && document.getElementById('preferred_vet').value) ? document.getElementById('preferred_vet').value : null
+          veterinarian_id: (document.getElementById('preferred_vet') && document.getElementById('preferred_vet').value) ? document.getElementById('preferred_vet').value : null
         };
 
         try {
@@ -1316,14 +1334,29 @@
       });
 
       function goToEmergencyPage() {
-  if (currentEmergencyKeyword) {
-    // Redirects to: emergency.html?alert=bleed (or poison, seizure, etc.)
-    window.location.href = `emergency.html?alert=${currentEmergencyKeyword}`;
-  } else {
-    // Fallback if they click the button without a keyword match
-    window.location.href = 'emergency.html';
-  }
-}
+        const petName = document.getElementById("pet_name")?.value.trim() || "";
+        const petSpecies = document.getElementById("pet_species")?.value || "";
+        const petAgeVal = document.getElementById("pet_age_value")?.value.trim() || "";
+        const petAgeUnit = document.getElementById("pet_age_unit")?.value || "years";
+        const petAge = petAgeVal ? `${petAgeVal} ${petAgeUnit}` : "";
+        const ownerName = document.getElementById("owner_name")?.value.trim() || "";
+        let ownerPhone = document.getElementById("owner_phone")?.value.trim() || "";
+        if (ownerPhone && !ownerPhone.startsWith("+")) {
+          ownerPhone = "+233" + ownerPhone;
+        }
+        const visitReason = document.getElementById("visit_reason")?.value.trim() || "";
+
+        const params = new URLSearchParams();
+        if (currentEmergencyKeyword) params.set("alert", currentEmergencyKeyword);
+        if (petName) params.set("pet_name", petName);
+        if (petSpecies) params.set("species", petSpecies);
+        if (petAge) params.set("age", petAge);
+        if (ownerName) params.set("owner_name", ownerName);
+        if (ownerPhone) params.set("owner_phone", ownerPhone);
+        if (visitReason) params.set("symptoms", visitReason);
+
+        window.location.href = `emergency.html?${params.toString()}`;
+      }
 
       // Initialize flatpickr when page loads
       document.addEventListener("DOMContentLoaded", function () {

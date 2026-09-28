@@ -232,6 +232,59 @@
         color: #991b1b;
       }
 
+      /* Print styles for Export Record */
+      @media print {
+        #desktopSidebar,
+        #mobileSidebar,
+        #mobileOverlay,
+        #mobileBurgerBtn,
+        header,
+        footer,
+        #toast-container,
+        .modal-overlay,
+        button,
+        a,
+        #note-editor,
+        #lab-file-input,
+        .record-actions-btn,
+        .record-actions-menu,
+        #weight-log-form,
+        #profile-pic-input {
+          display: none !important;
+        }
+        body,
+        html {
+          background: #ffffff !important;
+          color: #000000 !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          overflow: visible !important;
+          height: auto !important;
+        }
+        #mainContentWrapper {
+          overflow: visible !important;
+          height: auto !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+        #record-view {
+          display: block !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          padding: 16px !important;
+          margin: 0 !important;
+        }
+        .bg-white,
+        .bg-surface-container-lowest,
+        .bg-surface-muted {
+          background: #ffffff !important;
+          box-shadow: none !important;
+          border: 1px solid #e2e8f0 !important;
+        }
+      }
+
       /* Modal animation */
       .modal-overlay {
         transition: opacity 0.25s ease;
@@ -705,6 +758,15 @@
           <span class="material-symbols-outlined">emergency</span
           ><span>Emergency Cases</span>
         </a>
+        
+        <a
+          href="./inventory.html"
+          data-nav-mobile="inventory"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">inventory_2</span>
+          <span>Inventory</span>
+        </a>
         <a
           href="./mortuary.html"
           data-nav-mobile="mortuary"
@@ -771,11 +833,9 @@
           <a
             href="./Dashboard.html"
             data-nav-desktop="analytics"
-            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >analytics</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">analytics</span>
             <span class="sidebar-text">Analytics</span>
           </a>
           <a
@@ -783,9 +843,7 @@
             data-nav-desktop="calendar"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >calendar_today</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">calendar_today</span>
             <span class="sidebar-text">Calendar</span>
           </a>
           <a
@@ -793,9 +851,7 @@
             data-nav-desktop="staff"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >groups</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">groups</span>
             <span class="sidebar-text">Staff</span>
           </a>
           <a
@@ -803,39 +859,39 @@
             data-nav-desktop="appointment"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >event_note</span
-            >
-            <span class="sidebar-text">appointment</span>
+            <span class="material-symbols-outlined sidebar-icon-only">event_note</span>
+            <span class="sidebar-text">Appointments</span>
           </a>
           <a
             href="./billing.html"
             data-nav-desktop="billing"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >payments</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">payments</span>
             <span class="sidebar-text">Billing</span>
           </a>
           <a
             href="./records.html"
             data-nav-desktop="records"
-            class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all sidebar-button"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >description</span
-            >
-            <span class="sidebar-text">Patient & Owner Records</span>
+            <span class="material-symbols-outlined sidebar-icon-only">description</span>
+            <span class="sidebar-text">Patient &amp; Owner Records</span>
+          </a>
+          <a
+            href="./inventory.html"
+            data-nav-desktop="inventory"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only">inventory_2</span>
+            <span class="sidebar-text">Inventory</span>
           </a>
           <a
             href="./message.html"
             data-nav-desktop="message"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >message</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">message</span>
             <span class="sidebar-text">Messages</span>
           </a>
           <a
@@ -843,36 +899,34 @@
             data-nav-desktop="emergency"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >emergency</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">emergency</span>
             <span class="sidebar-text">Emergency Cases</span>
           </a>
           <a
             href="./mortuary.html"
             data-nav-desktop="mortuary"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >heart_broken</span
-            ><span class="sidebar-text">Mortuary</span></a
           >
+            <span class="material-symbols-outlined sidebar-icon-only">heart_broken</span>
+            <span class="sidebar-text">Mortuary</span>
+          </a>
           <a
             href="./report.html"
             data-nav-desktop="reports"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >assessment</span
-            ><span class="sidebar-text">Reports</span></a
           >
+            <span class="material-symbols-outlined sidebar-icon-only">assessment</span>
+            <span class="sidebar-text">Reports</span>
+          </a>
           <a
             href="./settings.html"
             data-nav-desktop="settings"
+
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
-            ><span class="material-symbols-outlined sidebar-icon-only"
-              >settings</span
-            ><span class="sidebar-text">Settings</span></a
           >
-        </nav>
+            <span class="material-symbols-outlined sidebar-icon-only">settings</span>
+            <span class="sidebar-text">Settings</span>
+          </a>        </nav>
         <div class="p-4 mt-auto bottom-container">
           <button
             id="logoutBtnDesktop"
@@ -911,6 +965,7 @@
               >
               <input
                 id="patient-search"
+                data-record-search
                 class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                 placeholder="Search patients, vets, or files..."
                 type="text"
@@ -1001,6 +1056,20 @@
                     </select>
                   </div>
                   <div>
+                    <label class="block font-label-md text-on-surface-variant mb-2">Emergency Cases</label>
+                    <label class="flex items-center gap-3 cursor-pointer group bg-red-50/80 p-2.5 rounded-lg border border-red-200 hover:bg-red-100 transition-colors">
+                      <input
+                        id="filter-emergency-only"
+                        class="w-4 h-4 rounded text-red-600 focus:ring-red-500 border-red-300"
+                        type="checkbox"
+                      />
+                      <span class="text-body-md font-bold text-red-800 flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                        🚨 Emergency Cases Only
+                      </span>
+                    </label>
+                  </div>
+                  <div>
                     <label
                       class="block font-label-md text-on-surface-variant mb-2"
                       >Vaccination Status</label
@@ -1062,19 +1131,34 @@
 
             <!-- Main Listing Area (Col 9) -->
             <div class="lg:col-span-9 flex flex-col gap-gutter">
-              <!-- Search Bar Container -->
-              <div class="relative w-full max-w-md group">
-                <span
-                  class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline group-focus-within:text-primary transition-colors"
-                  data-icon="search"
-                  >search</span
-                >
-                <input
-                  id="patient-search-input"
-                  class="w-full pl-12 pr-4 py-4 bg-white border border-outline-variant/50 rounded-xl shadow-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-body-md"
-                  placeholder="Search by Pet Name, Owner, or Breed..."
-                  type="text"
-                />
+              <!-- Active Emergency Admission Banner Alert -->
+              <div
+                id="emergency-banner-alert"
+                class="hidden p-4 rounded-xl bg-gradient-to-r from-red-500/10 via-rose-500/10 to-amber-500/10 border-2 border-red-500/40 flex items-center justify-between shadow-sm animate-pulse"
+              >
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center flex-shrink-0 shadow-md">
+                    <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1">emergency</span>
+                  </div>
+                  <div>
+                    <div class="font-bold text-red-900 text-sm flex items-center gap-2">
+                      <span>🚨 Emergency Case Focus: <span id="banner-patient-name" class="font-black text-base underline"></span></span>
+                      <span id="banner-emergency-priority" class="px-2 py-0.5 text-[11px] bg-red-600 text-white rounded-full font-black uppercase">CRITICAL ER</span>
+                    </div>
+                    <p id="banner-patient-desc" class="text-xs text-red-800 mt-0.5">
+                      Admitted to Emergency. Full patient clinical record and emergency history loaded below.
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <a href="./emergency_management.html" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-lg transition-colors flex items-center gap-1 shadow-sm">
+                    <span class="material-symbols-outlined text-sm">arrow_back</span>
+                    <span>Emergency Triage</span>
+                  </a>
+                  <button type="button" onclick="clearEmergencyFocus()" class="px-3 py-1.5 bg-white text-slate-700 hover:bg-slate-100 border border-slate-300 rounded-lg text-xs font-semibold shadow-xs">
+                    View All
+                  </button>
+                </div>
               </div>
 
               <!-- Data Table Card -->
@@ -1231,6 +1315,37 @@
                   class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-label-md text-caption uppercase tracking-wider"
                   >ID: Loading...</span
                 >
+                <span
+                  id="record-today-badge"
+                  class="hidden px-2.5 py-1 rounded-full font-label-md text-caption uppercase tracking-wider font-bold"
+                ></span>
+                <span
+                  id="record-emergency-badge"
+                  class="hidden px-2.5 py-1 rounded-full font-label-md text-caption uppercase tracking-wider font-extrabold bg-red-100 text-red-700 border border-red-300 inline-flex items-center gap-1.5 shadow-sm"
+                >
+                  <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                  <span id="record-emergency-badge-text">🚨 EMERGENCY CASE</span>
+                </span>
+              </div>
+
+              <!-- Active Emergency Info Box in Record View -->
+              <div id="record-emergency-box" class="hidden my-3 p-3.5 bg-red-50/90 border border-red-300/80 rounded-xl text-left shadow-xs">
+                <div class="flex items-center justify-between flex-wrap gap-2 mb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-red-600 text-xl" style="font-variation-settings: 'FILL' 1">crisis_alert</span>
+                    <span class="text-xs font-black uppercase text-red-800 tracking-wide">Emergency Admission Details</span>
+                    <span id="record-emergency-priority-pill" class="px-2 py-0.5 text-[10px] font-black rounded bg-red-600 text-white uppercase">Critical</span>
+                  </div>
+                  <a href="./emergency_management.html" class="inline-flex items-center gap-1 text-xs font-bold text-red-700 hover:text-red-900 bg-white/80 px-2.5 py-1 rounded-md border border-red-200 hover:bg-white transition-colors">
+                    <span>Open in Emergency Triage</span>
+                    <span class="material-symbols-outlined text-xs">open_in_new</span>
+                  </a>
+                </div>
+                <div class="text-xs text-red-950 grid grid-cols-1 md:grid-cols-3 gap-2.5 pt-2 border-t border-red-200/80">
+                  <div><span class="font-bold text-red-800">Case ID:</span> <span id="record-emergency-case-id" class="font-semibold text-slate-800">#EM----</span></div>
+                  <div><span class="font-bold text-red-800">ER Status:</span> <span id="record-emergency-status" class="font-semibold text-slate-800">Admitted</span></div>
+                  <div><span class="font-bold text-red-800">Emergency Complaint:</span> <span id="record-emergency-notes" class="font-semibold text-slate-800">--</span></div>
+                </div>
               </div>
 
               <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
@@ -1410,56 +1525,128 @@
               <div
                 class="bg-white rounded-xl p-6 shadow-sm border border-outline-variant"
               >
-                <h2
-                  class="font-headline-md text-headline-md mb-6 flex items-center gap-2"
-                >
-                  <span class="material-symbols-outlined text-primary"
-                    >monitoring</span
+                <div class="flex items-center justify-between mb-4">
+                  <h2
+                    class="font-headline-md text-headline-md flex items-center gap-2"
                   >
-                  Weight Track
-                </h2>
+                    <span class="material-symbols-outlined text-primary"
+                      >monitoring</span
+                    >
+                    Weight Track
+                  </h2>
+                  <span id="weight-trend-badge" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-surface-muted text-primary border border-outline-variant">History Log</span>
+                </div>
                 <div class="h-48 w-full">
                   <canvas id="weightChart"></canvas>
                 </div>
                 <div
-                  class="mt-4 pt-4 border-t border-outline-variant flex justify-between items-center"
+                  class="mt-4 pt-3 border-t border-outline-variant flex justify-between items-center"
                 >
                   <div>
                     <span class="text-caption text-on-surface-variant block"
                       >Current Weight</span
                     >
-                    <span class="text-headline-md font-bold text-primary"
-                      >31.2 kg</span
+                    <span id="current-weight-display" class="text-headline-md font-bold text-primary"
+                      >-- kg</span
                     >
                   </div>
                   <div class="text-right">
                     <span class="text-caption text-on-surface-variant block"
-                      >Target</span
+                      >Logged Entries</span
                     >
-                    <span
+                    <span id="weight-entries-count"
                       class="text-headline-md font-bold text-on-surface-variant"
-                      >30.0 kg</span
+                      >0</span
                     >
                   </div>
                 </div>
+
+                <!-- Weight Input Form for Doctors -->
+                <form id="weight-log-form" onsubmit="handleLogWeight(event)" class="mt-4 pt-4 border-t border-outline-variant/60">
+                  <label for="input-weight-val" class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2 flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[16px] text-primary">scale</span>
+                    Log Patient Weight (kg)
+                  </label>
+                  <div class="flex flex-col sm:flex-row gap-2">
+                    <input
+                      type="number"
+                      step="0.1"
+                      min="0.1"
+                      max="500"
+                      id="input-weight-val"
+                      required
+                      placeholder="e.g. 15.5"
+                      class="flex-1 bg-surface-muted border border-outline-variant rounded-lg px-3 py-2 text-sm focus:ring-primary focus:border-primary outline-none font-semibold"
+                    />
+                    <input
+                      type="date"
+                      id="input-weight-date"
+                      class="bg-surface-muted border border-outline-variant rounded-lg px-3 py-2 text-sm focus:ring-primary focus:border-primary outline-none"
+                    />
+                    <button
+                      type="submit"
+                      id="save-weight-btn"
+                      class="bg-primary text-on-primary p-2 rounded-lg hover:opacity-90 active:scale-95 transition-all flex items-center justify-center shadow-sm shrink-0"
+                      title="Save"
+                    >
+                      <span class="material-symbols-outlined text-[20px]">save</span>
+                    </button>
+                  </div>
+                  <div class="mt-3">
+                    <div class="text-[11px] font-bold uppercase text-on-surface-variant mb-1">Recent Weight Logs</div>
+                    <div id="weight-history-list" class="max-h-28 overflow-y-auto space-y-1.5 text-xs text-on-surface-variant"></div>
+                  </div>
+                </form>
               </div>
 
               <!-- Vaccination Records -->
               <div
                 class="bg-white rounded-xl p-6 shadow-sm border border-outline-variant"
               >
-                <h2
-                  class="font-headline-md text-headline-md mb-6 flex items-center gap-2"
-                >
-                  <span class="material-symbols-outlined text-primary"
-                    >vaccines</span
+                <div class="flex justify-between items-center mb-4">
+                  <h2
+                    class="font-headline-md text-headline-md flex items-center gap-2"
                   >
-                  Vaccinations
-                </h2>
-                <p class="text-caption text-on-surface-variant mb-4 -mt-4">
+                    <span class="material-symbols-outlined text-primary"
+                      >vaccines</span
+                    >
+                    Vaccinations
+                  </h2>
+                  <span id="record-vaccination-badge" class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800">
+                    Vaccinated
+                  </span>
+                </div>
+                <p class="text-caption text-on-surface-variant mb-4">
                   * Tracks core vaccines to ensure boosters are never missed.
                 </p>
-                <ul class="space-y-4">
+
+                <!-- Doctor Vaccination Status Confirmation Control -->
+                <div class="bg-surface-muted p-3 rounded-lg border border-outline-variant mb-4">
+                  <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1.5">
+                    Confirm Vaccination Status
+                  </label>
+                  <div class="flex items-center gap-2">
+                    <select
+                      id="confirm-vaccination-select"
+                      class="flex-1 bg-white border border-outline-variant rounded-lg px-3 py-1.5 text-sm font-semibold focus:ring-primary focus:border-primary outline-none"
+                    >
+                      <option value="VACCINATED">Vaccinated (All core up to date)</option>
+                      <option value="DUE SOON">Due Soon (Booster needed soon)</option>
+                      <option value="OVERDUE">Overdue (Booster lapsed)</option>
+                    </select>
+                    <button
+                      type="button"
+                      onclick="confirmCurrentPatientVaccination()"
+                      class="bg-primary text-on-primary p-1.5 rounded-lg hover:opacity-90 active:scale-95 transition-all flex items-center justify-center shadow-sm shrink-0"
+                      title="Confirm"
+                    >
+                      <span class="material-symbols-outlined text-[20px]">check_circle</span>
+                    </button>
+                  </div>
+                </div>
+
+                <ul class="space-y-4" id="vaccination-items-list">
+
                   <li class="flex items-center gap-4">
                     <span
                       class="material-symbols-outlined text-primary"
@@ -1468,9 +1655,7 @@
                     >
                     <div class="flex-grow">
                       <p class="font-semibold text-body-md">Rabies (3-Year)</p>
-                      <p class="text-caption text-on-surface-variant">
-                        Expires: Oct 2026
-                      </p>
+                      <p class="text-caption text-on-surface-variant">Core Vaccination</p>
                     </div>
                   </li>
                   <li class="flex items-center gap-4">
@@ -1480,23 +1665,19 @@
                       >check_circle</span
                     >
                     <div class="flex-grow">
-                      <p class="font-semibold text-body-md">DHPP</p>
-                      <p class="text-caption text-on-surface-variant">
-                        Expires: Oct 2024
-                      </p>
+                      <p class="font-semibold text-body-md">DHPP / FVRCP</p>
+                      <p class="text-caption text-on-surface-variant">Core Canine / Feline</p>
                     </div>
                   </li>
                   <li class="flex items-center gap-4">
-                    <span class="material-symbols-outlined text-outline-variant"
-                      >radio_button_unchecked</span
+                    <span
+                      class="material-symbols-outlined text-primary"
+                      style="font-variation-settings: &quot;FILL&quot; 1"
+                      >check_circle</span
                     >
                     <div class="flex-grow">
-                      <p class="font-semibold text-body-md text-outline">
-                        Bordetella
-                      </p>
-                      <p class="text-caption text-emergency-red font-bold">
-                        Overdue since Jan 2024
-                      </p>
+                      <p class="font-semibold text-body-md">Bordetella / Leptospirosis</p>
+                      <p class="text-caption text-on-surface-variant">Lifestyle Protection</p>
                     </div>
                   </li>
                 </ul>
@@ -1567,9 +1748,20 @@
                   Patient Status
                 </h2>
                 <p class="text-caption text-on-surface-variant">
-                  Toggle to mark this patient as deceased and transfer to
+                  Toggle to mark this patient as deceased in database and transfer to
                   mortuary management.
                 </p>
+                <!-- Doctor mistake recovery button -->
+                <div id="patient-status-mistake-container" class="hidden mt-2">
+                  <button
+                    type="button"
+                    onclick="revertPatientStatus()"
+                    class="inline-flex items-center gap-1.5 text-xs font-bold text-red-600 hover:text-red-800 bg-red-50 hover:bg-red-100 border border-red-200 px-3 py-1.5 rounded-lg transition-all shadow-sm"
+                  >
+                    <span class="material-symbols-outlined text-[16px]">undo</span>
+                    Doctor Mistake? Delete Deceased Status & Restore to Active
+                  </button>
+                </div>
               </div>
               <div
                 class="deceased-toggle-container"
@@ -1688,15 +1880,26 @@
                     class="block font-label-md text-on-surface-variant mb-2"
                     >Age *</label
                   >
-                  <input
-                    id="f-age"
-                    type="text"
-                    required
-                    pattern="^\d+\s*([Yy]ears?|[Mm]onths?|[Ww]eeks?|[Dd]ays?)(?:\s*,\s*\d+\s*([Yy]ears?|[Mm]onths?|[Ww]eeks?|[Dd]ays?))?$"
-                    title="Please enter age in format like: '3 Years', '2 Years, 2 Months'"
-                    class="w-full bg-surface-muted border border-outline-variant rounded-lg p-3 text-body-md focus:ring-primary focus:border-primary"
-                    placeholder="e.g. 2 Years"
-                  />
+                  <div class="flex gap-2">
+                    <input
+                      id="f-age-val"
+                      type="number"
+                      required
+                      min="1"
+                      max="100"
+                      class="w-1/2 bg-surface-muted border border-outline-variant rounded-lg p-3 text-body-md focus:ring-primary focus:border-primary"
+                      placeholder="e.g. 2"
+                    />
+                    <select
+                      id="f-age-unit"
+                      required
+                      class="w-1/2 bg-surface-muted border border-outline-variant rounded-lg p-3 text-body-md focus:ring-primary focus:border-primary"
+                    >
+                      <option value="Years">Years</option>
+                      <option value="Months">Months</option>
+                      <option value="Weeks">Weeks</option>
+                    </select>
+                  </div>
                 </div>
                 <div>
                   <label
@@ -1942,118 +2145,10 @@
       // ==========================================
       // 1. appointment DATA (Shared with appointment.html)
       // ==========================================
-      let appointmentData = [
-        {
-          id: "APT-001",
-          patient: "Kofi",
-          owner: "Kwame Mensah",
-          type: "General Checkup",
-          date: "2024-10-24",
-          time: "10:30",
-          vet: "Dr. Abena Mensah",
-          status: "Confirmed",
-          notes: "Annual wellness exam",
-        },
-        {
-          id: "APT-002",
-          patient: "Nala",
-          owner: "Ama Boateng",
-          type: "Vaccination",
-          date: "2024-11-02",
-          time: "14:15",
-          vet: "Dr. Kwame Osei",
-          status: "Pending",
-          notes: "Rabies booster",
-        },
-        {
-          id: "APT-003",
-          patient: "Snowy",
-          owner: "Daniel Appiah",
-          type: "Follow-up",
-          date: "2024-08-15",
-          time: "09:00",
-          vet: "Dr. Sarah Johnson",
-          status: "Completed",
-          notes: "Post-surgery check",
-        },
-        {
-          id: "APT-004",
-          patient: "Zazu",
-          owner: "Ekow Quansah",
-          type: "Emergency",
-          date: "2024-11-10",
-          time: "16:45",
-          vet: "Dr. Abena Mensah",
-          status: "Cancelled",
-          notes: "Bird had respiratory issues",
-        },
-        {
-          id: "APT-005",
-          patient: "Bella",
-          owner: "Grace Asare",
-          type: "Surgery",
-          date: "2024-12-05",
-          time: "11:00",
-          vet: "Dr. Kwame Osei",
-          status: "Confirmed",
-          notes: "Spay surgery",
-        },
-        {
-          id: "APT-006",
-          patient: "Max",
-          owner: "John Doe",
-          type: "General Checkup",
-          date: "2024-12-15",
-          time: "13:30",
-          vet: "Dr. Sarah Johnson",
-          status: "Pending",
-          notes: "Routine checkup",
-        },
-        {
-          id: "APT-007",
-          patient: "Luna",
-          owner: "Jane Smith",
-          type: "Vaccination",
-          date: "2024-12-20",
-          time: "10:00",
-          vet: "Dr. Abena Mensah",
-          status: "Confirmed",
-          notes: "Annual vaccines",
-        },
-        {
-          id: "APT-008",
-          patient: "Rocky",
-          owner: "Michael Chen",
-          type: "Follow-up",
-          date: "2024-12-01",
-          time: "15:00",
-          vet: "Dr. Kwame Osei",
-          status: "Completed",
-          notes: "Check healing progress",
-        },
-        {
-          id: "APT-009",
-          patient: "Kofi",
-          owner: "Kwame Mensah",
-          type: "Vaccination",
-          date: "2024-09-15",
-          time: "09:30",
-          vet: "Dr. Sarah Johnson",
-          status: "Completed",
-          notes: "Rabies booster",
-        },
-        {
-          id: "APT-010",
-          patient: "Kofi",
-          owner: "Kwame Mensah",
-          type: "Follow-up",
-          date: "2024-08-20",
-          time: "11:00",
-          vet: "Dr. Abena Mensah",
-          status: "Completed",
-          notes: "Follow-up on ear infection",
-        },
-      ];
+      // Populated from /api/appointments on DOMContentLoaded
+      let appointmentData = [];
+      let highlightedPatientId = null;
+
 
       // ==========================================
       // 2. VIEW ALL appointment - Navigate to appointment page with patient data
@@ -2072,7 +2167,7 @@
       // ==========================================
       function loadappointmentFromStorage() {
         try {
-          const saved = localStorage.getItem("appointmentData");
+          const saved = localStorage.getItem("appointmentData") || localStorage.getItem("appointmentsData");
           if (saved) {
             const parsed = JSON.parse(saved);
             if (Array.isArray(parsed) && parsed.length > 0) {
@@ -2089,7 +2184,7 @@
       loadappointmentFromStorage();
 
       // ==========================================
-      // 4. PATIENTS DATA
+      // 4. PATIENTS DATA — populated from DB
       // ==========================================
       const petImages = {
         Dog: "https://lh3.googleusercontent.com/aida-public/AB6AXuDaPdmzJWLko5Bjs7O9BAdaR-JOU0QVqS8OwF73T2lIf8DAcGb_8D5dyCBf507JjLBybEm771j7S6buktFanpFd9kEU9B1XAkdi1zY5fqXA8xEpw_IrfBFeUzdYUPVukoidQSxKZQOvfKWUocUQB07N7VBA126t7eXKLcvHceYnMcBJN0GnzG0eNrxwWTn1H3vmAUD1Fk4ENllaqaql5O9o2HS-rLO2VVoseqzWgcrfLBoCsiFtgXuGgkTdqIx4Tn4JKUkpBKE0qH4",
@@ -2098,58 +2193,52 @@
         Exotic: null,
       };
 
-      let patients = [
-        {
-          id: "VC-2041",
-          name: "Kofi",
-          species: "Dog",
-          breed: "Golden Retriever",
-          owner: "Kwame Mensah",
-          lastVisit: "Oct 24, 2024",
-          status: "VACCINATED",
-          age: "3 Years",
-          gender: "Male (Neutered)",
-          img: petImages.Dog,
-        },
-        {
-          id: "VC-2088",
-          name: "Nala",
-          species: "Cat",
-          breed: "Siamese",
-          owner: "Ama Boateng",
-          lastVisit: "Nov 02, 2024",
-          status: "DUE SOON",
-          age: "2 Years",
-          gender: "Female",
-          img: petImages.Cat,
-        },
-        {
-          id: "VC-3112",
-          name: "Snowy",
-          species: "Dog",
-          breed: "Toy Poodle",
-          owner: "Daniel Appiah",
-          lastVisit: "Aug 15, 2024",
-          status: "OVERDUE",
-          age: "4 Years",
-          gender: "Female (Neutered)",
-          img: petImages.Dog,
-        },
-        {
-          id: "VC-4002",
-          name: "Zazu",
-          species: "Bird",
-          breed: "African Gray Parrot",
-          owner: "Ekow Quansah",
-          lastVisit: "Nov 10, 2024",
-          status: "VACCINATED",
-          age: "1 Year",
-          gender: "Male",
-          img: petImages.Bird,
-        },
-      ];
+      // ==========================================
+      // API CONFIGURATION & DATABASE CONNECTIVITY
+      // ==========================================
+      const API_BASE = (window.location.origin && window.location.origin.includes(":3000"))
+        ? ""
+        : "http://localhost:3000";
 
-      let idCounter = 5000;
+      async function apiFetch(endpoint, options = {}) {
+        let url = endpoint;
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+          const cleanEndpoint = url.startsWith("/") ? url : `/${url}`;
+          url = `${API_BASE}${cleanEndpoint}`;
+        }
+
+        const token = localStorage.getItem("token");
+        const headers = {
+          "Content-Type": "application/json",
+          ...(options.headers || {}),
+        };
+        if (token) {
+          headers["Authorization"] = "Bearer " + token;
+        }
+
+        const fetchOptions = { ...options, headers };
+        if (!fetchOptions.method || fetchOptions.method === 'GET') {
+          fetchOptions.cache = 'no-store';
+        }
+
+        try {
+          const res = await fetch(url, fetchOptions);
+          return res;
+        } catch (err) {
+          // If relative fetch failed (e.g. Live Server port 5500 or file:// protocol), retry against localhost:3000
+          if (!url.includes("localhost:3000")) {
+            const cleanEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+            return await fetch(`http://localhost:3000${cleanEndpoint}`, fetchOptions);
+          }
+          throw err;
+        }
+      }
+
+      // Start with empty arrays — filled by fetchPatientsFromBackend() on load
+      let patients = [];
+      let patientLoadError = "";
+
+
       let currentPage = 1;
       const itemsPerPage = 5;
       let filteredPatients = [...patients];
@@ -2176,6 +2265,15 @@
         }, 4000);
       }
 
+      // auth-guard.js keeps its helper inside a private module, so this page
+      // needs its own escaping function before inserting database values into
+      // table markup.
+      function escapeHtml(value) {
+        const element = document.createElement("div");
+        element.textContent = value == null ? "" : String(value);
+        return element.innerHTML;
+      }
+
       // ==========================================
       // 6. FORMAT DATE
       // ==========================================
@@ -2188,83 +2286,255 @@
         });
       }
 
+      
+      // ==========================================
+      // 6b. APPOINTMENT & REVIEW BADGE HELPERS
+      // ==========================================
+      function isTodayDate(apptDateStr) {
+        if (!apptDateStr) return false;
+        const todayStr = new Date().toLocaleDateString("en-CA");
+        const str = String(apptDateStr).trim();
+        if (str.startsWith(todayStr) || str.includes(todayStr)) return true;
+        const parsed = new Date(str);
+        return !isNaN(parsed.getTime()) && parsed.toLocaleDateString("en-CA") === todayStr;
+      }
+
+      function getPatientAppointmentToday(p) {
+        if (!p) return null;
+        const pDbId = String(p.dbId || p.PATIENT_ID || "").trim();
+        const pNum = String(p.id || p.PATIENT_NUMBER || "").trim().toLowerCase();
+        const pName = String(p.name || p.PET_NAME || "").trim().toLowerCase();
+
+        const apptsList = Array.isArray(appointmentData) && appointmentData.length > 0
+          ? appointmentData
+          : [];
+
+        const patientAppts = apptsList.filter((a) => {
+          const aDbId = String(a.patientDbId || a.patientId || a.patient_id || a.PATIENT_ID || "").trim();
+          const aNum = String(a.patientNumber || a.PATIENT_NUMBER || "").trim().toLowerCase();
+          const aName = String(a.patient || a.PET_NAME || a.PATIENT_NAME || "").trim().toLowerCase();
+
+          if (pDbId && aDbId) {
+            return pDbId === aDbId;
+          }
+          if (pNum && aNum) {
+            return pNum === aNum;
+          }
+          if (!aDbId && !aNum && pName && aName) {
+            return pName === aName;
+          }
+          return false;
+        });
+
+        const activeAppts = patientAppts.filter(
+          (a) => String(a.status || "").toLowerCase() !== "cancelled"
+        );
+
+        const todayAppt = activeAppts.find((a) =>
+          isTodayDate(a.date || a.APPOINTMENT_TIME || a.appointment_time)
+        );
+
+        if (!todayAppt && !p.hasAppointmentToday) return null;
+
+        const typeStr = String(
+          todayAppt
+            ? [todayAppt.type, todayAppt.visitReason, todayAppt.notes].filter(Boolean).join(" ")
+            : p.hasAppointmentToday
+        ).toLowerCase();
+
+        const isExplicitReview =
+          typeStr.includes("review") ||
+          typeStr.includes("follow-up") ||
+          typeStr.includes("follow up");
+        const isReturning = activeAppts.length > 1;
+        const isReview = isExplicitReview || isReturning;
+
+        return {
+          isToday: true,
+          isReview: isReview,
+          badgeText: isReview ? "Review Today" : "In Clinic Today",
+          badgeColor: isReview ? "bg-purple-100 text-purple-700" : "bg-blue-100 text-blue-700",
+          appt: todayAppt,
+        };
+      }
+
       // ==========================================
       // 7. RENDER PATIENTS TABLE
       // ==========================================
       function renderTable() {
         const tbody = document.getElementById("patient-tbody");
-        const searchInput = document
-          .getElementById("patient-search-input")
-          .value.toLowerCase();
-        const speciesFilter = document.getElementById("filter-species").value;
-        const showVaccinated =
-          document.getElementById("filter-vaccinated").checked;
-        const showDueSoon = document.getElementById("filter-due-soon").checked;
-        const showOverdue = document.getElementById("filter-overdue").checked;
+        const searchInputEl = document.getElementById("patient-search-input");
+        const topSearchEl = document.getElementById("patient-search");
+        const searchInput = (searchInputEl?.value || topSearchEl?.value || "").trim().toLowerCase();
+        const speciesFilter = document.getElementById("filter-species")?.value || "All";
+        const showVaccinated = document.getElementById("filter-vaccinated")?.checked ?? true;
+        const showDueSoon = document.getElementById("filter-due-soon")?.checked ?? true;
+        const showOverdue = document.getElementById("filter-overdue")?.checked ?? true;
+        const showEmergencyOnly = document.getElementById("filter-emergency-only")?.checked ?? false;
 
         filteredPatients = patients.filter((p) => {
-          const matchesSearch =
-            !searchInput ||
-            p.name.toLowerCase().includes(searchInput) ||
-            p.owner.toLowerCase().includes(searchInput) ||
-            p.breed.toLowerCase().includes(searchInput) ||
-            p.species.toLowerCase().includes(searchInput);
-          const matchesSpecies =
-            speciesFilter === "All" || p.species === speciesFilter;
+          // Emergency Cases Only Filter
+          if (showEmergencyOnly) {
+            const isEm = p.isEmergency || (p.emergencyId && Number(p.emergencyId) > 0);
+            if (!isEm) return false;
+          }
+
+          // Search across: Pet Name, Owner Name, Species, Breed, ID, Age, Gender, Phone
+          let matchesSearch = true;
+          if (searchInput) {
+            const pName = (p.name || "").toLowerCase();
+            const pOwner = (p.owner || "").toLowerCase();
+            const pSpecies = (p.species || "").toLowerCase();
+            const pBreed = (p.breed || "").toLowerCase();
+            const pId = (p.id || "").toLowerCase();
+            const pPhone = (p.phone || "").toLowerCase();
+            const pEmail = (p.email || "").toLowerCase();
+
+            matchesSearch =
+              pName.includes(searchInput) ||
+              pOwner.includes(searchInput) ||
+              pSpecies.includes(searchInput) ||
+              pBreed.includes(searchInput) ||
+              pId.includes(searchInput) ||
+              pPhone.includes(searchInput) ||
+              pEmail.includes(searchInput);
+          }
+
+          // Species filter matching
+          let matchesSpecies = false;
+          if (speciesFilter === "All") {
+            matchesSpecies = true;
+          } else {
+            const sf = speciesFilter.toLowerCase();
+            const ps = (p.species || "").toLowerCase();
+            if (sf === "dog" && (ps.includes("dog") || ps.includes("canine"))) matchesSpecies = true;
+            else if (sf === "cat" && (ps.includes("cat") || ps.includes("feline"))) matchesSpecies = true;
+            else if (sf === "bird" && (ps.includes("bird") || ps.includes("avian") || ps.includes("parrot"))) matchesSpecies = true;
+            else if (sf === "exotic" && (ps.includes("exotic") || ps.includes("reptile") || ps.includes("rabbit") || ps.includes("hamster"))) matchesSpecies = true;
+            else matchesSpecies = ps.includes(sf);
+          }
+
+          // Vaccination Status Filter (supports VACCINATED and CONFIRMED VACCINATED)
           let matchesStatus = false;
-          if (p.status === "VACCINATED" && showVaccinated) matchesStatus = true;
-          if (p.status === "DUE SOON" && showDueSoon) matchesStatus = true;
-          if (p.status === "OVERDUE" && showOverdue) matchesStatus = true;
+          const st = (p.status || "").toUpperCase();
+          if ((st === "VACCINATED" || st.includes("VACCINAT")) && showVaccinated) matchesStatus = true;
+          if (st.includes("DUE") && showDueSoon) matchesStatus = true;
+          if (st.includes("OVERDUE") && showOverdue) matchesStatus = true;
+          if (!showVaccinated && !showDueSoon && !showOverdue) matchesStatus = true;
+
           return matchesSearch && matchesSpecies && matchesStatus;
         });
 
-        const totalPages =
-          Math.ceil(filteredPatients.length / itemsPerPage) || 1;
+        // Ensure highlighted patient from emergency triage appears first at top of list
+        if (highlightedPatientId) {
+          const idx = filteredPatients.findIndex((p) => p.id === highlightedPatientId || String(p.dbId) === String(highlightedPatientId));
+          if (idx > -1) {
+            const [highlightedP] = filteredPatients.splice(idx, 1);
+            filteredPatients.unshift(highlightedP);
+          }
+        }
+
+        const totalPages = Math.ceil(filteredPatients.length / itemsPerPage) || 1;
         if (currentPage > totalPages) currentPage = totalPages;
+        if (currentPage < 1) currentPage = 1;
         const start = (currentPage - 1) * itemsPerPage;
         const end = Math.min(start + itemsPerPage, filteredPatients.length);
         const pageData = filteredPatients.slice(start, end);
 
         if (pageData.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant font-body-md">No patients found matching your filters.</td></tr>`;
+          const message = patientLoadError || "No patients found matching your search or filters.";
+          tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant font-body-md">' + escapeHtml(message) + '</td></tr>';
         } else {
           tbody.innerHTML = pageData
             .map((p) => {
               const statusClass =
-                p.status === "VACCINATED"
+                p.status === "VACCINATED" || (p.status || "").includes("VACCINAT")
                   ? "status-vaccinated"
-                  : p.status === "DUE SOON"
+                  : (p.status || "").includes("DUE")
                     ? "status-due-soon"
                     : "status-overdue";
               const avatarHTML = p.img
-                ? `<img class="w-full h-full object-cover" src="${p.img}" />`
-                : `<span class="material-symbols-outlined text-primary text-2xl">pet_supplies</span>`;
+                ? '<img class="w-full h-full object-cover" src="' + p.img + '" />'
+                : '<span class="material-symbols-outlined text-primary text-2xl">pet_supplies</span>';
+              const deceasedBadge = p.patientStatus === "Deceased"
+                ? '<span class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-red-100 text-red-700 uppercase tracking-wide">Deceased</span>'
+                : '';
+              const todayInfo = getPatientAppointmentToday(p);
+              const appointmentBadge = todayInfo
+                ? `<span class="px-1.5 py-0.5 text-[10px] font-bold rounded ${todayInfo.badgeColor} uppercase tracking-wide font-bold">${escapeHtml(todayInfo.badgeText)}</span>`
+                : '';
+              const isEmergencyCase = p.isEmergency || (p.emergencyId && Number(p.emergencyId) > 0);
+              const emergencyPriorityUpper = (p.emergencyPriority || "URGENT").toUpperCase();
+              const emergencyBadge = isEmergencyCase
+                ? `<span class="px-2 py-0.5 text-[10px] font-extrabold rounded-full ${
+                    emergencyPriorityUpper === "CRITICAL"
+                      ? "bg-red-100 text-red-700 border border-red-300"
+                      : emergencyPriorityUpper === "URGENT"
+                      ? "bg-amber-100 text-amber-800 border border-amber-300"
+                      : "bg-rose-100 text-rose-700 border border-rose-200"
+                  } uppercase tracking-wide inline-flex items-center gap-1 shadow-sm" title="Active Emergency Case (#EM-${p.emergencyId || ''}) - Status: ${p.emergencyStatus || 'Admitted'}">
+                    <span class="w-1.5 h-1.5 rounded-full ${
+                      emergencyPriorityUpper === "CRITICAL" ? "bg-red-600 animate-ping" : "bg-amber-500 animate-ping"
+                    }"></span>
+                    <span>🚨 ${escapeHtml(emergencyPriorityUpper)} EMERGENCY</span>
+                  </span>`
+                : '';
+
+              const isHighlighted = highlightedPatientId && (p.id === highlightedPatientId || String(p.dbId) === String(highlightedPatientId));
+              const rowHighlightClass = isHighlighted
+                ? "ring-2 ring-red-500 bg-red-100/50 shadow-md transition-all"
+                : isEmergencyCase
+                ? "bg-red-50/25 border-l-4 border-l-red-500"
+                : "";
+
               return `
-              <tr class="hover:bg-surface-muted/50 transition-colors">
+              <tr class="patient-row hover:bg-surface-muted/50 transition-colors cursor-pointer ${rowHighlightClass}" data-id="${escapeHtml(p.id)}" title="Click to view full clinical record for ${escapeHtml(p.name)}">
                 <td class="px-6 py-4">
                   <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden">${avatarHTML}</div>
                     <div>
-                      <div class="font-label-md text-on-surface">${p.name}</div>
-                      <div class="text-caption text-outline">ID: #${p.id}</div>
+                      <div class="font-label-md text-on-surface font-bold flex items-center gap-1.5 flex-wrap">
+                        <span class="hover:text-primary transition-colors">${escapeHtml(p.name)}</span>
+                        ${deceasedBadge}
+                        ${appointmentBadge}
+                        ${emergencyBadge}
+                      </div>
+                      <div class="text-caption text-outline">ID: #${escapeHtml(p.id)}</div>
                     </div>
                   </div>
                 </td>
                 <td class="px-6 py-4">
-                  <div class="text-body-md">${p.species}</div>
-                  <div class="text-caption text-outline">${p.breed}</div>
+                  <div class="text-body-md font-medium">${escapeHtml(p.species)}</div>
+                  <div class="text-caption text-outline">${escapeHtml(p.breed)}</div>
                 </td>
-                <td class="px-6 py-4 text-body-md">${p.owner}</td>
-                <td class="px-6 py-4 text-body-md">${p.lastVisit}</td>
-                <td class="px-6 py-4">
-                  <select data-id="${p.id}" class="status-select rounded-full px-3 py-1 ${statusClass}">
-                    <option value="VACCINATED" ${p.status === "VACCINATED" ? "selected" : ""}>Vaccinated</option>
-                    <option value="DUE SOON" ${p.status === "DUE SOON" ? "selected" : ""}>Due Soon</option>
-                    <option value="OVERDUE" ${p.status === "OVERDUE" ? "selected" : ""}>Overdue</option>
+                <td class="px-6 py-4 text-body-md">
+                  <div class="font-medium">${escapeHtml(p.owner)}</div>
+                  ${p.phone ? '<div class="text-xs text-outline">' + escapeHtml(p.phone) + '</div>' : ''}
+                </td>
+                <td class="px-6 py-4 text-body-md text-on-surface-variant">${escapeHtml(p.lastVisit)}</td>
+                <td class="px-6 py-4" onclick="event.stopPropagation()">
+                  <select data-id="${p.id}" data-dbid="${p.dbId}" class="status-select rounded-full px-3 py-1 font-semibold text-xs ${statusClass}">
+                    <option value="VACCINATED" ${(p.status === "VACCINATED" || (p.status || "").includes("VACCINAT")) ? "selected" : ""}>Vaccinated</option>
+                    <option value="DUE SOON" ${(p.status || "").includes("DUE") ? "selected" : ""}>Due Soon</option>
+                    <option value="OVERDUE" ${(p.status || "").includes("OVERDUE") ? "selected" : ""}>Overdue</option>
                   </select>
                 </td>
-                <td class="px-6 py-4 text-right">
-                  <button data-id="${p.id}" class="view-record-btn text-primary font-label-md hover:underline active:opacity-70">View Records</button>
+                <td class="px-6 py-4 text-right" onclick="event.stopPropagation()">
+                  <div class="relative inline-block">
+                    <button type="button" data-id="${escapeHtml(p.id)}" class="record-actions-btn p-2 rounded-lg text-on-surface-variant hover:bg-surface-muted hover:text-primary transition-colors" aria-label="Actions for ${escapeHtml(p.name)}" aria-expanded="false">
+                      <span class="material-symbols-outlined">more_horiz</span>
+                    </button>
+                    <div class="record-actions-menu hidden absolute right-0 top-full mt-1 z-20 min-w-40 bg-white border border-outline-variant/40 rounded-lg shadow-lg overflow-hidden">
+                      <button type="button" data-id="${escapeHtml(p.id)}" class="view-record-btn w-full px-4 py-2.5 text-left text-sm font-medium text-primary hover:bg-surface-muted transition-colors flex items-center gap-2">
+                        <span class="material-symbols-outlined text-base">visibility</span>
+                        View record
+                      </button>
+                      <button type="button" data-id="${escapeHtml(p.id)}" data-dbid="${p.dbId}" class="delete-record-btn w-full px-4 py-2.5 text-left text-sm font-medium text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2 border-t border-slate-100">
+                        <span class="material-symbols-outlined text-base">delete</span>
+                        Delete record
+                      </button>
+                    </div>
+                  </div>
                 </td>
               </tr>
             `;
@@ -2272,16 +2542,58 @@
             .join("");
         }
 
-        document.querySelectorAll(".view-record-btn").forEach((btn) => {
-          btn.addEventListener("click", (e) => {
-            const id = e.target.getAttribute("data-id");
+        // Row click opens record view directly
+        document.querySelectorAll(".patient-row").forEach((row) => {
+          row.addEventListener("click", (e) => {
+            if (e.target.closest("select") || e.target.closest("button") || e.target.closest(".record-actions-menu")) return;
+            const id = row.getAttribute("data-id");
             const patient = patients.find((p) => p.id === id);
             if (patient) openRecordView(patient);
           });
         });
 
+        document.querySelectorAll(".view-record-btn").forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            const id = btn.getAttribute("data-id");
+            const patient = patients.find((p) => p.id === id);
+            if (patient) openRecordView(patient);
+          });
+        });
+
+        document.querySelectorAll(".delete-record-btn").forEach((btn) => {
+          btn.addEventListener("click", async (e) => {
+            e.stopPropagation();
+            const id = btn.getAttribute("data-id");
+            const dbId = btn.getAttribute("data-dbid");
+            const patient = patients.find((p) => p.id === id || String(p.dbId) === String(dbId));
+            if (!patient) return;
+            if (!confirm(`Permanently delete patient "${patient.name}" (#${patient.id}) from the database?`)) return;
+            try {
+              const res = await apiFetch(`/api/patients/${patient.dbId}`, { method: "DELETE" });
+              if (!res.ok) throw new Error("Could not delete patient record from database");
+              showToast(`Patient ${patient.name} deleted from database`, "success");
+              await fetchPatientsFromBackend();
+            } catch (err) {
+              console.warn("Delete patient error:", err);
+              showToast("Failed to delete patient from database", "error");
+            }
+          });
+        });
+
+        document.querySelectorAll(".record-actions-btn").forEach((btn) => {
+          btn.addEventListener("click", (event) => {
+            event.stopPropagation();
+            const menu = btn.nextElementSibling;
+            const willOpen = menu.classList.contains("hidden");
+            document.querySelectorAll(".record-actions-menu").forEach((item) => item.classList.add("hidden"));
+            document.querySelectorAll(".record-actions-btn").forEach((item) => item.setAttribute("aria-expanded", "false"));
+            menu.classList.toggle("hidden", !willOpen);
+            btn.setAttribute("aria-expanded", String(willOpen));
+          });
+        });
+
         document.querySelectorAll(".status-select").forEach((sel) => {
-          sel.addEventListener("change", (e) => {
+          sel.addEventListener("change", async (e) => {
             const id = e.target.getAttribute("data-id");
             const newStatus = e.target.value;
             const patient = patients.find((p) => p.id === id);
@@ -2299,22 +2611,40 @@
                     ? "status-due-soon"
                     : "status-overdue",
               );
+
+              // Persist confirmed vaccination status to database
+              try {
+                const res = await apiFetch(`/api/patients/${patient.dbId}/vaccination-status`, {
+                  method: "PATCH",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ status: newStatus }),
+                });
+                if (!res.ok) throw new Error("Could not update vaccination status in database");
+                showToast(`Vaccination status for ${patient.name} confirmed as ${newStatus}`, "success");
+              } catch (err) {
+                console.warn("Vaccination status save error:", err);
+                showToast("Failed to save vaccination status to database", "error");
+              }
             }
           });
         });
 
-        document.getElementById("pagination-count").textContent =
-          `Showing ${pageData.length} of ${filteredPatients.length} patients`;
-        document.getElementById("pageIndicator").textContent =
-          `Page ${currentPage} of ${totalPages}`;
-        document.getElementById("prevPageBtn").disabled = currentPage === 1;
-        document.getElementById("nextPageBtn").disabled =
-          currentPage === totalPages;
+        const paginationCount = document.getElementById("pagination-count");
+        if (paginationCount) {
+          paginationCount.textContent = `Showing ${pageData.length} of ${filteredPatients.length} patients`;
+        }
+        const pageIndicator = document.getElementById("pageIndicator");
+        if (pageIndicator) {
+          pageIndicator.textContent = `Page ${currentPage} of ${totalPages}`;
+        }
+        const prevBtn = document.getElementById("prevPageBtn");
+        if (prevBtn) prevBtn.disabled = currentPage === 1;
+        const nextBtn = document.getElementById("nextPageBtn");
+        if (nextBtn) nextBtn.disabled = currentPage === totalPages;
       }
 
       function changePage(delta) {
-        const totalPages =
-          Math.ceil(filteredPatients.length / itemsPerPage) || 1;
+        const totalPages = Math.ceil(filteredPatients.length / itemsPerPage) || 1;
         const newPage = currentPage + delta;
         if (newPage >= 1 && newPage <= totalPages) {
           currentPage = newPage;
@@ -2323,61 +2653,163 @@
       }
 
       // ==========================================
-      // 8. FILTERS & SEARCH
+      // 8. FILTERS & SEARCH EVENT LISTENERS
       // ==========================================
-      document
-        .getElementById("patient-search-input")
-        .addEventListener("input", renderTable);
-      document
-        .getElementById("filter-species")
-        .addEventListener("change", renderTable);
-      document
-        .getElementById("filter-vaccinated")
-        .addEventListener("change", renderTable);
-      document
-        .getElementById("filter-due-soon")
-        .addEventListener("change", renderTable);
-      document
-        .getElementById("filter-overdue")
-        .addEventListener("change", renderTable);
+      function handleSearchInput(e) {
+        const val = e.target.value;
+        const topSearch = document.getElementById("patient-search");
+        const pageSearch = document.getElementById("patient-search-input");
+        if (e.target === topSearch && pageSearch) pageSearch.value = val;
+        if (e.target === pageSearch && topSearch) topSearch.value = val;
+        currentPage = 1;
+        renderTable();
+      }
 
-      document
-        .getElementById("clear-filters-btn")
-        .addEventListener("click", () => {
-          document.getElementById("filter-species").value = "All";
-          document.getElementById("filter-vaccinated").checked = true;
-          document.getElementById("filter-due-soon").checked = true;
-          document.getElementById("filter-overdue").checked = true;
-          document.getElementById("patient-search-input").value = "";
-          renderTable();
-        });
+      document.getElementById("patient-search-input")?.addEventListener("input", handleSearchInput);
+      document.getElementById("patient-search")?.addEventListener("input", handleSearchInput);
+
+      document.addEventListener("click", (event) => {
+        if (event.target.closest(".record-actions-btn, .record-actions-menu")) return;
+        document.querySelectorAll(".record-actions-menu").forEach((menu) => menu.classList.add("hidden"));
+        document.querySelectorAll(".record-actions-btn").forEach((button) => button.setAttribute("aria-expanded", "false"));
+      });
+
+      document.getElementById("filter-species")?.addEventListener("change", () => {
+        currentPage = 1;
+        renderTable();
+      });
+      document.getElementById("filter-vaccinated")?.addEventListener("change", () => {
+        currentPage = 1;
+        renderTable();
+      });
+      document.getElementById("filter-due-soon")?.addEventListener("change", () => {
+        currentPage = 1;
+        renderTable();
+      });
+      document.getElementById("filter-overdue")?.addEventListener("change", () => {
+        currentPage = 1;
+        renderTable();
+      });
+      document.getElementById("filter-emergency-only")?.addEventListener("change", () => {
+        currentPage = 1;
+        renderTable();
+      });
+
+      document.getElementById("clear-filters-btn")?.addEventListener("click", () => {
+        const speciesSel = document.getElementById("filter-species");
+        if (speciesSel) speciesSel.value = "All";
+        const vCheck = document.getElementById("filter-vaccinated");
+        if (vCheck) vCheck.checked = true;
+        const dCheck = document.getElementById("filter-due-soon");
+        if (dCheck) dCheck.checked = true;
+        const oCheck = document.getElementById("filter-overdue");
+        if (oCheck) oCheck.checked = true;
+        const emCheck = document.getElementById("filter-emergency-only");
+        if (emCheck) emCheck.checked = false;
+        const sInp = document.getElementById("patient-search-input");
+        if (sInp) sInp.value = "";
+        const topInp = document.getElementById("patient-search");
+        if (topInp) topInp.value = "";
+        highlightedPatientId = null;
+        const banner = document.getElementById("emergency-banner-alert");
+        if (banner) banner.classList.add("hidden");
+        currentPage = 1;
+        renderTable();
+        showToast("Filters reset", "info");
+      });
+
+      document.getElementById("prevPageBtn")?.addEventListener("click", () => changePage(-1));
+      document.getElementById("nextPageBtn")?.addEventListener("click", () => changePage(1));
+
 
       // ==========================================
       // 9. RECORD VIEW WITH APPOINTMENT HISTORY
       // ==========================================
+      let currentPatientWeights = [];
+      let patientMedicalNotes = [];
+      let currentPatientAppointments = [];
+
       function openRecordView(patient) {
         currentPatientId = patient.id;
-        document.getElementById("record-name").textContent = patient.name;
-        document.getElementById("record-id").textContent =
-          `Patient ID: #${patient.id}`;
-        document.getElementById("record-species").textContent = patient.species;
-        document.getElementById("record-breed").textContent = patient.breed;
-        document.getElementById("record-age").textContent = patient.age;
-        document.getElementById("record-gender").textContent = patient.gender;
-        if (patient.img)
-          document.getElementById("record-img").src = patient.img;
+        const pObj = patients.find((p) => p.id === patient.id) || patient;
 
-        // Reset deceased toggle to off (active)
-        const toggle = document.getElementById("deceasedToggle");
-        const container = document.getElementById("deceasedToggleContainer");
-        const label = document.getElementById("deceasedToggleLabel");
-        const sub = document.getElementById("deceasedToggleSub");
-        toggle.classList.remove("active");
-        container.classList.remove("active");
-        label.textContent = "⚡ Active Patient";
-        sub.textContent = "Living • Under active care";
+        document.getElementById("record-name").textContent = pObj.name;
+        document.getElementById("record-id").textContent = `Patient ID: #${pObj.id}`;
+        document.getElementById("record-species").textContent = pObj.species;
+        document.getElementById("record-breed").textContent = pObj.breed;
+        document.getElementById("record-age").textContent = pObj.age;
+        document.getElementById("record-gender").textContent = pObj.gender;
+        if (pObj.img) document.getElementById("record-img").src = pObj.img;
 
-        renderAppointmentHistory(patient.name);
+        // Confirmed vaccination status UI
+        updateRecordVaccinationBadge(pObj.status || "VACCINATED");
+        const confirmSel = document.getElementById("confirm-vaccination-select");
+        if (confirmSel) confirmSel.value = pObj.status || "VACCINATED";
+
+        // Patient Status / Deceased toggle
+        syncDeceasedToggleUI(pObj.patientStatus || "Active");
+
+        // Appointment / Review Today Badge in Record View
+        const todayInfo = getPatientAppointmentToday(pObj);
+        const recordTodayBadge = document.getElementById("record-today-badge");
+        if (recordTodayBadge) {
+          if (todayInfo) {
+            recordTodayBadge.textContent = todayInfo.badgeText;
+            recordTodayBadge.className = `px-2.5 py-1 rounded-full font-label-md text-caption uppercase tracking-wider font-bold ${todayInfo.badgeColor}`;
+            recordTodayBadge.classList.remove("hidden");
+          } else {
+            recordTodayBadge.classList.add("hidden");
+          }
+        }
+
+        // Active Emergency Case Badge & Info in Record View
+        const isEmergency = pObj.isEmergency || (pObj.emergencyId && Number(pObj.emergencyId) > 0);
+        const recordEmergencyBadge = document.getElementById("record-emergency-badge");
+        const recordEmergencyBadgeText = document.getElementById("record-emergency-badge-text");
+        const recordEmergencyBox = document.getElementById("record-emergency-box");
+        if (recordEmergencyBadge) {
+          if (isEmergency) {
+            const prio = (pObj.emergencyPriority || "URGENT").toUpperCase();
+            if (recordEmergencyBadgeText) {
+              recordEmergencyBadgeText.textContent = `🚨 ${prio} EMERGENCY CASE`;
+            }
+            recordEmergencyBadge.className = `px-2.5 py-1 rounded-full font-label-md text-caption uppercase tracking-wider font-extrabold ${
+              prio === "CRITICAL"
+                ? "bg-red-100 text-red-700 border border-red-300"
+                : prio === "URGENT"
+                ? "bg-amber-100 text-amber-800 border border-amber-300"
+                : "bg-rose-100 text-rose-700 border border-rose-200"
+            } inline-flex items-center gap-1.5 shadow-sm`;
+            recordEmergencyBadge.classList.remove("hidden");
+
+            if (recordEmergencyBox) {
+              recordEmergencyBox.classList.remove("hidden");
+              const prioPill = document.getElementById("record-emergency-priority-pill");
+              if (prioPill) {
+                prioPill.textContent = prio;
+                prioPill.className = `px-2 py-0.5 text-[10px] font-black rounded ${
+                  prio === "CRITICAL" ? "bg-red-600" : "bg-amber-600"
+                } text-white uppercase`;
+              }
+              const caseIdEl = document.getElementById("record-emergency-case-id");
+              if (caseIdEl) caseIdEl.textContent = pObj.emergencyId ? `#EM-${String(pObj.emergencyId).padStart(4, "0")}` : "Active";
+              const statusEl = document.getElementById("record-emergency-status");
+              if (statusEl) statusEl.textContent = pObj.emergencyStatus || "Admitted to ER";
+              const notesEl = document.getElementById("record-emergency-notes");
+              if (notesEl) notesEl.textContent = pObj.emergencyComplaint || pObj.notes || "Emergency triage admission";
+            }
+          } else {
+            recordEmergencyBadge.classList.add("hidden");
+            if (recordEmergencyBox) recordEmergencyBox.classList.add("hidden");
+          }
+        }
+
+        // Load dynamic patient records from DB
+        loadPatientWeights(pObj.dbId);
+        loadPatientNotes(pObj.dbId);
+        loadPatientLabs(pObj.dbId);
+        renderAppointmentHistory(pObj);
+
         showRecordView();
       }
 
@@ -2385,9 +2817,7 @@
         document.getElementById("dashboard-view").style.display = "none";
         document.getElementById("record-view").style.display = "block";
         window.scrollTo(0, 0);
-        renderMedicalNotes();
         renderLabFiles();
-        setTimeout(initWeightChart, 100);
       }
 
       function showDashboardView() {
@@ -2398,16 +2828,76 @@
       }
 
       // ==========================================
-      // 10. APPOINTMENT HISTORY - CONNECTED TO appointment DATA
+      // 10. VACCINATION STATUS CONFIRMATION IN RECORD VIEW
       // ==========================================
-      function renderAppointmentHistory(patientName) {
+      function updateRecordVaccinationBadge(status) {
+        const badge = document.getElementById("record-vaccination-badge");
+        if (!badge) return;
+        const st = (status || "VACCINATED").toUpperCase();
+        badge.textContent = st;
+        badge.className = "px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ";
+        if (st === "VACCINATED") {
+          badge.className += "bg-emerald-100 text-emerald-800";
+        } else if (st === "DUE SOON") {
+          badge.className += "bg-amber-100 text-amber-800";
+        } else {
+          badge.className += "bg-red-100 text-red-800";
+        }
+      }
+
+      async function confirmCurrentPatientVaccination() {
+        const patient = patients.find((p) => p.id === currentPatientId || String(p.dbId) === String(currentPatientId));
+        if (!patient) return;
+        const selectEl = document.getElementById("confirm-vaccination-select");
+        const newStatus = selectEl ? selectEl.value : "VACCINATED";
+
+        try {
+          const res = await apiFetch(`/api/patients/${patient.dbId}/vaccination-status`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: newStatus }),
+          });
+          if (!res.ok) throw new Error("Could not update vaccination status in database");
+
+          patient.status = newStatus;
+          updateRecordVaccinationBadge(newStatus);
+          renderTable();
+          showToast(`Vaccination status for ${patient.name} confirmed as ${newStatus} in database`, "success");
+        } catch (err) {
+          console.warn("Vaccination confirm error:", err);
+          showToast("Failed to confirm vaccination status in database", "error");
+        }
+      }
+
+      // ==========================================
+      // 11. APPOINTMENT HISTORY - CONNECTED TO DATABASE FOR THIS PATIENT
+      // ==========================================
+      async function renderAppointmentHistory(patient) {
         const container = document.getElementById("appointment-timeline");
         const noMsg = document.getElementById("no-appointment-msg");
-        const patientappointment = appointmentData
-          .filter((a) => a.patient.toLowerCase() === patientName.toLowerCase())
-          .sort((a, b) => new Date(b.date) - new Date(a.date));
+        if (!container || !noMsg) return;
 
-        if (patientappointment.length === 0) {
+        const pObj = patients.find((p) => p.id === (patient?.id || currentPatientId)) || patient;
+        if (!pObj || !pObj.dbId) {
+          noMsg.classList.remove("hidden");
+          container.classList.add("hidden");
+          return;
+        }
+
+        try {
+          const res = await apiFetch(`/api/patients/${pObj.dbId}/appointments?_t=${Date.now()}`);
+          if (res.ok) {
+            const json = await res.json();
+            currentPatientAppointments = Array.isArray(json.data) ? json.data : [];
+          } else {
+            currentPatientAppointments = [];
+          }
+        } catch (e) {
+          console.warn("Fetch patient appointments error:", e);
+          currentPatientAppointments = [];
+        }
+
+        if (currentPatientAppointments.length === 0) {
           noMsg.classList.remove("hidden");
           container.classList.add("hidden");
           return;
@@ -2423,28 +2913,46 @@
           Cancelled: "bg-red-100 text-red-700",
         };
 
-        container.innerHTML = patientappointment
-          .map((apt, index) => {
-            const isLast = index === patientappointment.length - 1;
+        container.innerHTML = currentPatientAppointments
+          .map((a, index) => {
+            const isLast = index === currentPatientAppointments.length - 1;
+            const rawTime = a.APPOINTMENT_TIME || "";
+            const datePart = rawTime.includes(" ") ? rawTime.split(" ")[0] : (a.CREATED_AT ? a.CREATED_AT.split("T")[0] : "");
+            const timePart = rawTime.includes(" ") ? rawTime.split(" ").slice(1).join(" ") : rawTime || "09:00 AM";
+            const serviceType = a.SERVICE || a.VISIT_REASON || "General Checkup";
+            const status = a.STATUS || "Pending";
+            const vetName = a.VET_NAME || (a.VETERINARIAN_ID ? `Dr. #${a.VETERINARIAN_ID}` : "Veterinarian");
+            const aptNumber = a.APPOINTMENT_NUMBER || `APT-${String(a.APPOINTMENT_ID).padStart(3, "0")}`;
+
+            const isTodayAppt = isTodayDate(datePart);
+            const isReviewAppt = (index > 0 || currentPatientAppointments.length > 1 || serviceType.toLowerCase().includes("review") || serviceType.toLowerCase().includes("follow"));
+            const badgeLabel = (isTodayAppt && isReviewAppt) ? "Review Today" : (isReviewAppt ? "Review" : (isTodayAppt ? "Today" : ""));
+            const historyBadge = badgeLabel
+              ? `<span class="ml-2 px-1.5 py-0.5 text-[10px] font-bold rounded ${badgeLabel.includes('Review') ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'} uppercase tracking-wide font-bold">${badgeLabel}</span>`
+              : '';
+
             return `
             <div class="relative mb-8 ${isLast ? "mb-0" : ""}">
-              <div class="absolute -left-[25px] top-1 w-4 h-4 rounded-full ${apt.status === "Cancelled" ? "bg-red-500" : apt.status === "Completed" ? "bg-blue-500" : "bg-primary"} ring-4 ${apt.status === "Cancelled" ? "ring-red-100" : apt.status === "Completed" ? "ring-blue-100" : "ring-primary-fixed"}"></div>
+              <div class="absolute -left-[25px] top-1 w-4 h-4 rounded-full ${status === "Cancelled" ? "bg-red-500" : status === "Completed" ? "bg-blue-500" : "bg-primary"} ring-4 ${status === "Cancelled" ? "ring-red-100" : status === "Completed" ? "ring-blue-100" : "ring-primary-fixed"}"></div>
               ${!isLast ? '<div class="absolute left-[15px] top-6 bottom-0 w-0.5 bg-outline-variant/50"></div>' : ""}
               <div class="bg-surface-muted rounded-lg p-4 hover:shadow-md transition-shadow ml-4">
                 <div class="flex justify-between items-start mb-2 flex-wrap gap-2">
                   <div>
-                    <h3 class="font-semibold text-body-lg">${apt.type}</h3>
-                    <p class="text-caption text-on-surface-variant">${apt.vet}</p>
+                    <h3 class="font-semibold text-body-lg text-deep-navy">
+                      ${escapeHtml(serviceType)}
+                      ${historyBadge}
+                    </h3>
+                    <p class="text-caption text-on-surface-variant font-medium">${escapeHtml(vetName)}</p>
                   </div>
                   <div class="text-right">
-                    <span class="text-caption font-label-md text-on-surface-variant block">${formatDate(apt.date)}</span>
-                    <span class="text-caption text-on-surface-variant">${apt.time}</span>
+                    <span class="text-caption font-label-md text-on-surface-variant block font-bold">${formatDate(datePart)}</span>
+                    <span class="text-caption text-on-surface-variant">${escapeHtml(timePart)}</span>
                   </div>
                 </div>
-                ${apt.notes ? `<p class="text-on-surface-variant text-body-md mt-1">${apt.notes}</p>` : ""}
+                ${a.NOTES ? '<p class="text-on-surface-variant text-body-md mt-1">' + escapeHtml(a.NOTES) + '</p>' : ""}
                 <div class="mt-2 flex justify-between items-center">
-                  <span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-bold ${statusColors[apt.status] || "bg-slate-100 text-slate-700"}">${apt.status.toUpperCase()}</span>
-                  <span class="text-caption text-outline">${apt.id}</span>
+                  <span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-bold ${statusColors[status] || "bg-slate-100 text-slate-700"}">${escapeHtml(status.toUpperCase())}</span>
+                  <span class="text-caption text-outline font-mono">${escapeHtml(aptNumber)}</span>
                 </div>
               </div>
             </div>
@@ -2454,54 +2962,89 @@
       }
 
       // ==========================================
-      // 11. MEDICAL NOTES
+      // 12. MEDICAL NOTES - STORED IN DATABASE (NO DUMMY DATA)
       // ==========================================
-      let medicalNotes = [
-        {
-          id: 1,
-          date: "Dec 01, 2023, 10:30 AM",
-          text: "Owner reports slight stiffness in hind legs during morning walks. Monitored for early signs of dysplasia.",
-          isWarning: false,
-        },
-        {
-          id: 2,
-          date: "Oct 12, 2023, 02:15 PM",
-          text: "Allergy Warning: Sensitive to Penicillin-based medications.",
-          isWarning: true,
-        },
-      ];
+      async function loadPatientNotes(patientDbId) {
+        try {
+          const res = await apiFetch(`/api/patients/${patientDbId}/notes`);
+          if (res.ok) {
+            const json = await res.json();
+            patientMedicalNotes = Array.isArray(json.data) ? json.data : [];
+          } else {
+            patientMedicalNotes = [];
+          }
+        } catch (e) {
+          console.warn("Medical notes load error:", e);
+          patientMedicalNotes = [];
+        }
+
+        // Auto-merge appointment reasons from the admin panel as notes
+        if (typeof currentPatientAppointments !== "undefined") {
+          currentPatientAppointments.forEach(apt => {
+            if (apt.VISIT_REASON) {
+              patientMedicalNotes.push({
+                isWarning: false,
+                CREATED_AT: apt.CREATED_AT || apt.APPOINTMENT_TIME,
+                DOCTOR_NAME: "Appointment System",
+                NOTE_TEXT: "Visit Reason: " + apt.VISIT_REASON + (apt.SERVICE ? " (" + apt.SERVICE + ")" : ""),
+                NOTE_ID: "apt_" + apt.APPOINTMENT_ID,
+                isAuto: true
+              });
+            }
+          });
+          
+          patientMedicalNotes.sort((a,b) => {
+             const dA = new Date(a.CREATED_AT || 0).getTime();
+             const dB = new Date(b.CREATED_AT || 0).getTime();
+             return dB - dA;
+          });
+        }
+
+        renderMedicalNotes();
+      }
 
       function renderMedicalNotes() {
         const list = document.getElementById("medical-notes-list");
+        if (!list) return;
         list.innerHTML = "";
-        medicalNotes.forEach((note) => {
-          const warningClass = note.isWarning
+
+        if (patientMedicalNotes.length === 0) {
+          list.innerHTML = `<div class="text-center text-slate-400 py-6 text-sm">No medical notes recorded for this patient yet. Click "Add Note" above to write one.</div>`;
+          return;
+        }
+
+        patientMedicalNotes.forEach((note) => {
+          const isWarning = note.IS_WARNING === 1 || note.isWarning;
+          const warningClass = isWarning
             ? "border-l-4 border-emergency-red bg-error-container/20"
             : "border border-outline-variant";
-          const warningIcon = note.isWarning
-            ? `<div class="flex items-center gap-2 mb-1"><span class="material-symbols-outlined text-emergency-red text-sm">warning</span><span class="font-label-md text-emergency-red uppercase">Allergy Warning</span></div>`
+          const warningIcon = isWarning
+            ? `<div class="flex items-center gap-2 mb-1"><span class="material-symbols-outlined text-emergency-red text-sm">warning</span><span class="font-label-md text-emergency-red uppercase text-xs font-bold">Critical / Allergy Alert</span></div>`
             : "";
-          const textClass = note.isWarning ? "font-semibold" : "text-body-md";
+          const textClass = isWarning ? "font-semibold text-body-md" : "text-body-md";
+          const dateStr = note.FORMATTED_DATE || (note.CREATED_AT ? new Date(note.CREATED_AT).toLocaleString() : "Recently");
+          const doctorName = note.DOCTOR_NAME ? ` • ${escapeHtml(note.DOCTOR_NAME)}` : "";
+          const noteId = note.NOTE_ID || note.id;
+
           list.innerHTML += `
             <div class="${warningClass} p-4 rounded-r-lg relative group">
               ${warningIcon}
               <div class="flex justify-between items-start mb-2">
-                <span class="font-label-md text-on-surface-variant">${note.date}</span>
+                <span class="font-label-md text-on-surface-variant text-xs">${escapeHtml(dateStr)}${doctorName}</span>
+                ${note.isAuto ? '' : `
                 <div class="relative">
-                  <button onclick="toggleNoteDropdown(${note.id})" class="text-on-surface-variant hover:text-primary p-1 rounded-full hover:bg-surface-container transition-all">
+                  <button type="button" onclick="toggleNoteDropdown('${noteId}')" class="text-on-surface-variant hover:text-primary p-1 rounded-full hover:bg-surface-container transition-all">
                     <span class="material-symbols-outlined text-[20px]">more_vert</span>
                   </button>
-                  <div id="note-dropdown-${note.id}" class="hidden absolute right-0 mt-1 w-32 bg-white rounded-lg shadow-lg border border-outline-variant z-10 overflow-hidden">
-                    <button onclick="editNote(${note.id})" class="w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-muted transition-colors flex items-center gap-2">
-                      <span class="material-symbols-outlined text-[16px]">edit</span> Edit
-                    </button>
-                    <button onclick="deleteNote(${note.id})" class="w-full text-left px-4 py-2 text-sm text-emergency-red hover:bg-error-container/20 transition-colors flex items-center gap-2">
+                  <div id="note-dropdown-${noteId}" class="hidden absolute right-0 mt-1 w-32 bg-white rounded-lg shadow-lg border border-outline-variant z-10 overflow-hidden">
+                    <button type="button" onclick="deleteNote('${noteId}')" class="w-full text-left px-4 py-2 text-sm text-emergency-red hover:bg-error-container/20 transition-colors flex items-center gap-2">
                       <span class="material-symbols-outlined text-[16px]">delete</span> Delete
                     </button>
                   </div>
                 </div>
+                `}
               </div>
-              <p class="${textClass}">${note.text}</p>
+              <p class="${textClass} text-on-surface mt-1 whitespace-pre-wrap">${escapeHtml(note.NOTE_TEXT || note.text || "")}</p>
             </div>
           `;
         });
@@ -2509,39 +3052,48 @@
 
       function toggleNoteEditor() {
         const editor = document.getElementById("note-editor");
-        editor.classList.toggle("hidden");
-        if (!editor.classList.contains("hidden"))
-          document.getElementById("new-note-text").focus();
+        editor?.classList.toggle("hidden");
+        if (editor && !editor.classList.contains("hidden")) {
+          document.getElementById("new-note-text")?.focus();
+        }
       }
 
-      function saveMedicalNote() {
-        const text = document.getElementById("new-note-text").value.trim();
-        const isEmergency =
-          document.getElementById("note-is-emergency").checked;
-        if (!text) return;
-        const now = new Date();
-        const dateString =
-          now.toLocaleDateString("en-US", {
-            month: "short",
-            day: "2-digit",
-            year: "numeric",
-          }) +
-          ", " +
-          now.toLocaleTimeString("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
+      async function saveMedicalNote() {
+        const patient = patients.find((p) => p.id === currentPatientId || String(p.dbId) === String(currentPatientId));
+        if (!patient) return;
+
+        const textInput = document.getElementById("new-note-text");
+        const text = textInput ? textInput.value.trim() : "";
+        const isEmergency = document.getElementById("note-is-emergency")?.checked ?? false;
+        if (!text) {
+          showToast("Please enter medical note content", "error");
+          return;
+        }
+
+        try {
+          const user = window.getCurrentUser ? window.getCurrentUser() : null;
+          const res = await apiFetch(`/api/patients/${patient.dbId}/notes`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              note_text: text,
+              is_warning: isEmergency ? 1 : 0,
+              doctor_name: user?.full_name || "Veterinarian",
+            }),
           });
-        medicalNotes.unshift({
-          id: Date.now(),
-          date: dateString,
-          text: text,
-          isWarning: isEmergency,
-        });
-        document.getElementById("new-note-text").value = "";
-        document.getElementById("note-is-emergency").checked = false;
-        toggleNoteEditor();
-        renderMedicalNotes();
-        showToast("Medical note saved successfully", "success");
+          if (!res.ok) throw new Error("Could not save medical note to database");
+
+          if (textInput) textInput.value = "";
+          const checkEl = document.getElementById("note-is-emergency");
+          if (checkEl) checkEl.checked = false;
+
+          toggleNoteEditor();
+          await loadPatientNotes(patient.dbId);
+          showToast("Medical note stored in database successfully", "success");
+        } catch (err) {
+          console.warn("Save note error:", err);
+          showToast("Failed to save note to database", "error");
+        }
       }
 
       function toggleNoteDropdown(noteId) {
@@ -2549,76 +3101,286 @@
           if (el.id !== `note-dropdown-${noteId}`) el.classList.add("hidden");
         });
         const dropdown = document.getElementById(`note-dropdown-${noteId}`);
-        dropdown.classList.toggle("hidden");
+        dropdown?.classList.toggle("hidden");
       }
 
-      function deleteNote(noteId) {
-        if (confirm("Are you sure you want to delete this note?")) {
-          medicalNotes = medicalNotes.filter((n) => n.id !== noteId);
-          renderMedicalNotes();
-          showToast("Note deleted", "info");
+      async function deleteNote(noteId) {
+        const patient = patients.find((p) => p.id === currentPatientId || String(p.dbId) === String(currentPatientId));
+        if (!patient) return;
+        if (!confirm("Are you sure you want to delete this medical note from the database?")) return;
+
+        try {
+          const res = await apiFetch(`/api/patients/${patient.dbId}/notes/${noteId}`, {
+            method: "DELETE",
+          });
+          if (!res.ok) throw new Error("Could not delete note");
+
+          await loadPatientNotes(patient.dbId);
+          showToast("Medical note removed from database", "info");
+        } catch (err) {
+          console.warn("Delete note error:", err);
+          showToast("Failed to delete note from database", "error");
         }
       }
-
-      function editNote(noteId) {
-        const note = medicalNotes.find((n) => n.id === noteId);
-        if (note) {
-          document.getElementById("new-note-text").value = note.text;
-          toggleNoteEditor();
-          medicalNotes = medicalNotes.filter((n) => n.id !== noteId);
-        }
-      }
-
-      document.addEventListener("click", (e) => {
-        if (!e.target.closest(".relative.group")) {
-          document
-            .querySelectorAll('[id^="note-dropdown-"]')
-            .forEach((el) => el.classList.add("hidden"));
-        }
-      });
 
       // ==========================================
-      // 12. LAB FILES
+      // 13. WEIGHT TRACKER - DATABASE & CHART OVER TIME
+      // ==========================================
+      async function loadPatientWeights(patientDbId) {
+        try {
+          const res = await apiFetch(`/api/patients/${patientDbId}/weights`);
+          if (res.ok) {
+            const json = await res.json();
+            currentPatientWeights = Array.isArray(json.data) ? json.data : [];
+          } else {
+            currentPatientWeights = [];
+          }
+        } catch (e) {
+          console.warn("Error loading weights:", e);
+          currentPatientWeights = [];
+        }
+        renderWeightTrackerUI();
+      }
+
+      function renderWeightTrackerUI() {
+        const currentWeightDisplay = document.getElementById("current-weight-display");
+        const countDisplay = document.getElementById("weight-entries-count");
+        const historyList = document.getElementById("weight-history-list");
+
+        if (countDisplay) countDisplay.textContent = currentPatientWeights.length;
+
+        if (currentPatientWeights.length > 0) {
+          const latest = currentPatientWeights[currentPatientWeights.length - 1];
+          if (currentWeightDisplay) currentWeightDisplay.textContent = `${Number(latest.WEIGHT_KG).toFixed(1)} kg`;
+        } else {
+          if (currentWeightDisplay) currentWeightDisplay.textContent = "-- kg";
+        }
+
+        if (historyList) {
+          if (currentPatientWeights.length === 0) {
+            historyList.innerHTML = '<div class="text-slate-400 py-1 text-center">No weights logged yet. Enter weight above.</div>';
+          } else {
+            historyList.innerHTML = [...currentPatientWeights].reverse().map((w) => `
+              <div class="flex items-center justify-between py-1 px-2 rounded bg-surface-muted hover:bg-slate-100 transition-colors border border-outline-variant/30">
+                <span class="font-bold text-primary">${Number(w.WEIGHT_KG).toFixed(1)} kg</span>
+                <span class="text-slate-500">${escapeHtml(w.RECORDED_DATE || "")}</span>
+                <button type="button" onclick="deletePatientWeight(${w.WEIGHT_ID})" class="text-slate-400 hover:text-red-600 p-0.5 rounded transition-colors" title="Delete entry">
+                  <span class="material-symbols-outlined text-[14px]">delete</span>
+                </button>
+              </div>
+            `).join("");
+          }
+        }
+
+        initWeightChart(currentPatientWeights);
+      }
+
+      async function handleLogWeight(event) {
+        event.preventDefault();
+        const patient = patients.find((p) => p.id === currentPatientId || String(p.dbId) === String(currentPatientId));
+        if (!patient) return;
+
+        const valInput = document.getElementById("input-weight-val");
+        const dateInput = document.getElementById("input-weight-date");
+        const weightVal = parseFloat(valInput?.value);
+        if (isNaN(weightVal) || weightVal <= 0) {
+          showToast("Please enter a valid weight in kg", "error");
+          return;
+        }
+
+        const dateVal = dateInput?.value || new Date().toLocaleDateString("en-CA");
+
+        try {
+          const res = await apiFetch(`/api/patients/${patient.dbId}/weights`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ weight_kg: weightVal, recorded_date: dateVal }),
+          });
+          if (!res.ok) throw new Error("Could not save weight to database");
+
+          if (valInput) valInput.value = "";
+          showToast(`Weight of ${weightVal.toFixed(1)} kg saved to database`, "success");
+          await loadPatientWeights(patient.dbId);
+        } catch (err) {
+          console.warn("Save weight error:", err);
+          showToast("Failed to save weight entry", "error");
+        }
+      }
+
+      async function deletePatientWeight(weightId) {
+        const patient = patients.find((p) => p.id === currentPatientId || String(p.dbId) === String(currentPatientId));
+        if (!patient) return;
+        if (!confirm("Are you sure you want to delete this weight log entry?")) return;
+
+        try {
+          const res = await apiFetch(`/api/patients/${patient.dbId}/weights/${weightId}`, {
+            method: "DELETE",
+          });
+          if (!res.ok) throw new Error("Could not delete weight entry");
+
+          showToast("Weight entry deleted", "info");
+          await loadPatientWeights(patient.dbId);
+        } catch (err) {
+          console.warn("Delete weight error:", err);
+          showToast("Failed to delete weight entry", "error");
+        }
+      }
+
+      let weightChartInstance = null;
+
+      function initWeightChart(weightData = []) {
+        const canvas = document.getElementById("weightChart");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        if (weightChartInstance) weightChartInstance.destroy();
+
+        let labels = [];
+        let dataPoints = [];
+
+        if (Array.isArray(weightData) && weightData.length > 0) {
+          labels = weightData.map((w) => {
+            const d = new Date(w.RECORDED_DATE + "T00:00:00");
+            return isNaN(d.getTime()) ? w.RECORDED_DATE : d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+          });
+          dataPoints = weightData.map((w) => Number(w.WEIGHT_KG));
+        } else {
+          labels = ["No weights yet"];
+          dataPoints = [0];
+        }
+
+        weightChartInstance = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Weight (kg)",
+                data: dataPoints,
+                borderColor: "#036469",
+                backgroundColor: "rgba(3, 100, 105, 0.12)",
+                borderWidth: 2.5,
+                tension: 0.3,
+                fill: true,
+                pointBackgroundColor: "#ffffff",
+                pointBorderColor: "#036469",
+                pointBorderWidth: 2,
+                pointRadius: weightData.length > 0 ? 4 : 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: function (ctx) {
+                    return `${ctx.parsed.y} kg`;
+                  },
+                },
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: false,
+                grid: { color: "#e4e2e1" },
+                ticks: {
+                  font: { size: 11 },
+                  callback: function (val) {
+                    return val + " kg";
+                  },
+                },
+              },
+              x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+            },
+          },
+        });
+      }
+
+      // ==========================================
+      // 14. LAB FILES
       // ==========================================
       let uploadedFiles = [];
 
-      function handleLabUpload(event) {
-        const files = Array.from(event.target.files);
-        files.forEach((file) => {
-          if (file.size > 10 * 1024 * 1024) {
-            showToast(
-              `File ${file.name} is too large. Max size is 10MB.`,
-              "error",
-            );
-            return;
+      async function loadPatientLabs(patientDbId) {
+        try {
+          const res = await apiFetch(`/api/patients/${patientDbId}/labs`);
+          if (res.ok) {
+            const json = await res.json();
+            uploadedFiles = Array.isArray(json.data) ? json.data : [];
+          } else {
+            uploadedFiles = [];
           }
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            uploadedFiles.push({
-              id: Date.now() + Math.random(),
+        } catch (e) {
+          console.warn("Lab files load error:", e);
+          uploadedFiles = [];
+        }
+        renderLabFiles();
+      }
+
+      async function handleLabUpload(event) {
+        const files = Array.from(event.target.files);
+        if (!currentPatientId) {
+          showToast("No patient selected.", "error");
+          return;
+        }
+        
+        for (const file of files) {
+          if (file.size > 10 * 1024 * 1024) {
+            showToast(`File ${file.name} is too large. Max size is 10MB.`, "error");
+            continue;
+          }
+          
+          try {
+            const dataUrl = await new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = (e) => resolve(e.target.result);
+              reader.onerror = (e) => reject(e);
+              reader.readAsDataURL(file);
+            });
+            
+            const payload = {
               name: file.name,
               type: file.type,
               size: (file.size / 1024 / 1024).toFixed(2) + " MB",
-              dataUrl: e.target.result,
+              dataUrl: dataUrl
+            };
+            
+            const pObj = patients.find((p) => p.id === currentPatientId);
+            const res = await apiFetch(`/api/patients/${pObj.dbId}/labs`, {
+              method: "POST",
+              body: JSON.stringify(payload)
             });
-            renderLabFiles();
-          };
-          reader.readAsDataURL(file);
-        });
+            
+            if (!res.ok) throw new Error("Failed to upload lab file");
+            
+          } catch(e) {
+            console.error("Lab upload error:", e);
+            showToast(`Failed to upload ${file.name}`, "error");
+          }
+        }
         event.target.value = "";
+        
+        const pObj = patients.find((p) => p.id === currentPatientId);
+        if (pObj) {
+           await loadPatientLabs(pObj.dbId);
+           showToast("Lab files uploaded successfully", "success");
+        }
       }
 
       function renderLabFiles() {
         const list = document.getElementById("lab-files-list");
         const noFilesMsg = document.getElementById("no-files-msg");
+        if (!list) return;
         Array.from(list.children).forEach((child) => {
           if (child.id !== "no-files-msg") list.removeChild(child);
         });
         if (uploadedFiles.length === 0) {
-          noFilesMsg.style.display = "block";
+          if (noFilesMsg) noFilesMsg.style.display = "block";
           return;
         }
-        noFilesMsg.style.display = "none";
+        if (noFilesMsg) noFilesMsg.style.display = "none";
         uploadedFiles.forEach((file) => {
           const icon = file.type.includes("pdf") ? "picture_as_pdf" : "image";
           const canView =
@@ -2631,7 +3393,7 @@
                 <span class="material-symbols-outlined text-tertiary shrink-0">${icon}</span>
                 <div class="truncate">
                   <p class="text-body-md font-medium truncate">${file.name}</p>
-                  <p class="text-caption text-on-surface-variant">${file.size}</p>
+                  <p class="text-caption text-on-surface-variant">${file.size} • ${file.uploadedAt || 'Just now'}</p>
                 </div>
               </div>
               <div class="flex items-center gap-2 shrink-0">
@@ -2646,7 +3408,7 @@
       }
 
       function viewLabFile(fileId) {
-        const file = uploadedFiles.find((f) => f.id == fileId);
+        const file = uploadedFiles.find((f) => String(f.id) === String(fileId));
         if (!file) return;
         const newWindow = window.open();
         if (!newWindow) {
@@ -2666,7 +3428,7 @@
       }
 
       function downloadLabFile(fileId) {
-        const file = uploadedFiles.find((f) => f.id == fileId);
+        const file = uploadedFiles.find((f) => String(f.id) === String(fileId));
         if (!file) return;
         const link = document.createElement("a");
         link.href = file.dataUrl;
@@ -2677,60 +3439,27 @@
         showToast(`Downloading ${file.name}...`, "info");
       }
 
-      function removeLabFile(fileId) {
-        uploadedFiles = uploadedFiles.filter((f) => f.id != fileId);
-        renderLabFiles();
-        showToast("File removed successfully.", "success");
+      async function removeLabFile(fileId) {
+        if(!confirm("Are you sure you want to remove this file?")) return;
+        try {
+            const pObj = patients.find((p) => p.id === currentPatientId);
+            const res = await apiFetch(`/api/patients/${pObj.dbId}/labs/${fileId}`, {
+              method: "DELETE"
+            });
+            if (res.ok) {
+              await loadPatientLabs(pObj.dbId);
+              showToast("File removed successfully.", "success");
+            } else {
+              throw new Error("Delete failed");
+            }
+        } catch(e) {
+            console.error("Delete lab file error:", e);
+            showToast("Failed to remove file.", "error");
+        }
       }
 
       // ==========================================
-      // 13. WEIGHT CHART
-      // ==========================================
-      let weightChartInstance = null;
-
-      function initWeightChart() {
-        const canvas = document.getElementById("weightChart");
-        if (!canvas) return;
-        const ctx = canvas.getContext("2d");
-        if (weightChartInstance) weightChartInstance.destroy();
-        weightChartInstance = new Chart(ctx, {
-          type: "line",
-          data: {
-            labels: ["Jan", "Mar", "Jun", "Oct"],
-            datasets: [
-              {
-                label: "Weight (kg)",
-                data: [28.5, 29.1, 29.8, 31.2],
-                borderColor: "#036469",
-                backgroundColor: "rgba(3, 100, 105, 0.1)",
-                borderWidth: 3,
-                tension: 0.4,
-                fill: true,
-                pointBackgroundColor: "#ffffff",
-                pointBorderColor: "#036469",
-                pointBorderWidth: 2,
-                pointRadius: 5,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-              y: {
-                beginAtZero: false,
-                grid: { color: "#e4e2e1" },
-                ticks: { font: { size: 11 } },
-              },
-              x: { grid: { display: false }, ticks: { font: { size: 11 } } },
-            },
-          },
-        });
-      }
-
-      // ==========================================
-      // 14. PROFILE PICTURE
+      // 15. PROFILE PICTURE
       // ==========================================
       function updateProfilePicture(event) {
         const file = event.target.files[0];
@@ -2738,30 +3467,207 @@
           const reader = new FileReader();
           reader.onload = function (e) {
             document.getElementById("record-img").src = e.target.result;
+            if (typeof currentPatientId !== "undefined" && currentPatientId) {
+              localStorage.setItem("profilePic_" + currentPatientId, e.target.result);
+              const patient = patients.find((p) => p.id === currentPatientId || String(p.dbId) === String(currentPatientId));
+              if (patient) {
+                patient.profilePic = e.target.result;
+                renderTable();
+              }
+            }
           };
           reader.readAsDataURL(file);
         }
       }
 
       // ==========================================
-      // 15. EXPORT RECORD
+      // 16. EXPORT RECORD - COMPREHENSIVE OFFICIAL REPORT
       // ==========================================
       function exportRecord() {
-        window.print();
+        const patient = patients.find((p) => p.id === currentPatientId || String(p.dbId) === String(currentPatientId));
+        if (!patient) {
+          showToast("No active patient record selected to export", "error");
+          return;
+        }
+
+        const printWindow = window.open("", "_blank", "width=920,height=850");
+        if (!printWindow) {
+          window.print();
+          return;
+        }
+
+        const weightRows = currentPatientWeights.length > 0
+          ? currentPatientWeights.map((w) => `
+              <tr>
+                <td style="padding: 7px 12px; border-bottom: 1px solid #e2e8f0;">${escapeHtml(w.RECORDED_DATE || "")}</td>
+                <td style="padding: 7px 12px; border-bottom: 1px solid #e2e8f0; font-weight: bold; color: #036469;">${Number(w.WEIGHT_KG).toFixed(1)} kg</td>
+                <td style="padding: 7px 12px; border-bottom: 1px solid #e2e8f0; color: #64748b;">${escapeHtml(w.NOTES || "-")}</td>
+              </tr>
+            `).join("")
+          : `<tr><td colspan="3" style="padding: 12px; text-align: center; color: #94a3b8;">No weight records entered</td></tr>`;
+
+        const noteRows = patientMedicalNotes.length > 0
+          ? patientMedicalNotes.map((n) => `
+              <div style="margin-bottom: 10px; padding: 10px 12px; border-left: 4px solid ${n.IS_WARNING ? '#ef4444' : '#036469'}; background: ${n.IS_WARNING ? '#fef2f2' : '#f8fafc'}; border-radius: 4px; border: 1px solid #e2e8f0; border-left-width: 4px;">
+                <div style="font-size: 11px; color: #64748b; margin-bottom: 4px;">${escapeHtml(n.FORMATTED_DATE || (n.CREATED_AT ? new Date(n.CREATED_AT).toLocaleString() : ""))} ${n.DOCTOR_NAME ? '• Attending: ' + escapeHtml(n.DOCTOR_NAME) : ''} ${n.IS_WARNING ? '• <strong style="color: #ef4444;">CRITICAL ALERT / WARNING</strong>' : ''}</div>
+                <div style="font-size: 13px; color: #1e293b; white-space: pre-wrap;">${escapeHtml(n.NOTE_TEXT || "")}</div>
+              </div>
+            `).join("")
+          : `<div style="text-align: center; padding: 14px; color: #94a3b8; font-size: 12px;">No medical notes on file</div>`;
+
+        const apptRows = currentPatientAppointments.length > 0
+          ? currentPatientAppointments.map((a) => {
+              const rawTime = a.APPOINTMENT_TIME || "";
+              const datePart = rawTime.includes(" ") ? rawTime.split(" ")[0] : "";
+              const timePart = rawTime.includes(" ") ? rawTime.split(" ").slice(1).join(" ") : rawTime;
+              return `
+                <tr>
+                  <td style="padding: 7px 12px; border-bottom: 1px solid #e2e8f0; font-weight: 600;">${escapeHtml(datePart)} ${escapeHtml(timePart)}</td>
+                  <td style="padding: 7px 12px; border-bottom: 1px solid #e2e8f0;">${escapeHtml(a.SERVICE || a.VISIT_REASON || "General Checkup")}</td>
+                  <td style="padding: 7px 12px; border-bottom: 1px solid #e2e8f0;">${escapeHtml(a.VET_NAME || "Veterinarian")}</td>
+                  <td style="padding: 7px 12px; border-bottom: 1px solid #e2e8f0;"><strong>${escapeHtml(a.STATUS || "Pending")}</strong></td>
+                  <td style="padding: 7px 12px; border-bottom: 1px solid #e2e8f0; color: #64748b;">${escapeHtml(a.NOTES || "-")}</td>
+                </tr>
+              `;
+            }).join("")
+          : `<tr><td colspan="5" style="padding: 12px; text-align: center; color: #94a3b8;">No appointment history on file</td></tr>`;
+
+        const statusBadgeColor = patient.status === "VACCINATED" ? "#166534" : patient.status === "DUE SOON" ? "#854d0e" : "#991b1b";
+        const statusBadgeBg = patient.status === "VACCINATED" ? "#dcfce7" : patient.status === "DUE SOON" ? "#fef9c3" : "#fee2e2";
+
+        const printHtml = `
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8" />
+            <title>Medical Record - ${escapeHtml(patient.name)} (#${escapeHtml(patient.id)})</title>
+            <style>
+              body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #0f172a; margin: 24px; line-height: 1.5; font-size: 13px; background: #ffffff; }
+              .header { display: flex; justify-content: space-between; border-bottom: 2px solid #036469; padding-bottom: 16px; margin-bottom: 20px; }
+              .clinic-title { font-size: 22px; font-weight: 800; color: #036469; margin: 0; }
+              .clinic-subtitle { font-size: 12px; color: #64748b; margin: 2px 0 0 0; }
+              .section-title { font-size: 13px; font-weight: 700; color: #0f172a; border-bottom: 1px solid #cbd5e1; padding-bottom: 5px; margin: 20px 0 10px 0; text-transform: uppercase; letter-spacing: 0.5px; }
+              .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+              .info-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px; }
+              .field-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 12px; }
+              .field-label { color: #64748b; font-weight: 500; }
+              .field-val { font-weight: 600; color: #0f172a; }
+              table { width: 100%; border-collapse: collapse; text-align: left; font-size: 12px; margin-top: 6px; }
+              th { background: #f1f5f9; padding: 8px 12px; border-bottom: 2px solid #cbd5e1; font-weight: 700; color: #334155; }
+              .badge { display: inline-block; padding: 2px 8px; border-radius: 9999px; font-weight: 700; font-size: 11px; }
+              @media print {
+                body { margin: 12px; }
+                .no-print { display: none; }
+              }
+            </style>
+          </head>
+          <body>
+            <div class="header">
+              <div>
+                <h1 class="clinic-title">addyPets Veterinary Care</h1>
+                <p class="clinic-subtitle">Official Patient Health, Vaccination & Clinical Medical Record</p>
+              </div>
+              <div style="text-align: right;">
+                <div style="font-weight: bold; font-size: 14px; color: #036469;">Patient ID: #${escapeHtml(patient.id)}</div>
+                <div style="font-size: 11px; color: #64748b;">Export Date: ${new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="info-box">
+                <div style="font-weight: 700; font-size: 12px; margin-bottom: 8px; color: #036469; text-transform: uppercase;">PATIENT PROFILE</div>
+                <div class="field-row"><span class="field-label">Pet Name:</span><span class="field-val" style="font-size: 14px; color: #036469;">${escapeHtml(patient.name)}</span></div>
+                <div class="field-row"><span class="field-label">Species / Breed:</span><span class="field-val">${escapeHtml(patient.species)} • ${escapeHtml(patient.breed)}</span></div>
+                <div class="field-row"><span class="field-label">Age / Gender:</span><span class="field-val">${escapeHtml(patient.age)} • ${escapeHtml(patient.gender)}</span></div>
+                <div class="field-row"><span class="field-label">Patient Status:</span><span class="field-val">${escapeHtml(patient.patientStatus || "Active")}</span></div>
+                <div class="field-row"><span class="field-label">Vaccination Status:</span><span class="badge" style="background: ${statusBadgeBg}; color: ${statusBadgeColor};">${escapeHtml(patient.status)}</span></div>
+              </div>
+
+              <div class="info-box">
+                <div style="font-weight: 700; font-size: 12px; margin-bottom: 8px; color: #036469; text-transform: uppercase;">OWNER INFORMATION</div>
+                <div class="field-row"><span class="field-label">Owner Name:</span><span class="field-val">${escapeHtml(patient.owner)}</span></div>
+                <div class="field-row"><span class="field-label">Phone:</span><span class="field-val">${escapeHtml(patient.phone || "Not on file")}</span></div>
+                <div class="field-row"><span class="field-label">Email:</span><span class="field-val">${escapeHtml(patient.email || "Not on file")}</span></div>
+                <div class="field-row"><span class="field-label">Registered:</span><span class="field-val">${escapeHtml(patient.lastVisit || "Today")}</span></div>
+              </div>
+            </div>
+
+            <div class="section-title">Weight Tracking History</div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Recorded Date</th>
+                  <th>Weight (kg)</th>
+                  <th>Clinical Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${weightRows}
+              </tbody>
+            </table>
+
+            <div class="section-title">Clinical Medical Notes & Observations</div>
+            ${noteRows}
+
+            <div class="section-title">Appointment & Consultation History</div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Date & Time</th>
+                  <th>Service</th>
+                  <th>Veterinarian</th>
+                  <th>Status</th>
+                  <th>Visit Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${apptRows}
+              </tbody>
+            </table>
+
+            <div style="margin-top: 30px; padding-top: 14px; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; font-size: 11px; color: #64748b;">
+              <div>Document generated by addyPets Veterinary Portal • Ghana</div>
+              <div>Authorized Veterinary Signature: _______________________</div>
+            </div>
+
+            <script>
+              window.onload = function() {
+                setTimeout(function() {
+                  window.print();
+                }, 200);
+              };
+            <\/script>
+          </body>
+          </html>
+        `;
+
+        printWindow.document.open();
+        printWindow.document.write(printHtml);
+        printWindow.document.close();
       }
 
+      
       // ==========================================
       // 16. MODAL - ADD PATIENT
       // ==========================================
       const modal = document.getElementById("add-modal");
       const form = document.getElementById("add-form");
 
-      document
-        .getElementById("add-record-btn")
-        .addEventListener("click", () => {
-          modal.classList.remove("hidden");
-          modal.classList.add("flex");
-        });
+      function checkAddRecordPermissions() {
+        const user = window.getCurrentUser ? window.getCurrentUser() : null;
+        const role = user?.role || "Veterinarian";
+        const allowedRoles = ["super admin", "admin", "veterinarian", "doctor", "technician", "staff"];
+        const canAdd = allowedRoles.some((r) => role.toLowerCase().includes(r));
+        const btn = document.getElementById("add-record-btn");
+        if (btn) {
+          btn.style.display = canAdd ? "flex" : "none";
+        }
+      }
+
+      document.getElementById("add-record-btn")?.addEventListener("click", () => {
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      });
 
       function closeModal() {
         modal.classList.add("hidden");
@@ -2769,69 +3675,66 @@
         form.reset();
       }
 
-      document
-        .getElementById("close-modal")
-        .addEventListener("click", closeModal);
-      document
-        .getElementById("cancel-modal")
-        .addEventListener("click", closeModal);
-      modal.addEventListener("click", (e) => {
+      document.getElementById("close-modal")?.addEventListener("click", closeModal);
+      document.getElementById("cancel-modal")?.addEventListener("click", closeModal);
+      modal?.addEventListener("click", (e) => {
         if (e.target === modal) closeModal();
       });
 
-      form.addEventListener("submit", (e) => {
+      form?.addEventListener("submit", async (e) => {
+        e.preventDefault();
         if (!form.checkValidity()) {
           form.reportValidity();
           return;
         }
-        e.preventDefault();
+
         const name = document.getElementById("f-name").value.trim();
         const species = document.getElementById("f-species").value;
         const breed = document.getElementById("f-breed").value.trim();
         const owner = document.getElementById("f-owner").value.trim();
-        const age = document.getElementById("f-age").value.trim() || "N/A";
-        const gender = document.getElementById("f-gender").value;
-        const status = document.getElementById("f-status").value;
-        const newId = `VC-${idCounter++}`;
-        const today = new Date();
-        const lastVisit = today.toLocaleDateString("en-US", {
-          month: "short",
-          day: "2-digit",
-        const newPatientObj = {
-          id: newId,
-          name,
-          species,
-          breed,
-          owner,
-          lastVisit,
-          status,
-          age,
-          gender,
-          img: petImages[species] || null,
-        };
-        patients.unshift(newPatientObj);
-        renderTable();
-        closeModal();
-        showToast(`Patient ${name} added successfully!`, "success");
-
-        // Sync with backend database
+        const ageVal = document.getElementById("f-age-val")?.value.trim() || "1";
+        const ageUnit = document.getElementById("f-age-unit")?.value || "Years";
+        const age = `${ageVal} ${ageUnit}`;
+        const gender = document.getElementById("f-gender").value || "Male";
+        const status = document.getElementById("f-status").value || "VACCINATED";
+        const phone = document.getElementById("f-phone")?.value.trim() || "";
+        const email = document.getElementById("f-email")?.value.trim() || "";
+        // Save the pet and its owner contact details to PATIENTS first. The
+        // database trigger assigns the permanent PAT- number used by the table.
         try {
-          apiFetch("/api/patients", {
+          const res = await apiFetch("/api/patients", {
             method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               pet_name: name,
               pet_species: species,
               pet_breed: breed,
               pet_age: age,
+              pet_age_value: parseInt(ageVal, 10),
+              pet_age_unit: ageUnit.toLowerCase(),
               sex: gender,
               owner_name: owner,
-              notes: `Registered in clinic records with status ${status}.`
-            })
-          }).catch(err => console.warn("Backend patient sync:", err));
-        } catch (e) {}
+              owner_phone: phone,
+              owner_email: email,
+              vaccination_status: status,
+              patient_status: "Active",
+              medical_notes: `Initial registration with vaccination status ${status}.`,
+            }),
+          });
+          if (!res.ok) throw new Error("The patient record could not be saved.");
+
+          const refreshed = await fetchPatientsFromBackend();
+          if (!refreshed) throw new Error("The record was saved, but the patient table could not be refreshed.");
+          closeModal();
+          showToast(`Patient ${name} added successfully!`, "success");
+        } catch (err) {
+          console.warn("Backend patient save:", err);
+          showToast(err.message || "Unable to save the patient record.", "error");
+        }
+      });
 
       // ==========================================
-      // 17. SCHEDULE APPOINTMENT MODAL
+      // 17. SCHEDULE APPOINTMENT MODAL (CONNECTED TO DATABASE)
       // ==========================================
       const appointmentModal = document.getElementById("appointment-modal");
       const appointmentForm = document.getElementById("appointment-form");
@@ -2841,7 +3744,7 @@
         const id = document.getElementById("record-id").textContent;
         document.getElementById("appt-patient-name").textContent = name;
         document.getElementById("appt-patient-id").textContent = id;
-        const today = new Date().toISOString().split("T")[0];
+        const today = new Date().toLocaleDateString("en-CA");
         document.getElementById("appt-date").value = today;
         appointmentModal.classList.remove("hidden");
         appointmentModal.classList.add("flex");
@@ -2853,72 +3756,85 @@
         appointmentForm.reset();
       }
 
-      document
-        .getElementById("close-appointment-modal")
-        .addEventListener("click", closeAppointmentModal);
-      document
-        .getElementById("cancel-appointment-modal")
-        .addEventListener("click", closeAppointmentModal);
-      appointmentModal.addEventListener("click", (e) => {
+      document.getElementById("close-appointment-modal")?.addEventListener("click", closeAppointmentModal);
+      document.getElementById("cancel-appointment-modal")?.addEventListener("click", closeAppointmentModal);
+      appointmentModal?.addEventListener("click", (e) => {
         if (e.target === appointmentModal) closeAppointmentModal();
       });
 
-      appointmentForm.addEventListener("submit", (e) => {
+      appointmentForm?.addEventListener("submit", async (e) => {
         e.preventDefault();
         if (!appointmentForm.checkValidity()) {
           appointmentForm.reportValidity();
           return;
         }
-        const patient =
-          document.getElementById("appt-patient-name").textContent;
-        const owner = document
-          .getElementById("appt-patient-id")
-          .textContent.replace("Patient ID: #", "");
+
+        const patientName = document.getElementById("appt-patient-name").textContent;
+        const currentPatient = patients.find((p) => p.id === currentPatientId || p.name.toLowerCase() === patientName.toLowerCase());
         const type = document.getElementById("appt-type").value;
         const date = document.getElementById("appt-date").value;
         const time = document.getElementById("appt-time").value;
         const vet = document.getElementById("appt-vet").value;
+        const notes = document.getElementById("appt-notes").value.trim() || "";
 
-        const ids = appointmentData.map(
-          (a) => parseInt(a.id.split("-")[1]) || 0,
-        );
+        const ids = appointmentData.map((a) => parseInt(String(a.id).split("-")[1]) || 0);
         const nextId = Math.max(0, ...ids) + 1;
         const newId = `APT-${String(nextId).padStart(3, "0")}`;
 
-        appointmentData.push({
+        const newAppt = {
           id: newId,
-          patient: patient,
-          owner: owner,
+          patientDbId: currentPatient?.dbId || null,
+          patient: patientName,
+          owner: currentPatient?.owner || "Owner",
           type: type,
           date: date,
           time: time,
           vet: vet,
           status: "Pending",
-          notes: document.getElementById("appt-notes").value.trim() || "",
-        });
+          notes: notes,
+        };
+
+        appointmentData.unshift(newAppt);
 
         try {
-          localStorage.setItem(
-            "appointmentData",
-            JSON.stringify(appointmentData),
-          );
+          localStorage.setItem("appointmentData", JSON.stringify(appointmentData));
+          localStorage.setItem("appointmentsData", JSON.stringify(appointmentData));
         } catch (err) {}
 
         closeAppointmentModal();
-        showToast(
-          `Appointment scheduled for ${patient} on ${formatDate(date)} at ${time}`,
-          "success",
-        );
+        showToast(`Appointment scheduled for ${patientName} on ${formatDate(date)} at ${time}`, "success");
 
-        if (currentPatientId) {
-          const currentPatient = patients.find(
-            (p) => p.id === currentPatientId,
-          );
-          if (currentPatient) renderAppointmentHistory(currentPatient.name);
+        renderTable();
+        renderAppointmentHistory(currentPatient || patientName);
+
+        // Sync with backend /api/appointments
+        try {
+          await apiFetch("/api/appointments", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              patient_id: currentPatient?.dbId || null,
+              pet_name: patientName,
+              pet_species: currentPatient?.species || "Dog",
+              owner_name: currentPatient?.owner || "Owner",
+              owner_phone: currentPatient?.phone || "",
+              service: type,
+              visit_reason: type,
+              appointment_time: `${date} ${time}`,
+              status: "Pending",
+              notes: notes,
+            }),
+          });
+          await fetchAppointmentsFromBackend();
+          await fetchPatientsFromBackend();
+          renderAppointmentHistory(patientName);
+        } catch (err) {
+          console.warn("Backend appointment booking sync:", err);
         }
       });
 
-      // ==========================================
+
+// ==========================================
       // 18. SIDEBAR LOGIC
       // ==========================================
       const mobileBurgerBtn = document.getElementById("mobileBurgerBtn");
@@ -3006,16 +3922,48 @@
           analytics: "Dashboard.html",
           calendar: "clinic_calendar.html",
           staff: "staff_service_settings.html",
+          appointment: "appointment.html",
           billing: "billing.html",
           records: "records.html",
+          inventory: "inventory.html",
           message: "message.html",
           emergency: "emergency_management.html",
-          appointment: "appointment.html",
-          settings: "settings.html",
           mortuary: "mortuary.html",
+          reports: "report.html",
+          settings: "settings.html"
         };
         if (pageMap[section]) window.location.href = pageMap[section];
       }
+
+      document.querySelectorAll("[data-nav-desktop]").forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const section = link.getAttribute("data-nav-desktop");
+          navigateTo(section);
+        });
+      });
+
+      document.querySelectorAll("[data-nav-mobile]").forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const section = link.getAttribute("data-nav-mobile");
+          navigateTo(section);
+          closeMobileSidebarFunc();
+        });
+      });
+
+      // ==========================================
+      // 21. LOGOUT
+      // ==========================================
+      function logout() {
+        if (confirm("Are you sure you want to logout?")) {
+          localStorage.removeItem("user");
+          localStorage.removeItem("token");
+          window.location.href = "vet_portal_login.html";
+        }
+      }
+      document.getElementById("logoutBtnMobile")?.addEventListener("click", logout);
+      document.getElementById("logoutBtnDesktop")?.addEventListener("click", logout);
 
       document.querySelectorAll("[data-nav-desktop]").forEach((link) => {
         link.addEventListener("click", (e) => {
@@ -3052,77 +4000,248 @@
         ?.addEventListener("click", logout);
 
       // ==========================================
-      // 22. DECEASED TOGGLE FUNCTION (FIXED)
+      // 22. PATIENT STATUS & DECEASED TOGGLE (CONNECTED TO DATABASE)
       // ==========================================
-      function toggleDeceasedStatus() {
+      function syncDeceasedToggleUI(status) {
         const toggle = document.getElementById("deceasedToggle");
         const container = document.getElementById("deceasedToggleContainer");
         const label = document.getElementById("deceasedToggleLabel");
         const sub = document.getElementById("deceasedToggleSub");
-        const patientName = document.getElementById("record-name").textContent;
+        const mistakeBox = document.getElementById("patient-status-mistake-container");
+
+        if (status === "Deceased") {
+          toggle?.classList.add("active");
+          container?.classList.add("active");
+          if (label) label.textContent = "💔 Deceased";
+          if (sub) sub.textContent = "Marked as deceased in database";
+          if (mistakeBox) mistakeBox.classList.remove("hidden");
+        } else {
+          toggle?.classList.remove("active");
+          container?.classList.remove("active");
+          if (label) label.textContent = "⚡ Active Patient";
+          if (sub) sub.textContent = "Living • Under active care";
+          if (mistakeBox) mistakeBox.classList.add("hidden");
+        }
+      }
+
+      async function toggleDeceasedStatus() {
+        const toggle = document.getElementById("deceasedToggle");
+        const rawName = document.getElementById("record-name")?.textContent?.trim() || "";
+        const rawId = document.getElementById("record-id")?.textContent?.replace("Patient ID: #", "")?.trim() || "";
+        let patient = patients.find((p) => (p.name && p.name.trim().toLowerCase() === rawName.toLowerCase()) || p.id === rawId || String(p.dbId) === String(currentPatientId));
+
+        if (!patient && rawName) {
+          patient = {
+            id: rawId || "PAT-9999",
+            dbId: currentPatientId || null,
+            name: rawName,
+            owner: document.getElementById("record-owner")?.textContent?.trim() || "Owner",
+            phone: document.getElementById("record-phone")?.textContent?.trim() || "",
+            species: document.getElementById("record-species")?.textContent?.trim() || "Dog",
+            breed: document.getElementById("record-breed")?.textContent?.trim() || "Mixed Breed",
+            age: document.getElementById("record-age")?.textContent?.trim() || "Unknown",
+            patientStatus: "Active",
+          };
+        }
+
+        if (!patient) {
+          showToast("No active patient record selected", "error");
+          return;
+        }
+
+        const isCurrentlyDeceased = toggle.classList.contains("active");
+
+        if (!isCurrentlyDeceased) {
+          // Marking as Deceased
+          if (
+            !confirm(
+              `⚠️ Are you sure you want to mark "${patient.name}" as deceased?\n\nThis will:\n• Store "Deceased" status in the database\n• Transfer custody to Mortuary Management\n\n(If marked by mistake, you can remove it using the button below at any time.)`
+            )
+          ) return;
+
+          patient.patientStatus = "Deceased";
+          syncDeceasedToggleUI("Deceased");
+          renderTable();
+
+          const today = new Date().toLocaleDateString("en-CA");
+
+          // 1. Sync to shared deceased patients registry
+          try {
+            let deceasedList = JSON.parse(localStorage.getItem("vet_deceased_patients") || "[]");
+            deceasedList = deceasedList.filter((d) => d.id !== patient.id && d.name.toLowerCase() !== patient.name.toLowerCase());
+            deceasedList.unshift({
+              id: patient.id,
+              dbId: patient.dbId,
+              name: patient.name,
+              owner: patient.owner,
+              phone: patient.phone || "",
+              species: patient.species,
+              breed: patient.breed,
+              age: patient.age,
+              date: today,
+              status: "Deceased",
+            });
+            localStorage.setItem("vet_deceased_patients", JSON.stringify(deceasedList));
+          } catch (e) {
+            console.error("Error updating vet_deceased_patients", e);
+          }
+
+          // 2. Register directly into vet_mortuary_data so mortuary.html has it immediately
+          try {
+            let mortList = JSON.parse(localStorage.getItem("vet_mortuary_data") || "[]");
+            const alreadyInMort = mortList.some((m) => m.patient && m.patient.trim().toLowerCase() === patient.name.trim().toLowerCase());
+            if (!alreadyInMort) {
+              let maxNum = 12;
+              mortList.forEach((r) => {
+                if (r.id && r.id.startsWith("MOR-")) {
+                  const num = parseInt(r.id.replace("MOR-", ""), 10);
+                  if (!isNaN(num) && num > maxNum) maxNum = num;
+                }
+              });
+              const newMorId = "MOR-" + String(maxNum + 1).padStart(3, "0");
+              mortList.unshift({
+                id: newMorId,
+                patient: patient.name,
+                owner: patient.owner || "Pet Parent",
+                species: patient.species || "Pet",
+                breed: patient.breed || "Mixed Breed",
+                age: patient.age || "Unknown",
+                date: today,
+                cause: "Marked Deceased in Patient Records",
+                disposition: "Pending",
+                status: "pending",
+                storage: "Fridge A - Drawer 1",
+                pickupDate: "Pending",
+                notes: `Transferred directly from Patient Records on ${today}.`,
+              });
+              localStorage.setItem("vet_mortuary_data", JSON.stringify(mortList));
+            }
+          } catch (e) {
+            console.error("Error writing directly to vet_mortuary_data", e);
+          }
+
+          // 3. Register directly into vet_billing_records under mortuary tab
+          try {
+            let billingList = JSON.parse(localStorage.getItem("vet_billing_records") || "[]");
+            const alreadyInBilling = billingList.some((b) => b.type === "mortuary" && b.patient && b.patient.trim().toLowerCase() === patient.name.trim().toLowerCase());
+            if (!alreadyInBilling) {
+              const mortIds = billingList.filter(b => b.type === "mortuary" || (b.id && b.id.startsWith("MOR-B-"))).map((b) => {
+                const parts = (b.id || "").split("-");
+                return parseInt(parts[parts.length - 1]) || 0;
+              });
+              const nextSeq = Math.max(0, ...mortIds) + 1;
+              const nextTxnId = "MOR-B-" + String(nextSeq).padStart(3, "0");
+
+              billingList.unshift({
+                id: nextTxnId,
+                patient: patient.name,
+                owner: patient.owner || "Pet Parent",
+                phone: patient.phone || "",
+                species: patient.species || "Pet",
+                breed: patient.breed || "Mixed Breed",
+                age: patient.age || "Unknown",
+                cause: "Deceased",
+                disposition: "Pending Disposition",
+                storage: "Fridge A - Drawer 1",
+                item: `Mortuary Care - ${patient.name}`,
+                qty: 1,
+                unitPrice: 250,
+                total: 250,
+                status: "Pending",
+                paymentMethod: "Mobile Money",
+                date: today,
+                category: "Mortuary",
+                type: "mortuary",
+                notes: `Mortuary care auto-created from Patient Records on ${today}.`,
+              });
+              localStorage.setItem("vet_billing_records", JSON.stringify(billingList));
+            }
+          } catch (e) {
+            console.error("Error writing directly to vet_billing_records", e);
+          }
+
+          showToast(`💔 ${patient.name} marked as deceased.`, "warning");
+
+          // 4. Update Oracle database status asynchronously
+          if (patient.dbId) {
+            apiFetch(`/api/patients/${patient.dbId}/status`, {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ status: "Deceased" }),
+            }).then((res) => {
+              if (res.ok) console.log(`Database updated: ${patient.name} marked as Deceased.`);
+            }).catch((err) => {
+              console.warn("Database status patch warning:", err);
+            });
+          }
+
+          const mortuaryUrl = `./mortuary.html?auto=true&patient=${encodeURIComponent(patient.name)}&id=${encodeURIComponent(patient.id)}&species=${encodeURIComponent(patient.species)}&breed=${encodeURIComponent(patient.breed)}&age=${encodeURIComponent(patient.age)}&owner=${encodeURIComponent(patient.owner)}&date=${encodeURIComponent(today)}`;
+
+          if (confirm(`Would you like to open Mortuary Management now to log custody/funeral details for ${patient.name}?`)) {
+            window.location.href = mortuaryUrl;
+          }
+        } else {
+          await revertPatientStatus();
+        }
+      }
+
+      async function revertPatientStatus() {
         const patientId = document
           .getElementById("record-id")
           .textContent.replace("Patient ID: #", "");
+        const patient = patients.find((p) => p.id === patientId || String(p.dbId) === String(currentPatientId));
 
-        const isActive = !toggle.classList.contains("active");
+        if (!patient) return;
 
-        if (isActive) {
-          // Toggling ON - Mark as Deceased
-          if (
-            confirm(
-              `⚠️ Are you sure you want to mark "${patientName}" as deceased?\n\nThis will:\n• Transfer the record to Mortuary Management\n• Create a mortuary record automatically\n• Free up the patient record for archiving\n\nThis action cannot be undone.`,
-            )
-          ) {
-            toggle.classList.add("active");
-            container.classList.add("active");
-            label.textContent = "💔 Deceased";
-            sub.textContent = "Transferred to Mortuary Management";
+        if (
+          !confirm(
+            `Undo / Delete Status:\n\nAre you sure you want to delete the deceased status from the database and restore "${patient.name}" to Active Patient status?`
+          )
+        ) return;
 
-            // Get patient data for the mortuary record
-            const species =
-              document.getElementById("record-species").textContent;
-            const breed = document.getElementById("record-breed").textContent;
-            const age = document.getElementById("record-age").textContent;
-            const owner =
-              patients.find((p) => p.id === patientId)?.owner ||
-              "Unknown Owner";
-            const today = new Date().toISOString().split("T")[0];
+        try {
+          const res = await apiFetch(`/api/patients/${patient.dbId}/status`, {
+            method: "DELETE",
+          });
+          if (!res.ok) throw new Error("Could not clear patient status in database");
 
-            // Navigate to mortuary page with ALL patient data AND auto flag
-            const mortuaryUrl = `./mortuary.html?auto=true&patient=${encodeURIComponent(patientName)}&id=${encodeURIComponent(patientId)}&species=${encodeURIComponent(species)}&breed=${encodeURIComponent(breed)}&age=${encodeURIComponent(age)}&owner=${encodeURIComponent(owner)}&date=${encodeURIComponent(today)}`;
+          patient.patientStatus = "Active";
+          syncDeceasedToggleUI("Active");
+          renderTable();
 
-            showToast(
-              `💔 ${patientName} marked as deceased. Creating mortuary record...`,
-              "warning",
-            );
-
-            setTimeout(() => {
-              window.location.href = mortuaryUrl;
-            }, 1500);
+          // Remove from shared deceased patients registry
+          try {
+            let deceasedList = JSON.parse(localStorage.getItem("vet_deceased_patients") || "[]");
+            deceasedList = deceasedList.filter((d) => d.id !== patient.id && d.name !== patient.name);
+            localStorage.setItem("vet_deceased_patients", JSON.stringify(deceasedList));
+          } catch (e) {
+            console.error("Error updating vet_deceased_patients", e);
           }
-        } else {
-          // Toggling OFF - Reactivate (only if user confirms)
-          if (
-            confirm(
-              `Are you sure you want to reactivate "${patientName}" from deceased status?\n\nThis will remove them from mortuary management and restore their active record.`,
-            )
-          ) {
-            toggle.classList.remove("active");
-            container.classList.remove("active");
-            label.textContent = "⚡ Active Patient";
-            sub.textContent = "Living • Under active care";
-            showToast(`✅ ${patientName} has been reactivated.`, "success");
-          }
+
+          showToast(`✅ Patient status deleted from database. ${patient.name} restored to Active.`, "success");
+        } catch (err) {
+          console.warn("Status delete error:", err);
+          showToast("Failed to delete patient status from database", "error");
         }
       }
 
       async function fetchPatientsFromBackend() {
         try {
-          const res = await apiFetch("/api/patients");
-          if (!res.ok) return;
+          const res = await apiFetch(`/api/patients?_t=${Date.now()}`);
+          if (!res.ok) throw new Error(`Unable to load patient records (HTTP ${res.status}).`);
           const json = await res.json();
-          if (json && json.data && json.data.length > 0) {
-            patients = json.data.map((p) => ({
+          if (!json || !Array.isArray(json.data)) {
+            throw new Error("The patient API returned an invalid response.");
+          }
+
+          patients = json.data.map((p) => {
+            const rawStatus = (p.VACCINATION_STATUS || "VACCINATED").toUpperCase();
+            let normalizedStatus = "VACCINATED";
+            if (rawStatus.includes("DUE")) normalizedStatus = "DUE SOON";
+            else if (rawStatus.includes("OVERDUE")) normalizedStatus = "OVERDUE";
+            else normalizedStatus = "VACCINATED";
+
+            return {
               id: p.PATIENT_NUMBER || `PAT-${String(p.PATIENT_ID).padStart(4, "0")}`,
               dbId: p.PATIENT_ID,
               name: p.PET_NAME || "Pet",
@@ -3131,39 +4250,238 @@
               owner: p.OWNER_NAME || "Owner",
               phone: p.OWNER_PHONE || "",
               email: p.OWNER_EMAIL || "",
-              lastVisit: p.CREATED_AT
-                ? new Date(p.CREATED_AT).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "2-digit",
-                    year: "numeric",
-                  })
-                : "Today",
-              status: "VACCINATED",
-              age: p.PET_AGE || "1 Year",
+              lastVisit: (() => {
+                const patientAppts = appointmentData.filter(a => String(a.patientDbId || a.patientId || a.PATIENT_ID) === String(p.PATIENT_ID));
+                if (patientAppts && patientAppts.length > 0) {
+                  patientAppts.sort((a, b) => new Date(b.date) - new Date(a.date));
+                  const latest = new Date(patientAppts[0].date);
+                  return latest.toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" });
+                }
+                return p.CREATED_AT
+                  ? new Date(p.CREATED_AT).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "2-digit",
+                      year: "numeric",
+                    })
+                  : "Today";
+              })(),
+              hasAppointmentToday: (() => {
+                const patientAppts = appointmentData.filter(a => String(a.patientDbId || a.patientId || a.PATIENT_ID) === String(p.PATIENT_ID));
+                if (patientAppts && patientAppts.length > 0) {
+                  const todayStr = new Date().toLocaleDateString("en-CA");
+                  const todayAppt = patientAppts.find(a => {
+                    if (String(a.status || '').toLowerCase() === 'cancelled') return false;
+                    const aDate = String(a.date || a.APPOINTMENT_TIME || '').trim();
+                    if (aDate.startsWith(todayStr) || aDate.includes(todayStr)) return true;
+                    const d = new Date(aDate);
+                    return !isNaN(d.getTime()) && d.toLocaleDateString("en-CA") === todayStr;
+                  });
+                  if (todayAppt) {
+                    return [todayAppt.type, todayAppt.visitReason, todayAppt.notes]
+                      .filter(Boolean)
+                      .join(" ") || "Checkup";
+                  }
+                }
+                return false;
+              })(),
+              status: normalizedStatus,
+              patientStatus: p.PATIENT_STATUS || "Active",
+              age: p.PET_AGE || (p.PET_AGE_VALUE ? `${p.PET_AGE_VALUE} ${p.PET_AGE_UNIT || 'years'}` : "1 Year"),
+              ageValue: p.PET_AGE_VALUE || null,
+              ageUnit: p.PET_AGE_UNIT || null,
               gender: p.SEX || "Male",
               notes: p.MEDICAL_NOTES || "",
-              img: petImages[p.PET_SPECIES] || petImages.Dog,
-            }));
-            filteredPatients = [...patients];
-            renderTable();
-          }
+              isEmergency: Number(p.ACTIVE_EMERGENCY_COUNT || 0) > 0,
+              emergencyPriority: p.EMERGENCY_PRIORITY || null,
+              emergencyStatus: p.EMERGENCY_STATUS || null,
+              emergencyId: p.EMERGENCY_ID || null,
+              emergencyComplaint: p.EMERGENCY_COMPLAINT || null,
+              img: localStorage.getItem("profilePic_" + p.PATIENT_ID) || localStorage.getItem("profilePic_" + (p.PATIENT_NUMBER || `PAT-${String(p.PATIENT_ID).padStart(4, "0")}`)) || petImages[p.PET_SPECIES] || petImages.Dog,
+            };
+          });
+          patientLoadError = "";
+          filteredPatients = [...patients];
+          renderTable();
+          return true;
         } catch (e) {
           console.warn("Patient API fetch:", e);
+          patientLoadError = e.message || "Unable to load patient records from the database.";
+          patients = [];
+          filteredPatients = [];
+          renderTable();
+          return false;
+        }
+      }
+
+      async function fetchAppointmentsFromBackend() {
+        try {
+          const res = await apiFetch(`/api/appointments?_t=${Date.now()}`);
+          if (!res.ok) return;
+          const json = await res.json();
+          if (json && json.data && Array.isArray(json.data) && json.data.length > 0) {
+            appointmentData = json.data.map((a) => {
+              const rawTime = a.APPOINTMENT_TIME || "";
+              let datePart = new Date().toLocaleDateString("en-CA");
+              let timePart = "00:00";
+              
+              if (rawTime) {
+                if (rawTime.includes("T")) {
+                  // Handle ISO string format: 2026-09-19T10:55:00.000Z
+                  const parts = rawTime.split("T");
+                  datePart = parts[0];
+                  timePart = parts[1] ? parts[1].slice(0, 5) : "00:00";
+                } else if (rawTime.includes(" ")) {
+                  // Handle space separated format: 2026-09-19 10:55
+                  const parts = rawTime.split(" ");
+                  datePart = parts[0];
+                  timePart = parts[1] ? parts[1].slice(0, 5) : "00:00";
+                } else {
+                  datePart = rawTime;
+                }
+              } else if (a.CREATED_AT) {
+                datePart = a.CREATED_AT.split("T")[0];
+              }
+
+              return {
+                id: a.APPOINTMENT_NUMBER || `APT-${String(a.APPOINTMENT_ID).padStart(3, "0")}`,
+                dbId: a.APPOINTMENT_ID,
+                patientDbId: a.PATIENT_ID,
+                patient: a.PET_NAME || "Pet",
+                owner: a.OWNER_NAME || "Owner",
+                type: a.SERVICE || a.VISIT_REASON || "General Checkup",
+                visitReason: a.VISIT_REASON || "",
+                date: datePart,
+                time: timePart,
+                vet: a.VET_NAME || (a.VETERINARIAN_ID ? `Dr. Veterinarian #${a.VETERINARIAN_ID}` : "Dr. Abena Mensah"),
+                status: a.STATUS || "Pending",
+                notes: a.NOTES || a.VISIT_REASON || "",
+              };
+            });
+
+            try {
+              localStorage.setItem("appointmentData", JSON.stringify(appointmentData));
+              localStorage.setItem("appointmentsData", JSON.stringify(appointmentData));
+            } catch (e) {}
+
+            if (patients && patients.length > 0) {
+              renderTable();
+            }
+          }
+        } catch (e) {
+          console.warn("Appointments API fetch in records:", e);
         }
       }
 
       // ==========================================
       // 23. INIT
       // ==========================================
-      document.addEventListener("DOMContentLoaded", function () {
+      document.addEventListener("DOMContentLoaded", async function () {
         highlightCurrentPage();
+        checkAddRecordPermissions();
         renderTable();
         renderMedicalNotes();
         renderLabFiles();
-        fetchPatientsFromBackend();
-        const today = new Date().toISOString().split("T")[0];
-        document.getElementById("appt-date").value = today;
+        
+        // Fetch appointments first so we can calculate 'lastVisit' when rendering patients
+        await fetchAppointmentsFromBackend();
+        await fetchPatientsFromBackend();
+        
+        const today = new Date().toLocaleDateString("en-CA");
+        const apptDate = document.getElementById("appt-date");
+        if (apptDate) apptDate.value = today;
+
+        // Check if navigated from Emergency Triage or with patient focus
+        checkUrlPatientFocus();
       });
+
+      // Handle back-forward cache (bfcache) to ensure fresh data when navigating "Back" to this page
+      window.addEventListener('pageshow', async function(event) {
+        if (event.persisted) {
+          await fetchAppointmentsFromBackend();
+          await fetchPatientsFromBackend();
+          checkUrlPatientFocus();
+        }
+      });
+
+      // ==========================================
+      // 24. EMERGENCY CASE URL FOCUS
+      // ==========================================
+      function checkUrlPatientFocus() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const paramPatientId = (urlParams.get("patient_id") || "").trim();
+        const paramEmergencyId = (urlParams.get("emergency_id") || "").trim();
+        const paramPatientName = (urlParams.get("patient_name") || "").trim();
+
+        if (!paramPatientId && !paramEmergencyId && !paramPatientName) return;
+
+        // Match patient in loaded records
+        const match = patients.find((p) => {
+          if (paramPatientId && (String(p.dbId) === paramPatientId || p.id === paramPatientId || p.id.replace("PAT-", "") === paramPatientId.replace("PAT-", ""))) return true;
+          if (paramEmergencyId && String(p.emergencyId) === paramEmergencyId) return true;
+          if (paramPatientName && p.name.toLowerCase() === decodeURIComponent(paramPatientName).toLowerCase()) return true;
+          return false;
+        });
+
+        if (match) {
+          // If came from emergency management or emergency_id is present, ensure emergency flag is active
+          match.isEmergency = true;
+          if (paramEmergencyId && !match.emergencyId) {
+            match.emergencyId = paramEmergencyId;
+          }
+
+          highlightedPatientId = match.id;
+
+          // Populate and show the emergency case focus banner above table
+          const banner = document.getElementById("emergency-banner-alert");
+          const bannerName = document.getElementById("banner-patient-name");
+          const bannerPrio = document.getElementById("banner-emergency-priority");
+          const bannerDesc = document.getElementById("banner-patient-desc");
+
+          if (banner && bannerName) {
+            bannerName.textContent = match.name;
+            const prio = (match.emergencyPriority || "CRITICAL").toUpperCase();
+            if (bannerPrio) {
+              bannerPrio.textContent = `${prio} ER CASE`;
+              bannerPrio.className = `px-2.5 py-0.5 text-[11px] ${
+                prio === "CRITICAL" ? "bg-red-600" : "bg-amber-600"
+              } text-white rounded-full font-black uppercase tracking-wider shadow-xs`;
+            }
+            if (bannerDesc) {
+              bannerDesc.innerHTML = `Showing clinical records for <strong>${escapeHtml(match.name)}</strong> (#${escapeHtml(match.id)}), currently admitted in Emergency Management. Priority: <strong>${escapeHtml(prio)}</strong>. Click row to view full medical history.`;
+            }
+            banner.classList.remove("hidden");
+          }
+
+          // Re-render table with highlighted emergency patient pinned to the top
+          renderTable();
+
+          // Scroll smoothly to the patient's row in the records table
+          setTimeout(() => {
+            const row = document.querySelector(`.patient-row[data-id="${match.id}"]`);
+            if (row) {
+              row.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+          }, 200);
+
+          showToast(`🚨 Focused on Emergency Patient: ${match.name}`, "info");
+        }
+      }
+
+      function clearEmergencyFocus() {
+        highlightedPatientId = null;
+        const banner = document.getElementById("emergency-banner-alert");
+        if (banner) banner.classList.add("hidden");
+        const emFilter = document.getElementById("filter-emergency-only");
+        if (emFilter) emFilter.checked = false;
+        
+        // Clear URL search params without reload
+        if (window.history.replaceState) {
+          const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+          window.history.replaceState({ path: cleanUrl }, "", cleanUrl);
+        }
+        
+        renderTable();
+      }
     </script>
   </body>
 </html>

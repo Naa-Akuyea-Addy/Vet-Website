@@ -493,7 +493,7 @@
   </head>
   <body
     class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col overflow-x-hidden"
-    data-page="appointments"
+    data-page="appointment"
   >
     <!-- Mobile Top Bar -->
     <div
@@ -574,7 +574,7 @@
         </a>
         <a
           href="./appointment.html"
-          data-nav-mobile="appointments"
+          data-nav-mobile="appointment"
           class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all"
         >
           <span class="material-symbols-outlined">event_note</span
@@ -611,6 +611,15 @@
         >
           <span class="material-symbols-outlined">emergency</span
           ><span>Emergency Cases</span>
+        </a>
+        
+        <a
+          href="./inventory.html"
+          data-nav-mobile="inventory"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all"
+        >
+          <span class="material-symbols-outlined">inventory_2</span>
+          <span>Inventory</span>
         </a>
         <a
           href="./mortuary.html"
@@ -680,11 +689,9 @@
           <a
             href="./Dashboard.html"
             data-nav-desktop="analytics"
-            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim transition-all sidebar-button"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg  text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button "
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >analytics</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">analytics</span>
             <span class="sidebar-text">Analytics</span>
           </a>
           <a
@@ -692,9 +699,7 @@
             data-nav-desktop="calendar"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >calendar_today</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">calendar_today</span>
             <span class="sidebar-text">Calendar</span>
           </a>
           <a
@@ -702,19 +707,15 @@
             data-nav-desktop="staff"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >groups</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">groups</span>
             <span class="sidebar-text">Staff</span>
           </a>
           <a
             href="./appointment.html"
-            data-nav-desktop="appointments"
+            data-nav-desktop="appointment"
             class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >event_note</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">event_note</span>
             <span class="sidebar-text">Appointments</span>
           </a>
           <a
@@ -722,9 +723,7 @@
             data-nav-desktop="billing"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >payments</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">payments</span>
             <span class="sidebar-text">Billing</span>
           </a>
           <a
@@ -732,19 +731,23 @@
             data-nav-desktop="records"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >description</span
-            >
-            <span class="sidebar-text">Patient & Owner Records</span>
+            <span class="material-symbols-outlined sidebar-icon-only">description</span>
+            <span class="sidebar-text">Patient &amp; Owner Records</span>
+          </a>
+          <a
+            href="./inventory.html"
+            data-nav-desktop="inventory"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+          >
+            <span class="material-symbols-outlined sidebar-icon-only">inventory_2</span>
+            <span class="sidebar-text">Inventory</span>
           </a>
           <a
             href="./message.html"
             data-nav-desktop="message"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >message</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">message</span>
             <span class="sidebar-text">Messages</span>
           </a>
           <a
@@ -752,9 +755,7 @@
             data-nav-desktop="emergency"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-emergency-red transition-all font-semibold sidebar-button bg-emergency-red/10"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >emergency</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">emergency</span>
             <span class="sidebar-text">Emergency Cases</span>
           </a>
           <a
@@ -762,9 +763,7 @@
             data-nav-desktop="mortuary"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >heart_broken</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">heart_broken</span>
             <span class="sidebar-text">Mortuary</span>
           </a>
           <a
@@ -772,9 +771,7 @@
             data-nav-desktop="reports"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >assessment</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">assessment</span>
             <span class="sidebar-text">Reports</span>
           </a>
           <a
@@ -782,12 +779,9 @@
             data-nav-desktop="settings"
             class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
-            <span class="material-symbols-outlined sidebar-icon-only"
-              >settings</span
-            >
+            <span class="material-symbols-outlined sidebar-icon-only">settings</span>
             <span class="sidebar-text">Settings</span>
-          </a>
-        </nav>
+          </a>        </nav>
         <div class="p-4 mt-auto bottom-container">
           <button
             id="logoutBtnDesktop"
@@ -1386,79 +1380,68 @@
       }
 
       async function fetchAppointmentsFromBackend() {
-              // Try API helpers; be robust about whether they return a Response or parsed JSON.
-              // Prefer apiFetchJson (added by auth-guard) when available.
-              try {
-                let json = null;
+        try {
+          const fetcher = typeof window.portalApiFetch === "function"
+            ? window.portalApiFetch
+            : (url) => fetch(url, { headers: { "Authorization": "Bearer " + (localStorage.getItem("token") || "") } });
 
-                if (typeof apiFetchJson === "function") {
-                  // Returns parsed JSON regardless of underlying apiFetch implementation
-                  json = await apiFetchJson("/api/appointments");
-                } else if (typeof apiFetch === "function") {
-                  // apiFetch may return a Response or parsed JSON depending on page
-                  const resOrJson = await apiFetch("/api/appointments");
-                  if (resOrJson && typeof resOrJson.json === "function") {
-                    try {
-                      json = await resOrJson.json();
-                    } catch (e) {
-                      console.warn("apiFetch returned a Response but parsing failed:", e);
-                      json = null;
-                    }
+          const res = await fetcher("/api/appointments");
+
+          if (!res.ok) {
+            console.warn("[appointments] API returned " + res.status + " " + res.statusText);
+          } else {
+            const json = await res.json().catch(e => { console.warn("[appointments] JSON parse failed:", e); return null; });
+            const rows = json?.data ?? (Array.isArray(json) ? json : null);
+
+            if (rows && rows.length > 0) {
+              appointmentsData = rows.map((row) => {
+                let dateVal = new Date().toISOString().slice(0, 10);
+                let timeVal = "09:00";
+                if (row.APPOINTMENT_TIME) {
+                  const t = String(row.APPOINTMENT_TIME);
+                  if (t.includes("T")) {
+                    const d = new Date(t);
+                    if (!isNaN(d)) { dateVal = d.toISOString().slice(0, 10); timeVal = d.toTimeString().slice(0, 5); }
                   } else {
-                    json = resOrJson;
+                    const parts = t.split(" ");
+                    if (parts.length >= 2) { dateVal = parts[0]; timeVal = parts[1].slice(0, 5); }
+                    else if (t.includes(":")) { timeVal = t.slice(0, 5); }
+                    else if (t.includes("-")) { dateVal = t; }
                   }
-                } else if (typeof window.portalApiFetch === "function") {
-                  const res = await window.portalApiFetch("/api/appointments");
-                  if (!res.ok) {
-                    console.warn("Failed to fetch /api/appointments, status:", res.status);
-                  } else {
-                    json = await res.json();
-                  }
-                } else {
-                  console.warn("No API helper available to fetch appointments");
                 }
-
-                if (json && json.data && json.data.length > 0) {
-            appointmentsData = json.data.map((row) => {
-              // Normalize date/time stored in various formats
-              let dateVal = new Date().toISOString().slice(0, 10);
-              let timeVal = "09:00";
-              if (row.APPOINTMENT_TIME) {
-                const parts = String(row.APPOINTMENT_TIME).split(" ");
-                if (parts.length >= 2) {
-                  dateVal = parts[0];
-                  timeVal = parts[1];
-                } else if (String(row.APPOINTMENT_TIME).includes(":")) {
-                  timeVal = row.APPOINTMENT_TIME;
-                } else if (String(row.APPOINTMENT_TIME).includes("-")) {
-                  dateVal = row.APPOINTMENT_TIME;
-                }
-              }
-
-              return {
-                id: row.APPOINTMENT_NUMBER || (row.APPOINTMENT_ID ? `APT-${String(row.APPOINTMENT_ID).padStart(4, "0")}` : (row.ID || "")),
-                dbId: row.APPOINTMENT_ID || row.ID || null,
-                patientId: row.PATIENT_ID || null,
-                patient: row.PET_NAME || row.PATIENT_NAME || "Pet",
-                owner: row.OWNER_NAME || "Owner",
-                type: row.SERVICE || row.VISIT_REASON || "General Checkup",
-                date: dateVal,
-                time: timeVal,
-                vet: row.VET_NAME || row.VETERINARIAN || "Unassigned",
-                status: row.STATUS || "Confirmed",
-                notes: row.NOTES || row.COMMENTS || "",
-              };
-            });
-
-            saveAppointmentsToStorage();
-            renderAppointments();
-            return;
+                return {
+                  id: row.APPOINTMENT_NUMBER || (row.APPOINTMENT_ID ? "APT-" + String(row.APPOINTMENT_ID).padStart(4, "0") : (row.ID || "")),
+                  dbId: row.APPOINTMENT_ID || row.ID || null,
+                  patientId: row.PATIENT_ID || null,
+                  patientNumber: row.PATIENT_NUMBER || null,
+                  bookingRef: row.BOOKING_REFERENCE || null,
+                  bookingSource: row.BOOKING_SOURCE || null,
+                  patient: row.PET_NAME || row.PATIENT_NAME || "Pet",
+                  breed: row.PET_BREED || "",
+                  sex: row.SEX || "",
+                  owner: row.OWNER_NAME || "Owner",
+                  ownerEmail: row.OWNER_EMAIL || "",
+                  type: row.SERVICE || row.VISIT_REASON || "General Checkup",
+                  date: dateVal,
+                  time: timeVal,
+                  vet: row.VET_NAME || row.VETERINARIAN || "Unassigned",
+                  status: row.STATUS || "Confirmed",
+                  notes: row.NOTES || row.COMMENTS || "",
+                };
+              });
+              saveAppointmentsToStorage();
+              renderAppointments();
+              console.info("[appointments] Loaded " + appointmentsData.length + " appointments from DB.");
+              return;
+            } else {
+              console.warn("[appointments] Server returned 0 rows.");
+            }
           }
         } catch (e) {
-          console.warn("Failed to fetch appointments from backend:", e);
+          console.warn("[appointments] Fetch failed:", e.message);
         }
 
-        // Fallback to localStorage if server data is unavailable
+                // Fallback to localStorage if server data is unavailable
         if (loadAppointmentsFromStorage()) {
           renderAppointments();
         }
@@ -1971,17 +1954,26 @@
       }
 
       // ==========================================
-      // 12. TOGGLE STATUS
+      // 12. TOGGLE STATUS (DB-backed)
       // ==========================================
-      function toggleAppointmentStatus(id) {
+      async function toggleAppointmentStatus(id) {
         const apt = appointmentsData.find((a) => a.id === id);
-        if (!apt) {
-          showToast("Appointment not found", "error");
-          return;
-        }
+        if (!apt) { showToast("Appointment not found", "error"); return; }
         const statuses = ["Confirmed", "Pending", "Completed", "Cancelled"];
-        let idx = statuses.indexOf(apt.status);
-        apt.status = statuses[(idx + 1) % statuses.length];
+        const newStatus = statuses[(statuses.indexOf(apt.status) + 1) % statuses.length];
+        if (apt.dbId) {
+          try {
+            const token = localStorage.getItem("token") || "";
+            const fetcher = window.portalApiFetch || window.fetch;
+            const resp = await fetcher(`/api/appointments/${apt.dbId}/status`, {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+              body: JSON.stringify({ status: newStatus }),
+            });
+            if (!resp.ok) throw new Error("Server update failed");
+          } catch (e) { showToast("Could not update status on server", "error"); return; }
+        }
+        apt.status = newStatus;
         saveAppointmentsToStorage();
         renderAppointments();
         showToast(`✅ ${apt.id} status updated to ${apt.status}`, "success");
@@ -2083,7 +2075,8 @@
           const apt = appointmentsData.find((a) => a.id === editId);
           try {
             if (apt && apt.dbId) {
-              const resp = await fetch(`/api/appointments/${apt.dbId}`, {
+              const fetcher = window.portalApiFetch || window.fetch;
+              const resp = await fetcher(`/api/appointments/${apt.dbId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload),
@@ -2111,7 +2104,8 @@
           delete document.getElementById("appointmentForm").dataset.editId;
         } else {
           try {
-            const resp = await fetch('/api/appointments', {
+            const fetcher = window.portalApiFetch || window.fetch;
+            const resp = await fetcher('/api/appointments', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(payload),
@@ -2383,14 +2377,15 @@
           analytics: "Dashboard.html",
           calendar: "clinic_calendar.html",
           staff: "staff_service_settings.html",
+          appointment: "appointment.html",
           billing: "billing.html",
           records: "records.html",
+          inventory: "inventory.html",
           message: "message.html",
           emergency: "emergency_management.html",
-          appointments: "appointment.html",
           mortuary: "mortuary.html",
           reports: "report.html",
-          settings: "settings.html",
+          settings: "settings.html"
         };
         if (pageMap[section]) window.location.href = pageMap[section];
       }

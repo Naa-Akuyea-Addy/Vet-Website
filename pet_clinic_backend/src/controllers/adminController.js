@@ -56,7 +56,7 @@ async function listUsers(req, res, next) {
 
 async function createUser(req, res, next) {
   try {
-    const { email, password, fullName, role, phone, licenseNumber, status } = req.body;
+    const { email, password, fullName, role, phone, licenseNumber, department, salary, status } = req.body;
 
     if (!email || !password || !fullName) {
       return res.status(400).json({
@@ -85,6 +85,8 @@ async function createUser(req, res, next) {
       role: assignedRole,
       phone,
       licenseNumber,
+      department,
+      salary,
       status: status || "Active",
     });
 

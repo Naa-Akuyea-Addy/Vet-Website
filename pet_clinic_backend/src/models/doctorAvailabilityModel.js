@@ -4,15 +4,16 @@ const { withConnection } = require("../config/database");
 async function list() {
   return withConnection((connection) =>
     connection.execute(
-      `SELECT s.STAFF_ID, s.USER_ID, s.FULL_NAME, s.DEPARTMENT, s.JOB_TITLE,
-              s.PHONE, s.EMAIL, s.STATUS AS STAFF_STATUS,
+      `SELECT s.STAFF_ID, s.USER_ID, u.FULL_NAME, s.DEPARTMENT, s.JOB_TITLE,
+              u.PHONE, u.EMAIL, u.STATUS AS STAFF_STATUS,
               NVL(a.AVAILABILITY_STATUS, 'Available') AS AVAILABILITY_STATUS,
               NVL(a.START_TIME, '08:00') AS START_TIME,
               NVL(a.END_TIME, '18:00') AS END_TIME,
               a.LEAVE_REASON
        FROM STAFF s
+       JOIN USERS u ON u.USER_ID = s.USER_ID
        LEFT JOIN DOCTOR_AVAILABILITY a ON a.STAFF_ID = s.STAFF_ID
-       ORDER BY s.FULL_NAME`,
+       ORDER BY u.FULL_NAME`,
       [],
       { outFormat: oracledb.OUT_FORMAT_OBJECT },
     ).then((result) => result.rows || []),
