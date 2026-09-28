@@ -1470,11 +1470,16 @@
             <span class="material-symbols-outlined">shopping_cart</span>
             Buy Stocks Now to Unlock
           </button>
+          <!-- No inline pointer-events/pointer-events-none here: the lock is enforced by
+               handleBillingRecordsClick() so the click still reaches JS and shows the warning toast. -->
           <a
             id="lockBillingRecordsBtn"
-            style="pointer-events: none;"
+            href="#billing-locked"
+            data-muted="true"
+            aria-disabled="true"
+            title="Locked: Buy stock directly from this page to access Billing Records"
             onclick="handleBillingRecordsClick(event)"
-            class="w-full sm:w-auto px-5 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl border border-slate-300 transition-all flex items-center justify-center gap-2 pointer-events-none"
+            class="w-full sm:w-auto px-5 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-400 font-semibold rounded-xl border border-slate-300 transition-all flex items-center justify-center gap-2 opacity-45 cursor-not-allowed"
           >
             <span class="material-symbols-outlined text-lg">receipt_long</span>
             <span>Go to Billing Records</span>
@@ -2711,6 +2716,63 @@
         return false;
       }
 
+      // The three "Billing Records" buttons are plain <a> tags. A locked <a> must keep a
+      // valid href so the browser can navigate once it is unlocked, but `pointer-events: none`
+      // silently swallows every click while locked (no navigation AND no toast). Instead of
+      // disabling pointer events we keep the link clickable and gate the navigation inside
+      // handleBillingRecordsClick().
+      const BILLING_LOCKED_CLASS_LIST = [
+        "opacity-45",
+        "cursor-not-allowed",
+        "bg-slate-100",
+        "text-slate-400",
+        "border-slate-200",
+        "border-slate-300",
+        "hover:bg-slate-200",
+        "hover:bg-slate-50",
+        "text-slate-700",
+        "pointer-events-none",
+      ];
+
+      function setBillingButtonLocked(btn, isLocked) {
+        // Remember the button's ORIGINAL markup classes once, so unlocking can fully
+        // restore them (the header/banner buttons start un-muted with text-slate-700 etc.,
+        // and re-locking must not permanently strip that styling).
+        if (!btn.dataset.origClasses) btn.dataset.origClasses = btn.className;
+
+        if (isLocked) {
+          btn.dataset.muted = "true";
+          // Restore original look first, then apply the lock styles on top.
+          btn.className = btn.dataset.origClasses;
+          // Keep the href (so the link is still focusable/clickable and the guard below can
+          // intercept it) but mark it as locked-only so an accidental middle/right click or
+          // "open in new tab" is still blocked by the click handler returning false.
+          btn.setAttribute("href", "#billing-locked");
+          btn.setAttribute("aria-disabled", "true");
+          btn.style.pointerEvents = "";
+          btn.setAttribute("title", "Locked: Buy stock directly from this page to access Billing Records");
+          btn.classList.remove("hover:bg-slate-50", "hover:bg-slate-200", "text-slate-700");
+          btn.classList.add("opacity-45", "cursor-not-allowed", "bg-slate-100", "text-slate-400", "border-slate-200");
+          let lockIcon = btn.querySelector(".billing-lock-indicator");
+          if (!lockIcon) {
+            lockIcon = document.createElement("span");
+            lockIcon.className = "material-symbols-outlined text-xs text-amber-500 billing-lock-indicator ml-1";
+            lockIcon.textContent = "lock";
+            btn.appendChild(lockIcon);
+          }
+        } else {
+          btn.dataset.muted = "false";
+          // Restore the exact original markup classes, then point at billing again.
+          btn.className = btn.dataset.origClasses;
+          btn.setAttribute("href", "./billing.html?tab=inventory");
+          btn.removeAttribute("aria-disabled");
+          btn.style.pointerEvents = "";
+          btn.setAttribute("title", "View inventory billing records");
+          const lockIcon = btn.querySelector(".billing-lock-indicator");
+          if (lockIcon) lockIcon.remove();
+        }
+      }
+
       function updateBillingRecordsButtonsState() {
         const isUnlocked = hasBoughtStocksDirectly();
         const btns = [
@@ -2719,46 +2781,71 @@
           document.getElementById("lockBillingRecordsBtn"),
         ].filter(Boolean);
 
-        btns.forEach((btn) => {
-          if (!isUnlocked) {
-            btn.dataset.muted = "true";
-            btn.removeAttribute("href");
-            btn.style.pointerEvents = "none";
-            btn.setAttribute("title", "Locked: Buy stock directly from this page to access Billing Records");
-            btn.classList.add("opacity-45", "cursor-not-allowed", "bg-slate-100", "text-slate-400", "border-slate-200", "pointer-events-none");
-            btn.classList.remove("hover:bg-slate-50", "hover:bg-slate-200", "text-slate-700");
-            let lockIcon = btn.querySelector(".billing-lock-indicator");
-            if (!lockIcon) {
-              lockIcon = document.createElement("span");
-              lockIcon.className = "material-symbols-outlined text-xs text-amber-500 billing-lock-indicator ml-1";
-              lockIcon.textContent = "lock";
-              btn.appendChild(lockIcon);
-            }
-          } else {
-            btn.dataset.muted = "false";
-            btn.setAttribute("href", "./billing.html?tab=inventory");
-            btn.style.pointerEvents = "";
-            btn.setAttribute("title", "View inventory billing records");
-            btn.classList.remove("opacity-45", "cursor-not-allowed", "bg-slate-100", "text-slate-400", "border-slate-200", "pointer-events-none");
-            btn.classList.add("text-slate-700", "hover:bg-slate-50");
-            const lockIcon = btn.querySelector(".billing-lock-indicator");
-            if (lockIcon) lockIcon.remove();
+        btns.forEach((btn) => setBillingButtonLocked(btn, !isUnlocked));
+      }
+
+      // Safety net: block every way of following a still-locked link, not just left clicks.
+      // Middle-click / Ctrl+click / Cmd+click bypass the onclick handler and open the href in
+      // a new tab, so we neutralize those on any <a data-muted="true">.
+      document.addEventListener(
+        "auxclick",
+        (e) => {
+          const link = e.target && e.target.closest ? e.target.closest('a[data-muted="true"]') : null;
+          if (link) {
+            e.preventDefault();
+            handleBillingRecordsClick(e);
           }
-        });
+        },
+        true,
+      );
+      document.addEventListener(
+        "contextmenu",
+        (e) => {
+          const link = e.target && e.target.closest ? e.target.closest('a[data-muted="true"]') : null;
+          if (link) e.preventDefault();
+        },
+        true,
+      );
+      document.addEventListener(
+        "keydown",
+        (e) => {
+          if ((e.key === "Enter" || e.key === " ") && e.target && e.target.closest) {
+            const link = e.target.closest('a[data-muted="true"]');
+            if (link) {
+              e.preventDefault();
+              handleBillingRecordsClick(e);
+            }
+          }
+        },
+        true,
+      );
+
+      function highlightBuyStockButtons(durationMs = 1800) {
+        // Pulse every "Buy Stock(s) Now" button so the user sees what unlocks the link.
+        document
+          .querySelectorAll(
+            "button[onclick=\"openBuyStockModal()\"], button[onclick^=\"closeBufferWarningModal\"]",
+          )
+          .forEach((btn) => {
+            btn.classList.add("ring-4", "ring-emerald-400");
+            setTimeout(() => btn.classList.remove("ring-4", "ring-emerald-400"), durationMs);
+          });
       }
 
       function handleBillingRecordsClick(e) {
-        if (!hasBoughtStocksDirectly()) {
-          e.preventDefault();
-          e.stopPropagation();
-          showToast("🔒 'Go to Billing Records' is muted! Buy stock directly from this page first to activate.", "warning");
-          const buyBtn = document.querySelector("button[onclick='openBuyStockModal()']");
-          if (buyBtn) {
-            buyBtn.classList.add("ring-4", "ring-emerald-400");
-            setTimeout(() => buyBtn.classList.remove("ring-4", "ring-emerald-400"), 1500);
-          }
-          return false;
+        // Always stop the placeholder / stale href from taking us anywhere.
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (hasBoughtStocksDirectly()) {
+          // Unlocked -> perform the navigation manually (the default action was prevented above).
+          window.location.href = "./billing.html?tab=inventory";
+          return true;
         }
+
+        showToast("🔒 'Go to Billing Records' is muted! Buy stock directly from this page first to activate.", "warning");
+        highlightBuyStockButtons();
+        return false;
       }
 
       // ==========================================
