@@ -42,7 +42,7 @@
         color: #1b1c1c;
       }
       .sidebar-item-active {
-        background-color: #2e7d82;
+        background-color: var(--color-primary, #2e7d82);
         color: #ffffff;
       }
       .hide-scrollbar::-webkit-scrollbar {
@@ -510,12 +510,12 @@
               "inverse-on-surface": "#f2f0f0",
               "inverse-surface": "#303030",
               "surface-dim": "#dcd9d9",
-              "primary-container": "#2e7d82",
+              "primary-container": "var(--color-primary, #2e7d82)",
               "secondary-fixed-dim": "#82d4d8",
               "on-secondary-fixed": "#002021",
               "primary-fixed-dim": "#88d3d8",
               "surface-bright": "#fbf9f8",
-              primary: "#036469",
+              primary: "var(--color-primary, var(--color-primary, #036469))",
               outline: "#6f797a",
               "on-secondary-fixed-variant": "#004f52",
               "error-container": "#ffdad6",
@@ -1332,7 +1332,6 @@
                 </button>
               </div>
             </div>
-          </div>
         </main>
 
         <!-- Shared Footer -->
@@ -1512,15 +1511,18 @@
 
         <form id="buyStockForm" onsubmit="submitBuyStock(event)" class="space-y-4">
           <div>
-            <label class="input-label">Select Item to Buy *</label>
-            <select
-              id="buyStockItemId"
+            <label class="input-label">Item Name (Select or Type New) *</label>
+            <input
+              type="text"
+              id="buyStockItemName"
+              list="inventoryItemsList"
               required
+              placeholder="Start typing to search or create new..."
               class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
-              onchange="onBuyStockItemChange()"
-            >
+            />
+            <datalist id="inventoryItemsList">
               <!-- populated dynamically -->
-            </select>
+            </datalist>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -2196,6 +2198,16 @@
       function saveInventoryToStorage() {
         try {
           localStorage.setItem("vet_inventory_data", JSON.stringify(inventoryData));
+          
+          // Also sync to DB so Reports page shows correct data!
+          const token = localStorage.getItem("token");
+          if (token) {
+             fetch("/api/inventory/bulk-sync", {
+               method: "POST",
+               headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+               body: JSON.stringify(inventoryData)
+             }).catch(e => console.error("Sync error:", e));
+          }
         } catch (e) {
           console.error("Storage save error", e);
         }
@@ -2526,14 +2538,14 @@
 
       function openBuyStockModal(preselectItemId = null) {
         const modal = document.getElementById("buyStockModal");
-        const select = document.getElementById("buyStockItemId");
-        if (!modal || !select) return;
+        const input = document.getElementById("buyStockItemName");
+        const dataList = document.getElementById("inventoryItemsList");
+        if (!modal || !input || !dataList) return;
 
-        // Populate items in select
-        select.innerHTML = '<option value="">-- Choose item to buy --</option>' +
-          inventoryData
+        // Populate items in datalist
+        dataList.innerHTML = inventoryData
             .map(
-              (i) => `<option value="${i.id}">${i.name} (Current: ${getTotalQuantity(i)} ${i.unit})</option>`,
+              (i) => `<option value="${i.name}"></option>`,
             )
             .join("");
 
@@ -2552,9 +2564,13 @@
         }
 
         if (targetId) {
-          select.value = targetId;
+          const item = inventoryData.find(i => i.id === targetId);
+          if (item) input.value = item.name;
+        } else {
+          input.value = "";
         }
 
+        // Initialize cost/supplier if it exists
         onBuyStockItemChange();
 
         document.getElementById("buyStockQty").value = 50;
@@ -2575,11 +2591,14 @@
       }
 
       function onBuyStockItemChange() {
-        const itemId = document.getElementById("buyStockItemId").value;
-        const item = inventoryData.find((i) => i.id === itemId);
-        if (!item) return;
+        const itemName = document.getElementById("buyStockItemName").value.trim();
+        const item = inventoryData.find((i) => i.name.toLowerCase() === itemName.toLowerCase());
+        if (!item) {
+          // It's a new item, let them type freely without overwriting fields
+          return;
+        }
 
-        document.getElementById("buyStockCost").value = item.cost || 5.0;
+        document.getElementById("buyStockCost").value = item.cost || item.price || 5.0;
         document.getElementById("buyStockSupplier").value = item.supplier || "";
         updateBuyStockTotal();
       }
@@ -2594,7 +2613,7 @@
 
       async function submitBuyStock(e) {
         e.preventDefault();
-        const itemId = document.getElementById("buyStockItemId").value;
+        const itemName = document.getElementById("buyStockItemName").value.trim();
         const qty = parseInt(document.getElementById("buyStockQty").value) || 0;
         const unitCost = parseFloat(document.getElementById("buyStockCost").value) || 0;
         const supplier = document.getElementById("buyStockSupplier").value.trim();
@@ -2603,19 +2622,37 @@
         const paymentMethod = document.getElementById("buyStockPaymentMethod").value || "Mobile Money";
         const notes = document.getElementById("buyStockNotes").value.trim();
 
-        if (!itemId || qty <= 0 || unitCost <= 0) {
-          showToast("Please provide valid item, quantity and cost", "error");
+        if (!itemName || qty <= 0 || unitCost <= 0) {
+          showToast("Please provide valid item name, quantity and cost", "error");
           return;
         }
 
-        const item = inventoryData.find((i) => i.id === itemId);
+        let item = inventoryData.find((i) => i.name.toLowerCase() === itemName.toLowerCase());
+        
+        // If it's a completely new item not in inventory
         if (!item) {
-          showToast("Item not found", "error");
-          return;
+          const newId = "INV-" + Math.floor(Math.random() * 900 + 100);
+          
+          // Use currently selected filter category, otherwise default to Medicines
+          let currentCat = document.getElementById("categoryFilter").value;
+          if (currentCat === "all") currentCat = "Medicines";
+          
+          item = {
+            id: newId,
+            name: itemName,
+            category: currentCat,
+            quantity: 0,
+            unit: "units",
+            minStock: 10,
+            price: unitCost,
+            supplier: supplier,
+            batches: []
+          };
+          inventoryData.unshift(item); // Add to the top of the inventory array
         }
 
         // 1. Add batch to inventory
-        const batchId = generateBatchId(itemId);
+        const batchId = generateBatchId(item.id);
         if (!item.batches) item.batches = [];
         item.batches.push({
           batchId: batchId,
@@ -2623,6 +2660,7 @@
           expiry: expiry || "",
           supplier: supplier || item.supplier || "",
           notes: `Purchased: ${notes || "Restock purchase"} (${paymentMethod})`,
+          purchaseDate: new Date().toISOString()
         });
 
         saveInventoryToStorage();
@@ -2688,9 +2726,15 @@
         // 3. Reset buffer stock warnings because stocks have been bought!
         localStorage.setItem("inventory_buffer_warnings", "0");
 
-        // 4. Close modal, unlock page, and render
+        // 4. Close modal, unlock page, reset search/pagination, and render
         closeBuyStockModal();
         unlockInventoryPage(false);
+        
+        // Ensure the user actually sees what they just added!
+        currentPage = 1; 
+        const searchInput = document.getElementById("inventorySearch");
+        if (searchInput) searchInput.value = "";
+        
         renderInventory();
 
         showToast(
@@ -2932,8 +2976,11 @@
       }
 
       function getTotalQuantity(item) {
-        if (!item.batches) return 0;
-        return item.batches.reduce((sum, batch) => sum + batch.quantity, 0);
+        let total = parseInt(item.quantity) || 0;
+        if (item.batches && Array.isArray(item.batches)) {
+          total += item.batches.reduce((sum, batch) => sum + (parseInt(batch.quantity) || 0), 0);
+        }
+        return total;
       }
 
       function getTotalValue(items) {
@@ -3546,7 +3593,7 @@
         });
         win.document.write(`
           <html><head><title>Inventory Report</title>
-          <style>body{font-family:sans-serif;padding:30px;color:#1e293b;}table{width:100%;border-collapse:collapse;margin-top:20px;}th{background:#f1f5f9;padding:8px;border:1px solid #e2e8f0;}td{padding:6px 8px;border:1px solid #e2e8f0;}h2{border-bottom:2px solid #036469;padding-bottom:8px;}.footer{margin-top:24px;font-size:11px;color:#64748b;text-align:center;}</style>
+          <style>body{font-family:sans-serif;padding:30px;color:#1e293b;}table{width:100%;border-collapse:collapse;margin-top:20px;}th{background:#f1f5f9;padding:8px;border:1px solid #e2e8f0;}td{padding:6px 8px;border:1px solid #e2e8f0;}h2{border-bottom:2px solid var(--color-primary, #036469);padding-bottom:8px;}.footer{margin-top:24px;font-size:11px;color:#64748b;text-align:center;}</style>
           </head><body>
           <h2>Inventory Report</h2>
           <p>Generated: ${new Date().toLocaleString()}</p>

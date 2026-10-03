@@ -65,7 +65,7 @@
         background: linear-gradient(135deg, #b45309, #d97706);
       }
       .sidebar-item-active {
-        background-color: #2e7d82;
+        background-color: var(--color-primary, #2e7d82);
         color: #ffffff;
       }
       .hide-scrollbar::-webkit-scrollbar {
@@ -179,7 +179,7 @@
         color: white;
       }
       .sidebar-link.active {
-        background-color: #2e7d82;
+        background-color: var(--color-primary, #2e7d82);
         color: #ffffff;
       }
       .sidebar-link.active .sidebar-icon-only {
@@ -214,14 +214,14 @@
       }
 
       .sidebar-link.billing-highlight {
-        background-color: #036469 !important;
+        background-color: var(--color-primary, #036469) !important;
         color: #ffffff !important;
       }
       .sidebar-link.billing-highlight .sidebar-icon-only {
         color: #ffffff !important;
       }
       .nav-btn.billing-highlight {
-        background: #036469 !important;
+        background: var(--color-primary, #036469) !important;
         color: white !important;
         box-shadow: 0 2px 6px rgba(3, 100, 105, 0.25) !important;
       }
@@ -258,7 +258,7 @@
         color: #3f4949;
       }
       .nav-btn.active {
-        background: #036469;
+        background: var(--color-primary, #036469);
         color: white;
         box-shadow: 0 2px 6px rgba(3, 100, 105, 0.25);
       }
@@ -378,7 +378,7 @@
         transition: all 0.3s ease;
       }
       .staff-search-input:focus {
-        border-color: #036469;
+        border-color: var(--color-primary, #036469);
         box-shadow: 0 0 0 3px rgba(3, 100, 105, 0.1);
       }
 
@@ -394,7 +394,7 @@
         color: #334155;
       }
       .billing-tab-btn.active {
-        background: #036469;
+        background: var(--color-primary, #036469);
         color: white;
         box-shadow: 0 2px 6px rgba(3, 100, 105, 0.2);
       }
@@ -552,7 +552,7 @@
               "emergency-red": "#943031",
               "surface-container-lowest": "#ffffff",
               "surface-dim": "#dcd9d9",
-              primary: "#036469",
+              primary: "var(--color-primary, var(--color-primary, #036469))",
               "on-surface": "#1b1c1c",
               "inverse-on-surface": "#f2f0f0",
               "on-secondary-fixed": "#002021",
@@ -569,7 +569,7 @@
               "on-tertiary-container": "#e6fdfe",
               "surface-container-low": "#f5f3f3",
               "primary-fixed-dim": "#88d3d8",
-              "primary-container": "#2e7d82",
+              "primary-container": "var(--color-primary, #2e7d82)",
               "tertiary-fixed": "#d0e7e8",
               surface: "#fbf9f8",
               "on-tertiary": "#ffffff",
@@ -3167,7 +3167,7 @@
         document
           .querySelectorAll("[data-nav-desktop='billing']")
           .forEach((link) => {
-            link.classList.add("bg-[#036469]", "text-white");
+            link.classList.add("bg-[var(--color-primary,var(--color-primary, #036469))]", "text-white");
             link.classList.remove(
               "text-tertiary-fixed-dim",
               "hover:bg-white/5",
@@ -3177,7 +3177,7 @@
         document
           .querySelectorAll("[data-nav-mobile='billing']")
           .forEach((link) => {
-            link.classList.add("bg-[#036469]", "text-white");
+            link.classList.add("bg-[var(--color-primary,var(--color-primary, #036469))]", "text-white");
             link.classList.remove(
               "text-tertiary-fixed-dim",
               "hover:bg-white/5",
@@ -4420,7 +4420,7 @@
                     body { font-family: 'Courier New', monospace; padding: 30px; background: #f5f5f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
                     .receipt { background: white; max-width: 520px; width: 100%; padding: 35px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
                     .header { text-align: center; border-bottom: 2px dashed #333; padding-bottom: 18px; margin-bottom: 18px; }
-                    .header h2 { font-size: 26px; margin: 0; color: #036469; letter-spacing: 1px; }
+                    .header h2 { font-size: 26px; margin: 0; color: var(--color-primary, #036469); letter-spacing: 1px; }
                     .header p { font-size: 14px; color: #555; margin: 4px 0; }
                     .header .receipt-id { font-size: 12px; color: #888; margin-top: 6px; }
                     .divider { border-top: 1px dashed #ddd; margin: 12px 0; }
@@ -4429,14 +4429,14 @@
                     .row .value { font-weight: 600; color: #1a1a1a; }
                     .row-total { display: flex; justify-content: space-between; padding: 14px 0 10px 0; font-size: 20px; font-weight: 700; border-top: 2px solid #333; margin-top: 8px; }
                     .row-total .label { color: #1a1a1a; }
-                    .row-total .value { color: #036469; }
+                    .row-total .value { color: var(--color-primary, #036469); }
                     .status-badge { display: inline-block; padding: 4px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; }
                     .status-paid { background: #d1fae5; color: #065f46; }
                     .status-pending { background: #fef3c7; color: #92400e; }
                     .status-overdue { background: #fee2e2; color: #991b1b; }
                     .footer { text-align: center; font-size: 12px; color: #888; margin-top: 20px; border-top: 1px dashed #ddd; padding-top: 16px; }
                     .footer p { margin: 2px 0; }
-                    .clinic-name { font-size: 22px; font-weight: 700; color: #036469; }
+                    .clinic-name { font-size: 22px; font-weight: 700; color: var(--color-primary, #036469); }
                     .clinic-detail { font-size: 13px; color: #666; }
                 </style>
                 </head><body>
@@ -4469,7 +4469,7 @@
                     </div>
                     
                     <div class="footer">
-                        <p style="font-weight:600;color:#036469;">Thank you for your business! 🐾</p>
+                        <p style="font-weight:600;color:var(--color-primary, #036469);">Thank you for your business! 🐾</p>
                         <p>This is a computer-generated receipt.</p>
                         <p>Generated: ${new Date().toLocaleString()}</p>
                     </div>
@@ -5477,7 +5477,7 @@
           billingCurrentTab.charAt(0).toUpperCase() +
           billingCurrentTab.slice(1);
         win.document.write(
-          `<html><head><title>Billing Report</title><style>body{font-family:sans-serif;padding:30px;color:#1e293b;}table{width:100%;border-collapse:collapse;margin-top:20px;}th{background:#f1f5f9;padding:8px;border:1px solid #e2e8f0;}td{padding:6px 8px;border:1px solid #e2e8f0;}h2{border-bottom:2px solid #036469;padding-bottom:8px;}.footer{margin-top:24px;font-size:11px;color:#64748b;text-align:center;}</style></head><body><h2>${tabName} Transactions</h2><p>Generated: ${new Date().toLocaleString()}</p><table><thead><tr><th>ID</th><th>Item/Patient</th><th>Qty</th><th>Unit Price</th><th>Total</th><th>Status</th><th>Date</th></tr></thead><tbody>${rows}</tbody></table><p style="margin-top:16px;font-weight:bold;">Total: GHS ${total.toFixed(2)}</p><div class="footer">© 2026 addyPets Veterinary Clinic</div><script>window.onload=function(){window.print();}<\\/script></body></html>`,
+          `<html><head><title>Billing Report</title><style>body{font-family:sans-serif;padding:30px;color:#1e293b;}table{width:100%;border-collapse:collapse;margin-top:20px;}th{background:#f1f5f9;padding:8px;border:1px solid #e2e8f0;}td{padding:6px 8px;border:1px solid #e2e8f0;}h2{border-bottom:2px solid var(--color-primary, #036469);padding-bottom:8px;}.footer{margin-top:24px;font-size:11px;color:#64748b;text-align:center;}</style></head><body><h2>${tabName} Transactions</h2><p>Generated: ${new Date().toLocaleString()}</p><table><thead><tr><th>ID</th><th>Item/Patient</th><th>Qty</th><th>Unit Price</th><th>Total</th><th>Status</th><th>Date</th></tr></thead><tbody>${rows}</tbody></table><p style="margin-top:16px;font-weight:bold;">Total: GHS ${total.toFixed(2)}</p><div class="footer">© 2026 addyPets Veterinary Clinic</div><script>window.onload=function(){window.print();}<\\/script></body></html>`,
         );
         win.document.close();
       }

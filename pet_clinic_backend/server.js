@@ -28,9 +28,11 @@ const doctorAvailabilityRoutes = require("./src/routes/doctorAvailabilityRoutes"
 const recurringBlockRoutes = require("./src/routes/recurringBlockRoutes");
 const staffMessageRoutes = require("./src/routes/staffMessageRoutes");
 const payrollRoutes = require("./src/routes/payrollRoutes");
+const mortuaryRoutes = require("./src/routes/mortuaryRoutes");
 const authController = require("./src/controllers/authController");
 const { checkConnection } = require("./src/config/database");
 const { startRetentionSchedule } = require("./src/services/retentionService");
+const { startBackupCron } = require("./src/services/backupService");
 const emergencyModel = require("./src/models/emergencyModel");
 
 const publicDirectory = fs.existsSync(path.join(__dirname, "public"))
@@ -66,6 +68,7 @@ app.use("/api/vets", vetRoutes);
 app.use("/api/doctor-availability", doctorAvailabilityRoutes);
 app.use("/api/recurring-blocks", recurringBlockRoutes);
 app.use("/api/staff-messages", staffMessageRoutes);
+app.use("/api/mortuary", mortuaryRoutes);
 
 app.get("/api/health", async (req, res, next) => {
   try {
@@ -440,25 +443,16 @@ app.post("/api/triage", async (req, res) => {
     - Animal: "${animal}"
     - Duration: "${duration}"`;
 
-    let response;
+    let responseText;
     try {
-      response = await groq.chat.completions.create({
-        messages: [{ role: "user", content: prompt }],
-        model: "openai/gpt-oss-120b",
-        temperature: 0.2,
-        response_format: { type: "json_object" },
-      });
+      const { groqChat } = require("./src/utils/groqHelper");
+      responseText = await groqChat(prompt, "", { type: "json_object" });
     } catch (modelErr) {
-      console.warn("Primary model failed, trying fallback model:", modelErr.message);
-      response = await groq.chat.completions.create({
-        messages: [{ role: "user", content: prompt }],
-        model: "openai/gpt-oss-20b",
-        temperature: 0.2,
-        response_format: { type: "json_object" },
-      });
+      console.warn("Triage groq helper failed:", modelErr.message);
+      return res.json({ isValid: false, reason: "Error contacting AI service" });
     }
 
-    const result = JSON.parse(response.choices[0].message.content);
+    const result = JSON.parse(responseText);
 
     // If valid emergency triage, persist directly into EMERGENCY_CASES database
     if (result && result.isValid) {
@@ -511,4 +505,6 @@ app.use(errorHandler);
 app.listen(3000, () => {
   console.log("Server running on port 3000");
   startRetentionSchedule();
+  startBackupCron();
 });
+

@@ -3,6 +3,7 @@ const controller = require("../controllers/inventoryController");
 const { authenticate } = require("../middleware/auth");
 
 router.use(authenticate);
+router.post("/bulk-sync", controller.bulkSync);
 router.get("/", controller.list);
 router.post("/", controller.create);
 router.patch("/:id", controller.update);

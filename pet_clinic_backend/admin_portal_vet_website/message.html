@@ -40,7 +40,7 @@
               "emergency-red": "#943031",
               "surface-container-lowest": "#ffffff",
               "surface-dim": "#dcd9d9",
-              primary: "#036469",
+              primary: "var(--color-primary, var(--color-primary, #036469))",
               "on-surface": "#1b1c1c",
               "inverse-on-surface": "#f2f0f0",
               "on-secondary-fixed": "#002021",
@@ -57,7 +57,7 @@
               "on-tertiary-container": "#e6fdfe",
               "surface-container-low": "#f5f3f3",
               "primary-fixed-dim": "#88d3d8",
-              "primary-container": "#2e7d82",
+              "primary-container": "var(--color-primary, #2e7d82)",
               "tertiary-fixed": "#d0e7e8",
               surface: "#fbf9f8",
               "on-tertiary": "#ffffff",
@@ -274,7 +274,7 @@
         transition: border-color 0.2s;
       }
       .reply-textarea:focus {
-        border-color: #036469;
+        border-color: var(--color-primary, #036469);
         box-shadow: 0 0 0 3px rgba(3, 100, 105, 0.1);
       }
       .template-chip {
@@ -289,8 +289,8 @@
       }
       .template-chip:hover {
         background: #e4e2e1;
-        border-color: #036469;
-        color: #036469;
+        border-color: var(--color-primary, #036469);
+        color: var(--color-primary, #036469);
       }
 
       .filter-panel {

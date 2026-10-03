@@ -47,7 +47,7 @@
         color: #1b1c1c;
       }
       .sidebar-item-active {
-        background-color: #2e7d82;
+        background-color: var(--color-primary, #2e7d82);
         color: #ffffff;
       }
       .hide-scrollbar::-webkit-scrollbar {
@@ -180,17 +180,17 @@
       }
       a[data-nav-desktop].active-link,
       a[data-nav-mobile].active-link {
-        background-color: #2e7d82 !important;
+        background-color: var(--color-primary, #2e7d82) !important;
         color: #ffffff !important;
       }
       a[data-nav-desktop="mortuary"].active-link,
       a[data-nav-mobile="mortuary"].active-link {
-        background-color: #2e7d82 !important;
+        background-color: var(--color-primary, #2e7d82) !important;
         color: #ffffff !important;
       }
       a[data-nav-desktop="emergency"].active-link,
       a[data-nav-mobile="emergency"].active-link {
-        background-color: #2e7d82 !important;
+        background-color: var(--color-primary, #2e7d82) !important;
         color: #ffffff !important;
       }
 
@@ -475,12 +475,12 @@
       }
       .pagination-btn:hover:not(:disabled) {
         background: #f8fafc;
-        border-color: #036469;
+        border-color: var(--color-primary, #036469);
       }
       .pagination-btn.active {
-        background: #036469;
+        background: var(--color-primary, #036469);
         color: white;
-        border-color: #036469;
+        border-color: var(--color-primary, #036469);
       }
       .pagination-btn:disabled {
         opacity: 0.4;
@@ -500,12 +500,12 @@
         min-width: 180px;
       }
       .filter-select:focus {
-        border-color: #036469;
+        border-color: var(--color-primary, #036469);
         box-shadow: 0 0 0 3px rgba(3, 100, 105, 0.15);
       }
       .btn-primary {
         padding: 8px 20px;
-        background: #036469;
+        background: var(--color-primary, #036469);
         color: white;
         border: none;
         border-radius: 8px;
@@ -645,7 +645,7 @@
       }
       .modal-card .modal-footer .btn-primary-modal {
         padding: 8px 20px;
-        background: #036469;
+        background: var(--color-primary, #036469);
         color: white;
         border: none;
         border-radius: 8px;
@@ -709,7 +709,7 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       }
       .fridge-drawer.occupied {
-        border-color: #036469;
+        border-color: var(--color-primary, #036469);
         background: #f0fdf4;
       }
       .fridge-drawer.occupied-critical {
@@ -788,7 +788,7 @@
       .billing-section .billing-total {
         font-weight: 700;
         font-size: 1.1rem;
-        color: #036469;
+        color: var(--color-primary, #036469);
       }
 
       /* quick actions grid */
@@ -909,12 +909,12 @@
               "inverse-on-surface": "#f2f0f0",
               "inverse-surface": "#303030",
               "surface-dim": "#dcd9d9",
-              "primary-container": "#2e7d82",
+              "primary-container": "var(--color-primary, #2e7d82)",
               "secondary-fixed-dim": "#82d4d8",
               "on-secondary-fixed": "#002021",
               "primary-fixed-dim": "#88d3d8",
               "surface-bright": "#fbf9f8",
-              primary: "#036469",
+              primary: "var(--color-primary, var(--color-primary, #036469))",
               outline: "#6f797a",
               "on-secondary-fixed-variant": "#004f52",
               "error-container": "#ffdad6",
@@ -1440,22 +1440,26 @@
                 >
               </div>
               <div class="billing-row">
-                <span class="text-slate-600">Base mortuary fee</span
-                ><span class="font-medium">GHS 250.00</span>
+                <span class="text-slate-600">Base fee (GHS 250/record)</span
+                ><span id="baseFeeCount" class="text-xs text-slate-400 mx-2"></span>
+                <span class="font-medium" id="baseFeeCost">GHS 0.00</span>
               </div>
               <div class="billing-row">
-                <span class="text-slate-600">Storage (per day)</span
-                ><span id="storageDays">0</span
+                <span class="text-slate-600">Storage (GHS 15/day)</span
+                ><span id="storageDays" class="text-xs text-slate-400 mx-2">0</span
                 ><span class="font-medium" id="storageCost">GHS 0.00</span>
               </div>
               <div class="billing-row">
-                <span class="text-slate-600">Disposition service</span
-                ><span id="dispService">—</span
-                ><span class="font-medium" id="dispCost">GHS 0.00</span>
+                <span class="text-slate-600 group relative cursor-help" title="Private Cremation: GHS 180&#10;Communal Cremation: GHS 120&#10;Pet Cemetery Burial: GHS 150&#10;Home Burial: GHS 50&#10;Necropsy: GHS 220">
+                  Disposition Services <span class="material-symbols-outlined text-[12px] align-text-top text-slate-400">info</span>
+                </span>
+                <span id="dispService" class="text-xs text-slate-400 mx-2">—</span>
+                <span class="font-medium" id="dispCost">GHS 0.00</span>
               </div>
               <div class="billing-row">
-                <span class="text-slate-600">Necropsy (if applicable)</span
-                ><span id="necropsyFee">GHS 0.00</span>
+                <span class="text-slate-600">Necropsy (GHS 220 each)</span
+                ><span id="necropsyCount" class="text-xs text-slate-400 mx-2"></span>
+                <span class="font-medium" id="necropsyFee">GHS 0.00</span>
               </div>
               <div class="billing-row billing-total">
                 <span>Total Due</span><span id="totalDue">GHS 250.00</span>
@@ -1875,6 +1879,25 @@
       </div>
     </div>
 
+    <!-- Confirm Modal -->
+    <div id="confirmModal" class="modal-overlay">
+      <div class="modal-card" style="max-width: 400px;">
+        <div class="modal-header border-b pb-3 mb-4">
+          <h2 id="confirmModalTitle">Confirm Action</h2>
+          <button onclick="closeConfirmModal()">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <div class="modal-body mb-6 text-slate-600 font-medium" id="confirmModalMessage">
+          Are you sure you want to proceed?
+        </div>
+        <div class="modal-footer gap-3 flex justify-end">
+          <button class="btn-secondary" onclick="closeConfirmModal()">Cancel</button>
+          <button class="btn-primary-modal" id="confirmModalActionBtn">Confirm</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Toast Container -->
     <div
       id="toast-container"
@@ -2253,6 +2276,65 @@
         }
       }
 
+      async function loadMortuaryRecordsFromDatabase() {
+        try {
+          const response = await apiFetch("/api/mortuary?_t=" + Date.now());
+          if (!response.ok) throw new Error(`Mortuary API returned ${response.status}`);
+          const records = await response.json();
+          if (!Array.isArray(records)) return;
+
+          records.forEach((record) => {
+            const patientKey = (record.patient || "").trim().toLowerCase();
+            const existingIndex = mortuaryData.findIndex((item) =>
+              (record.db_id && String(item.db_id) === String(record.db_id)) ||
+              (patientKey && (item.patient || "").trim().toLowerCase() === patientKey)
+            );
+            if (existingIndex >= 0) {
+              mortuaryData[existingIndex] = { ...mortuaryData[existingIndex], ...record };
+            } else {
+              mortuaryData.unshift(record);
+            }
+          });
+          saveMortuaryData();
+        } catch (error) {
+          console.warn("Could not load Mortuary records from database:", error);
+        }
+      }
+
+      async function persistMortuaryRecord(record) {
+        if (!record) return;
+        const isUpdate = Boolean(record.db_id);
+        const response = await apiFetch(
+          isUpdate ? `/api/mortuary/${record.db_id}` : "/api/mortuary",
+          {
+            method: isUpdate ? "PUT" : "POST",
+            body: JSON.stringify({
+              patient: record.patient,
+              owner: record.owner,
+              species: record.species,
+              breed: record.breed,
+              age: record.age,
+              date: record.date,
+              cause: record.cause,
+              disposition: record.disposition,
+              status: record.status,
+              storage: record.storage,
+              pickupDate: record.pickupDate,
+              notes: record.notes,
+            }),
+          },
+        );
+        if (!response.ok) {
+          const message = await response.text();
+          throw new Error(`Mortuary save failed (${response.status}): ${message}`);
+        }
+        if (!isUpdate) {
+          const result = await response.json();
+          record.db_id = result.id;
+        }
+        saveMortuaryData();
+      }
+
       function getNextMortuaryId() {
         let maxNum = 12;
         mortuaryData.forEach((r) => {
@@ -2302,9 +2384,13 @@
               storageDrawer: rec.storage || "N/A",
               storageFee: 45,
               procedureFee: dispCost,
+              qty: 1,
+              unitPrice: baseFee + dispCost,
               total: baseFee + dispCost,
-              status: "pending",
+              status: "Pending",
               paymentMethod: "Pending",
+              category: "Mortuary",
+              notes: `Mortuary care for ${rec.patient}`,
             };
             billingRecords.unshift(newTxn);
             localStorage.setItem("vet_billing_records", JSON.stringify(billingRecords));
@@ -2312,6 +2398,59 @@
         } catch (e) {
           console.warn("Could not sync mortuary record to billing:", e);
         }
+
+        // Persist the matching invoice too. The backend derives its Mortuary tab
+        // category from this description, so billing.html does not need changes.
+        (async () => {
+          const description = `Mortuary Care - ${rec.patient} (${rec.species || "Pet"})`;
+          const billingResponse = await apiFetch("/api/billing");
+          if (!billingResponse.ok) throw new Error(`Billing lookup failed (${billingResponse.status})`);
+          const billingJson = await billingResponse.json();
+          const patientId = Number(rec.dbId);
+          const existingInvoice = (billingJson.data || []).find((row) => {
+            const rowDescription = String(row.DESCRIPTION || "");
+            const patientMatches = Number.isFinite(patientId) && patientId > 0 && Number(row.PATIENT_ID) === patientId;
+            return rowDescription === description || (patientMatches && rowDescription.toLowerCase().startsWith("mortuary"));
+          });
+          let billingId = existingInvoice?.BILLING_ID || existingInvoice?.billing_id;
+
+          if (!billingId) {
+            let dispositionCost = 120;
+            if (rec.disposition && rec.disposition.includes("Private")) dispositionCost = 180;
+            else if (rec.disposition && rec.disposition.includes("Burial")) dispositionCost = 150;
+            else if (rec.disposition && rec.disposition.includes("Home")) dispositionCost = 50;
+            else if (rec.disposition && rec.disposition.includes("Necropsy")) dispositionCost = 220;
+            const invoice = {
+              patient_id: Number.isFinite(patientId) && patientId > 0 ? patientId : null,
+              amount: 250 + dispositionCost,
+              status: "Pending",
+              description,
+              payment_method: "Pending",
+            };
+            const saveResponse = await apiFetch("/api/billing", {
+              method: "POST",
+              body: JSON.stringify(invoice),
+            });
+            if (!saveResponse.ok) throw new Error(`Billing save failed (${saveResponse.status})`);
+            const savedInvoice = await saveResponse.json();
+            billingId = savedInvoice.billing_id;
+          }
+
+          // Align the local item ID with billing.html's server-generated ID so
+          // its local-storage merge doesn't show the same invoice twice.
+          if (billingId) {
+            const billingRecords = JSON.parse(localStorage.getItem("vet_billing_records") || "[]");
+            const localInvoice = billingRecords.find((item) =>
+              item.type === "mortuary" &&
+              (item.patient || "").trim().toLowerCase() === (rec.patient || "").trim().toLowerCase()
+            );
+            if (localInvoice) {
+              localInvoice.id = patientId > 0 ? `MED-${patientId}-${billingId}` : `MED-${billingId}`;
+              localInvoice.billing_id = billingId;
+              localStorage.setItem("vet_billing_records", JSON.stringify(billingRecords));
+            }
+          }
+        })().catch((error) => console.warn("Could not persist Mortuary billing record:", error));
       }
 
       async function syncDeceasedPatientsFromDatabaseAndStorage() {
@@ -2319,6 +2458,9 @@
 
         // 1. First sync from localStorage vet_deceased_patients (from records.html toggle)
         const localDeceased = JSON.parse(localStorage.getItem("vet_deceased_patients") || "[]");
+        const deceasedNames = new Set(
+          localDeceased.map((patient) => (patient.name || "").trim().toLowerCase()).filter(Boolean),
+        );
         localDeceased.forEach((p) => {
           const exists = mortuaryData.some((r) => r.patient && r.patient.toLowerCase() === p.name.toLowerCase());
           if (!exists) {
@@ -2364,6 +2506,7 @@
                 const pStatus = (p.PATIENT_STATUS || "").toLowerCase();
                 const petName = p.PET_NAME;
                 if (pStatus === "deceased" && petName) {
+                  deceasedNames.add(petName.trim().toLowerCase());
                   const exists = mortuaryData.some(
                     (r) => r.patient && r.patient.toLowerCase() === petName.toLowerCase()
                   );
@@ -2410,6 +2553,22 @@
           saveMortuaryData();
           currentPage = 1;
           renderMortuaryTable();
+        }
+
+        // The Records page writes the deceased status and handoff details to local storage.
+        // Persist those handoffs here so no other page needs to change.
+        for (const record of mortuaryData) {
+          const patientKey = (record.patient || "").trim().toLowerCase();
+          if (deceasedNames.has(patientKey)) {
+            syncMortuaryRecordToBilling(record);
+            if (!record.db_id) {
+              try {
+                await persistMortuaryRecord(record);
+              } catch (error) {
+                console.warn(`Could not save Mortuary record for ${record.patient}:`, error);
+              }
+            }
+          }
         }
       }
 
@@ -2494,56 +2653,55 @@
           hint.textContent = "Storage is under capacity.";
         }
 
-        // Update billing summary (using first storage record for sample billing)
-        const storageRecords = mortuaryData.filter(
-          (r) => r.status === "in_storage",
-        );
-        const storageDays =
-          storageRecords.length > 0
-            ? Math.max(
-                1,
-                Math.floor(
-                  (Date.now() -
-                    new Date(storageRecords[0].date + "T00:00:00")) /
-                    (1000 * 60 * 60 * 24),
-                ),
-              )
-            : 1;
-        document.getElementById("storageDays").textContent = storageDays;
-        const storageCost = storageDays * 15;
-        document.getElementById("storageCost").textContent =
-          "GHS " + storageCost.toFixed(2);
+        // Update billing summary (Aggregate for all non-completed records)
+        const activeRecords = mortuaryData.filter(r => r.status !== "completed");
+        
+        let totalStorageCost = 0;
+        let totalDispCost = 0;
+        let totalNecropsyCost = 0;
+        let totalStorageDays = 0;
 
-        let dispRecord =
-          storageRecords.length > 0
-            ? storageRecords[0]
-            : mortuaryData.find((r) => r.status === "pending");
-        let dispName = dispRecord ? dispRecord.disposition : "—";
-        let dispCost = 0;
-        if (dispName.includes("Private")) dispCost = 180;
-        else if (dispName.includes("Communal")) dispCost = 120;
-        else if (dispName.includes("Burial")) dispCost = 150;
-        else if (dispName.includes("Home")) dispCost = 50;
-        else if (dispName.includes("Necropsy")) dispCost = 220;
-        else dispCost = 100;
-        document.getElementById("dispService").textContent = dispName;
-        document.getElementById("dispCost").textContent =
-          "GHS " + dispCost.toFixed(2);
+        activeRecords.forEach(r => {
+          // 1. Storage Cost (only if in_storage)
+          if (r.status === "in_storage") {
+            const days = Math.max(1, Math.floor((Date.now() - new Date(r.date + "T00:00:00")) / (1000 * 60 * 60 * 24)));
+            totalStorageDays += days;
+            totalStorageCost += days * 15;
+          }
 
-        const hasNecropsy = mortuaryData.some(
-          (r) =>
-            r.disposition === "Necropsy" &&
-            (r.status === "in_storage" || r.status === "pending"),
-        );
-        document.getElementById("necropsyFee").textContent = hasNecropsy
-          ? "GHS 220.00"
-          : "GHS 0.00";
+          // 2. Disposition Cost
+          let dCost = 0;
+          if (r.disposition.includes("Private")) dCost = 180;
+          else if (r.disposition.includes("Communal")) dCost = 120;
+          else if (r.disposition.includes("Burial")) dCost = 150;
+          else if (r.disposition.includes("Home")) dCost = 50;
+          else if (r.disposition.includes("Necropsy")) dCost = 220;
+          else dCost = 100;
+          totalDispCost += dCost;
 
-        const baseFee = 250;
-        const total =
-          baseFee + storageCost + dispCost + (hasNecropsy ? 220 : 0);
-        document.getElementById("totalDue").textContent =
-          "GHS " + total.toFixed(2);
+          // 3. Necropsy Fee
+          if (r.disposition === "Necropsy") {
+            totalNecropsyCost += 220;
+          }
+        });
+
+        const baseFee = activeRecords.length * 250; // Base fee per record
+        
+        document.getElementById("baseFeeCount").textContent = `(${activeRecords.length} records)`;
+        document.getElementById("baseFeeCost").textContent = "GHS " + baseFee.toFixed(2);
+
+        document.getElementById("storageDays").textContent = `(${totalStorageDays} days total)`;
+        document.getElementById("storageCost").textContent = "GHS " + totalStorageCost.toFixed(2);
+        
+        document.getElementById("dispService").textContent = "(All records)";
+        document.getElementById("dispCost").textContent = "GHS " + totalDispCost.toFixed(2);
+
+        const necropsyCount = activeRecords.filter(r => r.disposition === "Necropsy").length;
+        document.getElementById("necropsyCount").textContent = necropsyCount > 0 ? `(${necropsyCount} total)` : "";
+        document.getElementById("necropsyFee").textContent = "GHS " + totalNecropsyCost.toFixed(2);
+
+        const total = baseFee + totalStorageCost + totalDispCost + totalNecropsyCost;
+        document.getElementById("totalDue").textContent = "GHS " + total.toFixed(2);
 
         // Render drawer grid
         renderFridgeDrawers();
@@ -2673,7 +2831,7 @@
               const dropdownId = `action-${r.id}-${index}`;
               return `
               <tr>
-                <td><div><div class="font-semibold text-slate-900">${r.patient}</div><div class="text-xs text-slate-400">${r.breed || "Mixed"} • ${typeof r.age === 'string' && (r.age.includes('yr') || r.age.includes('month') || r.age.includes('week')) ? r.age : (r.age + ' yrs')}</div></div></td>
+                <td><div><div class="font-semibold text-slate-900">${r.patient}</div><div class="text-xs text-slate-400">${r.breed || "Mixed"} • ${typeof r.age === 'string' && /[a-zA-Z]/.test(r.age) ? r.age : (r.age + ' yrs')}</div></div></td>
                 <td class="hide-mobile">${r.owner}</td>
                 <td class="hide-mobile">${r.species}</td>
                 <td>${r.date}</td>
@@ -3028,6 +3186,24 @@
         currentEditRecord = null;
         isEditing = false;
       }
+      
+      let pendingConfirmAction = null;
+      function showConfirmModal(message, actionCallback) {
+        document.getElementById("confirmModalMessage").textContent = message;
+        document.getElementById("confirmModal").classList.add("open");
+        document.body.style.overflow = "hidden";
+        pendingConfirmAction = actionCallback;
+      }
+      function closeConfirmModal() {
+        document.getElementById("confirmModal").classList.remove("open");
+        document.body.style.overflow = "";
+        pendingConfirmAction = null;
+      }
+      document.getElementById("confirmModalActionBtn").addEventListener("click", () => {
+        if (pendingConfirmAction) pendingConfirmAction();
+        closeConfirmModal();
+      });
+
       async function saveRecord() {
         const patient = document.getElementById("editPatient").value.trim();
         const owner = document.getElementById("editOwner").value.trim();
@@ -3170,6 +3346,12 @@
 
         // Persist frontend state and billing sync
         if (savedRecord) {
+          try {
+            await persistMortuaryRecord(savedRecord);
+          } catch (error) {
+            console.error("Could not save Mortuary record to database:", error);
+            showToast("⚠️ Record is saved in this browser but could not be saved to the database.", "error");
+          }
           syncMortuaryRecordToBilling(savedRecord);
         }
         saveMortuaryData();
@@ -3195,7 +3377,7 @@
         const printWindow = window.open("", "_blank", "width=600,height=500");
         printWindow.document.write(`
           <html><head><title>Mortuary Record ${record.id}</title>
-          <style>body{font-family:Arial,sans-serif;padding:40px;background:white;}.header{text-align:center;border-bottom:2px solid #036469;padding-bottom:20px;margin-bottom:20px;}.header h1{color:#036469;font-size:24px;margin:0;}.header p{color:#6b7280;font-size:14px;margin:5px 0 0;}.details{margin:20px 0;}.row{display:flex;padding:8px 0;border-bottom:1px solid #f1f5f9;}.label{font-weight:600;color:#6b7280;width:150px;}.value{color:#1a1a2e;}.footer{margin-top:30px;text-align:center;font-size:12px;color:#9ca3af;border-top:1px solid #e5e7eb;padding-top:15px;}.status-badge{display:inline-block;padding:3px 12px;border-radius:20px;font-size:12px;font-weight:500;}.status-pending{background:#fef3c7;color:#92400e;}.status-in_storage{background:#dbeafe;color:#1e40af;}.status-completed{background:#d1fae5;color:#065f46;}.disposition-badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600;}.disposition-cremation-private{background:#dbeafe;color:#1e40af;}.disposition-cremation{background:#fef3c7;color:#92400e;}.disposition-burial{background:#d1fae5;color:#065f46;}.disposition-home{background:#ede9fe;color:#5b21b6;}.disposition-necropsy{background:#fce4ec;color:#b91c1c;}</style>
+          <style>body{font-family:Arial,sans-serif;padding:40px;background:white;}.header{text-align:center;border-bottom:2px solid var(--color-primary, #036469);padding-bottom:20px;margin-bottom:20px;}.header h1{color:var(--color-primary, #036469);font-size:24px;margin:0;}.header p{color:#6b7280;font-size:14px;margin:5px 0 0;}.details{margin:20px 0;}.row{display:flex;padding:8px 0;border-bottom:1px solid #f1f5f9;}.label{font-weight:600;color:#6b7280;width:150px;}.value{color:#1a1a2e;}.footer{margin-top:30px;text-align:center;font-size:12px;color:#9ca3af;border-top:1px solid #e5e7eb;padding-top:15px;}.status-badge{display:inline-block;padding:3px 12px;border-radius:20px;font-size:12px;font-weight:500;}.status-pending{background:#fef3c7;color:#92400e;}.status-in_storage{background:#dbeafe;color:#1e40af;}.status-completed{background:#d1fae5;color:#065f46;}.disposition-badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600;}.disposition-cremation-private{background:#dbeafe;color:#1e40af;}.disposition-cremation{background:#fef3c7;color:#92400e;}.disposition-burial{background:#d1fae5;color:#065f46;}.disposition-home{background:#ede9fe;color:#5b21b6;}.disposition-necropsy{background:#fce4ec;color:#b91c1c;}</style>
           </head><body>
           <div class="header"><h1>addyPets Veterinary Clinic</h1><p>Mortuary Record</p></div>
           <div class="details">
@@ -3246,19 +3428,21 @@
           necropsy: "Necropsy",
           completed: "Completed",
         };
-        if (confirm(`Update ${id} status to "${statusMap[newStatus]}"?`)) {
+        
+        showConfirmModal(`Update ${id} status to "${statusMap[newStatus]}"?`, () => {
           record.status = newStatus;
           if (newStatus === "completed") {
             record.pickupDate = new Date().toISOString().slice(0, 10);
             // Free the drawer when completed
             showToast(`📦 Drawer ${record.storage} has been freed.`, "info");
           }
+          saveMortuaryData();
           renderMortuaryTable();
           showToast(
             `✅ ${id} status updated to ${statusMap[newStatus]}`,
             "success",
           );
-        }
+        });
         document
           .querySelectorAll(".action-dropdown-menu")
           .forEach((el) => el.classList.remove("open"));
@@ -3267,22 +3451,31 @@
       // ==========================================
       // 15. DELETE RECORD (unchanged)
       // ==========================================
-      function deleteRecord(id) {
+      async function deleteRecord(id) {
         const record = mortuaryData.find((r) => r.id === id);
         if (!record) {
           showToast("❌ Record not found", "error");
           return;
         }
-        if (
-          confirm(
-            `⚠️ Are you sure you want to delete ${id} for ${record.patient}? This cannot be undone.`,
-          )
-        ) {
+        
+        showConfirmModal(`⚠️ Are you sure you want to delete ${id} for ${record.patient}? This cannot be undone.`, async () => {
+          if (record.db_id) {
+            try {
+              const response = await apiFetch(`/api/mortuary/${record.db_id}`, { method: "DELETE" });
+              if (!response.ok) throw new Error(`Delete failed (${response.status})`);
+            } catch (error) {
+              console.error("Could not delete Mortuary record from database:", error);
+              showToast("❌ Could not delete the database record", "error");
+              return;
+            }
+          }
           const index = mortuaryData.indexOf(record);
           if (index > -1) mortuaryData.splice(index, 1);
+          saveMortuaryData();
           renderMortuaryTable();
           showToast(`🗑️ Record ${id} deleted`, "warning");
-        }
+        });
+        
         document
           .querySelectorAll(".action-dropdown-menu")
           .forEach((el) => el.classList.remove("open"));
@@ -3524,6 +3717,7 @@
       document.addEventListener("DOMContentLoaded", async function () {
         highlightCurrentPage();
         mortuaryData = loadMortuaryData();
+        await loadMortuaryRecordsFromDatabase();
         currentPage = 1;
         renderMortuaryTable();
         checkForAutoCreation();

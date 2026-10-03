@@ -229,13 +229,88 @@ async function updateVaccinationStatus(id, status) {
 }
 
 async function updatePatientStatus(id, status) {
-  return withConnection((c) =>
-    c.execute(
-      `UPDATE PATIENTS SET PATIENT_STATUS = :status WHERE PATIENT_ID = :id`,
-      { id: Number(id), status: String(status) },
-      { autoCommit: true },
-    ),
-  );
+  return withConnection(async (c) => {
+    const patientId = Number(id);
+    const normalizedStatus = String(status).trim();
+    try {
+      const result = await c.execute(
+        `UPDATE PATIENTS SET PATIENT_STATUS = :status WHERE PATIENT_ID = :id`,
+        { id: patientId, status: normalizedStatus },
+        { autoCommit: false },
+      );
+
+      if (normalizedStatus.toLowerCase() === "deceased" && result.rowsAffected > 0) {
+        const patientResult = await c.execute(
+          `SELECT PET_NAME, OWNER_NAME, PET_SPECIES, PET_BREED, PET_AGE
+           FROM PATIENTS WHERE PATIENT_ID = :id`,
+          { id: patientId },
+          { outFormat: oracledb.OUT_FORMAT_OBJECT },
+        );
+        const patient = patientResult.rows?.[0];
+
+        if (patient) {
+          const mortuaryResult = await c.execute(
+            `SELECT RECORD_ID FROM MORTUARY_RECORDS
+             WHERE UPPER(TRIM(PATIENT_NAME)) = UPPER(TRIM(:patient_name))
+             FETCH FIRST 1 ROWS ONLY`,
+            { patient_name: patient.PET_NAME },
+            { outFormat: oracledb.OUT_FORMAT_OBJECT },
+          );
+          if (!mortuaryResult.rows?.length) {
+            await c.execute(
+              `INSERT INTO MORTUARY_RECORDS (
+                 PATIENT_NAME, OWNER_NAME, SPECIES, BREED, AGE, ENTRY_DATE,
+                 CAUSE_OF_DEATH, DISPOSITION, STATUS, STORAGE_LOCATION,
+                 PICKUP_DATE, NOTES
+               ) VALUES (
+                 :patient_name, :owner_name, :species, :breed, :age,
+                 TO_CHAR(SYSDATE, 'YYYY-MM-DD'), 'Marked Deceased in Patient Records',
+                 'Pending', 'pending', 'N/A', 'Pending',
+                 'Created automatically when patient was marked deceased.'
+               )`,
+              {
+                patient_name: patient.PET_NAME,
+                owner_name: patient.OWNER_NAME,
+                species: patient.PET_SPECIES,
+                breed: patient.PET_BREED,
+                age: patient.PET_AGE,
+              },
+              { autoCommit: false },
+            );
+          }
+
+          const invoiceResult = await c.execute(
+            `SELECT BILLING_ID FROM BILLING
+             WHERE PATIENT_ID = :patient_id
+               AND LOWER(DESCRIPTION) LIKE 'mortuary care -%'
+             FETCH FIRST 1 ROWS ONLY`,
+            { patient_id: patientId },
+            { outFormat: oracledb.OUT_FORMAT_OBJECT },
+          );
+          if (!invoiceResult.rows?.length) {
+            await c.execute(
+              `INSERT INTO BILLING (
+                 PATIENT_ID, AMOUNT, STATUS, DESCRIPTION, PAYMENT_METHOD, ISSUED_AT
+               ) VALUES (
+                 :patient_id, 250, 'Pending', :description, 'Pending', SYSTIMESTAMP
+               )`,
+              {
+                patient_id: patientId,
+                description: `Mortuary Care - ${patient.PET_NAME} (${patient.PET_SPECIES || "Pet"})`,
+              },
+              { autoCommit: false },
+            );
+          }
+        }
+      }
+
+      await c.commit();
+      return result;
+    } catch (error) {
+      await c.rollback();
+      throw error;
+    }
+  });
 }
 
 async function clearPatientStatus(id) {

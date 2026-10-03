@@ -48,7 +48,7 @@
       }
 
       .sidebar-item-active {
-        background-color: #2e7d82;
+        background-color: var(--color-primary, #2e7d82);
         color: #ffffff;
       }
       .hide-scrollbar::-webkit-scrollbar {
@@ -186,7 +186,7 @@
         gap: 0.5rem;
       }
       .settings-tab-btn.active {
-        background: #036469;
+        background: var(--color-primary, #036469);
         color: white;
         box-shadow: 0 2px 6px rgba(3, 100, 105, 0.25);
       }
@@ -324,11 +324,11 @@
         border: 2px solid #cbd5e1;
         cursor: pointer;
         transition: all 0.15s;
-        accent-color: #036469;
+        accent-color: var(--color-primary, #036469);
       }
       .permission-checkbox:checked {
-        background-color: #036469;
-        border-color: #036469;
+        background-color: var(--color-primary, #036469);
+        border-color: var(--color-primary, #036469);
       }
 
       .row-clickable {
@@ -356,12 +356,12 @@
         border: 2px solid #e2e8f0;
       }
       .pos-provider-card:hover {
-        border-color: #036469;
+        border-color: var(--color-primary, #036469);
         transform: translateY(-2px);
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
       }
       .pos-provider-card.active {
-        border-color: #036469;
+        border-color: var(--color-primary, #036469);
         background-color: #f0fdf4;
       }
 
@@ -450,12 +450,12 @@
               "inverse-on-surface": "#f2f0f0",
               "inverse-surface": "#303030",
               "surface-dim": "#dcd9d9",
-              "primary-container": "#2e7d82",
+              "primary-container": "var(--color-primary, #2e7d82)",
               "secondary-fixed-dim": "#82d4d8",
               "on-secondary-fixed": "#002021",
               "primary-fixed-dim": "#88d3d8",
               "surface-bright": "#fbf9f8",
-              primary: "#036469",
+              primary: "var(--color-primary, var(--color-primary, #036469))",
               outline: "#6f797a",
               "on-secondary-fixed-variant": "#004f52",
               "error-container": "#ffdad6",
@@ -1546,15 +1546,14 @@
                       <span class="text-slate-400">Status:</span>
                       <span class="text-emerald-600 font-medium">Active</span>
                     </div>
-                    <button
-                      onclick="
-                        event.stopPropagation();
-                        showToast('Square POS settings opened', 'info');
-                      "
-                      class="mt-3 text-primary text-sm font-medium hover:underline"
+                    <a
+                      href="https://developer.squareup.com/"
+                      target="_blank"
+                      onclick="event.stopPropagation();"
+                      class="mt-3 text-primary text-sm font-medium hover:underline inline-block"
                     >
                       Configure
-                    </button>
+                    </a>
                   </div>
 
                   <!-- POS Provider 2 -->
@@ -1578,15 +1577,14 @@
                       <span class="text-slate-400">Status:</span>
                       <span class="text-amber-600 font-medium">Pending</span>
                     </div>
-                    <button
-                      onclick="
-                        event.stopPropagation();
-                        showToast('Clover POS setup started', 'info');
-                      "
-                      class="mt-3 text-primary text-sm font-medium hover:underline"
+                    <a
+                      href="https://www.clover.com/developer/"
+                      target="_blank"
+                      onclick="event.stopPropagation();"
+                      class="mt-3 text-primary text-sm font-medium hover:underline inline-block"
                     >
                       Set up
-                    </button>
+                    </a>
                   </div>
 
                   <!-- POS Provider 3 -->
@@ -1648,14 +1646,10 @@
                     <p class="text-sm text-slate-500 mb-3">
                       Stripe, PayPal, Mobile Money
                     </p>
-                    <button
-                      onclick="
-                        showToast('Payment gateway settings opened', 'info')
-                      "
-                      class="text-primary text-sm font-medium hover:underline"
-                    >
-                      Configure
-                    </button>
+                    <div class="flex gap-4">
+                      <a href="https://dashboard.stripe.com/" target="_blank" class="text-primary text-sm font-medium hover:underline">Stripe</a>
+                      <a href="https://dashboard.paystack.com/" target="_blank" class="text-primary text-sm font-medium hover:underline">Paystack</a>
+                    </div>
                   </div>
 
                   <div class="border border-slate-200 rounded-lg p-4">
@@ -1674,14 +1668,13 @@
                     <p class="text-sm text-slate-500 mb-3">
                       Connect to diagnostic labs
                     </p>
-                    <button
-                      onclick="
-                        showToast('Lab integration settings opened', 'info')
-                      "
-                      class="text-primary text-sm font-medium hover:underline"
+                    <a
+                      href="https://www.vetconnectplus.com/"
+                      target="_blank"
+                      class="text-primary text-sm font-medium hover:underline inline-block"
                     >
-                      Configure
-                    </button>
+                      Configure IDEXX
+                    </a>
                   </div>
 
                   <div class="border border-slate-200 rounded-lg p-4">
@@ -1700,17 +1693,13 @@
                     <p class="text-sm text-slate-500 mb-3">
                       E-prescriptions and pharmacy integration
                     </p>
-                    <button
-                      onclick="
-                        showToast(
-                          'Pharmacy integration settings opened',
-                          'info',
-                        )
-                      "
-                      class="text-primary text-sm font-medium hover:underline"
+                    <a
+                      href="https://www.covetrus.com/"
+                      target="_blank"
+                      class="text-primary text-sm font-medium hover:underline inline-block"
                     >
-                      Configure
-                    </button>
+                      Configure Covetrus
+                    </a>
                   </div>
 
                   <div class="border border-slate-200 rounded-lg p-4">
@@ -1750,17 +1739,7 @@
                 System Preferences
               </h2>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label class="input-label">Theme</label>
-                  <select
-                    id="prefTheme"
-                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
-                  >
-                    <option value="light" selected>Light</option>
-                    <option value="dark">Dark</option>
-                    <option value="system">System Default</option>
-                  </select>
-                </div>
+
                 <div>
                   <label class="input-label">Primary Color</label>
                   <div class="flex gap-2">
@@ -1769,65 +1748,14 @@
                       id="prefColor"
                       value="#036469"
                       class="w-12 h-12 rounded-lg border border-slate-200 cursor-pointer"
+                      oninput="document.documentElement.style.setProperty('--color-primary', this.value); this.nextElementSibling.textContent = this.value;"
                     />
                     <span class="text-sm text-slate-500 self-center"
                       >#036469</span
                     >
                   </div>
                 </div>
-                <div>
-                  <label class="input-label">Language</label>
-                  <select
-                    id="prefLanguage"
-                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
-                  >
-                    <option value="en" selected>English</option>
-                    <option value="fr">French</option>
-                    <option value="es">Spanish</option>
-                    <option value="pt">Portuguese</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="input-label">Timezone</label>
-                  <select
-                    id="prefTimezone"
-                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
-                  >
-                    <option value="UTC">UTC</option>
-                    <option value="Africa/Accra" selected>
-                      Africa/Accra (GMT+0)
-                    </option>
-                    <option value="Africa/Lagos">Africa/Lagos (GMT+1)</option>
-                    <option value="Africa/Nairobi">
-                      Africa/Nairobi (GMT+3)
-                    </option>
-                    <option value="America/New_York">
-                      America/New York (GMT-5)
-                    </option>
-                    <option value="Europe/London">Europe/London (GMT+0)</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="input-label">Date Format</label>
-                  <select
-                    id="prefDateFormat"
-                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
-                  >
-                    <option value="DD/MM/YYYY" selected>DD/MM/YYYY</option>
-                    <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                    <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="input-label">Time Format</label>
-                  <select
-                    id="prefTimeFormat"
-                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
-                  >
-                    <option value="12h" selected>12-Hour (AM/PM)</option>
-                    <option value="24h">24-Hour</option>
-                  </select>
-                </div>
+
                 <div class="md:col-span-2">
                   <label class="input-label">Auto-Backup Schedule</label>
                   <select
@@ -2082,15 +2010,15 @@
       // ==========================================
       const modulePermissions = [
         "Dashboard",
-        "Calendar",
-        "Staff",
-        "Patients",
-        "Billing",
+        "Appointments",
+        "Triage / Emergency",
+        "Clinic Records",
+        "Billing / Accounting",
         "Inventory",
-        "Reports",
+        "Mortuary",
+        "Reports & Analytics",
         "Settings",
-        "Emergency",
-        "Messages",
+        "Help & Support",
         "Suppliers",
       ];
 
@@ -2137,7 +2065,7 @@
         },
       ];
 
-      const notificationTypes = [
+      let notificationTypes = [
         {
           id: "notif-appointment",
           name: "Appointment Reminder",
@@ -2181,6 +2109,12 @@
           inApp: true,
         },
       ];
+      try {
+        const savedNotifs = localStorage.getItem("notificationSettings");
+        if (savedNotifs) {
+          notificationTypes = JSON.parse(savedNotifs);
+        }
+      } catch (e) {}
 
       // Initialize permissions for each role
       defaultRoles.forEach((role) => {
@@ -2739,6 +2673,16 @@
       }
 
       function saveClinicSettings() {
+        const payload = {
+          clinicName: document.getElementById("clinicName")?.value,
+          clinicEmail: document.getElementById("clinicEmail")?.value,
+          clinicAddress: document.getElementById("clinicAddress")?.value,
+          clinicPhone: document.getElementById("clinicPhone")?.value,
+          clinicEmergency: document.getElementById("clinicEmergency")?.value,
+          clinicCurrency: document.getElementById("clinicCurrency")?.value,
+          clinicTax: document.getElementById("clinicTax")?.value,
+        };
+        localStorage.setItem("clinicSettings", JSON.stringify(payload));
         showToast("✅ Clinic settings saved successfully!", "success");
       }
 
@@ -2747,17 +2691,40 @@
       }
 
       function saveNotificationSettings() {
+        localStorage.setItem("notificationSettings", JSON.stringify(notificationTypes));
         showToast("✅ Notification settings saved successfully!", "success");
       }
 
-      function savePreferences() {
-        const theme = document.getElementById("prefTheme").value;
-        if (theme === "dark") {
-          document.documentElement.classList.add("dark");
-        } else {
-          document.documentElement.classList.remove("dark");
+      async function savePreferences() {
+        const color = document.getElementById("prefColor").value;
+        const backup = document.getElementById("prefBackup").value;
+        
+        const payload = {
+          color, backup
+        };
+        
+        localStorage.setItem("systemPreferences", JSON.stringify(payload));
+        
+        if (typeof window.applySystemPreferences === 'function') {
+          window.applySystemPreferences();
         }
-        showToast("✅ Preferences saved successfully!", "success");
+        
+        try {
+          const res = await apiFetch("/api/settings", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+          });
+          if (res.ok) {
+            showToast("✅ System Preferences saved successfully!", "success");
+          } else {
+            showToast("Saved locally, but failed to sync to server.", "warning");
+          }
+        } catch (e) {
+          showToast("Saved locally, but failed to sync to server.", "warning");
+        }
       }
 
       function exportSettings() {
@@ -2782,12 +2749,7 @@
             expiry: document.getElementById("securityExpiry").value,
           },
           preferences: {
-            theme: document.getElementById("prefTheme").value,
             color: document.getElementById("prefColor").value,
-            language: document.getElementById("prefLanguage").value,
-            timezone: document.getElementById("prefTimezone").value,
-            dateFormat: document.getElementById("prefDateFormat").value,
-            timeFormat: document.getElementById("prefTimeFormat").value,
             backup: document.getElementById("prefBackup").value,
           },
         };
@@ -2947,7 +2909,7 @@
       async function fetchSettingsAndUsersFromBackend() {
         try {
           // Fetch real users
-          const usersRes = await apiFetch("/api/admin/users");
+          const usersRes = await apiFetch("/api/staff");
           if (usersRes.ok) {
             const usersData = await usersRes.json();
             if (usersData && usersData.data) {
@@ -2970,6 +2932,31 @@
               if (totalPermEl) totalPermEl.textContent = "12";
             }
           }
+          
+          // Fetch settings
+          const prefRes = await apiFetch("/api/settings");
+          if (prefRes.ok) {
+            const prefs = await prefRes.json();
+            if (prefs) {
+              if (prefs.color) document.getElementById("prefColor").value = prefs.color;
+              if (prefs.backup) document.getElementById("prefBackup").value = prefs.backup;
+            }
+          }
+
+          // Fetch clinic setup from local storage
+          try {
+            const clinicData = localStorage.getItem("clinicSettings");
+            if (clinicData) {
+              const clinicObj = JSON.parse(clinicData);
+              if (clinicObj.clinicName) document.getElementById("clinicName").value = clinicObj.clinicName;
+              if (clinicObj.clinicEmail) document.getElementById("clinicEmail").value = clinicObj.clinicEmail;
+              if (clinicObj.clinicAddress) document.getElementById("clinicAddress").value = clinicObj.clinicAddress;
+              if (clinicObj.clinicPhone) document.getElementById("clinicPhone").value = clinicObj.clinicPhone;
+              if (clinicObj.clinicEmergency) document.getElementById("clinicEmergency").value = clinicObj.clinicEmergency;
+              if (clinicObj.clinicCurrency) document.getElementById("clinicCurrency").value = clinicObj.clinicCurrency;
+              if (clinicObj.clinicTax) document.getElementById("clinicTax").value = clinicObj.clinicTax;
+            }
+          } catch (e) {}
         } catch (e) {
           console.warn("Settings API fetch:", e);
         }

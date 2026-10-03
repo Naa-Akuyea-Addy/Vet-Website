@@ -1,0 +1,9 @@
+{
+  "theme": "light",
+  "color": "#1a3638",
+  "language": "fr",
+  "timezone": "Africa/Accra",
+  "dateFormat": "DD/MM/YYYY",
+  "timeFormat": "12h",
+  "backup": "daily"
+}

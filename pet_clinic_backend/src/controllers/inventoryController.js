@@ -28,4 +28,13 @@ async function remove(req, res, next) {
   } catch (error) { next(error); }
 }
 
-module.exports = { list, create, update, remove };
+async function bulkSync(req, res, next) {
+  try {
+    const dataList = req.body;
+    if (!Array.isArray(dataList)) return res.status(400).json({ success: false, message: "Expected an array" });
+    await model.bulkSync(dataList);
+    res.json({ success: true, message: "Inventory synced to DB" });
+  } catch (error) { next(error); }
+}
+
+module.exports = { list, create, update, remove, bulkSync };

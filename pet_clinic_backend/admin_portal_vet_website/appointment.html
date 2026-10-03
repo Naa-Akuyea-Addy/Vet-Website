@@ -44,7 +44,7 @@
 
       /* Sidebar styles */
       .sidebar-item-active {
-        background-color: #2e7d82;
+        background-color: var(--color-primary, #2e7d82);
         color: #ffffff;
       }
       .hide-scrollbar::-webkit-scrollbar {
@@ -318,7 +318,7 @@
       /* Patient highlight in table */
       .patient-highlight {
         background-color: #dbeafe !important;
-        border-left: 4px solid #036469;
+        border-left: 4px solid var(--color-primary, #036469);
       }
 
       @media (max-width: 768px) {
@@ -397,12 +397,12 @@
               "inverse-on-surface": "#f2f0f0",
               "inverse-surface": "#303030",
               "surface-dim": "#dcd9d9",
-              "primary-container": "#2e7d82",
+              "primary-container": "var(--color-primary, #2e7d82)",
               "secondary-fixed-dim": "#82d4d8",
               "on-secondary-fixed": "#002021",
               "primary-fixed-dim": "#88d3d8",
               "surface-bright": "#fbf9f8",
-              primary: "#036469",
+              primary: "var(--color-primary, var(--color-primary, #036469))",
               outline: "#6f797a",
               "on-secondary-fixed-variant": "#004f52",
               "error-container": "#ffdad6",
@@ -1898,7 +1898,7 @@
             body { font-family: 'Courier New', monospace; padding: 30px; background: #f5f5f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
             .receipt { background: white; max-width: 520px; width: 100%; padding: 35px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
             .header { text-align: center; border-bottom: 2px dashed #333; padding-bottom: 18px; margin-bottom: 18px; }
-            .header h2 { font-size: 26px; margin: 0; color: #036469; letter-spacing: 1px; }
+            .header h2 { font-size: 26px; margin: 0; color: var(--color-primary, #036469); letter-spacing: 1px; }
             .header p { font-size: 14px; color: #555; margin: 4px 0; }
             .header .receipt-id { font-size: 12px; color: #888; margin-top: 6px; }
             .divider { border-top: 1px dashed #ddd; margin: 12px 0; }
@@ -1912,7 +1912,7 @@
             .status-cancelled { background: #fee2e2; color: #991b1b; }
             .footer { text-align: center; font-size: 12px; color: #888; margin-top: 20px; border-top: 1px dashed #ddd; padding-top: 16px; }
             .footer p { margin: 2px 0; }
-            .clinic-name { font-size: 22px; font-weight: 700; color: #036469; }
+            .clinic-name { font-size: 22px; font-weight: 700; color: var(--color-primary, #036469); }
             .clinic-detail { font-size: 13px; color: #666; }
           </style>
           </head><body>
@@ -1935,7 +1935,7 @@
             ${apt.notes ? `<div class="row"><span class="label">📝 Notes</span><span class="value" style="font-size:13px;color:#555;">${apt.notes}</span></div>` : ""}
             
             <div class="footer">
-              <p style="font-weight:600;color:#036469;">Thank you for choosing addyPets! 🐾</p>
+              <p style="font-weight:600;color:var(--color-primary, #036469);">Thank you for choosing addyPets! 🐾</p>
               <p>This is a computer-generated receipt.</p>
               <p>Generated: ${new Date().toLocaleString()}</p>
             </div>
@@ -2248,7 +2248,7 @@
 
         win.document.write(`
           <html><head><title>Appointments Report</title>
-          <style>body{font-family:sans-serif;padding:30px;color:#1e293b;}table{width:100%;border-collapse:collapse;margin-top:20px;}th{background:#f1f5f9;padding:8px;border:1px solid #e2e8f0;}td{padding:6px 8px;border:1px solid #e2e8f0;}h2{border-bottom:2px solid #036469;padding-bottom:8px;}.footer{margin-top:24px;font-size:11px;color:#64748b;text-align:center;}</style>
+          <style>body{font-family:sans-serif;padding:30px;color:#1e293b;}table{width:100%;border-collapse:collapse;margin-top:20px;}th{background:#f1f5f9;padding:8px;border:1px solid #e2e8f0;}td{padding:6px 8px;border:1px solid #e2e8f0;}h2{border-bottom:2px solid var(--color-primary, #036469);padding-bottom:8px;}.footer{margin-top:24px;font-size:11px;color:#64748b;text-align:center;}</style>
           </head><body>
           <h2>Appointments Report</h2>
           <p>Generated: ${new Date().toLocaleString()}</p>

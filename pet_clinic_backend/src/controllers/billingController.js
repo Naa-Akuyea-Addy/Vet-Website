@@ -3,7 +3,13 @@ const model = require("../models/billingModel");
 async function list(req, res, next) {
   try {
     const rows = await model.list();
-    res.json({ success: true, data: rows });
+    const data = rows.map((row) => ({
+      ...row,
+      TYPE: String(row.DESCRIPTION || "").toLowerCase().startsWith("mortuary care -")
+        ? "mortuary"
+        : row.TYPE,
+    }));
+    res.json({ success: true, data });
   } catch (error) {
     next(error);
   }

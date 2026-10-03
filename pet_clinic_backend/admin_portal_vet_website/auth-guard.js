@@ -805,3 +805,21 @@
     }
   };
 })();
+
+// Apply system preferences globally
+window.applySystemPreferences = function applySystemPreferences() {
+  try {
+    const prefsJson = localStorage.getItem("systemPreferences");
+    if (prefsJson) {
+      const prefs = JSON.parse(prefsJson);
+      
+      // Apply primary color
+      if (prefs.color) {
+        document.documentElement.style.setProperty('--color-primary', prefs.color);
+      }
+    }
+  } catch (e) {
+    console.error("Error applying system preferences:", e);
+  }
+};
+window.applySystemPreferences();

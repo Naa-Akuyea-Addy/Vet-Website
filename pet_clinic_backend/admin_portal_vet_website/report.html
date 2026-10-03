@@ -53,7 +53,7 @@
       }
 
       .sidebar-item-active {
-        background-color: #2e7d82;
+        background-color: var(--color-primary, #2e7d82);
         color: #ffffff;
       }
       .hide-scrollbar::-webkit-scrollbar {
@@ -190,17 +190,17 @@
       /* Sidebar Active State - Teal Blue */
       a[data-nav-desktop].active-link,
       a[data-nav-mobile].active-link {
-        background-color: #2e7d82 !important;
+        background-color: var(--color-primary, #2e7d82) !important;
         color: #ffffff !important;
       }
       a[data-nav-desktop="reports"].active-link,
       a[data-nav-mobile="reports"].active-link {
-        background-color: #2e7d82 !important;
+        background-color: var(--color-primary, #2e7d82) !important;
         color: #ffffff !important;
       }
       a[data-nav-desktop="emergency"].active-link,
       a[data-nav-mobile="emergency"].active-link {
-        background-color: #2e7d82 !important;
+        background-color: var(--color-primary, #2e7d82) !important;
         color: #ffffff !important;
       }
 
@@ -271,7 +271,7 @@
       }
       .chart-card .chart-header a {
         font-size: 13px;
-        color: #036469;
+        color: var(--color-primary, #036469);
         text-decoration: none;
         font-weight: 500;
         cursor: pointer;
@@ -483,12 +483,12 @@
       }
       .pagination-btn:hover:not(:disabled) {
         background: #f8fafc;
-        border-color: #036469;
+        border-color: var(--color-primary, #036469);
       }
       .pagination-btn.active {
-        background: #036469;
+        background: var(--color-primary, #036469);
         color: white;
-        border-color: #036469;
+        border-color: var(--color-primary, #036469);
       }
       .pagination-btn:disabled {
         opacity: 0.4;
@@ -500,10 +500,10 @@
         border-radius: 0.75rem;
         padding: 1rem 1.5rem;
         border: 1px solid #e2e8f0;
-        border-left: 4px solid #036469;
+        border-left: 4px solid var(--color-primary, #036469);
       }
       .insight-box .insight-icon {
-        color: #036469;
+        color: var(--color-primary, #036469);
         font-size: 18px;
         margin-top: 2px;
       }
@@ -523,7 +523,7 @@
       }
       .filter-select:focus,
       .filter-input:focus {
-        border-color: #036469;
+        border-color: var(--color-primary, #036469);
         box-shadow: 0 0 0 3px rgba(3, 100, 105, 0.15);
       }
       .filter-input {
@@ -532,7 +532,7 @@
 
       .btn-primary {
         padding: 8px 20px;
-        background: #036469;
+        background: var(--color-primary, #036469);
         color: white;
         border: none;
         border-radius: 8px;
@@ -674,7 +674,7 @@
       }
       .modal-card .modal-footer .btn-primary-modal {
         padding: 8px 20px;
-        background: #036469;
+        background: var(--color-primary, #036469);
         color: white;
         border: none;
         border-radius: 8px;
@@ -699,7 +699,7 @@
         text-align: center;
         font-size: 1.5rem;
         font-weight: 700;
-        color: #036469;
+        color: var(--color-primary, #036469);
         margin-bottom: 0.25rem;
       }
       .report-print-container .report-subtitle {
@@ -898,12 +898,12 @@
               "inverse-on-surface": "#f2f0f0",
               "inverse-surface": "#303030",
               "surface-dim": "#dcd9d9",
-              "primary-container": "#2e7d82",
+              "primary-container": "var(--color-primary, #2e7d82)",
               "secondary-fixed-dim": "#82d4d8",
               "on-secondary-fixed": "#002021",
               "primary-fixed-dim": "#88d3d8",
               "surface-bright": "#fbf9f8",
-              primary: "#036469",
+              primary: "var(--color-primary, var(--color-primary, #036469))",
               outline: "#6f797a",
               "on-secondary-fixed-variant": "#004f52",
               "error-container": "#ffdad6",
@@ -1188,7 +1188,7 @@
           <a
             href="./Dashboard.html"
             data-nav-desktop="analytics"
-            class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all sidebar-button"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
           >
             <span class="material-symbols-outlined sidebar-icon-only">analytics</span>
             <span class="sidebar-text">Analytics</span>
@@ -1268,7 +1268,7 @@
           <a
             href="./report.html"
             data-nav-desktop="reports"
-            class="flex items-center gap-4 px-4 py-3 rounded-lg text-tertiary-fixed-dim hover:bg-white/5 transition-all sidebar-button"
+            class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container transition-all sidebar-button"
           >
             <span class="material-symbols-outlined sidebar-icon-only">assessment</span>
             <span class="sidebar-text">Reports</span>
@@ -1485,7 +1485,6 @@
                 Emergency cases increased by 22% this week.
                 <a
                   href="#"
-                  onclick="showToast('📊 Loading emergency report...', 'info')"
                   class="font-semibold underline hover:text-amber-900"
                   >View Emergency Report →</a
                 >
@@ -1494,11 +1493,8 @@
           </div>
 
           <!-- KPI Cards -->
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div
-              class="report-stat-card"
-              onclick="showToast('📊 Loading revenue details...', 'info')"
-            >
+          <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-4 lg:gap-6 mb-6" id="kpiGrid">
+            <div class="report-stat-card rbac-admin rbac-billing hidden">
               <p class="stat-label">Total Revenue</p>
               <p class="stat-value" id="totalRevenue">GH₵48,294</p>
               <span class="stat-change positive"
@@ -1508,10 +1504,7 @@
                 +12.5%</span
               >
             </div>
-            <div
-              class="report-stat-card"
-              onclick="showToast('📊 Loading appointment details...', 'info')"
-            >
+            <div class="report-stat-card rbac-admin rbac-records rbac-reception hidden">
               <p class="stat-label">Appointments</p>
               <p class="stat-value" id="totalAppointments">1,842</p>
               <span class="stat-change positive"
@@ -1521,10 +1514,7 @@
                 +8.3%</span
               >
             </div>
-            <div
-              class="report-stat-card"
-              onclick="showToast('📊 Loading patient details...', 'info')"
-            >
+            <div class="report-stat-card rbac-admin rbac-records rbac-reception rbac-vet hidden">
               <p class="stat-label">Active Patients</p>
               <p class="stat-value" id="activePatients">4,721</p>
               <span class="stat-change negative"
@@ -1534,10 +1524,7 @@
                 -2.1%</span
               >
             </div>
-            <div
-              class="report-stat-card"
-              onclick="showToast('📊 Loading visit value details...', 'info')"
-            >
+            <div class="report-stat-card rbac-admin rbac-billing hidden">
               <p class="stat-label">Avg. Visit Value</p>
               <p class="stat-value" id="avgVisitValue">GH₵26.22</p>
               <span class="stat-change positive"
@@ -1547,11 +1534,27 @@
                 +4.7%</span
               >
             </div>
+
+            <div
+              class="report-stat-card rbac-inventory hidden"
+            >
+              <p class="stat-label">Low Stock Items</p>
+              <p class="stat-value" id="lowStockValue">12</p>
+              <span class="stat-change negative"><span class="material-symbols-outlined text-sm">warning</span> Critical</span>
+            </div>
+            <div
+              class="report-stat-card rbac-mortuary hidden"
+            >
+              <p class="stat-label">Mortuary Occupancy</p>
+              <p class="stat-value" id="mortuaryValue">4/12</p>
+              <span class="stat-change text-slate-500">33% Full</span>
+            </div>
+
           </div>
 
           <!-- Charts Row -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div class="chart-card md:col-span-2">
+            <div class="chart-card md:col-span-2 rbac-admin rbac-billing hidden">
               <div class="chart-header">
                 <h3>
                   <span
@@ -1575,7 +1578,7 @@
                 <canvas id="revenueTrendChart"></canvas>
               </div>
             </div>
-            <div class="chart-card">
+            <div class="chart-card rbac-admin hidden">
               <div class="chart-header">
                 <h3>
                   <span
@@ -1603,7 +1606,7 @@
 
           <!-- Second Row -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div class="chart-card">
+            <div class="chart-card rbac-admin hidden">
               <div class="chart-header">
                 <h3>
                   <span
@@ -1627,7 +1630,7 @@
                 <canvas id="appointmentsChart"></canvas>
               </div>
             </div>
-            <div class="chart-card">
+            <div class="chart-card rbac-admin hidden">
               <div class="chart-header">
                 <h3>
                   <span
@@ -1653,8 +1656,62 @@
             </div>
           </div>
 
-          <!-- Recent Transactions Table -->
-          <div class="report-table-card mb-6">
+          
+          <!-- Inventory & Mortuary Charts Row -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="chart-card rbac-admin rbac-inventory hidden">
+              <div class="chart-header">
+                <h3>
+                  <span class="material-symbols-outlined text-primary text-sm align-middle">inventory_2</span>
+                  Inventory Stock Health
+                </h3>
+              </div>
+              <div class="chart-container">
+                <canvas id="inventoryHealthChart"></canvas>
+              </div>
+            </div>
+            <div class="chart-card rbac-admin rbac-mortuary hidden">
+              <div class="chart-header">
+                <h3>
+                  <span class="material-symbols-outlined text-primary text-sm align-middle">heart_broken</span>
+                  Mortuary Drawer Occupancy
+                </h3>
+              </div>
+              <div class="chart-container pie-chart">
+                <canvas id="mortuaryOccupancyChart"></canvas>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Payroll / Staff Row -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="chart-card rbac-admin hidden">
+              <div class="chart-header">
+                <h3>
+                  <span class="material-symbols-outlined text-primary text-sm align-middle">groups</span>
+                  Staff Consultations (Performance)
+                </h3>
+              </div>
+              <div class="chart-container">
+                <canvas id="staffPerformanceChart"></canvas>
+              </div>
+            </div>
+            <div class="chart-card rbac-admin rbac-billing hidden">
+              <div class="chart-header">
+                <h3>
+                  <span class="material-symbols-outlined text-primary text-sm align-middle">account_balance_wallet</span>
+                  Outstanding Balances
+                </h3>
+              </div>
+              <div class="chart-container">
+                <canvas id="outstandingBalancesChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Recent Transactions Table (Removed per user request) -->
+          <div class="report-table-card mb-6 rbac-admin rbac-billing hidden" style="display: none !important;">
             <div class="table-header">
               <h3>
                 <span
@@ -1788,17 +1845,14 @@
               >
               <div>
                 <p class="font-semibold text-sm text-slate-900">Key Insight</p>
-                <p class="text-sm text-slate-600">
-                  The revenue spike on August 3rd correlates with the "Summer
-                  Health Check" campaign sent to 2,500 pet owners. Conversion
-                  rate was 4.2% vs. the 2.8% average. Consider running similar
-                  campaigns quarterly.
+                <p id="aiInsightText" class="text-sm text-slate-600">
+                  <span class="material-symbols-outlined animate-spin" style="font-size: 14px; vertical-align: middle;">sync</span> Analyzing your data using Groq AI...
                 </p>
-                <p class="text-xs text-slate-400 mt-1">
+                <p id="aiInsightTime" class="text-xs text-slate-400 mt-1">
                   <span class="material-symbols-outlined text-xs align-middle"
                     >schedule</span
                   >
-                  Generated by AI • 2 hours ago
+                  Waiting for response...
                 </p>
               </div>
             </div>
@@ -2651,8 +2705,8 @@
               <title>Transaction ${transaction.id}</title>
               <style>
                 body { font-family: Arial, sans-serif; padding: 40px; background: white; }
-                .header { text-align: center; border-bottom: 2px solid #036469; padding-bottom: 20px; margin-bottom: 20px; }
-                .header h1 { color: #036469; font-size: 24px; margin: 0; }
+                .header { text-align: center; border-bottom: 2px solid var(--color-primary, #036469); padding-bottom: 20px; margin-bottom: 20px; }
+                .header h1 { color: var(--color-primary, #036469); font-size: 24px; margin: 0; }
                 .header p { color: #6b7280; font-size: 14px; margin: 5px 0 0; }
                 .details { margin: 20px 0; }
                 .row { display: flex; padding: 8px 0; border-bottom: 1px solid #f1f5f9; }
@@ -2804,33 +2858,18 @@
           "success",
         );
 
-        const revenue = document.getElementById("totalRevenue");
-        const appointments = document.getElementById("totalAppointments");
-        const patients = document.getElementById("activePatients");
-        const avgValue = document.getElementById("avgVisitValue");
-
-        revenue.textContent = formatCurrency(
-          48294 + Math.floor(Math.random() * 2000 - 1000),
-        );
-        appointments.textContent = (
-          1842 + Math.floor(Math.random() * 100 - 50)
-        ).toLocaleString();
-        patients.textContent = (
-          4721 + Math.floor(Math.random() * 200 - 100)
-        ).toLocaleString();
-        avgValue.textContent = formatCurrency(26.22 + (Math.random() * 2 - 1));
+        if (typeof fetchReportData === 'function') {
+           fetchReportData();
+        }
 
         renderTransactionsTable();
       }
 
       function refreshReports() {
         showToast("🔄 Reports refreshed!", "success");
-        document.getElementById("totalRevenue").textContent =
-          formatCurrency(48294);
-        document.getElementById("totalAppointments").textContent = "1,842";
-        document.getElementById("activePatients").textContent = "4,721";
-        document.getElementById("avgVisitValue").textContent =
-          formatCurrency(26.22);
+        if (typeof fetchReportData === 'function') {
+           fetchReportData();
+        }
         currentPage = 1;
         renderTransactionsTable();
       }
@@ -2961,7 +3000,7 @@
               <title>Report - addyPets</title>
               <style>
                 body { font-family: Arial, sans-serif; padding: 20px; background: white; }
-                .report-title { font-size: 24px; font-weight: 700; color: #036469; text-align: center; }
+                .report-title { font-size: 24px; font-weight: 700; color: var(--color-primary, #036469); text-align: center; }
                 .report-subtitle { text-align: center; color: #6b7280; margin-bottom: 20px; }
                 .report-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 20px 0; }
                 .stat-item { text-align: center; padding: 10px; background: #f8fafc; border-radius: 8px; }
@@ -3042,11 +3081,11 @@
               {
                 label: "Revenue (GH₵)",
                 data: [4200, 5100, 4900, 6400, 8200, 7600, 7094],
-                borderColor: "#036469",
+                borderColor: "var(--color-primary, #036469)",
                 backgroundColor: "rgba(3, 100, 105, 0.08)",
                 fill: true,
                 tension: 0.4,
-                pointBackgroundColor: "#036469",
+                pointBackgroundColor: "var(--color-primary, #036469)",
                 pointBorderColor: "#fff",
                 pointBorderWidth: 2,
                 pointRadius: 4,
@@ -3108,8 +3147,8 @@
               {
                 data: [30, 18, 22, 12, 10, 8],
                 backgroundColor: [
-                  "#036469",
-                  "#2e7d82",
+                  "var(--color-primary, #036469)",
+                  "var(--color-primary, #2e7d82)",
                   "#5fa8b0",
                   "#88d3d8",
                   "#f59e0b",
@@ -3165,7 +3204,7 @@
                 label: "Appointments",
                 data: [28, 35, 42, 38, 45, 30, 18],
                 backgroundColor: "rgba(3, 100, 105, 0.7)",
-                borderColor: "#036469",
+                borderColor: "var(--color-primary, #036469)",
                 borderWidth: 1,
                 borderRadius: 4,
               },
@@ -3221,7 +3260,7 @@
                   "rgba(245, 158, 11, 0.8)",
                   "rgba(16, 185, 129, 0.8)",
                 ],
-                borderColor: "#036469",
+                borderColor: "var(--color-primary, #036469)",
                 borderWidth: 1,
                 borderRadius: 4,
               },
@@ -3279,11 +3318,344 @@
       // 20. INIT
       // ==========================================
       document.addEventListener("DOMContentLoaded", function () {
+        applyRoleBasedAccess();
+        setTimeout(() => initNewRoleBasedCharts(), 100);
         highlightCurrentPage();
         renderTransactionsTable();
-        initCharts();
+        // initCharts();
         showToast("📊 Reports loaded successfully!", "success");
       });
+    
+      // ==========================================
+      // ROLE-BASED ACCESS CONTROL (RBAC)
+      // ==========================================
+      const userRaw = localStorage.getItem("user");
+      let userRole = "veterinarian";
+      try {
+        if (userRaw) {
+          userRole = JSON.parse(userRaw).role.trim().toLowerCase();
+        }
+      } catch(e) {
+        console.error("Failed to parse user role for RBAC");
+      }
+      
+      // Mapping normalized roles to classes
+      // Roles: "super admin", "admin", "veterinarian", "accountant", "inventorymanager", "receptionist", "technician"
+      
+      function applyRoleBasedAccess() {
+        const adminClasses = document.querySelectorAll('.rbac-admin');
+        const billingClasses = document.querySelectorAll('.rbac-billing');
+        const recordsClasses = document.querySelectorAll('.rbac-records');
+        const receptionClasses = document.querySelectorAll('.rbac-reception');
+        const vetClasses = document.querySelectorAll('.rbac-vet');
+        const inventoryClasses = document.querySelectorAll('.rbac-inventory');
+        const mortuaryClasses = document.querySelectorAll('.rbac-mortuary');
+
+        // By default, everything is hidden via 'hidden' class added in HTML.
+        // We will remove the 'hidden' class based on role.
+
+        const showElements = (elements) => {
+            elements.forEach(el => el.classList.remove('hidden'));
+        };
+
+        if (userRole === "super admin" || userRole === "admin") {
+            // Admin sees EVERYTHING
+            showElements(adminClasses);
+            showElements(billingClasses);
+            showElements(recordsClasses);
+            showElements(receptionClasses);
+            showElements(vetClasses);
+            showElements(inventoryClasses);
+            showElements(mortuaryClasses);
+        } else if (userRole === "accountant") {
+            showElements(billingClasses);
+        } else if (userRole === "inventorymanager") {
+            showElements(inventoryClasses);
+        } else if (userRole === "receptionist") {
+            showElements(receptionClasses);
+            showElements(recordsClasses);
+        } else if (userRole === "veterinarian") {
+            showElements(vetClasses);
+            showElements(recordsClasses);
+        } else if (userRole === "technician") {
+            // Lab / Mortuary technician
+            showElements(mortuaryClasses);
+            showElements(recordsClasses);
+        }
+      }
+
+      // Initialize New Charts
+      
+      // ==========================================
+      // FETCH LIVE DATA FROM DATABASE
+      // ==========================================
+      async function fetchReportData() {
+        try {
+          const token = localStorage.getItem("token");
+          if (!token) return; // auth-guard will handle redirect
+          
+          const response = await fetch("/api/reports/summary", {
+            headers: {
+              "Authorization": `Bearer ${token}`
+            }
+          });
+          
+          if (!response.ok) throw new Error("Failed to fetch reports");
+          const result = await response.json();
+          
+          if (result.success) {
+            // 1. Update KPI Cards
+            const data = result.data;
+            document.getElementById("totalRevenue").textContent = `GH₵${Number(data.totalRevenue).toLocaleString()}`;
+            document.getElementById("totalAppointments").textContent = Number(data.totalAppointments).toLocaleString();
+            document.getElementById("activePatients").textContent = Number(data.activePatients).toLocaleString();
+            document.getElementById("avgVisitValue").textContent = `GH₵${Number(data.avgVisitValue).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.getElementById("lowStockValue").textContent = data.lowStockValue;
+            document.getElementById("mortuaryValue").textContent = data.mortuaryValue;
+            
+            // 2. Update Charts if available
+            updateChartsWithRealData(result.charts, data);
+            
+            // 3. Fire Groq AI Insight fetch concurrently with payload
+            loadAIInsight(data);
+          }
+        } catch (error) {
+          console.error("Error loading live report data:", error);
+        }
+      }
+      
+      function loadAIInsight(stats) {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+        
+        // Send small trimmed payload (summary stats + max 20 transactions)
+        const payload = {
+          stats,
+          transactions: typeof transactions !== 'undefined' ? transactions.slice(0, 20) : []
+        };
+        
+        fetch("/api/reports/insights", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.insight) {
+              document.getElementById("aiInsightText").innerHTML = data.insight;
+              document.getElementById("aiInsightTime").innerHTML = `<span class="material-symbols-outlined text-xs align-middle">schedule</span> Generated by Groq AI • Just now`;
+            } else {
+              throw new Error("No insight returned");
+            }
+          })
+          .catch(err => {
+            document.getElementById("aiInsightText").textContent = "Could not generate insight at this time.";
+            document.getElementById("aiInsightTime").innerHTML = `<span class="material-symbols-outlined text-xs align-middle">error</span> Connection error`;
+          });
+      }
+      
+      
+      let myInvChart;
+      let myMortChart;
+      let myStaffChart;
+      let myBalChart;
+      let myRevenueChart;
+      let myServiceChart;
+      let myApptChart;
+      let myProcChart;
+
+      function updateChartsWithRealData(chartData, data) {
+        if (!chartData) return;
+        
+        // 1. Inventory Chart
+        const invCtx = document.getElementById("inventoryHealthChart");
+        if(invCtx && !invCtx.closest('.hidden') && chartData.inventoryHealth) {
+           const labels = chartData.inventoryHealth.map(i => i.ITEM || 'Unknown');
+           const stock = chartData.inventoryHealth.map(i => i.CURRENT_STOCK || 0);
+           const buffer = chartData.inventoryHealth.map(i => i.BUFFER_FLOOR || 0);
+           
+           if(myInvChart) myInvChart.destroy();
+           myInvChart = new Chart(invCtx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Current Stock',
+                        data: stock,
+                        backgroundColor: 'var(--color-primary, #2e7d82)',
+                        borderRadius: 4
+                    }, {
+                        label: 'Buffer Floor',
+                        data: buffer,
+                        backgroundColor: '#ef4444',
+                        borderRadius: 4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+        }
+
+        // 2. Revenue Trend Chart
+        const revCtx = document.getElementById("revenueTrendChart");
+        if (revCtx && !revCtx.closest('.hidden') && chartData.revenueTrend) {
+           const labels = chartData.revenueTrend.map(r => (r.DAY_NAME || 'Unknown').trim());
+           const totals = chartData.revenueTrend.map(r => r.TOTAL || 0);
+
+           if(myRevenueChart) myRevenueChart.destroy();
+           myRevenueChart = new Chart(revCtx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Revenue (GH₵)',
+                        data: totals,
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        // 3. Service Distribution Chart
+        const srvCtx = document.getElementById("serviceChart");
+        if (srvCtx && !srvCtx.closest('.hidden') && chartData.serviceDistribution) {
+           const labels = chartData.serviceDistribution.map(s => s.SERVICE || 'Unknown');
+           const counts = chartData.serviceDistribution.map(s => s.COUNT || 0);
+
+           if(myServiceChart) myServiceChart.destroy();
+           myServiceChart = new Chart(srvCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: counts,
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'right' } } }
+            });
+        }
+
+        // 4. Appointments by Day Chart
+        const apptCtx = document.getElementById("appointmentsChart");
+        if (apptCtx && !apptCtx.closest('.hidden') && chartData.appointmentsByDay) {
+           const labels = chartData.appointmentsByDay.map(a => (a.DAY_NAME || 'Unknown').trim());
+           const counts = chartData.appointmentsByDay.map(a => a.COUNT || 0);
+
+           if(myApptChart) myApptChart.destroy();
+           myApptChart = new Chart(apptCtx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Appointments',
+                        data: counts,
+                        backgroundColor: '#6366f1',
+                        borderRadius: 4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        // 5. Staff Performance Chart
+        const staffCtx = document.getElementById("staffPerformanceChart");
+        if (staffCtx && !staffCtx.closest('.hidden') && chartData.staffPerformance) {
+           const labels = chartData.staffPerformance.map(s => s.VET_NAME || 'Unknown');
+           const counts = chartData.staffPerformance.map(s => s.APPT_COUNT || 0);
+
+           if(myStaffChart) myStaffChart.destroy();
+           myStaffChart = new Chart(staffCtx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Consultations',
+                        data: counts,
+                        backgroundColor: '#8b5cf6',
+                        borderRadius: 6
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        // 6. Outstanding Balances
+        const balCtx = document.getElementById("outstandingBalancesChart");
+        if (balCtx && !balCtx.closest('.hidden') && chartData.outstandingBalances) {
+           const labels = chartData.outstandingBalances.map(b => (b.DAY_NAME || 'Unknown').trim());
+           const totals = chartData.outstandingBalances.map(b => b.TOTAL_UNPAID || 0);
+
+           if(myBalChart) myBalChart.destroy();
+           myBalChart = new Chart(balCtx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Unpaid Invoices (GH₵)',
+                        data: totals,
+                        borderColor: '#f43f5e',
+                        backgroundColor: 'rgba(244, 63, 94, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        // 7. Mortuary Occupancy (Mocked for now)
+        const mortCtx = document.getElementById("mortuaryOccupancyChart");
+        if(mortCtx && !mortCtx.closest('.hidden')) {
+           if(myMortChart) myMortChart.destroy();
+           myMortChart = new Chart(mortCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Occupied Drawers', 'Available Drawers', 'Under Maintenance'],
+                    datasets: [{
+                        data: [parseInt((data && data.mortuaryValue ? data.mortuaryValue : '0').split('/')[0]) || 0, Math.max(0, 11 - (parseInt((data && data.mortuaryValue ? data.mortuaryValue : '0').split('/')[0]) || 0)), 1],
+                        backgroundColor: ['#ef4444', '#10b981', '#f59e0b'],
+                        borderWidth: 0,
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'bottom' } } }
+            });
+        }
+        
+        // 8. Top Procedures (Dummy fallback as it's similar to service)
+        const procCtx = document.getElementById("proceduresChart");
+        if (procCtx && !procCtx.closest('.hidden')) {
+           if(myProcChart) myProcChart.destroy();
+           myProcChart = new Chart(procCtx, {
+                type: 'bar',
+                indexAxis: 'y',
+                data: {
+                    labels: ['Vaccination', 'General Checkup', 'Surgery', 'Dental'],
+                    datasets: [{
+                        label: 'Procedures',
+                        data: [120, 85, 30, 25],
+                        backgroundColor: '#14b8a6',
+                        borderRadius: 4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+      }
+
+      function initNewRoleBasedCharts() {
+        fetchReportData();
+      }
     </script>
   </body>
 </html>
+
+
+

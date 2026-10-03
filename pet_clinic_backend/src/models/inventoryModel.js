@@ -56,4 +56,40 @@ async function remove(id) {
   );
 }
 
-module.exports = { list, create, update, remove };
+async function bulkSync(dataList) {
+  return withConnection(async (c) => {
+    for (const item of dataList) {
+      // Calculate total quantity from batches if present
+      let totalQty = parseInt(item.quantity) || 0;
+      if (item.batches && Array.isArray(item.batches)) {
+        totalQty += item.batches.reduce((sum, b) => sum + (parseInt(b.quantity) || 0), 0);
+      }
+      
+      const itemName = item.name || item.item_name;
+      const category = item.category || "General";
+      const minStock = parseInt(item.minStock) || 10;
+      const cost = parseFloat(item.cost || item.price) || 0;
+      const supplier = item.supplier || "Supplier";
+      
+      // Check if it exists by name
+      const res = await c.execute("SELECT INVENTORY_ID FROM INVENTORY WHERE ITEM_NAME = :name", [itemName]);
+      if (res.rows && res.rows.length > 0) {
+        // Update
+        await c.execute(
+          `UPDATE INVENTORY SET QUANTITY = :q, REORDER_LEVEL = :rl, UNIT_COST = :uc, UPDATED_AT = SYSTIMESTAMP WHERE INVENTORY_ID = :id`,
+          { q: totalQty, rl: minStock, uc: cost, id: res.rows[0][0] }
+        );
+      } else {
+        // Insert
+        await c.execute(
+          `INSERT INTO INVENTORY (ITEM_NAME, CATEGORY, QUANTITY, REORDER_LEVEL, UNIT_COST, SUPPLIER) VALUES (:name, :cat, :q, :rl, :uc, :sup)`,
+          { name: itemName, cat: category, q: totalQty, rl: minStock, uc: cost, sup: supplier }
+        );
+      }
+    }
+    await c.commit();
+    return true;
+  });
+}
+
+module.exports = { list, create, update, remove, bulkSync };

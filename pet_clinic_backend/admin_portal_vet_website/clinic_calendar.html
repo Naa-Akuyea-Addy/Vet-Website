@@ -48,12 +48,12 @@
               "inverse-on-surface": "#f2f0f0",
               "inverse-surface": "#303030",
               "surface-dim": "#dcd9d9",
-              "primary-container": "#2e7d82",
+              "primary-container": "var(--color-primary, #2e7d82)",
               "secondary-fixed-dim": "#82d4d8",
               "on-secondary-fixed": "#002021",
               "primary-fixed-dim": "#88d3d8",
               "surface-bright": "#fbf9f8",
-              primary: "#036469",
+              primary: "var(--color-primary, var(--color-primary, #036469))",
               outline: "#6f797a",
               "on-secondary-fixed-variant": "#004f52",
               "error-container": "#ffdad6",
@@ -223,7 +223,7 @@
 
       /* ===== SIDEBAR STYLES ===== */
       .sidebar-item-active {
-        background-color: #2e7d82;
+        background-color: var(--color-primary, #2e7d82);
         color: #ffffff;
       }
       .hide-scrollbar::-webkit-scrollbar {
@@ -321,21 +321,21 @@
         color: #1a3638;
       }
       .fc .fc-button-primary {
-        background-color: #036469;
-        border-color: #036469;
+        background-color: var(--color-primary, #036469);
+        border-color: var(--color-primary, #036469);
         transition: all 0.2s ease;
       }
       .fc .fc-button-primary:hover {
-        background-color: #2e7d82;
-        border-color: #2e7d82;
+        background-color: var(--color-primary, #2e7d82);
+        border-color: var(--color-primary, #2e7d82);
       }
       .fc .fc-button-primary:focus {
         box-shadow: 0 0 0 3px rgba(3, 100, 105, 0.5);
       }
       .fc .fc-button-primary:not(:disabled):active,
       .fc .fc-button-primary:not(:disabled).fc-button-active {
-        background-color: #2e7d82;
-        border-color: #2e7d82;
+        background-color: var(--color-primary, #2e7d82);
+        border-color: var(--color-primary, #2e7d82);
       }
       .fc .fc-button-primary:disabled {
         background-color: #617677;
@@ -354,7 +354,7 @@
       }
       .fc .fc-daygrid-day-number:hover,
       .fc .fc-col-header-cell-cushion:hover {
-        color: #036469;
+        color: var(--color-primary, #036469);
       }
       .fc .fc-col-header-cell {
         background-color: #f5f3f3;
@@ -2199,7 +2199,7 @@
           return { bg: "#ba1a1a", border: "#943031" };
         }
         if (s.includes("vaccin")) {
-          return { bg: "#00696d", border: "#036469" };
+          return { bg: "#00696d", border: "var(--color-primary, #036469)" };
         }
         if (s.includes("dental")) {
           return { bg: "#617677", border: "#475569" };
@@ -2207,7 +2207,7 @@
         if (s.includes("groom")) {
           return { bg: "#0d9488", border: "#0f766e" };
         }
-        return { bg: "#2e7d82", border: "#036469" };
+        return { bg: "var(--color-primary, #2e7d82)", border: "var(--color-primary, #036469)" };
       }
 
       // ===== MODAL FUNCTIONS =====

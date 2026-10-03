@@ -42,12 +42,12 @@
               "inverse-on-surface": "#f2f0f0",
               "inverse-surface": "#303030",
               "surface-dim": "#dcd9d9",
-              "primary-container": "#2e7d82",
+              "primary-container": "var(--color-primary, #2e7d82)",
               "secondary-fixed-dim": "#82d4d8",
               "on-secondary-fixed": "#002021",
               "primary-fixed-dim": "#88d3d8",
               "surface-bright": "#fbf9f8",
-              primary: "#036469",
+              primary: "var(--color-primary, var(--color-primary, #036469))",
               outline: "#6f797a",
               "on-secondary-fixed-variant": "#004f52",
               "error-container": "#ffdad6",
@@ -145,7 +145,7 @@
       }
 
       .sidebar-item-active {
-        background-color: #2e7d82;
+        background-color: var(--color-primary, #2e7d82);
         color: #ffffff;
       }
 
@@ -809,7 +809,7 @@
                       </div>
                       <div class="flex-1 space-y-2">
                           <div class="flex items-center gap-2 text-sm md:text-base">
-                              <span class="inline-block w-3 h-3 rounded-full bg-[#036469]"></span>
+                              <span class="inline-block w-3 h-3 rounded-full bg-[var(--color-primary,var(--color-primary, #036469))]"></span>
                               Vaccinations 45%
                           </div>
                           <div class="flex items-center gap-2 text-sm md:text-base">
@@ -817,7 +817,7 @@
                               Dental Care 28%
                           </div>
                           <div class="flex items-center gap-2 text-sm md:text-base">
-                              <span class="inline-block w-3 h-3 rounded-full bg-[#2e7d82]"></span>
+                              <span class="inline-block w-3 h-3 rounded-full bg-[var(--color-primary, #2e7d82)]"></span>
                               Surgery 15%
                           </div>
                           <div class="flex items-center gap-2 text-sm md:text-base">
@@ -1269,7 +1269,7 @@
                 {
                   label: "Appointments",
                   data: [],
-                  borderColor: "#036469",
+                  borderColor: "var(--color-primary, #036469)",
                   backgroundColor: "rgba(3, 100, 105, 0.1)",
                   tension: 0.4,
                   fill: true,
@@ -1323,7 +1323,7 @@
               datasets: [
                 {
                   data: [],
-                  backgroundColor: ["#036469", "#00696d", "#2e7d82", "#943031"],
+                  backgroundColor: ["var(--color-primary, #036469)", "#00696d", "var(--color-primary, #2e7d82)", "#943031"],
                   borderWidth: 0,
                   cutout: window.innerWidth < 768 ? "50%" : "60%",
                 },
@@ -1354,7 +1354,7 @@
                 {
                   label: "New Patients",
                   data: [],
-                  borderColor: "#036469",
+                  borderColor: "var(--color-primary, #036469)",
                   tension: 0.4,
                   pointRadius: window.innerWidth < 768 ? 3 : 4,
                 },
